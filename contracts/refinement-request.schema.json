@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/ohos-gsas-ii/refinement-request.schema.json",
+  "title": "GSAS-II HarmonyOS Refinement Request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "jobId", "operation", "recipeId", "inputs", "options", "output"],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "jobId": { "$ref": "#/$defs/jobId" },
+    "operation": { "const": "powder-refinement" },
+    "recipeId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]{2,63}$" },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["histograms", "phase"],
+      "properties": {
+        "histograms": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": { "$ref": "#/$defs/histogram" }
+        },
+        "phase": { "$ref": "#/$defs/phase" }
+      }
+    },
+    "options": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cycleCount"],
+      "properties": {
+        "cycleCount": { "type": "integer", "minimum": 0, "maximum": 50 },
+        "validateAgainstBaseline": { "type": "boolean", "default": false }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["projectName", "overwrite"],
+      "properties": {
+        "projectName": { "type": "string", "pattern": "^[^/\\\\]{1,100}\\.gpx$" },
+        "overwrite": { "type": "boolean", "default": false }
+      }
+    }
+  },
+  "$defs": {
+    "jobId": { "type": "string", "pattern": "^job_[A-Za-z0-9_-]{8,64}$" },
+    "fileId": { "type": "string", "pattern": "^file_[A-Za-z0-9_-]{8,64}$" },
+    "histogram": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "role", "dataFileId", "instrumentFileId", "formatHint"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$" },
+        "role": { "enum": ["xray", "neutron", "other"] },
+        "dataFileId": { "$ref": "#/$defs/fileId" },
+        "instrumentFileId": { "$ref": "#/$defs/fileId" },
+        "formatHint": { "type": "string", "minLength": 1, "maxLength": 80 }
+      }
+    },
+    "phase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "fileId"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "fileId": { "$ref": "#/$defs/fileId" }
+      }
+    }
+  }
+}

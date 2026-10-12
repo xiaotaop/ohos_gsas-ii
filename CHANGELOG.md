@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — Phase 3
+
+- 冻结 ArkUI、FileService、C++ N-API 和 Python Bridge 之间的核心接口 v1.0。
+- 新增精修请求与核心事件 JSON Schema、成功/失败示例和无第三方依赖的契约校验脚本。
+- 明确单任务状态机、文件 ID 与沙箱规则、事件顺序、取消语义、错误码和集成验收条件。
+
 ## Unreleased — Phase 2
 
 - 新增无 GUI 的 GSASIIscriptable PbSO4 精修 PoC 和结构化结果格式。
