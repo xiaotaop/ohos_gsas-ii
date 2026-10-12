@@ -1,0 +1,2 @@
+scripts/ohos/*.sh text eol=lf
+scripts/ohos/*.ini text eol=lf

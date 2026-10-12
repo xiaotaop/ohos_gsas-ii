@@ -19,16 +19,22 @@ Windows 需要让 Python 能定位 `libgfortran-3.dll` 等 MinGW 运行库。PoC
   -Output poc/results/windows-x86_64.json
 ```
 
-## HarmonyOS PC 探测结果
+## HarmonyOS PC 真机结果
 
-本机已安装 HarmonyOS 6.0.2/API 22 SDK。其 Clang 15.0.4 可识别 `aarch64-unknown-linux-ohos`，C/C++ 交叉编译入口可用；SDK 内没有 gfortran 或 flang，`hdc list targets` 当前返回 `[Empty]`。完整快照见 `poc/results/harmony-environment.json`，可用以下命令重新生成：
+2026-10-12 已在 HAD-W24 鸿蒙 PC 上完成验证。设备为 HarmonyOS 6.1.0.117、aarch64、HongMeng Kernel 1.12.0；用户终端安装 CPython 3.12.9、NumPy 2.2.6、SciPy 1.16.3 和 PyCifRW 5.0.1。PyCifRW 的 `StarScan` C 扩展在真机源码构建并成功导入。
+
+设备上的 Harmonybrew SDK 26.0.0.18 提供 Clang 15.0.4。按照 OpenHarmonyPCDeveloper 的 Fortran 项目指导取得 flang 20.1.0 后，先编译、签名并由 Python `ctypes` 加载独立 Fortran 动态库，再通过 Meson 构建固定 GSAS-II 提交的 9 个原生扩展。签名后以下模块全部在真机导入成功：`fmask`、`histogram2d`、`pack_f`、`pydiffax`、`pypowder`、`pyspg`、`pytexture`、`unpack_cbf`、`kvec_general`。
+
+同一 `poc/core_refinement.py` 随后完成五阶段 PbSO4 精修，全部 Rwp 和择优取向系数满足既定容差，结构化结果见 `poc/results/harmonyos-aarch64.json`。运行耗时 14.305 秒。该次测试直接从固定源码树运行，未安装 wheel，所以结果中的 `gsas_ii` 元数据为 `not-installed`；实际提交由结果中的 `upstream_commit` 锁定。
+
+主机 SDK 探测仍可用以下命令重跑：
 
 ```powershell
 .\scripts\Probe-HarmonyEnvironment.ps1
 .\scripts\Probe-OhosPythonIndex.ps1
 ```
 
-仓库还包含一个不依赖第三方库的 C 探针。以下命令已成功产出 `EM_AARCH64` ELF 共享库，用来区分“SDK C 工具链可用”和“GSAS-II Fortran 工具链仍缺失”这两个事实：
+仓库还包含一个不依赖第三方库的 C 探针。以下命令已成功产出 `EM_AARCH64` ELF 共享库：
 
 ```powershell
 .\scripts\Build-HarmonyCProbe.ps1
@@ -36,17 +42,21 @@ Windows 需要让 Python 能定位 `libgfortran-3.dll` 等 MinGW 运行库。PoC
 
 依赖逐项状态、社区 wheel 可用性和 Flojoy 参考架构见 [第二阶段依赖矩阵](PHASE2_DEPENDENCY_MATRIX.md)。
 
-## HarmonyOS PC 待验证项
+## 第二阶段验收结论
 
-1. 确认目标设备 CPU 架构、HarmonyOS PC SDK/API 版本和可用的 Python 3.12 运行时。
-2. 按社区实践取得 CPython 3.12.9 运行时，使用已存在的 NumPy/SciPy OHOS wheel，并以纯 Python 模式安装 PyCifRW；不得复用 Windows `.pyd`。
-3. 验证实验性 OHOS gfortran 路线，为目标平台配置 Meson cross file、NumPy 头文件和 Fortran/C 链接参数，先只构建 `pyspg`、`pypowder`、`pytexture`。
-4. 在真机运行同一 `core_refinement.py`，提交结果 JSON，并与 Windows 基线逐阶段比较。
-5. 对最终要分发的动态运行库建立 SBOM，确认许可证和源码提供义务。
+第二阶段已通过：目标设备、Python 科学计算依赖、C/C++/Fortran 编译链、原生扩展签名加载，以及完整脚本化精修均已真机验证。可复用的 flang 包装器、Meson cross file 和签名脚本位于 `scripts/ohos/`。
+
+进入第三阶段前仍需完成的发布工程工作：
+
+1. 将目前的真机开发构建固化为排除 `pydiffax` 的可重复构建，并生成 wheel 或应用私有 Python 载荷。
+2. 为最终进入 HAP 的 Python、NumPy、SciPy、PyCifRW、flang 运行库和 GSAS-II 文件建立 SBOM 与许可证清单。
+3. 设计 ArkUI 桌面壳层、后台任务模型、文件选择/保存与错误展示，并验证大文件与长时间精修。
+4. 在应用沙箱内完成打包、签名、安装、卸载和冷启动测试；当前 HiShell 用户终端结果不能替代 HAP 集成验证。
 
 ## 已识别的工程/合规门槛
 
 - 上游默认构建 `pydiffax`。本次 Windows wheel 为本地可行性诊断而构建，没有发布；HarmonyOS 可分发包必须先取得 DIFFaX 下游分发依据，或修改构建使其不包含 DIFFaX 并验证所需功能不受影响。
 - `GSASII/G2shapes.py` 为 GPL-3+，是否纳入最终应用必须单独作兼容性决定。
 - 原生扩展依赖编译器运行库。最终包需使用目标系统支持的动态库、静态链接方案或应用私有库目录，并完成相应许可证审查。
-- 当前结果证明脚本化核心及数值基线在 Windows x86-64 可复现，也证明 PyCifRW 的可选 `StarScan` 加速器不是本用例的硬依赖；不等于已在 HarmonyOS PC 上运行。
+- 真机诊断构建中的 `pydiffax` 只用于确认技术可构建性，没有提交或分发二进制。可发布构建仍须排除它或先取得明确的下游分发依据。
+- 本阶段证明 GSAS-II 脚本化核心可以在鸿蒙 PC 真机运行，并不代表原 wxPython GUI 已移植，也不代表 HAP 已满足上架要求。

@@ -1,6 +1,6 @@
 # ohos_gsas-ii
 
-GSAS-II 面向 HarmonyOS PC 的移植准备仓库。目前处于**第二阶段：无 GUI 核心计算 PoC**，尚无可运行的鸿蒙安装包，也未宣称移植成功。
+GSAS-II 面向 HarmonyOS PC 的移植准备仓库。**第二阶段：无 GUI 核心计算 PoC 已通过鸿蒙 PC 真机验证**；当前仍没有可上架的 GUI 安装包，第三阶段将进入原生桌面壳层与应用集成。
 
 GitCode 个人暂存仓库：<https://gitcode.com/2401_86708491/ohos_gsas-ii>。截至 2026-10-12，本地仓库与远端 `main` 已建立并通过 SSH 推送；社区申请状态见 [发布交接](docs/PUBLISHING.md)。
 
@@ -8,7 +8,7 @@ GSAS-II 是用于 X 射线及中子衍射等结构分析的上游开源软件。
 
 ## 第二阶段进度
 
-无 GUI 核心计算 PoC 已加入仓库。Windows x86-64 基线已完成源码编译和五阶段 PbSO4 精修，结果满足上游数值容差；HarmonyOS SDK 的 aarch64 C/C++ 入口也已确认。真机验证当前受两项条件限制：没有连接设备，SDK 没有 GSAS-II 所需的 Fortran 编译器。详见 [第二阶段核心 PoC](docs/PHASE2_CORE_POC.md)和[依赖矩阵](docs/PHASE2_DEPENDENCY_MATRIX.md)。
+Windows x86-64 基线与 HarmonyOS PC aarch64 真机均已完成同一套五阶段 PbSO4 精修，全部结果满足上游数值容差。真机环境为 HarmonyOS 6.1.0.117、CPython 3.12.9，并使用社区 NumPy/SciPy wheel、真机编译的 PyCifRW 及 flang 20.1.0 构建的 GSAS-II 原生扩展。结果见 `poc/results/harmonyos-aarch64.json`，构建细节见 [第二阶段核心 PoC](docs/PHASE2_CORE_POC.md)、[依赖矩阵](docs/PHASE2_DEPENDENCY_MATRIX.md)和[真机构建配置](scripts/ohos/README.md)。
 
 ## 第一阶段成果
 
