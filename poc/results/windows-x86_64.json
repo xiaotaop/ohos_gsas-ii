@@ -1,0 +1,109 @@
+{
+  "elapsed_seconds": 9.9,
+  "environment": {
+    "gsas_ii": "2.0.0",
+    "machine": "AMD64",
+    "numpy": "2.2.6",
+    "platform": "Windows-11-10.0.22631-SP0",
+    "pycifrw": "5.0.1",
+    "python": "3.12.10",
+    "scipy": "1.16.3"
+  },
+  "fixtures": [
+    {
+      "bytes": 49445,
+      "name": "PBSO4.XRA",
+      "sha256": "CA2DA02FC7E17D2FC912DE22A979F8101BA6140F2E8104F9D3AA64F030CA58BB"
+    },
+    {
+      "bytes": 794,
+      "name": "INST_XRY.PRM",
+      "sha256": "E59413059BC3B12A51F1C6EEBC5D581470320D05A31F11A41DBB32E16D1D16B9"
+    },
+    {
+      "bytes": 24190,
+      "name": "PBSO4.CWN",
+      "sha256": "59462BA6D7C72C9800B0B6BF41903F9933ED5AC5ADAB101D27022D5D25CF18BA"
+    },
+    {
+      "bytes": 971,
+      "name": "inst_d1a.prm",
+      "sha256": "A1031174A9B509F889377752F5C095A1DAD49A25FB0A72C057F184F7B321FCEA"
+    },
+    {
+      "bytes": 1569,
+      "name": "PbSO4-Wyckoff.cif",
+      "sha256": "22CBA0B64FB6BF89178FE828FDF63570BFFEBED1485313E78C50C2918A47A970"
+    }
+  ],
+  "generated_at": "2026-10-12T11:28:15.703326+00:00",
+  "passed": true,
+  "preferred_orientation": {
+    "C(2,0)": 0.12738348216481607,
+    "C(2,2)": 0.09406348068782173
+  },
+  "schema_version": 1,
+  "stages": [
+    {
+      "actual_rwp": [
+        96.68109956184195,
+        99.74899353638497
+      ],
+      "expected_rwp": [
+        96.681098,
+        99.748994
+      ],
+      "name": "before_fitting",
+      "passed": true
+    },
+    {
+      "actual_rwp": [
+        45.81214159784883,
+        17.864613296064597
+      ],
+      "expected_rwp": [
+        45.811562,
+        17.864834
+      ],
+      "name": "scale_and_background",
+      "passed": true
+    },
+    {
+      "actual_rwp": [
+        32.47641111963635,
+        15.024290785484668
+      ],
+      "expected_rwp": [
+        32.475886,
+        15.02412
+      ],
+      "name": "cells",
+      "passed": true
+    },
+    {
+      "actual_rwp": [
+        13.405809191614509,
+        6.3613044514972055
+      ],
+      "expected_rwp": [
+        13.40599,
+        6.36131
+      ],
+      "name": "microstrain_displacement_atoms",
+      "passed": true
+    },
+    {
+      "actual_rwp": [
+        13.164629040289125,
+        6.3823293493295115
+      ],
+      "expected_rwp": [
+        13.16483,
+        6.3823
+      ],
+      "name": "preferred_orientation",
+      "passed": true
+    }
+  ],
+  "upstream_commit": "2b4aba1bc44de63a3da9d4495944c3b99e389399"
+}

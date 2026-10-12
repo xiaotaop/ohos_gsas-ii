@@ -1,0 +1,36 @@
+{
+    "schema_version":  1,
+    "generated_at":  "2026-10-12T11:33:54.2544352Z",
+    "sdk":  {
+                "root":  "C:\\Users\\pxt\\Tools\\Huawei\\command-line-tools\\sdk",
+                "display_name":  "HarmonyOS 6.0.2",
+                "api_version":  "22",
+                "platform_version":  "6.0.2",
+                "package_version":  "6.0.2.130"
+            },
+    "native_toolchain":  {
+                             "clang":  "C:\\Users\\pxt\\Tools\\Huawei\\command-line-tools\\sdk\\default\\openharmony\\native\\llvm\\bin\\clang.exe",
+                             "clang_version":  "OHOS (dev) clang version 15.0.4 (llvm-project 15b1c2bd53b4c3961c7b75000251612d2cbfe2cf)\r\nTarget: x86_64-w64-windows-gnu\r\nThread model: posix\r\nInstalledDir: C:/Users/pxt/Tools/Huawei/command-line-tools/sdk/default/openharmony/native/llvm/bin",
+                             "target_triple":  "aarch64-unknown-linux-ohos",
+                             "cmake":  "C:\\Users\\pxt\\Tools\\Huawei\\command-line-tools\\sdk\\default\\openharmony\\native\\build-tools\\cmake\\bin\\cmake.exe",
+                             "ninja":  "C:\\Users\\pxt\\Tools\\Huawei\\command-line-tools\\sdk\\default\\openharmony\\native\\build-tools\\cmake\\bin\\ninja.exe",
+                             "c_cross_compile_ready":  true,
+                             "fortran_compilers":  [
+
+                                                   ],
+                             "fortran_cross_compile_ready":  false
+                         },
+    "device":  {
+                   "hdc":  "C:\\Users\\pxt\\Tools\\Huawei\\command-line-tools\\sdk\\default\\openharmony\\toolchains\\hdc.exe",
+                   "raw_output":  "[Empty]",
+                   "targets":  [
+
+                               ],
+                   "connected":  false
+               },
+    "blockers":  [
+                     "No HarmonyOS target is visible to hdc.",
+                     "The installed HarmonyOS SDK contains no Fortran compiler."
+                 ],
+    "ready_for_harmony_core_poc":  false
+}

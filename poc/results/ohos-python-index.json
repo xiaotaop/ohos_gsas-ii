@@ -1,0 +1,87 @@
+{
+    "schema_version":  1,
+    "generated_at":  "2026-10-12T11:33:55.3986155Z",
+    "index_url":  "https://pypi.cnb.cool/OpenHarmonyPCDeveloper/pypi/-/packages/simple",
+    "packages":  [
+                     {
+                         "package":  "gsas-ii",
+                         "url":  "https://pypi.cnb.cool/OpenHarmonyPCDeveloper/pypi/-/packages/simple/gsas-ii/",
+                         "status_code":  404,
+                         "project_present":  false,
+                         "ohos_aarch64_wheel_count":  0,
+                         "ohos_aarch64_wheels":  [
+
+                                                 ],
+                         "error":  "远程服务器返回错误: (404) 未找到。"
+                     },
+                     {
+                         "package":  "pycifrw",
+                         "url":  "https://pypi.cnb.cool/OpenHarmonyPCDeveloper/pypi/-/packages/simple/pycifrw/",
+                         "status_code":  200,
+                         "project_present":  true,
+                         "ohos_aarch64_wheel_count":  0,
+                         "ohos_aarch64_wheels":  [
+
+                                                 ],
+                         "error":  null
+                     },
+                     {
+                         "package":  "numpy",
+                         "url":  "https://pypi.cnb.cool/OpenHarmonyPCDeveloper/pypi/-/packages/simple/numpy/",
+                         "status_code":  200,
+                         "project_present":  true,
+                         "ohos_aarch64_wheel_count":  28,
+                         "ohos_aarch64_wheels":  [
+                                                     "numpy-2.4.5-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-2.4.6-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-2.5.2-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-1.16.0-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-1.20.1-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-2.3.5-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-2.5.1-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-1.22.0-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-1.25.1-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-1.25.2-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-1.26.3-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-2.1.3-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-2.3.2-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-2.4.4-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-2.5.3-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-1.10.4-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-1.19.3-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-1.19.5-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-1.24.4-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-1.26.4-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-2.1.0-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-2.2.0-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-2.2.6-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-1.26.0-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-1.26.1-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-1.26.2-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-2.0.1-cp312-cp312-ohos_aarch64.whl",
+                                                     "numpy-2.3.1-cp312-cp312-ohos_aarch64.whl"
+                                                 ],
+                         "error":  null
+                     },
+                     {
+                         "package":  "scipy",
+                         "url":  "https://pypi.cnb.cool/OpenHarmonyPCDeveloper/pypi/-/packages/simple/scipy/",
+                         "status_code":  200,
+                         "project_present":  true,
+                         "ohos_aarch64_wheel_count":  10,
+                         "ohos_aarch64_wheels":  [
+                                                     "scipy-1.11.2-cp312-cp312-ohos_aarch64.whl",
+                                                     "scipy-1.12.0-cp312-cp312-ohos_aarch64.whl",
+                                                     "scipy-1.16.3-cp312-cp312-ohos_aarch64.whl",
+                                                     "scipy-1.18.1-cp312-cp312-ohos_aarch64.whl",
+                                                     "scipy-1.11.3-cp312-cp312-ohos_aarch64.whl",
+                                                     "scipy-1.13.1-cp312-cp312-ohos_aarch64.whl",
+                                                     "scipy-1.14.1-cp312-cp312-ohos_aarch64.whl",
+                                                     "scipy-1.15.3-cp312-cp312-ohos_aarch64.whl",
+                                                     "scipy-1.17.1-cp312-cp312-ohos_aarch64.whl",
+                                                     "scipy-1.18.0-cp312-cp312-ohos_aarch64.whl"
+                                                 ],
+                         "error":  null
+                     }
+                 ]
+}

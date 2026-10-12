@@ -14,5 +14,5 @@ git rev-parse HEAD
 
 后两条的提交 SHA 应一致。首次推送已执行一致性检查；后续发布仍应复查，并在浏览器确认 `README.md`、`README.OpenSource`、`LICENSE`、`docs/` 和 `tests/fixtures/` 均可见。
 
-接着根据 `GITCODE_APPLICATION.md` 在社区 `community` 仓库提出 NewRepository 申请。申请前复查重名仓库和许可问题，社区批准后再按其流程向组织仓库贡献。应用上架另走应用市场审核；第一阶段没有提交任何上架申请。
+按当前决定，先在个人仓库完成核心移植、真机验证和可分发物审查，不立即提交社区 NewRepository 申请。开发完成后再复核 `GITCODE_APPLICATION.md`、重名仓库和许可问题，随后按社区流程申请组织仓库并进入应用上架审核。当前没有提交任何上架申请。
 
