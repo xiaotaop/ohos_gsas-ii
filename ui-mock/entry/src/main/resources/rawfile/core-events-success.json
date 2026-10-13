@@ -1,0 +1,100 @@
+[
+  {
+    "schemaVersion": "1.0",
+    "eventId": "evt_20261012_0000",
+    "jobId": "job_20261012_001",
+    "sequence": 0,
+    "timestamp": "2026-10-12T13:20:00Z",
+    "type": "job.accepted",
+    "payload": { "state": "queued" }
+  },
+  {
+    "schemaVersion": "1.0",
+    "eventId": "evt_20261012_0001",
+    "jobId": "job_20261012_001",
+    "sequence": 1,
+    "timestamp": "2026-10-12T13:20:01Z",
+    "type": "job.progress",
+    "payload": {
+      "state": "validating",
+      "stage": "reading_files",
+      "stageIndex": 1,
+      "stageCount": 7,
+      "percent": 10,
+      "message": "正在读取粉末、仪器和相文件"
+    }
+  },
+  {
+    "schemaVersion": "1.0",
+    "eventId": "evt_20261012_0002",
+    "jobId": "job_20261012_001",
+    "sequence": 2,
+    "timestamp": "2026-10-12T13:20:05Z",
+    "type": "job.progress",
+    "payload": {
+      "state": "running",
+      "stage": "cells",
+      "stageIndex": 4,
+      "stageCount": 7,
+      "percent": 55,
+      "message": "正在精修晶胞参数"
+    }
+  },
+  {
+    "schemaVersion": "1.0",
+    "eventId": "evt_20261012_0003",
+    "jobId": "job_20261012_001",
+    "sequence": 3,
+    "timestamp": "2026-10-12T13:20:14Z",
+    "type": "job.completed",
+    "payload": {
+      "state": "succeeded",
+      "result": {
+        "recipeId": "powder-five-stage-v1",
+        "upstreamCommit": "2b4aba1bc44de63a3da9d4495944c3b99e389399",
+        "elapsedSeconds": 14.305,
+        "stages": [
+          {
+            "name": "before_fitting",
+            "rwpByHistogram": { "xray": 96.68109958753662, "neutron": 99.74899353640811 }
+          },
+          {
+            "name": "scale_and_background",
+            "rwpByHistogram": { "xray": 45.812156668808676, "neutron": 17.8646146764211 }
+          },
+          {
+            "name": "cells",
+            "rwpByHistogram": { "xray": 32.47640414550473, "neutron": 15.024235435240652 }
+          },
+          {
+            "name": "microstrain_displacement_atoms",
+            "rwpByHistogram": { "xray": 13.406029327510774, "neutron": 6.361309933904001 }
+          },
+          {
+            "name": "preferred_orientation",
+            "rwpByHistogram": { "xray": 13.164609965645022, "neutron": 6.382344571362896 }
+          }
+        ],
+        "preferredOrientation": {
+          "C(2,0)": 0.1273832642588459,
+          "C(2,2)": 0.0940648194451078
+        },
+        "validation": { "performed": true, "passed": true },
+        "artifacts": [
+          {
+            "fileId": "file_result_gpx_001",
+            "kind": "project",
+            "displayName": "PbSO4-refined.gpx",
+            "mediaType": "application/octet-stream"
+          },
+          {
+            "fileId": "file_result_json_001",
+            "kind": "result",
+            "displayName": "PbSO4-refined.json",
+            "mediaType": "application/json"
+          }
+        ]
+      }
+    }
+  }
+]

@@ -1,0 +1,28 @@
+[
+  {
+    "schemaVersion": "1.0",
+    "eventId": "evt_20261012_fail0",
+    "jobId": "job_20261012_002",
+    "sequence": 0,
+    "timestamp": "2026-10-12T13:30:00Z",
+    "type": "job.accepted",
+    "payload": { "state": "queued" }
+  },
+  {
+    "schemaVersion": "1.0",
+    "eventId": "evt_20261012_fail1",
+    "jobId": "job_20261012_002",
+    "sequence": 1,
+    "timestamp": "2026-10-12T13:30:01Z",
+    "type": "job.failed",
+    "payload": {
+      "state": "failed",
+      "error": {
+        "code": "INVALID_INSTRUMENT_FILE",
+        "message": "仪器参数文件无法识别",
+        "retryable": false,
+        "detail": "GSAS powder reader rejected the selected instrument file"
+      }
+    }
+  }
+]

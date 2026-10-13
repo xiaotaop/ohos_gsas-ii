@@ -8,3 +8,12 @@ dist/
 *.gpx
 *.bak
 
+# Local ArkUI mock build/cache; no signing material or HAPs in source control.
+.hvigor/
+.hvigor-user/
+.preview/
+oh_modules/
+node_modules/
+local.properties
+*.hap
+

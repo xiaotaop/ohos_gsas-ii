@@ -14,7 +14,7 @@
 | DIFFaX | 上游获作者 M. Treacy 直接分发许可；文本未明确授予下游再次分发许可 | **发布门槛**：获得可转授权依据或从打包范围移除，且验证核心功能可用 |
 | Shapes (`GSASII/G2shapes.py`) | GPL-3+ | **发布门槛**：确认与最终整包许可证/上架条款兼容，或排除该组件及调用路径 |
 
-本仓库当前只复制了五个上游测试样例，不含 DIFFaX/Shapes 源码或二进制。仍需保留主许可和来源记录。
+本仓库复制了五个上游测试样例；成员 A 的 `ui-mock/entry/src/main/ets/pages/Index.ets` 另按锁定版本 `GSASIIdataGUI.py` 的菜单、数据树、布局与事件入口译写了 ArkUI 子集，来源、修改作者和差异见 [M1 源码映射](M1_ARKUI.md)。未复制完整 wxPython GUI，也不含 DIFFaX/Shapes 源码或二进制。主许可、NOTICE、源文件修改注释及应用 About 致谢均保留；M1 调试包验收不关闭下述发布门槛。
 
 ## 上架前必须完成
 

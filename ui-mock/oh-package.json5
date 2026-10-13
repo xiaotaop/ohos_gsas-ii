@@ -1,0 +1,8 @@
+{
+  "modelVersion": "6.0.0",
+  "name": "gsas-ui-mock",
+  "version": "0.1.0",
+  "description": "Member A M1: isolated ArkUI contract replay demo",
+  "dependencies": {},
+  "devDependencies": {}
+}
