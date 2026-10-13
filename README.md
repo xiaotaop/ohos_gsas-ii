@@ -16,6 +16,8 @@ ArkUI、文件服务、C++ N-API 和 Python/GSAS-II 核心之间的 v1.0 接口�
 
 成员 A 的 [M1 ArkUI 源码映射与接入说明](docs/M1_ARKUI.md) 位于 `ui-mock/`，按锁定上游 wxPython 源码翻译菜单、数据树、Controls 与 Refine 交互子集。成功、失败、取消、窗口适配及基本键鼠操作已通过 HarmonyOS PC 模拟器验收，附运行截图。演示使用模拟数据，未接入真实计算和文件导出；真机 GUI 验收与正式工程集成待完成，分支供组长审核后合并。
 
+A/B/C 接入前需确认的工程入口、公共类型、文件服务、初始化、日志产物及集成验收，见 [接入对齐清单](docs/INTEGRATION_ALIGNMENT.md)。待确认项不改变冻结契约。
+
 ## 第一阶段成果
 
 - [上游源码锁定](docs/UPSTREAM_LOCK.md)：固定到 `2b4aba1bc44de63a3da9d4495944c3b99e389399`。
