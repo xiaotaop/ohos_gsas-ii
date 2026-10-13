@@ -2,7 +2,7 @@
 
 ## Unreleased — Phase 3
 
-- 新增 GitCode AtomGit Action 持续集成，自动检查 Python 语法、JSON、核心接口契约和测试样例完整性。
+- 新增 GitHub Actions 持续集成，自动检查 Python 语法、JSON、核心接口契约和测试样例完整性。
 - 冻结 ArkUI、FileService、C++ N-API 和 Python Bridge 之间的核心接口 v1.0。
 - 新增精修请求与核心事件 JSON Schema、成功/失败示例和无第三方依赖的契约校验脚本。
 - 明确单任务状态机、文件 ID 与沙箱规则、事件顺序、取消语义、错误码和集成验收条件。

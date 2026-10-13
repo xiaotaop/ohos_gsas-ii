@@ -1,20 +1,20 @@
-# GitCode 持续集成说明
+# GitHub Actions 持续集成说明
 
 ## 1. 目标
 
-本仓库使用 GitCode AtomGit Action 对无需 HarmonyOS PC 真机和专用 SDK 的内容进行持续验证。工作流文件位于：
+本仓库使用 GitHub Actions 对无需 HarmonyOS PC 真机和专用 SDK 的内容进行持续验证。工作流文件位于：
 
 ```text
-.gitcode/workflows/ci.yml
+.github/workflows/ci.yml
 ```
 
-流水线使用 GitCode 官方托管的 Ubuntu x64 Runner 和 Python 3.12，不需要配置访问令牌或其他 Secret。
+流水线使用 GitHub 官方托管的 Ubuntu Runner 和 Python 3.12，仅声明 `contents: read` 权限，不需要配置访问令牌或其他 Secret。
 
 ## 2. 触发条件
 
 - 任意分支发生 push 时自动运行。
 - 向 `main` 分支创建或更新 Pull Request 时自动运行。
-- 可在 GitCode Actions 页面通过 `workflow_dispatch` 手动运行。
+- 可在 GitHub Actions 页面通过 `workflow_dispatch` 手动运行。
 
 ## 3. 质量门禁
 
@@ -44,12 +44,12 @@ python .\scripts\Verify-Fixtures.py
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\Verify-Fixtures.ps1
 ```
 
-## 5. GitCode 启用要求
+## 5. GitHub 启用要求
 
-1. 将工作流文件提交并推送至 GitCode 仓库。
-2. 在仓库的 Actions/流水线页面确认 AtomGit Action 已启用。
-3. 首次可使用“Run workflow”手动执行，也可通过 push 自动触发。
-4. 建议在分支保护中启用“流水线成功后才允许合并”。
+1. 将工作流文件提交并推送至 GitHub 仓库默认分支。
+2. 在仓库的 Actions 页面确认 `Repository verification` 工作流已自动运行。
+3. 也可在工作流页面选择 `main`，通过“Run workflow”手动执行。
+4. 建议为 `main` 配置分支保护，并将 `Repository verification` 设置为合并前必须通过的状态检查。
 
 ## 6. 当前不纳入云端 CI 的项目
 

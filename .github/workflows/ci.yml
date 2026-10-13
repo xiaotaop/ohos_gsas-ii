@@ -1,33 +1,30 @@
-name: GSAS-II HarmonyOS PC CI
+name: Repository verification
 
 on:
   push:
-    branches:
-      - '**'
   pull_request:
     branches:
       - main
   workflow_dispatch:
 
 permissions:
-  repository: read
+  contents: read
 
 concurrency:
-  enable: true
-  max: 2
-  exceed-action: QUEUE
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   verify:
     name: Repository verification
-    runs-on: [ubuntu-24, x64, slim]
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - name: Checkout source code
-        uses: checkout
+        uses: actions/checkout@v6
 
       - name: Set up Python 3.12
-        uses: setup-python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 

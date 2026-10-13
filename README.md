@@ -16,7 +16,7 @@ ArkUI、文件服务、C++ N-API 和 Python/GSAS-II 核心之间的 v1.0 接口�
 
 ## 持续集成
 
-GitCode CI 配置位于 `.gitcode/workflows/ci.yml`，在分支推送、面向 `main` 的 Pull Request 以及手动触发时执行 Python 语法、JSON、接口契约和测试样例完整性检查。启用方法及云端 CI 的范围见 [持续集成说明](docs/CI.md)。
+GitHub Actions 配置位于 `.github/workflows/ci.yml`，在分支推送、面向 `main` 的 Pull Request 以及手动触发时执行 Python 语法、JSON、接口契约和测试样例完整性检查。启用方法及云端 CI 的范围见 [持续集成说明](docs/CI.md)。
 
 ## 第一阶段成果
 
