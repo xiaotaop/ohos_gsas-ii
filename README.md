@@ -14,6 +14,10 @@ Windows x86-64 基线与 HarmonyOS PC aarch64 真机均已完成同一套五阶�
 
 ArkUI、文件服务、C++ N-API 和 Python/GSAS-II 核心之间的 v1.0 接口已冻结，见 [核心接口契约](docs/CORE_API.md)。JSON Schema 与可用于界面 mock 的成功/失败示例位于 `contracts/`，可运行 `python scripts/Validate-CoreContracts.py` 校验。
 
+## 持续集成
+
+GitCode CI 配置位于 `.gitcode/workflows/ci.yml`，在分支推送、面向 `main` 的 Pull Request 以及手动触发时执行 Python 语法、JSON、接口契约和测试样例完整性检查。启用方法及云端 CI 的范围见 [持续集成说明](docs/CI.md)。
+
 ## 第一阶段成果
 
 - [上游源码锁定](docs/UPSTREAM_LOCK.md)：固定到 `2b4aba1bc44de63a3da9d4495944c3b99e389399`。

@@ -1,0 +1,51 @@
+name: GSAS-II HarmonyOS PC CI
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  repository: read
+
+concurrency:
+  enable: true
+  max: 2
+  exceed-action: QUEUE
+
+jobs:
+  verify:
+    name: Repository verification
+    runs-on: [ubuntu-24, x64, slim]
+    timeout-minutes: 10
+    steps:
+      - name: Checkout source code
+        uses: checkout
+
+      - name: Set up Python 3.12
+        uses: setup-python
+        with:
+          python-version: '3.12'
+
+      - name: Show environment
+        run: |
+          python --version
+          git --version
+          echo "Runner OS: $RUNNER_OS"
+          echo "Runner architecture: $RUNNER_ARCH"
+
+      - name: Check Python syntax
+        run: python -m compileall -q scripts poc
+
+      - name: Validate JSON files
+        run: python scripts/Validate-JsonFiles.py
+
+      - name: Validate core API contracts
+        run: python scripts/Validate-CoreContracts.py
+
+      - name: Verify fixture integrity
+        run: python scripts/Verify-Fixtures.py
