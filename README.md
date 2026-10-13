@@ -2,7 +2,7 @@
 
 GSAS-II 面向 HarmonyOS PC 的移植准备仓库。**第二阶段：无 GUI 核心计算 PoC 已通过鸿蒙 PC 真机验证**；当前仍没有可上架的 GUI 安装包，第三阶段将进入原生桌面壳层与应用集成。
 
-GitCode 个人暂存仓库：<https://gitcode.com/2401_86708491/ohos_gsas-ii>。截至 2026-10-12，本地仓库与远端 `main` 已建立并通过 SSH 推送；社区申请状态见 [发布交接](docs/PUBLISHING.md)。
+GitHub 主仓库：<https://github.com/xiaotaop/ohos_gsas-ii>；GitCode 个人暂存仓库：<https://gitcode.com/2401_86708491/ohos_gsas-ii>。GitHub 用于代码协作和 GitHub Actions 持续集成，社区申请状态见 [发布交接](docs/PUBLISHING.md)。
 
 GSAS-II 是用于 X 射线及中子衍射等结构分析的上游开源软件。本项目拟先验证其脚本化科学计算核心在 HarmonyOS PC 上的运行与数值一致性，再决定桌面界面的具体实现及上架范围。
 
