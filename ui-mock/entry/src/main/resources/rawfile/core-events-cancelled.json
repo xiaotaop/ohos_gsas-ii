@@ -1,0 +1,39 @@
+[
+  {
+    "schemaVersion": "1.0",
+    "eventId": "evt_20261012_stop0",
+    "jobId": "job_20261012_003",
+    "sequence": 0,
+    "timestamp": "2026-10-12T13:40:00Z",
+    "type": "job.accepted",
+    "payload": { "state": "queued" }
+  },
+  {
+    "schemaVersion": "1.0",
+    "eventId": "evt_20261012_stop1",
+    "jobId": "job_20261012_003",
+    "sequence": 1,
+    "timestamp": "2026-10-12T13:40:02Z",
+    "type": "job.progress",
+    "payload": {
+      "state": "cancelling",
+      "stage": "scale_and_background",
+      "stageIndex": 3,
+      "stageCount": 7,
+      "percent": 35,
+      "message": "正在等待当前计算阶段安全结束"
+    }
+  },
+  {
+    "schemaVersion": "1.0",
+    "eventId": "evt_20261012_stop2",
+    "jobId": "job_20261012_003",
+    "sequence": 2,
+    "timestamp": "2026-10-12T13:40:03Z",
+    "type": "job.cancelled",
+    "payload": {
+      "state": "cancelled",
+      "reason": "用户取消了精修任务"
+    }
+  }
+]

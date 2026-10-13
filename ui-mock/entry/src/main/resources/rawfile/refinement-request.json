@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "jobId": "job_20261012_001",
+  "operation": "powder-refinement",
+  "recipeId": "powder-five-stage-v1",
+  "inputs": {
+    "histograms": [
+      {
+        "id": "xray",
+        "role": "xray",
+        "dataFileId": "file_pbso4_xra_001",
+        "instrumentFileId": "file_inst_xry_001",
+        "formatHint": "GSAS powder"
+      },
+      {
+        "id": "neutron",
+        "role": "neutron",
+        "dataFileId": "file_pbso4_cwn_001",
+        "instrumentFileId": "file_inst_d1a_001",
+        "formatHint": "GSAS powder"
+      }
+    ],
+    "phase": {
+      "id": "pbso4",
+      "name": "PbSO4",
+      "fileId": "file_pbso4_cif_001"
+    }
+  },
+  "options": {
+    "cycleCount": 3,
+    "validateAgainstBaseline": true
+  },
+  "output": {
+    "projectName": "PbSO4-refined.gpx",
+    "overwrite": false
+  }
+}
