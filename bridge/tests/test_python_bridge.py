@@ -39,7 +39,8 @@ contract = _load_contract_validator()
 from bridge.engine import CoreRuntime  # noqa: E402
 from bridge.errors import BridgeError  # noqa: E402
 from bridge.fake_core import FakeFiveStageRefiner  # noqa: E402
-from bridge.files import FIXTURE_SHA256  # noqa: E402
+from bridge.files import FIXTURE_SHA256, FileCatalog  # noqa: E402
+from bridge.request import parse_request  # noqa: E402
 from bridge.service import LocalCoreService  # noqa: E402
 
 FIXTURES = {
@@ -168,6 +169,57 @@ class BridgeFakeCoreTest(unittest.TestCase, SandboxMixin):
         out_dir = self.files / "outputs" / "job_20261013_101"
         for name in ("PbSO4-refined.gpx", "PbSO4-refined.json", "PbSO4-refined.log"):
             self.assertTrue((out_dir / name).is_file(), f"missing artifact {name}")
+
+    def test_public_execute_before_initialize_is_contract_error(self):
+        import bridge
+
+        previous = bridge._default_runtime
+        bridge._default_runtime = None
+        try:
+            with self.assertRaises(BridgeError) as ctx:
+                bridge.execute("{}", lambda _event: None, lambda: False)
+            self.assertEqual(ctx.exception.code, "CORE_NOT_READY")
+            self.assertTrue(ctx.exception.retryable)
+        finally:
+            bridge._default_runtime = previous
+
+    def test_service_rejects_start_before_initialize_synchronously(self):
+        service = LocalCoreService(CoreRuntime(FakeFiveStageRefiner()))
+        self.addCleanup(service.shutdown)
+        with self.assertRaises(BridgeError) as ctx:
+            service.start_refinement(json.dumps(make_request("job_20261013_100")))
+        self.assertEqual(ctx.exception.code, "CORE_NOT_READY")
+
+    def test_invalid_scalar_types_map_to_invalid_request(self):
+        cases = {
+            "jobId": lambda request: request.update(jobId=7),
+            "histogram id": lambda request: request["inputs"]["histograms"][0].update(id=[]),
+            "histogram role": lambda request: request["inputs"]["histograms"][0].update(role=[]),
+            "baseline flag": lambda request: request["options"].update(validateAgainstBaseline="yes"),
+            "project name": lambda request: request["output"].update(projectName=None),
+        }
+        for name, mutate in cases.items():
+            with self.subTest(name=name):
+                request = make_request("job_20261013_100")
+                mutate(request)
+                with self.assertRaises(BridgeError) as ctx:
+                    parse_request(json.dumps(request))
+                self.assertEqual(ctx.exception.code, "INVALID_REQUEST")
+
+    def test_file_symlink_escape_is_rejected(self):
+        directory = self.files / "imports" / "file_symlink_escape_001"
+        directory.mkdir(parents=True)
+        outside = self.files / "outside.prm"
+        outside.write_bytes(b"outside sandbox mapping\n")
+        link = directory / "linked.prm"
+        try:
+            link.symlink_to(outside)
+        except OSError as exc:
+            self.skipTest(f"symbolic links unavailable: {exc}")
+        catalog = FileCatalog(self.files / "jobs", self.files / "outputs")
+        with self.assertRaises(BridgeError) as ctx:
+            catalog.resolve("file_symlink_escape_001")
+        self.assertEqual(ctx.exception.code, "INVALID_REQUEST")
 
     def test_events_delivered_on_worker_thread(self):
         service = self.make_service(files=self.files)
@@ -325,6 +377,21 @@ class BridgeFakeCoreTest(unittest.TestCase, SandboxMixin):
             info["gsasCommit"], "2b4aba1bc44de63a3da9d4495944c3b99e389399"
         )
         self.assertEqual(info["supportedRecipes"], ["powder-five-stage-v1"])
+
+    def test_initialize_rejects_invalid_config_types(self):
+        cases = {
+            "root": ("runtimeRoot", 7),
+            "concurrency bool": ("maxConcurrentJobs", True),
+            "log level": ("logLevel", None),
+        }
+        for name, (field, value) in cases.items():
+            with self.subTest(name=name):
+                config = self.config_for(self.files)
+                config[field] = value
+                runtime = CoreRuntime(FakeFiveStageRefiner())
+                with self.assertRaises(BridgeError) as ctx:
+                    runtime.initialize(json.dumps(config))
+                self.assertEqual(ctx.exception.code, "INVALID_REQUEST")
 
     def test_snapshot_unknown_job(self):
         service = self.make_service(files=self.files)

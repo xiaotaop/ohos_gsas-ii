@@ -51,8 +51,12 @@ class FileCatalog:
         self.imports_root = imports_root(workspace_root)
 
     def resolve(self, file_id: str) -> Path:
-        directory = (self.imports_root / file_id).resolve()
-        if not directory.is_relative_to(self.imports_root.resolve()):
+        root = self.imports_root.resolve()
+        requested_directory = root / file_id
+        if requested_directory.is_symlink():
+            raise BridgeError("INVALID_REQUEST", f"fileId 不允许指向符号链接: {file_id!r}")
+        directory = requested_directory.resolve()
+        if not directory.is_relative_to(root):
             raise BridgeError("INVALID_REQUEST", f"fileId 解析越界: {file_id!r}")
         if not directory.is_dir():
             raise BridgeError("FILE_NOT_FOUND", f"未找到文件 {file_id}")
@@ -63,7 +67,11 @@ class FileCatalog:
                 f"fileId {file_id} 未指向唯一导入文件",
                 detail=f"目录内文件数: {len(candidates)}",
             )
-        return candidates[0]
+        candidate = candidates[0]
+        resolved = candidate.resolve()
+        if candidate.is_symlink() or not resolved.is_relative_to(directory):
+            raise BridgeError("INVALID_REQUEST", f"fileId 文件解析越界: {file_id!r}")
+        return resolved
 
     def resolve_verified(self, file_id: str) -> Path:
         """Resolve and enforce fixture hashes for the five pinned samples."""

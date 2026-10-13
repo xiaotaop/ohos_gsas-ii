@@ -65,6 +65,10 @@ class CoreRuntime:
         self._config: dict[str, Any] | None = None
         self._catalog: FileCatalog | None = None
 
+    @property
+    def ready(self) -> bool:
+        return self._config is not None and self._catalog is not None
+
     # ------------------------------------------------------------------
     # CORE_API §3.1 / §3.2
     # ------------------------------------------------------------------
@@ -77,8 +81,13 @@ class CoreRuntime:
             raise BridgeError("INVALID_REQUEST", "config 字段不完整或含未知字段")
         if config["schemaVersion"] != "1.0":
             raise BridgeError("UNSUPPORTED_SCHEMA", f"不支持的配置版本 {config['schemaVersion']!r}")
-        if config["maxConcurrentJobs"] != 1:
+        concurrency = config["maxConcurrentJobs"]
+        if not isinstance(concurrency, int) or isinstance(concurrency, bool) or concurrency != 1:
             raise BridgeError("INVALID_REQUEST", "MVP 的 maxConcurrentJobs 固定为 1")
+        if not isinstance(config["logLevel"], str) or not config["logLevel"]:
+            raise BridgeError("INVALID_REQUEST", "logLevel 必须是非空字符串")
+        if not all(isinstance(config[key], str) and config[key] for key in ROOT_FIELDS):
+            raise BridgeError("INVALID_REQUEST", "三个根目录必须是非空字符串")
         config = {
             **config,
             **{key: str(Path(config[key])) for key in ROOT_FIELDS},

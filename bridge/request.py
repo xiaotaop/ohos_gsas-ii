@@ -20,6 +20,10 @@ HIST_FIELDS = {"id", "role", "dataFileId", "instrumentFileId", "formatHint"}
 PHASE_FIELDS = {"id", "name", "fileId"}
 
 
+def _matches(pattern: re.Pattern[str], value: object) -> bool:
+    return isinstance(value, str) and pattern.fullmatch(value) is not None
+
+
 def parse_request(request_json: str) -> dict[str, Any]:
     try:
         request = json.loads(request_json)
@@ -35,11 +39,11 @@ def validate_request(request: dict[str, Any]) -> dict[str, Any]:
         raise BridgeError("INVALID_REQUEST", "请求顶层字段不完整或含未知字段")
     if request["schemaVersion"] != "1.0":
         raise BridgeError("UNSUPPORTED_SCHEMA", f"不支持的接口版本 {request['schemaVersion']!r}")
-    if not JOB_ID_RE.fullmatch(request["jobId"]):
+    if not _matches(JOB_ID_RE, request["jobId"]):
         raise BridgeError("INVALID_REQUEST", "jobId 不符合命名规则")
     if request["operation"] != "powder-refinement":
         raise BridgeError("INVALID_REQUEST", "仅支持 operation=powder-refinement")
-    if not RECIPE_ID_RE.fullmatch(request["recipeId"]):
+    if not _matches(RECIPE_ID_RE, request["recipeId"]):
         raise BridgeError("INVALID_REQUEST", "recipeId 不符合命名规则")
 
     inputs = request["inputs"]
@@ -52,14 +56,18 @@ def validate_request(request: dict[str, Any]) -> dict[str, Any]:
     for item in histograms:
         if not isinstance(item, dict) or set(item) != HIST_FIELDS:
             raise BridgeError("INVALID_REQUEST", "histogram 字段不完整或含未知字段")
-        if not HIST_ID_RE.fullmatch(item["id"]) or item["id"] in seen_ids:
+        if not _matches(HIST_ID_RE, item["id"]) or item["id"] in seen_ids:
             raise BridgeError("INVALID_REQUEST", f"histogram id 无效或重复: {item['id']!r}")
         seen_ids.add(item["id"])
-        if item["role"] not in {"xray", "neutron", "other"}:
+        if not isinstance(item["role"], str) or item["role"] not in {
+            "xray",
+            "neutron",
+            "other",
+        }:
             raise BridgeError("INVALID_REQUEST", f"未知 histogram role: {item['role']!r}")
-        if not FILE_ID_RE.fullmatch(item["dataFileId"]):
+        if not _matches(FILE_ID_RE, item["dataFileId"]):
             raise BridgeError("INVALID_REQUEST", f"dataFileId 无效: {item['dataFileId']!r}")
-        if not FILE_ID_RE.fullmatch(item["instrumentFileId"]):
+        if not _matches(FILE_ID_RE, item["instrumentFileId"]):
             raise BridgeError("INVALID_REQUEST", f"instrumentFileId 无效: {item['instrumentFileId']!r}")
         if not isinstance(item["formatHint"], str) or not 1 <= len(item["formatHint"]) <= 80:
             raise BridgeError("INVALID_REQUEST", "formatHint 无效")
@@ -67,11 +75,11 @@ def validate_request(request: dict[str, Any]) -> dict[str, Any]:
     phase = inputs["phase"]
     if not isinstance(phase, dict) or set(phase) != PHASE_FIELDS:
         raise BridgeError("INVALID_REQUEST", "phase 字段不完整或含未知字段")
-    if not HIST_ID_RE.fullmatch(phase["id"]):
+    if not _matches(HIST_ID_RE, phase["id"]):
         raise BridgeError("INVALID_REQUEST", f"phase id 无效: {phase['id']!r}")
     if not isinstance(phase["name"], str) or not 1 <= len(phase["name"]) <= 80:
         raise BridgeError("INVALID_REQUEST", "phase.name 无效")
-    if not FILE_ID_RE.fullmatch(phase["fileId"]):
+    if not _matches(FILE_ID_RE, phase["fileId"]):
         raise BridgeError("INVALID_REQUEST", f"phase fileId 无效: {phase['fileId']!r}")
 
     options = request["options"]
@@ -82,11 +90,13 @@ def validate_request(request: dict[str, Any]) -> dict[str, Any]:
     cycles = options["cycleCount"]
     if not isinstance(cycles, int) or isinstance(cycles, bool) or not 0 <= cycles <= 50:
         raise BridgeError("INVALID_REQUEST", "cycleCount 必须为 0..50 的整数")
+    if "validateAgainstBaseline" in options and not isinstance(options["validateAgainstBaseline"], bool):
+        raise BridgeError("INVALID_REQUEST", "validateAgainstBaseline 必须是布尔值")
 
     output = request["output"]
     if not isinstance(output, dict) or set(output) != {"projectName", "overwrite"}:
         raise BridgeError("INVALID_REQUEST", "output 字段不完整或含未知字段")
-    if not PROJECT_NAME_RE.fullmatch(output["projectName"]):
+    if not _matches(PROJECT_NAME_RE, output["projectName"]):
         raise BridgeError("INVALID_REQUEST", "projectName 必须是 .gpx 文件名且不含路径")
     if not isinstance(output["overwrite"], bool):
         raise BridgeError("INVALID_REQUEST", "output.overwrite 必须是布尔值")

@@ -1,3 +1,5 @@
 scripts/ohos/*.sh text eol=lf
 scripts/ohos/*.ini text eol=lf
 tests/fixtures/* -text
+contracts/examples/*.json text eol=lf
+ui-mock/entry/src/main/resources/rawfile/*.json text eol=lf

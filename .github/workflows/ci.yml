@@ -28,15 +28,21 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
       - name: Show environment
         run: |
           python --version
+          node --version
           git --version
           echo "Runner OS: $RUNNER_OS"
           echo "Runner architecture: $RUNNER_ARCH"
 
       - name: Check Python syntax
-        run: python -m compileall -q scripts poc
+        run: python -m compileall -q scripts poc bridge
 
       - name: Validate JSON files
         run: python scripts/Validate-JsonFiles.py
@@ -46,3 +52,12 @@ jobs:
 
       - name: Verify fixture integrity
         run: python scripts/Verify-Fixtures.py
+
+      - name: Test Python bridge
+        run: python -m unittest -v bridge.tests.test_python_bridge
+
+      - name: Test ArkUI mock model
+        run: |
+          npx --yes --package typescript@5.4.5 tsc ui-mock/entry/src/main/ets/model/Refinement.ts --target ES2020 --module commonjs --strict --skipLibCheck --outDir ui-mock/build/test-model
+          node tests/ui-mock.test.cjs
+          pwsh -NoProfile -File scripts/Sync-UiMockFixtures.ps1 -Check

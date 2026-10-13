@@ -1,8 +1,8 @@
 # 第三阶段：Python Bridge 与本地核心自测（成员 B）
 
 接口基线：`docs/CORE_API.md` v1.0（提交 `5e486c6`）。本文档描述 `bridge/`
-包——嵌入式 Python Bridge 与宿主侧本地 CoreService 仿真层。分支：
-`core/python-bridge`。
+包——嵌入式 Python Bridge 与宿主侧本地 CoreService 仿真层。原始开发分支为
+`core/python-bridge`，现已由组长完成审核并合入 `main`。
 
 ## 1. 组件布局
 

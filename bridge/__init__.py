@@ -38,6 +38,5 @@ def execute(request_json: str, emit_event, is_cancelled) -> str:
         raise BridgeError(
             "CORE_NOT_READY",
             "核心尚未初始化",
-            retryable=True,
         )
     return _default_runtime.execute(request_json, emit_event, is_cancelled)

@@ -65,6 +65,8 @@ class LocalCoreService:
     # JOB_ALREADY_EXISTS, BUSY, CORE_NOT_READY).
     # ------------------------------------------------------------------
     def start_refinement(self, request_json: str) -> dict[str, Any]:
+        if not self._runtime.ready:
+            raise BridgeError("CORE_NOT_READY", "核心尚未初始化")
         # Cheap synchronous validation first (CORE_API §5): structural and
         # recipe errors never create a job and never emit events.
         request = parse_request(request_json)

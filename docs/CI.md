@@ -8,7 +8,7 @@
 .github/workflows/ci.yml
 ```
 
-流水线使用 GitHub 官方托管的 Ubuntu Runner 和 Python 3.12，仅声明 `contents: read` 权限，不需要配置访问令牌或其他 Secret。
+流水线使用 GitHub 官方托管的 Ubuntu Runner、Python 3.12 和 Node.js 22，仅声明 `contents: read` 权限，不需要配置访问令牌或其他 Secret。
 
 ## 2. 触发条件
 
@@ -20,10 +20,12 @@
 
 流水线依次执行：
 
-1. Python 文件语法编译检查。
+1. Python 文件语法编译检查（包括 Python Bridge）。
 2. `contracts/` 和 `poc/results/` 中全部 JSON 文件的编码及语法检查。
 3. 核心接口 Schema、请求示例及成功、失败、取消事件序列检查。
 4. 五个 PbSO4 测试样例的 SHA-256 完整性检查。
+5. Python Bridge 的请求校验、沙箱、事件、并发、取消、失败和产物自测。
+6. ArkUI mock 状态模型的 TypeScript 类型检查、六项行为测试及契约示例同步检查。
 
 任意步骤失败时，流水线返回失败状态，不应合并对应 Pull Request。
 
@@ -32,10 +34,14 @@
 在仓库根目录运行：
 
 ```powershell
-python -m compileall -q scripts poc
+python -m compileall -q scripts poc bridge
 python .\scripts\Validate-JsonFiles.py
 python .\scripts\Validate-CoreContracts.py
 python .\scripts\Verify-Fixtures.py
+python -m unittest -v bridge.tests.test_python_bridge
+npx --yes --package typescript@5.4.5 tsc .\ui-mock\entry\src\main\ets\model\Refinement.ts --target ES2020 --module commonjs --strict --skipLibCheck --outDir .\ui-mock\build\test-model
+node .\tests\ui-mock.test.cjs
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\Sync-UiMockFixtures.ps1 -Check
 ```
 
 原有 PowerShell 完整性检查仍可使用：

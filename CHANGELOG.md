@@ -2,6 +2,8 @@
 
 ## Unreleased — Phase 3
 
+- 合并 ArkUI M1 mock 与 Python Bridge，并将两者的可脱机自测纳入 GitHub Actions。
+- 修复 Bridge 未初始化错误映射、非法字段类型校验和 fileId 符号链接越界检查。
 - 固定测试样例的原始字节与换行格式，确保 Windows 与 Linux Runner 使用相同 SHA-256。
 - 新增 GitHub Actions 持续集成，自动检查 Python 语法、JSON、核心接口契约和测试样例完整性。
 - 冻结 ArkUI、FileService、C++ N-API 和 Python Bridge 之间的核心接口 v1.0。

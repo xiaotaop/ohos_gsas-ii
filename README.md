@@ -20,7 +20,7 @@ A/B/C 接入前需确认的工程入口、公共类型、文件服务、初始�
 
 ## 持续集成
 
-GitHub Actions 配置位于 `.github/workflows/ci.yml`，在分支推送、面向 `main` 的 Pull Request 以及手动触发时执行 Python 语法、JSON、接口契约和测试样例完整性检查。启用方法及云端 CI 的范围见 [持续集成说明](docs/CI.md)。
+GitHub Actions 配置位于 `.github/workflows/ci.yml`，在分支推送、面向 `main` 的 Pull Request 以及手动触发时执行 Python 语法、JSON、接口契约、测试样例完整性、Python Bridge 自测和 ArkUI mock 状态模型测试。启用方法及云端 CI 的范围见 [持续集成说明](docs/CI.md)。
 
 ## 第一阶段成果
 

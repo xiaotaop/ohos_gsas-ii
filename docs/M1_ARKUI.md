@@ -2,7 +2,7 @@
 
 基线：`5e486c6477fa4bdc3642ccc7043568f3a777243c`，接口 v1.0。
 
-提交规则：成员 A 使用 `ui/mock-refinement` 独立分支提交，交由组长审核后合并；不直接向 `main` 提交，也不自行合并。
+原始开发分支为 `ui/mock-refinement`，现已由组长完成审核并合入 `main`。
 
 ## 原项目源码如何映射到 ArkUI
 
@@ -99,6 +99,6 @@ $env:npm_config_cache = Join-Path (Get-Location) 'build\npm-cache'
 
 与 B/C 需要确认的接口、文件生命周期、初始化、日志产物和验收事项统一维护在 [接入对齐清单](INTEGRATION_ALIGNMENT.md)。其中区分冻结约定与待确认选择，并提供负责人、交接内容和确认记录；M1 临时类型不作为正式契约。
 
-本次未修改冻结契约、Schema、原始示例、计算 PoC 或 C 的发布职责；分支供组长审核，尚未合并；没有向团队发送消息。
+本次未修改冻结契约、Schema、原始示例、计算 PoC 或 C 的发布职责；M1 mock 已完成组长审核并合入 `main`，后续仍需正式工程集成和真机 GUI 验收。
 
 This product includes software produced by UChicago Argonne, LLC under Contract No. DE-AC02-06CH11357 with the Department of Energy.
