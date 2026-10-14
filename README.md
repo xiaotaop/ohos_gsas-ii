@@ -2,7 +2,7 @@
 
 GSAS-II 面向 HarmonyOS PC 的移植准备仓库。**第二阶段：无 GUI 核心计算 PoC 已通过鸿蒙 PC 真机验证**；当前仍没有可上架的 GUI 安装包，第三阶段将进入原生桌面壳层与应用集成。
 
-代码仓库：[GitHub](https://github.com/xiaotaop/ohos_gsas-ii)、[GitCode](https://gitcode.com/2401_86708491/ohos_gsas-ii)。社区申请状态见 [发布交接](docs/PUBLISHING.md)。
+当前主仓库：[GitHub](https://github.com/xiaotaop/ohos_gsas-ii)；迁移前仓库：[GitCode](https://gitcode.com/2401_86708491/ohos_gsas-ii)。后续分支和 PR 使用 GitHub，迁移核对及社区申请状态见 [发布交接](docs/PUBLISHING.md)。
 
 GSAS-II 是用于 X 射线及中子衍射等结构分析的上游开源软件。本项目拟先验证其脚本化科学计算核心在 HarmonyOS PC 上的运行与数值一致性，再决定桌面界面的具体实现及上架范围。
 
@@ -17,6 +17,8 @@ ArkUI、文件服务、C++ N-API 和 Python/GSAS-II 核心之间的 v1.0 接口�
 M1 ArkUI 源码映射与接入说明见 [M1 ArkUI 演示](docs/M1_ARKUI.md)，工程位于 `ui-mock/`，按锁定上游 wxPython 源码翻译菜单、数据树、Controls 与 Refine 交互子集。成功、失败、取消、窗口适配及基本键鼠操作已通过 HarmonyOS PC 模拟器验收，附运行截图。演示使用模拟数据，未接入真实计算和文件导出；真机 GUI 验收与正式工程集成待完成。
 
 A/B/C 接入前需确认的工程入口、公共类型、文件服务、初始化、日志产物及集成验收，见 [接入对齐清单](docs/INTEGRATION_ALIGNMENT.md)。待确认项不改变冻结契约。
+
+[Python Bridge](docs/PHASE3_CORE_BRIDGE.md) 与 M1 界面已合入 `main`。截至 2026-10-14 的仓库检查，可推进公共类型对齐和最小联调准备；正式 HAP、ArkTS/N-API 门面及 FileService 仍待接入，不能将宿主侧自测视为真机 GUI 集成通过。
 
 ## 持续集成
 

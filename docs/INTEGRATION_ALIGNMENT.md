@@ -1,8 +1,23 @@
 # ArkUI、核心与文件服务接入对齐清单
 
-更新日期：2026-10-13。面向成员 A（界面）、B（核心）、C（文件服务与打包）及组长/集成负责人。
+更新日期：2026-10-14。面向成员 A（界面）、B（核心）、C（文件服务与打包）及组长/集成负责人。
 
 当前界面基线源自成员 A 分支 `ui/mock-refinement`，已完成 [M1 模拟器验收](M1_ARKUI.md)并合入 `main`。本文整理接入正式工程前需要确认的事项；**所有待确认项均未形成团队决议，不修改或取代冻结的 [CORE_API v1.0](CORE_API.md)**。真实核心、文件服务联调及真机 GUI 验收尚未完成。
+
+## 2026-10-14 接入准备检查
+
+检查基线为 GitHub `main@12db7e7`；仓库迁移记录见 [发布交接](PUBLISHING.md)。A 的 M1 与 B 的 Python Bridge 已合入，最新 [CI](https://github.com/xiaotaop/ohos_gsas-ii/actions/runs/38397057616) 通过。以下是代码现状，不是对待确认项的团队批准。
+
+| 检查点 | 当前证据与后续动作 |
+|---|---|
+| 正式工程/服务入口（A01～A03） | 仓库仅有 `ui-mock/` DevEco 工程；`Index.ets` 仍构造 MockCoreService。`bridge/service.py` 是宿主侧 Python 仿真，未提供可供 ArkUI 调用的 ArkTS/N-API 实现；C 的 FileService 暂只有接口声明。先由 B/C 交付最小工程和可导入服务入口 |
+| 快照/错误类型（A04、B04） | UI 临时快照为 `sequence`、`terminalEvent`；Python 仿真为 `lastSequence`、`terminal: {type, payload}`，初始 stage 为 null。Python 同步拒绝抛出 BridgeError，但到 ArkTS Promise 的映射未实现。需批准统一类型或明确边界转换后再接入，不能直接强制类型转换 |
+| 任务 ID（A06） | Python 仿真读取并校验请求中的 jobId，可作为“调用方生成、核心确认”的现有实现依据；仍需 B 确认正式门面沿用，并保留先订阅后启动的时序 |
+| 文件解析与登记（A07、B02） | `bridge/files.py` 可从 imports 目录解析输入；`engine.py` 成功时已写 GPX/JSON/log 并返回三种输出 fileId。当前 FileCatalog 解析范围仍是导入目录，尚无输出登记、getFile/exportFile 闭环；C 需接通后才能启用真实导出 |
+| 日志与重启（B03～B05） | 成功日志已落盘；异常有私有 traceback。取消路径未见统一的可导出用户日志产物，失败/取消终态未给出日志 fileId。Python 仿真的快照保存在进程内字典，重启中断恢复也需应用层补齐 |
+| 真机与科学计算范围 | 当前 CI 验证无专用 SDK 的代码和假核心流程；真实 GSAS-II 测试在运行时不可用时会跳过。已有第二阶段数值验收和 M1 模拟器证据可保留，但不代表新增 Bridge 已完成嵌入式真机集成 |
+
+推进判断：**可以进入公共类型对齐、正式工程最小壳与假核心事件联调准备；尚不能直接切换为真实精修 GUI 或进入发布验收。** 下一步由 B/C 明确 A01～A04、A06～A07 的入口与类型，A 随后迁移页面并接入已就绪服务。先验证一个真实服务事件链，再扩展文件导入、产物导出和真机五阶段验证；本次不为绕过缺失接口另建临时通信层。
 
 ## 1. 已确定的接口边界
 
