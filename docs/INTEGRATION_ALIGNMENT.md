@@ -11,13 +11,34 @@
 | 检查点 | 当前证据与后续动作 |
 |---|---|
 | 正式工程/服务入口（A01～A03） | 仓库仅有 `ui-mock/` DevEco 工程；`Index.ets` 仍构造 MockCoreService。`bridge/service.py` 是宿主侧 Python 仿真，未提供可供 ArkUI 调用的 ArkTS/N-API 实现；C 的 FileService 暂只有接口声明。先由 B/C 交付最小工程和可导入服务入口 |
-| 快照/错误类型（A04、B04） | UI 临时快照为 `sequence`、`terminalEvent`；Python 仿真为 `lastSequence`、`terminal: {type, payload}`，初始 stage 为 null。Python 同步拒绝抛出 BridgeError，但到 ArkTS Promise 的映射未实现。需批准统一类型或明确边界转换后再接入，不能直接强制类型转换 |
+| 快照/错误类型（A04、B04） | 本分支已将 A 的本地快照投影对齐 Python 仿真的 `lastSequence`、`terminal: {type, payload}` 和可空 stage，并增加恢复测试；这不是正式公共类型决议。Python 同步拒绝抛出 BridgeError，但到 ArkTS Promise 的映射未实现，仍需 B/C 交付公共类型 |
 | 任务 ID（A06） | Python 仿真读取并校验请求中的 jobId，可作为“调用方生成、核心确认”的现有实现依据；仍需 B 确认正式门面沿用，并保留先订阅后启动的时序 |
 | 文件解析与登记（A07、B02） | `bridge/files.py` 可从 imports 目录解析输入；`engine.py` 成功时已写 GPX/JSON/log 并返回三种输出 fileId。当前 FileCatalog 解析范围仍是导入目录，尚无输出登记、getFile/exportFile 闭环；C 需接通后才能启用真实导出 |
 | 日志与重启（B03～B05） | 成功日志已落盘；异常有私有 traceback。取消路径未见统一的可导出用户日志产物，失败/取消终态未给出日志 fileId。Python 仿真的快照保存在进程内字典，重启中断恢复也需应用层补齐 |
 | 真机与科学计算范围 | 当前 CI 验证无专用 SDK 的代码和假核心流程；真实 GSAS-II 测试在运行时不可用时会跳过。已有第二阶段数值验收和 M1 模拟器证据可保留，但不代表新增 Bridge 已完成嵌入式真机集成 |
 
 推进判断：**可以进入公共类型对齐、正式工程最小壳与假核心事件联调准备；尚不能直接切换为真实精修 GUI 或进入发布验收。** 下一步由 B/C 明确 A01～A04、A06～A07 的入口与类型，A 随后迁移页面并接入已就绪服务。先验证一个真实服务事件链，再扩展文件导入、产物导出和真机五阶段验证；本次不为绕过缺失接口另建临时通信层。
+
+### 本分支 A 端已完成的准备
+
+- `Refinement.ts` 的 `RefinementSession` 接收已就绪的 CoreService，负责先订阅再启动、取消等待和页面退订；`Index.ets` 已使用它。页面销毁只让会话退订，真实服务由应用持有；演示页面仍单独释放自己创建的 mock。
+- `connect(knownJobId)` 先订阅后读取快照，恢复进度和成功/失败/取消摘要。旧快照、旧任务事件、退订后返回的 Promise 不覆盖当前页面；迟到的启动/取消响应不覆盖终态或新任务。`connect()` 用于开始一个空闲页面，`disconnect()` 不取消核心任务。
+- 快照恢复支持 B 当前字段、初始 `lastSequence: -1` / `stage: null`。成功终态在 UI 显示 100%，不要求 B 的原始快照也写成 100%；不伪造 eventId、timestamp 或持久化记录。恢复不重建快照未提供的历史日志。
+- `tests/capture_bridge_ui.py` 在临时测试沙箱实际运行 B 的 LocalCoreService + FakeFiveStageRefiner，捕获成功、异常、取消事件和快照，再由 `tests/ui-mock.test.cjs` 驱动 A 的状态/会话代码比较结果。捕获前执行已有契约语义校验，结束清理测试产物。它只用于离线测试，不是供页面调用的 Python 通信层。
+- B 假核心采用 `TEST_PLAN.md` 的最终 X 射线 Rwp 基线 `13.16483`；原 M1 示例约为 `13.1646`。两者分别按各自来源检查，不改动冻结示例，也不将假核心数字当作新科学计算结果。
+
+正式工程取得服务后，A 的接入顺序为：创建 `RefinementSession(readyCore, refreshUI)` → `connect()` 或 `connect(knownJobId)` → `start(request)` / `cancel()` → 页面离开时 `disconnect()`。服务初始化、已知任务 ID 的来源、进程重启后的任务记录由 B/C 提供，不由页面猜测。
+
+### 阻塞真实接入的 B/C 交付
+
+| 负责人 | 仍需提供 | A 端当前处理 |
+|---|---|---|
+| B | 可导入的 ArkTS CoreService/N-API 门面；初始化就绪时机；确认调用方 jobId；共享 JobSnapshot 与 Promise 拒绝结构 | 已可注入服务并恢复 B 宿主快照。事件中的 CoreError 保留；同步 Promise 拒绝仍仅给通用安全提示，未识别的异常内容不显示，不声称已完成错误码映射 |
+| C | 正式 entry/路由、SDK/bundle、应用持有服务的入口、配置与调试签名方式 | 继续使用 `ui-mock` 临时工程；未创建第二套正式工程或签名配置 |
+| C，B 协作 | FileRole、选择器取消语义、真实 FileService、输入引用生命周期、GPX/JSON/log 输出登记及导出 | 文件选择与导出继续禁用，只有真实产物登记后才开放 |
+| B/C | 活动/最近 jobId 查询来源、任务记录持久化与 PROCESS_INTERRUPTED、失败/取消日志 fileId | 会话可恢复给定 ID 的快照；重启中断仅有 UI 消费测试，应用发现/持久化和日志导出仍未实现 |
+
+验证范围：本分支 14 项 UI/会话及宿主联调测试、四份资源一致性检查、DevEco ArkTS 编译和未签名 HAP 打包通过。没有执行新版本模拟器交互、真机 GUI、嵌入式 CPython/N-API 或真实文件导出验收。保持开发分支，待后续实质性集成及组长审核再合并。
 
 ## 1. 已确定的接口边界
 

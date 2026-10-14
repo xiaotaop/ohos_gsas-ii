@@ -5,8 +5,8 @@
 // This is an explicit M1 subset, not a port of every upstream menu, editor or scientific operation.
 import { util } from '@kit.ArkTS';
 import {
-  CoreEvent, CoreService, MockCoreService, MockData, RefinementRequest, RefinementView,
-  StageResult, Artifact, isActive, newMockRequest, receiveEvent, stageLabel
+  CoreEvent, MockCoreService, MockData, RefinementRequest, RefinementView, RefinementSession,
+  StageResult, Artifact, isActive, newMockRequest, stageLabel
 } from '../model/Refinement';
 
 interface DemoChoice { id: string; label: string; description: string; }
@@ -30,9 +30,8 @@ struct Index {
   @State private xrayExpanded: boolean = true;
   @State private neutronExpanded: boolean = false;
   private mock?: MockCoreService;
-  private core?: CoreService;
+  private session?: RefinementSession;
   private data?: MockData;
-  private unsubscribe?: () => void;
   private mounted: boolean = false;
   private choices: DemoChoice[] = [
     { id: 'success', label: '成功', description: '五阶段结果与产物摘要' },
@@ -54,7 +53,8 @@ struct Index {
 
   aboutToDisappear(): void {
     this.mounted = false;
-    if (this.unsubscribe) { this.unsubscribe(); }
+    if (this.session) { this.session.disconnect(); }
+    // Only this demo owns/disposes its mock; a real application service must outlive the page.
     if (this.mock) { this.mock.dispose(); }
   }
 
@@ -79,12 +79,13 @@ struct Index {
       this.data = { request, success, failed, cancelled };
       this.cycleCount = request.options.cycleCount.toString();
       this.mock = new MockCoreService(this.data);
-      this.core = this.mock;
-      // Subscribe before startRefinement, including synchronous accepted events.
-      this.unsubscribe = this.core.onEvent((event: CoreEvent) => {
-        this.view = receiveEvent(this.view, event);
-        if (!isActive(this.view.state)) { this.cancelRequested = false; }
+      this.session = new RefinementSession(this.mock, () => {
+        if (!this.mounted || !this.session) { return; }
+        this.view = this.session.view;
+        this.cancelRequested = this.session.cancelRequested;
+        this.notice = this.session.notice;
       });
+      await this.session.connect();
       this.ready = true;
     } catch {
       this.notice = '演示数据加载失败，请检查安装包是否包含完整示例后重新打开。';
@@ -92,43 +93,21 @@ struct Index {
   }
 
   private async startDemo(): Promise<void> {
-    if (!this.core || !this.mock || !this.data || isActive(this.view.state)) { return; }
+    if (!this.session || !this.mock || !this.data || isActive(this.view.state)) { return; }
     this.notice = '';
     this.cancelRequested = false;
     this.showProgress = true;
     const request = newMockRequest(this.data.request);
-    const pending = new RefinementView();
-    pending.jobId = request.jobId;
-    pending.state = 'queued';
-    pending.message = '正在提交任务';
-    this.view = pending;
-    try {
-      this.mock.setScenario(this.scenario);
-      await this.core.startRefinement(request);
-      // Do not overwrite events already received while this Promise was pending.
-    } catch {
-      const failed = new RefinementView();
-      failed.jobId = request.jobId;
-      failed.state = 'failed';
-      failed.message = '任务未能启动，请稍后重试。';
-      failed.error = { code: 'INTERNAL_ERROR', message: failed.message, retryable: true };
-      this.view = failed;
-    }
+    this.mock.setScenario(this.scenario);
+    await this.session.start(request);
   }
 
   private async cancel(): Promise<void> {
-    if (!this.core || !isActive(this.view.state) || this.cancelRequested) { return; }
-    this.cancelRequested = true;
-    try {
-      await this.core.cancelJob(this.view.jobId);
-      // CancelAck is not completion. Keep waiting for a terminal CoreEvent.
-    } catch {
-      this.cancelRequested = false;
-      if (isActive(this.view.state)) { this.notice = '取消请求未能送达，请重试或等待任务结束。'; }
-    }
+    if (this.session) { await this.session.cancel(); }
   }
 
   private reset(): void {
+    if (this.session) { this.session.connect(); }
     this.view = new RefinementView();
     this.cancelRequested = false;
     this.notice = '';

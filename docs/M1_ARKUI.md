@@ -41,10 +41,11 @@ M1 没有实现系统文件选择、真实 FileService、Python/N-API、运行�
 | 文件 | 用途 |
 |---|---|
 | `ui-mock/entry/src/main/ets/pages/Index.ets` | 页面及交互 |
-| `ui-mock/entry/src/main/ets/model/Refinement.ts` | UI 类型、状态转换、CoreService mock |
+| `ui-mock/entry/src/main/ets/model/Refinement.ts` | UI 类型、事件/快照转换、可注入服务的 RefinementSession、CoreService mock |
 | `ui-mock/entry/src/main/resources/rawfile/` | 原样打包的四份契约示例 |
 | `scripts/Sync-UiMockFixtures.ps1` | 同步资源，`-Check` 只比较哈希 |
-| `scripts/Test-UiMock.ps1` | 类型检查、六项行为测试及示例一致性检查 |
+| `scripts/Test-UiMock.ps1` | 类型检查、14 项 UI/会话/宿主联调测试及示例一致性检查；需要 Python 3.10+ |
+| `tests/capture_bridge_ui.py` | 测试时运行 B 的假核心服务并捕获事件/快照，不进入 HAP |
 
 示例以 `contracts/examples/` 为唯一数据来源。资源复制是 ArkUI 打包需要，不独立编辑；契约变化后运行同步脚本。
 
