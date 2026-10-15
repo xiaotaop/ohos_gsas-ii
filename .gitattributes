@@ -3,3 +3,7 @@ scripts/ohos/*.ini text eol=lf
 tests/fixtures/* -text
 contracts/examples/*.json text eol=lf
 ui-mock/entry/src/main/resources/rawfile/*.json text eol=lf
+
+# Verbatim fixture and upstream notice copies must retain their hashes.
+app/entry/src/main/resources/rawfile/fixtures/* -text -whitespace
+app/entry/src/main/resources/rawfile/licenses/* -text -whitespace

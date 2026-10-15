@@ -18,6 +18,8 @@ M1 ArkUI 源码映射与接入说明见 [M1 ArkUI 演示](docs/M1_ARKUI.md)，�
 
 A/B/C 接入前需确认的工程入口、公共类型、文件服务、初始化、日志产物及集成验收，见 [接入对齐清单](docs/INTEGRATION_ALIGNMENT.md)。待确认项不改变冻结契约。
 
+成员 C 的正式 PC 工程与持久化文件服务位于 `app/`，支持系统选择器导入、fileId 查询/删除、真实文件导出及原生产物登记。构建和 A/B 接入方式见 [成员 C 交接](docs/MEMBER_C_HANDOFF.md)，组件清单见 [应用依赖初稿](docs/APP_DEPENDENCY_INVENTORY.md)。当前是文件服务开发应用，Python/计算核心 N-API 与真实精修仍待接入；不表示已经形成可上架版本。中文工作目录可运行 `python3 scripts/Build-App.py --check`，脚本在英文临时目录调用 DevEco CLI。
+
 ## 持续集成
 
 GitHub Actions 配置位于 `.github/workflows/ci.yml`，在分支推送、面向 `main` 的 Pull Request 以及手动触发时执行 Python 语法、JSON、接口契约、测试样例完整性、Python Bridge 自测和 ArkUI mock 状态模型测试。启用方法及云端 CI 的范围见 [持续集成说明](docs/CI.md)。
