@@ -2,6 +2,7 @@
 import copy
 import importlib.util
 import json
+import os
 import struct
 import sys
 import tempfile
@@ -231,7 +232,15 @@ class ReleaseToolsTest(unittest.TestCase):
 
     def test_hap_traversal_symlink_and_duplicate_rejected(self):
         path = self.root / 'base.hap'
-        for name in ('../escape', '/absolute', 'a\\b'):
+        unsafe_names = ['../escape', '/absolute']
+        if os.sep == '\\':
+            # ZipInfo normalizes the host separator before it is written, so
+            # a backslash cannot be observed by audit_hap on Windows. The
+            # direct relative_path test above still covers its rejection.
+            self.assertEqual(zipfile.ZipInfo('a\\b').filename, 'a/b')
+        else:
+            unsafe_names.append('a\\b')
+        for name in unsafe_names:
             base_hap(path, {name: b'x'})
             with self.subTest(name=name), self.assertRaises(rt.ReleaseError):
                 rt.audit_hap(path)
