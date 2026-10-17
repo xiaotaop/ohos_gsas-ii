@@ -17,3 +17,5 @@
 | mock/fake core | 当前 app 不包含 | ui-mock 与 bridge/fake_core 仅在仓库开发范围 | 发布装配时继续验证最终载荷排除 |
 
 DevEco CLI、Hvigor、ohpm、Node.js 为构建工具，当前不是 app 的自带运行时组件。最终 SBOM 必须以实际发布 HAP 文件与链接关系为依据，不能直接把此计划表当作成品 SBOM。
+
+后续收件使用 [运行时清单模板](../packaging/runtime-manifest.example.json)和 [装配流程](RUNTIME_PACKAGING.md)。Audit-Hap 对实际 HAP 生成逐文件哈希、运行时组件归属及许可记录，作为最终 SBOM 的基础；仍须补充静态/动态依赖分析、源码义务和人工审查。模板缺少真实载荷时明确失败，不将上述计划组件列为已经入包。

@@ -27,7 +27,8 @@
 5. Python Bridge 的请求校验、沙箱、事件、并发、取消、失败和产物自测。
 6. 原生文件排他创建测试：已有文件、并发创建及符号链接不会被覆盖。
 7. 宿主真实文件系统运行实际 FileService 源码，覆盖九项文件生命周期及符号链接防护场景。
-8. ArkUI mock 状态模型的 TypeScript 类型检查、六项行为测试及契约示例同步检查；A 的后续会话准备分支增加至十四项，合入后随之更新。
+8. 宿主运行时装配、HAP 内容门禁和构建记录测试（合成载荷，不证明真实运行时加载）。
+9. ArkUI mock 状态模型的 TypeScript 类型检查、六项行为测试及契约示例同步检查；A 的后续会话准备分支增加至十四项，合入后随之更新。
 
 任意步骤失败时，流水线返回失败状态，不应合并对应 Pull Request。
 
@@ -62,6 +63,12 @@ GSAS_TYPESCRIPT_PATH=/tmp/gsas-file-tests/node_modules/typescript node --test te
 ```
 
 这些测试不替代 ArkTS 编译、系统选择器交互或真机验收。C01/C02 的平台证据及设备跳过项见 [成员 C 验证记录](MEMBER_C_VALIDATION.md)。
+
+运行时/发布工具的标准库测试：
+
+```sh
+python3 -m unittest discover -s tests -p 'test_release_tools.py' -v
+```
 
 ## 5. GitHub 启用要求
 

@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "kind": "hap-content-inventory",
+  "auditMode": "development",
+  "contentChecksPassed": true,
+  "releaseCandidateApproved": false,
+  "hapSha256": "98959e835c1ab9debbe71cc1b784af14c830cd9174e3a48359d22727ceca6a03",
+  "hapSize": 1642148,
+  "app": {
+    "iconId": 16777217,
+    "minPatchAPIVersion": 0,
+    "debug": false,
+    "targetPatchAPIVersion": 0,
+    "minMinorAPIVersion": 0,
+    "minAPIVersion": 60000020,
+    "icon": "$media:app_icon",
+    "buildMode": "release",
+    "label": "$string:app_name",
+    "bundleType": "app",
+    "versionName": "0.1.0",
+    "versionCode": 1,
+    "appEnvironments": [],
+    "compileSdkType": "HarmonyOS",
+    "labelId": 16777216,
+    "compileSdkVersion": "26.0.0.105",
+    "targetAPIVersion": 60101024,
+    "vendor": "GSAS-II porting team",
+    "bundleName": "com.xiaotaop.gsaspc",
+    "apiReleaseType": "Release",
+    "targetMinorAPIVersion": 0
+  },
+  "runtimeId": null,
+  "components": [],
+  "files": [
+    {
+      "path": "ets/modules.abc",
+      "size": 70224,
+      "sha256": "9696e3e947af16a4b813474dda3bc1697a7ba9822255f02b67084208215d139e"
+    },
+    {
+      "path": "libs/arm64-v8a/libc++_shared.so",
+      "size": 1262504,
+      "sha256": "f69947af100b652e349ae51e4a4888bcc7a327db9085272d318176ef1782bf0f",
+      "component": "sdk-libcxx"
+    },
+    {
+      "path": "libs/arm64-v8a/libgsas_fileio.so",
+      "size": 49968,
+      "sha256": "5d6fb16900de91b2821d217dc31d58ee540817136a525cef6ba35fc82b1649ea",
+      "component": "app-fileio"
+    },
+    {
+      "path": "module.json",
+      "size": 1216,
+      "sha256": "5cd2bc6689acc6cd5b86673833c74a5b133deccf0eac88195a05ac3836fbdfd7"
+    },
+    {
+      "path": "pack.info",
+      "size": 522,
+      "sha256": "efd0e20d01bd860f0848f72aad03497cdc4875d7da40ce455f656d72dbce4cff"
+    },
+    {
+      "path": "pkgSdkInfo.json",
+      "size": 135,
+      "sha256": "124dc6917267fb3ec691ccbad1b1753bbad9c1e66c806983d50e7701790e289e"
+    },
+    {
+      "path": "resources.index",
+      "size": 517,
+      "sha256": "5368f61c1277d5f6823b0559b50ce39cb98671df298cb0b2e42186ea809cc068"
+    },
+    {
+      "path": "resources/base/media/app_icon.svg",
+      "size": 313,
+      "sha256": "d8ab06e9deebb48cbda1e0a79e026f0fa5f2b8197913f9ee86ce102f4f4bb755"
+    },
+    {
+      "path": "resources/base/profile/main_pages.json",
+      "size": 23,
+      "sha256": "93846868ae31b5507d3e0675b3a364dab27a9e2ea7edb2a39c9a2bb70846d1f6"
+    },
+    {
+      "path": "resources/rawfile/fixtures/INST_XRY.PRM",
+      "size": 794,
+      "sha256": "e59413059bc3b12a51f1c6eebc5d581470320d05a31f11a41dbb32e16d1d16b9"
+    },
+    {
+      "path": "resources/rawfile/fixtures/PBSO4.CWN",
+      "size": 24190,
+      "sha256": "59462ba6d7c72c9800b0b6bf41903f9933ed5ac5adab101d27022d5d25cf18ba"
+    },
+    {
+      "path": "resources/rawfile/fixtures/PBSO4.XRA",
+      "size": 49445,
+      "sha256": "ca2da02fc7e17d2fc912de22a979f8101ba6140f2e8104f9d3aa64f030ca58bb"
+    },
+    {
+      "path": "resources/rawfile/fixtures/PbSO4-Wyckoff.cif",
+      "size": 1569,
+      "sha256": "22cba0b64fb6bf89178fe828fdf63570bffebed1485313e78c50c2918a47a970"
+    },
+    {
+      "path": "resources/rawfile/fixtures/inst_d1a.prm",
+      "size": 971,
+      "sha256": "a1031174a9b509f889377752f5c095a1dad49a25fb0a72c057f184f7b321fcea"
+    },
+    {
+      "path": "resources/rawfile/licenses/GSAS-II-LICENSE.txt",
+      "size": 3496,
+      "sha256": "05f7d608ff9997aa4e89c380f936ee2b1ea6a20df3d4dabe362c522e3bf7218d"
+    },
+    {
+      "path": "resources/rawfile/licenses/GSAS-II-NOTICE.txt",
+      "size": 350,
+      "sha256": "e58dee871082ef2764aa7978871f59a4bcf182f19c6883b7d1652ddbe79019a6"
+    },
+    {
+      "path": "resources/rawfile/licenses/LLVM-NOTICE.txt",
+      "size": 166566,
+      "sha256": "22208a1d78a9271ec1d6eaf7d21db5dda6049ed14af09d7d0f8d7787b6bffb77"
+    },
+    {
+      "path": "resources/rawfile/licenses/libcxx-LICENSE.txt",
+      "size": 3319,
+      "sha256": "54fe8296021f29a40b7abccb174d440f650088807f8b84d4315e6ef9c3e323a7"
+    },
+    {
+      "path": "resources/rawfile/licenses/libcxxabi-LICENSE.txt",
+      "size": 3322,
+      "sha256": "dd55121fdf68d349082de00243eb187fd01ab7afa07944be6d23f6a598b7b37e"
+    }
+  ],
+  "limits": [
+    "Does not prove embedded CPython loading, numerical correctness, signing validity,",
+    "device compatibility, or complete static/dynamic dependency and license review.",
+    "Compiled code inspection is limited to known development markers."
+  ]
+}
