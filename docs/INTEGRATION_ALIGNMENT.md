@@ -1,8 +1,30 @@
 # ArkUI、核心与文件服务接入对齐清单
 
-更新日期：2026-10-13。面向成员 A（界面）、B（核心）、C（文件服务与打包）及组长/集成负责人。
+更新日期：2026-10-17。面向成员 A（界面）、B（核心）、C（文件服务与打包）及组长/集成负责人。
 
 当前界面基线源自成员 A 分支 `ui/mock-refinement`，已完成 [M1 模拟器验收](M1_ARKUI.md)并合入 `main`。本文整理接入正式工程前需要确认的事项；**所有待确认项均未形成团队决议，不修改或取代冻结的 [CORE_API v1.0](CORE_API.md)**。真实核心、文件服务联调及真机 GUI 验收尚未完成。
+
+## C01/C02 交付状态（2026-10-17）
+
+成员 C 在 `release/stages-1-2` 交付正式 `app/` 工程和真实 FileService，实现提交 `3d6957d`；当前文件管理应用已完成 [模拟器及宿主验证](MEMBER_C_VALIDATION.md)。[成员 C 交接](MEMBER_C_HANDOFF.md)提供复现命令与 A/B 接入方式。以下为可审核的实现与剩余接入工作，**不表示已获团队批准或已合入 main**。
+
+| 事项 | C 已交付的实现 | 剩余接入/确认及负责人 |
+|---|---|---|
+| A01 工程入口 | `app/entry`、EntryAbility、`pages/Index`，公共文件类型在 `contracts/Files.ets` | A 迁移真实页面；组长确认工程入口，保留 ui-mock 作为演示/测试 |
+| A02 工具链与应用 | 开发包 `com.xiaotaop.gsaspc`、0.1.0，最低20/目标24，SDK26 编译；debug/release 及英文目录构建脚本 | 组长确认团队工具链和真机系统；C 完成真机签名及 API20/24 兼容验证，上架名待定 |
+| A03 初始化 | Ability 预热文件服务；AppServices 提供同一实例及失败重试 | B 提供 CoreService；B/C 完成运行时和核心初始化，A 消费就绪/失败/重试状态 |
+| A04 类型 | FileRole、AppFile、FileServiceError、CoreConfig 已有 ArkTS 实现 | B/C 对齐共享类型，B 补 JobSnapshot 和 Promise 错误；组长批准跨层选择 |
+| A05 文件选择 | FilePickerService；导入取消返回 undefined，导出取消返回 false；三种输入角色 | A 接入五份输入关联和反馈，B 确认可计算格式，组长确认选择器与角色方案 |
+| A06 jobId | 文件服务接收并校验外部 jobId，不分配计算任务 ID | B/A 确认调用方生成及 accepted 时序，组长确认；C 不代实现核心门面 |
+| A07 文件与产物 | resolveInputFile、registerOutput、getFile/exportFile 已实现；三种产物可登记 | B 在发出 completed 前登记真实产物，A 随后开放导出 |
+| B01 输入生命周期 | beginJob 持久化引用，活动引用拒绝删除；finishJob 释放 | B 保证所有终态与调度异常释放；A 按确认策略处理重选 |
+| B02 导出交互 | 系统保存选择器、真实写入、同名确认取消保留原文件 | A 接入真实 fileId，组长确认交互；细节见交接文档 |
+| B03 日志 | C 可登记并导出 log 产物 | B 落盘脱敏的失败/取消日志；B/C 提议日志 fileId 的发现方式，组长批准；私有 traceback 不导出 |
+| B04/B05 重启与终态 | 旧租约恢复为 interrupted job IDs；清理 input/work，保留输入、日志、输出 | B 持久化快照并标记 PROCESS_INTERRUPTED、处理唯一终态/取消；A 恢复页面与退出提示 |
+
+A 的后续会话接入准备位于 `docs/github-integration-readiness@27dce33`，其中基于 `main@12db7e7` 的“C 尚未提供工程/文件服务”描述已被本分支交付补齐；其会话代码仍需由 A 合入正式 app 并适配 ArkTS。B 的 Python Bridge 已在 main，但计算 N-API/CPython 应用集成仍未交付。各分支不能分别使用旧文档判断另一成员仍缺相同成果。
+
+接入顺序：组长审核 C01/C02 并确认剩余选择 → A 接文件选择/持久化列表，同时 B 接配置、输入和任务租约 → B/C 接运行时及真实核心 → 产物登记后开放导出 → 执行本文件第 5 节的正式集成验收。运行时清单、装配脚本和许可审计可由 C 并行准备。
 
 ## 1. 已确定的接口边界
 
@@ -23,7 +45,7 @@
 
 ## 2. 接入前需要给出明确答案
 
-各项状态均为 **待确认**。负责人是建议的牵头角色，跨层选择由组长/集成负责人确认。
+各项的**团队决议仍待确认**；已提供实现的项目见上表，不再表示所有代码均未交付。负责人是建议的牵头角色，跨层选择由组长/集成负责人确认。
 
 | 编号 | 对齐事项及需要提供的结果 | 牵头/协作 |
 |---|---|---|
@@ -35,7 +57,7 @@
 | A06 | **jobId 分配时序**：契约允许核心“生成或确认”，需选定实际路径。明确 UI 在首个事件之前如何知道 jobId，避免同步 accepted 事件早于 Promise 返回而丢失 | B、A |
 | A07 | **内部文件解析与产物登记**：B 如何通过 C 的文件服务解析输入 fileId；谁登记新 GPX/JSON/日志并返回可查询、可导出的 fileId。具体内部调用和模块归属需双方确认，UI 不参与路径解析 | B、C |
 
-当前临时值仅供比对：工程为 `ui-mock/`，页面 `pages/Index`，bundleName 为 `com.example.gsas.uimock`，本机目标 API 24、最低 API 20。`Refinement.ts` 中的 role 使用 string、Snapshot 为本地投影；这些均不自动成为正式接口。
+M1 临时值仅供比对：`ui-mock/`、`pages/Index`、`com.example.gsas.uimock`、目标 API24/最低 API20。C 的正式工程实现为 `app/`、`pages/Index`、`com.xiaotaop.gsaspc`、相同兼容/目标 API 范围。M1 `Refinement.ts` 的 role 为 string、Snapshot 为本地投影；C 的 FileRole 实现及所有跨层选择仍需按本文件确认，不自动成为新的冻结契约。
 
 ## 3. 联调前需要关闭的行为差异
 

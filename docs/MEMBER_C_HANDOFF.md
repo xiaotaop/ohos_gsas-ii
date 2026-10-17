@@ -2,6 +2,41 @@
 
 适用范围：成员 C 工作计划的阶段 1、2（C01/C02），不是项目第一、第二阶段的计算 PoC。开发基线为 `12db7e7`，实现分支 `release/stages-1-2`。
 
+## 0. 交接入口与接收顺序（2026-10-17）
+
+C01/C02 的实现提交为 `3d6957dc04f414117f447a176a6160eb7cb638a3`，本次补充文档交接。代码、测试和验证证据均随分支提供；HAP、构建缓存和签名材料不提交 Git。该分支面向 `main` 发起合并请求，由组长审核；交付、接收确认和正式集成验收分别记录。
+
+| 接收人 | 现在可接入的内容 | 下一步及仍需提供的内容 |
+|---|---|---|
+| A | `app/entry`、`pages/Index`、`contracts/Files.ets`、`AppServices.files`、`FilePickerService` | 将页面迁入 app，使用真实选择器和 fileId；计算按钮等待 B 的就绪服务。A 的 `docs/github-integration-readiness@27dce33` 会话准备仍在独立分支，未包含在本交付中 |
+| B | `AppServices.nativeFiles`、`getCoreConfig`、输入解析、任务租约、产物登记和中断任务 ID | 提供计算 N-API/CoreService、共享快照与错误类型、运行时载荷及构建说明；按第 5 节接入文件生命周期 |
+| 组长 | 本文、[验证记录](MEMBER_C_VALIDATION.md)、[对齐状态](INTEGRATION_ALIGNMENT.md) | 审核合并请求，确认 A01～A07 和 B01～B05 的剩余跨层选择；安排真机集成验收 |
+| C 后续 | [组件清单](APP_DEPENDENCY_INVENTORY.md)、现有构建脚本和 runtime 目录 | 准备运行时装配、升级和依赖审计；收到 B 的载荷后验证沙箱加载和离线运行 |
+
+首次接手可在新建的本地审核分支复现文件服务应用：
+
+```sh
+git fetch origin
+git switch -c integration/member-c-review origin/release/stages-1-2
+python3 scripts/Validate-CoreContracts.py
+python3 scripts/Verify-Fixtures.py
+python3 scripts/Build-App.py --check --build-mode release
+```
+
+该分支名仅用于首次本地审核；已有开发分支的成员保留原分支，通过合并交付分支接入。合并前也可阅读和试接，不需等待 main 更新。构建前需安装 DevEco CLI 及对应 SDK；命令打印英文构建目录，HAP 位于该目录的 `entry/build/default/outputs/default`。安装与调试见第 2 节。安装启动后应看到真实文件管理页，可导入五份 fixture，重启后恢复已导入记录；不会执行精修。
+
+上述 Build-App.py 当前面向 macOS，使用 `/private/tmp` 暂存。Windows/Linux 接收方应在无中文路径的仓库中进入 `app/`，依次执行 `devecocli check arkts` 和 `devecocli build --modules entry --build-mode release`；对应 SDK、签名及设备配置需在接收方环境复验，不将本机 macOS 记录当作跨平台构建通过证据。
+
+接收检查：
+
+- [x] C01/C02 源码、A/B 调用入口、验证范围及限制已交付。
+- [x] 组件初稿、构建复现和后续运行时依赖已说明。
+- [ ] A 确认页面迁移及文件服务接入结果。
+- [ ] B 确认配置、输入解析、任务租约和输出登记调用顺序。
+- [ ] 组长批准待决接口并审核合并；真实核心/真机验收另行记录。
+
+未勾选项是接收方确认，不能由 C 代签。具体实现提议见 [接入对齐清单的 C01/C02 交付状态](INTEGRATION_ALIGNMENT.md#c01c02-交付状态2026-10-17)。
+
 ## 1. 工程入口与范围
 
 正式应用源码放在 `app/`，entry 模块、入口 `EntryAbility`、首页 `pages/Index`。现有 `ui-mock/` 原样保留，A 后续可把真实计算页面接入 app 的服务。当前首页提供真实文件管理和隔离的设备自测，不模拟精修、不生成假 GPX。
@@ -56,10 +91,18 @@ python3 scripts/Build-App.py --check --device 'MateBook Pro 1'
 公共类型：`app/entry/src/main/ets/contracts/Files.ets`。
 
 ```ts
-const files = await AppServices.files(context);
-const selection = new FilePickerService(context, files);
-const imported = await selection.selectAndImport(FileRole.POWDER_DATA);
-// imported 为 undefined 表示用户取消；有值才更新请求的 dataFileId。
+// 位于 app/entry/src/main/ets/pages/ 下的调用示例。
+import { common } from '@kit.AbilityKit';
+import { AppFile, FileRole } from '../contracts/Files';
+import { AppServices } from '../services/AppServices';
+import { FilePickerService } from '../services/FilePickerService';
+
+async function selectPowder(context: common.UIAbilityContext): Promise<AppFile | undefined> {
+  const files = await AppServices.files(context);
+  const selection = new FilePickerService(context, files);
+  return selection.selectAndImport(FileRole.POWDER_DATA);
+}
+// 返回 undefined 表示用户取消；有值才更新请求的 dataFileId，错误由页面捕获。
 ```
 
 FileLibrary 只提供 CORE_API 的四个文件方法以及 listFiles；页面不取得沙箱绝对路径、CoreConfig 或 native 解析能力。服务由应用持有，页面重建复用同一实例与操作队列。
@@ -76,6 +119,8 @@ FileLibrary 只提供 CORE_API 的四个文件方法以及 listFiles；页面不
 
 角色为当前 C 实现选择：`powder-data`、`instrument-parameters`、`phase`，产物为 `project`、`result`、`log`。这些角色不等同于 histogram 的 xray/neutron，后者仍由精修请求选择。文件后缀提示不表示核心已经支持全部格式；真正可计算范围由 B 的 recipe 决定。
 
+五份 PbSO4 输入的关联方式：`PBSO4.XRA`、`PBSO4.CWN` 均按 `POWDER_DATA` 导入；`INST_XRY.PRM`、`inst_d1a.prm` 均按 `INSTRUMENT` 导入；`PbSO4-Wyckoff.cif` 按 `PHASE` 导入。请求的 xray/neutron histogram 分别引用各自的数据及仪器参数 fileId，phase 引用 CIF 的 fileId。不能仅根据统一的 POWDER_DATA 角色猜测两组关联；由页面保存用户选择的对应关系。
+
 错误为 FileServiceError（Error 派生类），含 code/message/retryable；页面使用 describeFileError，避免把平台原始路径/URI/错误堆栈呈现给用户。
 
 ## 5. B 的接入方式
@@ -90,6 +135,8 @@ FileLibrary 只提供 CORE_API 的四个文件方法以及 listFiles；页面不
 | registerOutput(jobId, fileId, displayName, kind) | 登记已经写完的 outputs/jobId/name 文件；不接受任意绝对路径 |
 | finishJob(jobId) | 终态后释放引用、清理 input/work；保留 logs 和 outputs |
 | listInterruptedJobs() | 获取启动时从旧租约识别的任务，供 B 的快照层标记 PROCESS_INTERRUPTED；不恢复计算 |
+
+`getCoreConfig()` 和 `listInterruptedJobs()` 是同步读取，其他内部文件方法返回 Promise，应等待完成。EntryAbility 目前只预热文件服务；初始化失败后 AppServices 会清除失败的 Promise，后续调用可重试。它没有初始化计算核心，也没有提供 CoreService 就绪标志。B/C 应在文件服务与运行时准备完成后初始化核心，再向 A 暴露可启动状态。
 
 建议调用顺序：
 
