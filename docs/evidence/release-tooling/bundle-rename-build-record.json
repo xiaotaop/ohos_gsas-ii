@@ -1,0 +1,438 @@
+{
+  "schemaVersion": 1,
+  "kind": "development-build-record",
+  "createdAt": "2026-10-17T06:04:45.101403+00:00",
+  "sourceCommit": "85f23b0571cff9daed8c868b2523787d5e84f113",
+  "workingTreeDirty": false,
+  "sourceFiles": [
+    {
+      "path": "AppScope/app.json5",
+      "sha256": "2457db3f7e3dc25416cb0d249eddd3cb46790520ac23e6859ecd0388b926c833"
+    },
+    {
+      "path": "AppScope/resources/base/element/string.json",
+      "sha256": "74546fb5b3f3790e906b374afd6f28da71807cfa749b6568d8a99ac82572231e"
+    },
+    {
+      "path": "AppScope/resources/base/media/app_icon.svg",
+      "sha256": "2b358deeb4e88d4fcca93022a4b7bfb5b30ff1ec55f02749546327ca52752762"
+    },
+    {
+      "path": "build-profile.json5",
+      "sha256": "cd5a5d943b3c0c92812ed4ad1cfd2aecaff0c0830f7decc7974856d7fbd3ce5d"
+    },
+    {
+      "path": "code-linter.json5",
+      "sha256": "de386cac6a6e41d19aa90be2809678849dd4993a0300cdfa38bfdf4b0d7f1a2b"
+    },
+    {
+      "path": "entry/build-profile.json5",
+      "sha256": "ea9f6858fc2a6d1e2e9106293e4dd6768d1d51293a58f9d54e639c28635ab26a"
+    },
+    {
+      "path": "entry/hvigorfile.ts",
+      "sha256": "f71679171099cb5c2260ab2a43e38164f169216c217ffdba7d0933e92ca8f733"
+    },
+    {
+      "path": "entry/oh-package-lock.json5",
+      "sha256": "ca6560660b985a3685a1e536ac171fb5c144f0e988a2bbb1c3e7d8183fc92808"
+    },
+    {
+      "path": "entry/oh-package.json5",
+      "sha256": "25f07a01f3f874e60f603c97c7625b230f62a0fed4fb074e58dd58bc9ece0733"
+    },
+    {
+      "path": "entry/src/main/cpp/CMakeLists.txt",
+      "sha256": "df19b5bca09b0f5686fcaad14325058c40c072fa2bbb9e4a99b6e7fd187ae7d2"
+    },
+    {
+      "path": "entry/src/main/cpp/exclusive_file.h",
+      "sha256": "9b52e28725b307921e87d78009b361561ab2f182d4b76cc14a6d19ca49692398"
+    },
+    {
+      "path": "entry/src/main/cpp/file_exporter.cpp",
+      "sha256": "29e23d5308f6c7e699215703b1f5085f2eaa1e78048d0fd167343a4d4637ef8f"
+    },
+    {
+      "path": "entry/src/main/cpp/types/libgsas_fileio/index.d.ts",
+      "sha256": "7e63ecba29eda0e94d4c64bf73b55c804ea88659f69d08ac51d6eeaecd24681b"
+    },
+    {
+      "path": "entry/src/main/cpp/types/libgsas_fileio/oh-package.json5",
+      "sha256": "12803e53497e3a1f14e35e7a5b61ef97eefee075e02d0ddf407e758919118f01"
+    },
+    {
+      "path": "entry/src/main/ets/contracts/Files.ets",
+      "sha256": "12d16aaa9e0555921b3df097c0d441b8ed43be217ceb54c57bf5156213b1900e"
+    },
+    {
+      "path": "entry/src/main/ets/entryability/EntryAbility.ets",
+      "sha256": "81b9df95574d5e790d30f06f21f637f3c85a6dd6a0385e3c15d8912d68cd3561"
+    },
+    {
+      "path": "entry/src/main/ets/pages/Index.ets",
+      "sha256": "b317da4464535fc7867f30df9f37d2cebee55ba2cc4f2c441a59f29bc06ce68a"
+    },
+    {
+      "path": "entry/src/main/ets/services/AppServices.ets",
+      "sha256": "d129b35e6fa51cbeac629443149e0ba89890fe410ef9cb8be9276b12f3d95e4c"
+    },
+    {
+      "path": "entry/src/main/ets/services/FilePickerService.ets",
+      "sha256": "c63e69f238fa2f3c7829ed61c89e4a7d18b96fc3355f28ec544355d0b39effc7"
+    },
+    {
+      "path": "entry/src/main/ets/services/SandboxFileService.ets",
+      "sha256": "1d23bda881c72f065bd654ef53501aca4a0f82e9ec3d239ecc10728404092f3c"
+    },
+    {
+      "path": "entry/src/main/ets/verification/FileServiceCheck.ets",
+      "sha256": "fbd7b0f345e2a24f3e2bad614f3097b4fc86e202b2aa16ed8f48436bf9c6f756"
+    },
+    {
+      "path": "entry/src/main/module.json5",
+      "sha256": "381c7e13631e36c6f7b39e17e72b63327b5a58b4f0c19796650ec9dace32441c"
+    },
+    {
+      "path": "entry/src/main/resources/base/element/color.json",
+      "sha256": "124305790c9fd64b536d0ededd2cb9bb401048a94aab66a9054b5cc61927142d"
+    },
+    {
+      "path": "entry/src/main/resources/base/profile/main_pages.json",
+      "sha256": "51fdd64180812e80cf58205d26c52812d324597333e0095a968e178037dc7772"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/fixtures/INST_XRY.PRM",
+      "sha256": "e59413059bc3b12a51f1c6eebc5d581470320d05a31f11a41dbb32e16d1d16b9"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/fixtures/PBSO4.CWN",
+      "sha256": "59462ba6d7c72c9800b0b6bf41903f9933ed5ac5adab101d27022d5d25cf18ba"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/fixtures/PBSO4.XRA",
+      "sha256": "ca2da02fc7e17d2fc912de22a979f8101ba6140f2e8104f9d3aa64f030ca58bb"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/fixtures/PbSO4-Wyckoff.cif",
+      "sha256": "22cba0b64fb6bf89178fe828fdf63570bffebed1485313e78c50c2918a47a970"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/fixtures/inst_d1a.prm",
+      "sha256": "a1031174a9b509f889377752f5c095a1dad49a25fb0a72c057f184f7b321fcea"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/licenses/GSAS-II-LICENSE.txt",
+      "sha256": "05f7d608ff9997aa4e89c380f936ee2b1ea6a20df3d4dabe362c522e3bf7218d"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/licenses/GSAS-II-NOTICE.txt",
+      "sha256": "e58dee871082ef2764aa7978871f59a4bcf182f19c6883b7d1652ddbe79019a6"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/licenses/LLVM-NOTICE.txt",
+      "sha256": "22208a1d78a9271ec1d6eaf7d21db5dda6049ed14af09d7d0f8d7787b6bffb77"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/licenses/libcxx-LICENSE.txt",
+      "sha256": "54fe8296021f29a40b7abccb174d440f650088807f8b84d4315e6ef9c3e323a7"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/licenses/libcxxabi-LICENSE.txt",
+      "sha256": "dd55121fdf68d349082de00243eb187fd01ab7afa07944be6d23f6a598b7b37e"
+    },
+    {
+      "path": "hvigor/hvigor-config.json5",
+      "sha256": "2a67a5bc578397522e2d0fd256e424f31c4ae3d64ca93aebce50da1d8d8f78aa"
+    },
+    {
+      "path": "hvigorfile.ts",
+      "sha256": "c08e821b017d4199cbc2f0d086bb329e27e469e4c7d575f4493dfc2f92c72143"
+    },
+    {
+      "path": "oh-package.json5",
+      "sha256": "a4999a48272eb0067b4233bced3c636d9a4eb64d45ec6af72f7c2027a2cbbc2a"
+    }
+  ],
+  "sourceFingerprintSha256": "43cbb5926d4f7f2619705cfc063eba99e4244844f85cddf715c0dd193a401fa1",
+  "buildInputFiles": [
+    {
+      "path": "AppScope/app.json5",
+      "sha256": "2457db3f7e3dc25416cb0d249eddd3cb46790520ac23e6859ecd0388b926c833"
+    },
+    {
+      "path": "AppScope/resources/base/element/string.json",
+      "sha256": "74546fb5b3f3790e906b374afd6f28da71807cfa749b6568d8a99ac82572231e"
+    },
+    {
+      "path": "AppScope/resources/base/media/app_icon.svg",
+      "sha256": "2b358deeb4e88d4fcca93022a4b7bfb5b30ff1ec55f02749546327ca52752762"
+    },
+    {
+      "path": "build-profile.json5",
+      "sha256": "cd5a5d943b3c0c92812ed4ad1cfd2aecaff0c0830f7decc7974856d7fbd3ce5d"
+    },
+    {
+      "path": "code-linter.json5",
+      "sha256": "de386cac6a6e41d19aa90be2809678849dd4993a0300cdfa38bfdf4b0d7f1a2b"
+    },
+    {
+      "path": "entry/build-profile.json5",
+      "sha256": "ea9f6858fc2a6d1e2e9106293e4dd6768d1d51293a58f9d54e639c28635ab26a"
+    },
+    {
+      "path": "entry/hvigorfile.ts",
+      "sha256": "f71679171099cb5c2260ab2a43e38164f169216c217ffdba7d0933e92ca8f733"
+    },
+    {
+      "path": "entry/oh-package-lock.json5",
+      "sha256": "ca6560660b985a3685a1e536ac171fb5c144f0e988a2bbb1c3e7d8183fc92808"
+    },
+    {
+      "path": "entry/oh-package.json5",
+      "sha256": "25f07a01f3f874e60f603c97c7625b230f62a0fed4fb074e58dd58bc9ece0733"
+    },
+    {
+      "path": "entry/src/main/cpp/CMakeLists.txt",
+      "sha256": "df19b5bca09b0f5686fcaad14325058c40c072fa2bbb9e4a99b6e7fd187ae7d2"
+    },
+    {
+      "path": "entry/src/main/cpp/exclusive_file.h",
+      "sha256": "9b52e28725b307921e87d78009b361561ab2f182d4b76cc14a6d19ca49692398"
+    },
+    {
+      "path": "entry/src/main/cpp/file_exporter.cpp",
+      "sha256": "29e23d5308f6c7e699215703b1f5085f2eaa1e78048d0fd167343a4d4637ef8f"
+    },
+    {
+      "path": "entry/src/main/cpp/types/libgsas_fileio/index.d.ts",
+      "sha256": "7e63ecba29eda0e94d4c64bf73b55c804ea88659f69d08ac51d6eeaecd24681b"
+    },
+    {
+      "path": "entry/src/main/cpp/types/libgsas_fileio/oh-package.json5",
+      "sha256": "12803e53497e3a1f14e35e7a5b61ef97eefee075e02d0ddf407e758919118f01"
+    },
+    {
+      "path": "entry/src/main/ets/contracts/Files.ets",
+      "sha256": "12d16aaa9e0555921b3df097c0d441b8ed43be217ceb54c57bf5156213b1900e"
+    },
+    {
+      "path": "entry/src/main/ets/entryability/EntryAbility.ets",
+      "sha256": "81b9df95574d5e790d30f06f21f637f3c85a6dd6a0385e3c15d8912d68cd3561"
+    },
+    {
+      "path": "entry/src/main/ets/pages/Index.ets",
+      "sha256": "b317da4464535fc7867f30df9f37d2cebee55ba2cc4f2c441a59f29bc06ce68a"
+    },
+    {
+      "path": "entry/src/main/ets/services/AppServices.ets",
+      "sha256": "d129b35e6fa51cbeac629443149e0ba89890fe410ef9cb8be9276b12f3d95e4c"
+    },
+    {
+      "path": "entry/src/main/ets/services/FilePickerService.ets",
+      "sha256": "c63e69f238fa2f3c7829ed61c89e4a7d18b96fc3355f28ec544355d0b39effc7"
+    },
+    {
+      "path": "entry/src/main/ets/services/SandboxFileService.ets",
+      "sha256": "1d23bda881c72f065bd654ef53501aca4a0f82e9ec3d239ecc10728404092f3c"
+    },
+    {
+      "path": "entry/src/main/ets/verification/FileServiceCheck.ets",
+      "sha256": "fbd7b0f345e2a24f3e2bad614f3097b4fc86e202b2aa16ed8f48436bf9c6f756"
+    },
+    {
+      "path": "entry/src/main/module.json5",
+      "sha256": "381c7e13631e36c6f7b39e17e72b63327b5a58b4f0c19796650ec9dace32441c"
+    },
+    {
+      "path": "entry/src/main/resources/base/element/color.json",
+      "sha256": "124305790c9fd64b536d0ededd2cb9bb401048a94aab66a9054b5cc61927142d"
+    },
+    {
+      "path": "entry/src/main/resources/base/profile/main_pages.json",
+      "sha256": "51fdd64180812e80cf58205d26c52812d324597333e0095a968e178037dc7772"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/fixtures/INST_XRY.PRM",
+      "sha256": "e59413059bc3b12a51f1c6eebc5d581470320d05a31f11a41dbb32e16d1d16b9"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/fixtures/PBSO4.CWN",
+      "sha256": "59462ba6d7c72c9800b0b6bf41903f9933ed5ac5adab101d27022d5d25cf18ba"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/fixtures/PBSO4.XRA",
+      "sha256": "ca2da02fc7e17d2fc912de22a979f8101ba6140f2e8104f9d3aa64f030ca58bb"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/fixtures/PbSO4-Wyckoff.cif",
+      "sha256": "22cba0b64fb6bf89178fe828fdf63570bffebed1485313e78c50c2918a47a970"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/fixtures/inst_d1a.prm",
+      "sha256": "a1031174a9b509f889377752f5c095a1dad49a25fb0a72c057f184f7b321fcea"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/licenses/GSAS-II-LICENSE.txt",
+      "sha256": "05f7d608ff9997aa4e89c380f936ee2b1ea6a20df3d4dabe362c522e3bf7218d"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/licenses/GSAS-II-NOTICE.txt",
+      "sha256": "e58dee871082ef2764aa7978871f59a4bcf182f19c6883b7d1652ddbe79019a6"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/licenses/LLVM-NOTICE.txt",
+      "sha256": "22208a1d78a9271ec1d6eaf7d21db5dda6049ed14af09d7d0f8d7787b6bffb77"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/licenses/libcxx-LICENSE.txt",
+      "sha256": "54fe8296021f29a40b7abccb174d440f650088807f8b84d4315e6ef9c3e323a7"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/licenses/libcxxabi-LICENSE.txt",
+      "sha256": "dd55121fdf68d349082de00243eb187fd01ab7afa07944be6d23f6a598b7b37e"
+    },
+    {
+      "path": "hvigor/hvigor-config.json5",
+      "sha256": "2a67a5bc578397522e2d0fd256e424f31c4ae3d64ca93aebce50da1d8d8f78aa"
+    },
+    {
+      "path": "hvigorfile.ts",
+      "sha256": "c08e821b017d4199cbc2f0d086bb329e27e469e4c7d575f4493dfc2f92c72143"
+    },
+    {
+      "path": "oh-package.json5",
+      "sha256": "a4999a48272eb0067b4233bced3c636d9a4eb64d45ec6af72f7c2027a2cbbc2a"
+    }
+  ],
+  "buildInputFingerprintSha256": "43cbb5926d4f7f2619705cfc063eba99e4244844f85cddf715c0dd193a401fa1",
+  "toolingFiles": [
+    {
+      "path": "scripts/Audit-Hap.py",
+      "sha256": "0eb3947a89c714699b2b11c6ba61d43bda4e7fa80f4b315f43121559d8dfd3c0"
+    },
+    {
+      "path": "scripts/Build-App.py",
+      "sha256": "8670d922c71f633cf4b78758631e1c80c5cbe2bb65faa93c71818979b1730a30"
+    },
+    {
+      "path": "scripts/Build-HarmonyCProbe.ps1",
+      "sha256": "a554d24fe1e46ca1369b10a162c9a878dd9783bcfc8b0a2210a23089407fb1b2"
+    },
+    {
+      "path": "scripts/Prepare-Runtime.py",
+      "sha256": "28bf5b1cb06fdd828a18e5f05e20f4307eb94ad29e14ed80de06fac6b09eee3a"
+    },
+    {
+      "path": "scripts/Probe-HarmonyEnvironment.ps1",
+      "sha256": "f6391951e87e62dffcbebefaa278630d4ca4d907f0019561f756b2ed992797cd"
+    },
+    {
+      "path": "scripts/Probe-OhosPythonIndex.ps1",
+      "sha256": "df0be182944094ff6270600c4f14b1739442ee3461821fdbeda1e1be39d3024f"
+    },
+    {
+      "path": "scripts/Run-BridgeSelfTest.ps1",
+      "sha256": "00a670abcd7368202b6a94d35c5353ef4dd87e3d8f531f837bf256bf2a0667e7"
+    },
+    {
+      "path": "scripts/Run-CorePoc.ps1",
+      "sha256": "7b0b5419b05787ed81700bf971e1063acb3b3cc4d9981e33a0f720af8a3e87c2"
+    },
+    {
+      "path": "scripts/Sync-UiMockFixtures.ps1",
+      "sha256": "8564a5bff77c6e7c31796d8a1112dba33d0278adcbc501b757f4edb2d9cdffac"
+    },
+    {
+      "path": "scripts/Test-UiMock.ps1",
+      "sha256": "acab4694d8fcffc0d9f22c441e5919c97be41053a5de4a3a830dc36b920263e3"
+    },
+    {
+      "path": "scripts/Validate-CoreContracts.py",
+      "sha256": "ee819fdb8544fb74fdf2bcc6ede95e7616002911f276fa77b5cf0f8bdeb58cb0"
+    },
+    {
+      "path": "scripts/Validate-JsonFiles.py",
+      "sha256": "5eb25b44f90aacc660eef90f7fef5ac7ead8dd8d62a6cd6265fd463463e90237"
+    },
+    {
+      "path": "scripts/Verify-Fixtures.ps1",
+      "sha256": "2470ecf9be7e18950fc4b3c7fc45486fa5df999738af04c48ce1ee71a0a2104a"
+    },
+    {
+      "path": "scripts/Verify-Fixtures.py",
+      "sha256": "4fb6e32842ed374702a2a49bf76ce14f2fd04e41ddcfd9af15906351d75e7290"
+    },
+    {
+      "path": "scripts/ohos/README.md",
+      "sha256": "64b6fbc27e5439aa17c69feab0daea67b160f1f17e1716cfb412bbe3a4d44124"
+    },
+    {
+      "path": "scripts/ohos/flang-ohos-wrapper.sh",
+      "sha256": "18e493a458d3e7c84a462a43910acf8892fe53c1a00e530ce40fef579e073aee"
+    },
+    {
+      "path": "scripts/ohos/gsas-ohos-cross.ini",
+      "sha256": "d6ed3f1d8193b6cad3e809ff7a411446a5488c8b8e075b10c205cf96a72c213a"
+    },
+    {
+      "path": "scripts/ohos/sign-native-modules.sh",
+      "sha256": "edd18537b39625b36004045cb4034c6b78feab4d134f92c136b69efd57be8d92"
+    },
+    {
+      "path": "scripts/release_tools.py",
+      "sha256": "ae60f3834bbe301138c16820cbc604b945239e77336401b2fd0c7e4877443bd4"
+    },
+    {
+      "path": "packaging/runtime-manifest.example.json",
+      "sha256": "46f1bdf2d17de13a34695929afed58cf64f21aff320c6f913f9e87e03b989e2d"
+    }
+  ],
+  "toolingFingerprintSha256": "518d7fdaa83cfc1b456195e6b604c32283a052c5f65dabb9db5507ebf6ff89d4",
+  "toolVersions": {
+    "python": "3.12.10",
+    "platform": "Windows-11-10.0.22631-SP0",
+    "devecocli": "1.3.5",
+    "node": "v24.16.0",
+    "git": "git version 2.48.1.windows.1"
+  },
+  "buildMode": "release",
+  "runtimeId": null,
+  "runtimeManifestSha256": null,
+  "auditMode": "development",
+  "releaseCandidateApproved": false,
+  "artifacts": [
+    {
+      "path": "entry-default-unsigned.hap",
+      "sha256": "d0a5511becc02cfd6c5325693e6f6d9a673b986b5fd54d6772b03b663c15c48a",
+      "size": 1642271,
+      "inventory": "entry-default-unsigned.hap.inventory.json",
+      "inventorySha256": "12b646ce6073e53a30a394715606357ec4cfd5c266f56f52ae93dfa015e2bdf1",
+      "app": {
+        "iconId": 16777217,
+        "minPatchAPIVersion": 0,
+        "debug": false,
+        "targetPatchAPIVersion": 0,
+        "minMinorAPIVersion": 0,
+        "minAPIVersion": 60000020,
+        "icon": "$media:app_icon",
+        "buildMode": "release",
+        "label": "$string:app_name",
+        "bundleType": "app",
+        "versionName": "0.1.0",
+        "versionCode": 1,
+        "appEnvironments": [],
+        "compileSdkType": "HarmonyOS",
+        "labelId": 16777216,
+        "compileSdkVersion": "26.0.0.105",
+        "targetAPIVersion": 60101024,
+        "vendor": "GSAS-II porting team",
+        "bundleName": "com.gsasii.desktop",
+        "apiReleaseType": "Release",
+        "targetMinorAPIVersion": 0
+      },
+      "signingVerified": false
+    }
+  ],
+  "deviceRun": "not-requested"
+}

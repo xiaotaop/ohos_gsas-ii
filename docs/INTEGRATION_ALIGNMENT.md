@@ -11,7 +11,7 @@
 | 事项 | C 已交付的实现 | 剩余接入/确认及负责人 |
 |---|---|---|
 | A01 工程入口 | `app/entry`、EntryAbility、`pages/Index`，公共文件类型在 `contracts/Files.ets` | A 迁移真实页面；组长确认工程入口，保留 ui-mock 作为演示/测试 |
-| A02 工具链与应用 | 开发包 `com.gsasii.desktop`、0.1.0，最低20/目标24，SDK26 编译；debug/release 及英文目录构建脚本 | bundleName 已由组长确认；组长仍需确认团队工具链和真机系统，C 完成真机签名及 API20/24 兼容验证，上架名待定 |
+| A02 工具链与应用 | 开发包 `com.gsasii.desktop`、0.1.0，最低20/目标24；Windows Command Line Tools 26.0.0.851/SDK 26.0.0.105 的 Release 构建及 HAP 内容审计已通过 | bundleName 已由组长确认；组长仍需确认团队工具链基线和真机系统，C 完成真机签名及 API20/24 兼容验证，上架名待定 |
 | A03 初始化 | Ability 预热文件服务；AppServices 提供同一实例及失败重试 | B 提供 CoreService；B/C 完成运行时和核心初始化，A 消费就绪/失败/重试状态 |
 | A04 类型 | FileRole、AppFile、FileServiceError、CoreConfig 已有 ArkTS 实现 | B/C 对齐共享类型，B 补 JobSnapshot 和 Promise 错误；组长批准跨层选择 |
 | A05 文件选择 | FilePickerService；导入取消返回 undefined，导出取消返回 false；三种输入角色 | A 接入五份输入关联和反馈，B 确认可计算格式，组长确认选择器与角色方案 |

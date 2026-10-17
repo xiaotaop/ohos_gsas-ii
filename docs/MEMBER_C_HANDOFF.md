@@ -50,7 +50,7 @@ python3 scripts/Build-App.py --check --build-mode release
 | 版本 | 0.1.0 / versionCode 1 |
 | 设备 | 2in1 |
 | 最低/目标 API | 20 / 24，沿用 M1 版本范围 |
-| 本机工具链 | DevEco Studio 26.0.0.821，编译 SDK API 26，DevEco CLI 1.3.5 |
+| 已验证工具链 | DevEco CLI 1.3.5；Windows Command Line Tools 26.0.0.851、Hvigor 6.26.8、SDK 26.0.0.105 |
 | 构建模式 | debug、release |
 
 应用显示名是开发接入配置，上架名称尚未确定。组长已于 2026-10-17 确认开发 bundleName 为 `com.gsasii.desktop`；该标识与个人 GitHub 账号解耦，正式签名及提交上架后原则上不再变更。API 26 编译不表示最低兼容版本升级；API 20/24 真机兼容仍待验收。

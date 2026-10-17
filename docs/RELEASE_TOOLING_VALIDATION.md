@@ -10,7 +10,8 @@
 | 覆盖安装后文件恢复 | PASS：界面显示已恢复 1 个文件，PBSO4.XRA / 49,445 字节 |
 | 空模板与无运行时 release 审计 | 预期失败，退出码 1；分别明确提示等待 B 载荷、要求 ready 清单，未写成功报告 |
 | 真实 B 运行时、设备激活、离线精修、最终 SBOM/正式签名 | 未执行；等待 B、A、组长的相关交付 |
-| Windows/Linux SDK 构建 | 未执行；跨平台路径/CLI 分支需接收方验证 |
+| Linux SDK 构建 | 未执行；Linux 路径/CLI 分支仍需接收方验证 |
+| Windows 新 bundleName 构建 | PASS：DevEco CLI 1.3.5、Command Line Tools 26.0.0.851、SDK 26.0.0.105；7 个 ArkTS 文件 0 错误，Release 构建成功，实际 HAP 内容审计通过 |
 
 实际产物留在 `app/build/deliverables/` 的忽略目录，测试记录不作为正式发布候选批准。CI 使用公开 Runner 验证宿主门禁，不提供签名或设备验收。
 
@@ -25,4 +26,13 @@
 
 构建记录和内容清单哈希已用独立脚本从归档字节重算并一致；`runtimeId: null`、`signingVerified: false`、`releaseCandidateApproved: false`。未重复 C01/C02 的完整设备文件测试，未声称应用已可执行 Python 精修。HAP 的字节哈希可能因构建路径/工具输出而变化，留档用于追溯，不声称跨机器二进制逐字节可重现。
 
-> 历史证据说明（2026-10-17）：组长确认开发 bundleName 由 `com.xiaotaop.gsaspc` 改为 `com.gsasii.desktop`。本页引用的 HAP、构建记录和逐文件清单均来自改名前的真实构建，保留原始字节、哈希和元数据仅用于历史追溯，不得作为新 bundleName 的构建验收证据。新包名的 DevEco 构建、HAP 审计、安装和数据隔离验证需重新执行并另行留档。
+> 历史证据说明（2026-10-17）：组长确认开发 bundleName 由 `com.xiaotaop.gsaspc` 改为 `com.gsasii.desktop`。上文“真实构建的追溯信息”及原 `build-record.json`、`entry-default-unsigned.hap.inventory.json` 均来自改名前构建，仅用于历史追溯，不得作为新 bundleName 的验收证据。新包名的 Windows 重建及内容审计证据见下节；设备安装和数据隔离仍待具备设备或模拟器后执行。
+
+## Windows 新 bundleName 重建（2026-10-17）
+
+- 工具安装：[安装证据](evidence/release-tooling/windows-toolchain-installation.json)。DevEco CLI 1.3.5 通过 npm 安装；华为 Command Line Tools 26.0.0.851 以并行目录安装，保留原 6.0.2.670。安装包 SHA-256 为 `ac8d0563f47f95ca78799ea4aa494fa260bc3f7c8f2a569ac629af1794b5d71c`；压缩包 109,379 个条目，未发现越界路径或符号链接。安装包由组长从[华为下载中心](https://developer.huawei.com/consumer/cn/download/command-line-tools-for-hmos)下载并提供；本记录未用单独发布的厂商校验值交叉核验。
+- 构建输入：`main@85f23b0571cff9daed8c868b2523787d5e84f113`，构建时工作区干净；源码指纹与临时英文构建目录的输入指纹均为 `43cbb5926d4f7f2619705cfc063eba99e4244844f85cddf715c0dd193a401fa1`。
+- 检查与构建：7 个 ArkTS 文件 0 错误、36 条既有异常传播/N-API 声明警告；Hvigor Release 构建 33 个任务成功。工具链内部安装 pnpm 时报告 1 个 high severity npm 审计项，未执行可能改变锁定工具链的 `npm audit fix --force`；该提示不等同于应用 HAP 已发现同一依赖漏洞。
+- HAP：`entry-default-unsigned.hap`，1,642,271 字节，SHA-256 `d0a5511becc02cfd6c5325693e6f6d9a673b986b5fd54d6772b03b663c15c48a`。包内元数据为 `com.gsasii.desktop`、0.1.0、最低 API20、目标 API24、编译 SDK 26.0.0.105、`debug: false`、`buildMode: release`。
+- 内容审计：development 模式通过，19 个文件；独立复跑与构建时清单逐字节相同，清单 SHA-256 `12b646ce6073e53a30a394715606357ec4cfd5c266f56f52ae93dfa015e2bdf1`。证据为[构建记录](evidence/release-tooling/bundle-rename-build-record.json)和[逐文件清单](evidence/release-tooling/bundle-rename-entry-default-unsigned.hap.inventory.json)。
+- 限制：HAP 未签名，`runtimeId: null`、`signingVerified: false`、`releaseCandidateApproved: false`。检查时没有连接设备，26.0.0.851 工具目录也没有模拟器实例，因此没有执行安装、覆盖升级、旧包沙箱隔离或真实核心验证；不得将本记录解释为上架候选批准。
