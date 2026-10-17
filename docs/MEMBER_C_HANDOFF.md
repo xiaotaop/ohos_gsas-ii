@@ -25,7 +25,7 @@ python3 scripts/Build-App.py --check --build-mode release
 
 该分支名仅用于首次本地审核；已有开发分支的成员保留原分支，通过合并交付分支接入。合并前也可阅读和试接，不需等待 main 更新。构建前需安装 DevEco CLI 及对应 SDK；命令打印英文构建目录，HAP 位于该目录的 `entry/build/default/outputs/default`。安装与调试见第 2 节。安装启动后应看到真实文件管理页，可导入五份 fixture，重启后恢复已导入记录；不会执行精修。
 
-上述 Build-App.py 当前面向 macOS，使用 `/private/tmp` 暂存。Windows/Linux 接收方应在无中文路径的仓库中进入 `app/`，依次执行 `devecocli check arkts` 和 `devecocli build --modules entry --build-mode release`；对应 SDK、签名及设备配置需在接收方环境复验，不将本机 macOS 记录当作跨平台构建通过证据。
+本后续分支的 Build-App.py 已改用系统临时目录，并支持 `--stage-root` 指定英文路径、`--output-dir` 指定新产物目录，详见 [构建留档](RUNTIME_PACKAGING.md)。Windows/Linux 接收方也可在无中文路径的仓库进入 `app/`，依次执行 `devecocli check arkts` 和 `devecocli build --modules entry --build-mode release`；对应 SDK、签名及设备配置需在接收方环境复验，不将本机 macOS 记录当作跨平台构建通过证据。
 
 接收检查：
 
