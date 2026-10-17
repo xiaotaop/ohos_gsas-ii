@@ -1,0 +1,18 @@
+{
+  "files": [
+    "**/*.ets"
+  ],
+  "ignore": [
+    "**/build/**",
+    "**/oh_modules/**",
+    "**/node_modules/**",
+    "**/.hvigor/**"
+  ],
+  "ruleSet": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@performance/recommended"
+  ],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "error"
+  }
+}

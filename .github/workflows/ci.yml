@@ -56,6 +56,16 @@ jobs:
       - name: Test Python bridge
         run: python -m unittest -v bridge.tests.test_python_bridge
 
+      - name: Test native exclusive file creation
+        run: |
+          c++ -std=c++17 -Wall -Wextra -Werror tests/file-exporter-native.test.cpp -o /tmp/gsas-exclusive-test
+          /tmp/gsas-exclusive-test
+
+      - name: Test file service on host filesystem
+        run: |
+          npm install --prefix /tmp/gsas-file-tests --no-package-lock --no-save typescript@5.4.5
+          GSAS_TYPESCRIPT_PATH=/tmp/gsas-file-tests/node_modules/typescript node --test tests/file-service-host.test.cjs
+
       - name: Test ArkUI mock model
         run: |
           npx --yes --package typescript@5.4.5 tsc ui-mock/entry/src/main/ets/model/Refinement.ts --target ES2020 --module commonjs --strict --skipLibCheck --outDir ui-mock/build/test-model

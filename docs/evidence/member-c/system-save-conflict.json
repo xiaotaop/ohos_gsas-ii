@@ -1,0 +1,1503 @@
+[
+  {
+    "bounds": [
+      0,
+      0,
+      2730,
+      1757
+    ],
+    "children": [
+      {
+        "id": "ContainerModalStack",
+        "type": "Stack",
+        "bounds": [
+          390,
+          197,
+          2730,
+          1757
+        ],
+        "children": [
+          {
+            "type": "Column",
+            "bounds": [
+              391,
+              198,
+              2729,
+              1756
+            ],
+            "clickable": true,
+            "children": [
+              {
+                "type": "Row",
+                "bounds": [
+                  392,
+                  199,
+                  2728,
+                  275
+                ],
+                "clickable": true,
+                "children": [
+                  {
+                    "type": "Text",
+                    "text": "选择路径",
+                    "bounds": [
+                      437,
+                      219,
+                      2728,
+                      255
+                    ],
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "id": "ADDRESS_BAR_COMP_BACK",
+                "type": "Image",
+                "bounds": [
+                  422,
+                  290,
+                  498,
+                  366
+                ],
+                "children": []
+              },
+              {
+                "id": "ADDRESS_BAR_COMP_NEXT",
+                "type": "Image",
+                "bounds": [
+                  498,
+                  290,
+                  574,
+                  366
+                ],
+                "children": []
+              },
+              {
+                "id": "ADDRESS_BAR_COMP_UP",
+                "type": "Image",
+                "bounds": [
+                  574,
+                  290,
+                  650,
+                  366
+                ],
+                "clickable": true,
+                "children": []
+              },
+              {
+                "type": "Row",
+                "bounds": [
+                  672,
+                  290,
+                  1976,
+                  366
+                ],
+                "clickable": true,
+                "children": [
+                  {
+                    "id": "FileManager_PathSegComp_0",
+                    "type": "Row",
+                    "bounds": [
+                      672,
+                      298,
+                      815,
+                      359
+                    ],
+                    "clickable": true,
+                    "children": [
+                      {
+                        "type": "Text",
+                        "text": "user",
+                        "bounds": [
+                          740,
+                          310,
+                          800,
+                          346
+                        ],
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "id": "FileManager_PathSegComp_1",
+                    "type": "Row",
+                    "bounds": [
+                      853,
+                      298,
+                      997,
+                      359
+                    ],
+                    "clickable": true,
+                    "children": [
+                      {
+                        "type": "Text",
+                        "text": "个人",
+                        "bounds": [
+                          921,
+                          310,
+                          982,
+                          346
+                        ],
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "id": "FileManager_FirstSegComp_2",
+                    "type": "Row",
+                    "bounds": [
+                      1035,
+                      298,
+                      1180,
+                      359
+                    ],
+                    "clickable": true,
+                    "children": [
+                      {
+                        "id": "FileManager_FirstSegComp_2_TEXT",
+                        "type": "Text",
+                        "text": "音频",
+                        "bounds": [
+                          1103,
+                          310,
+                          1164,
+                          346
+                        ],
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "FileManager_RefreshButton",
+                "type": "Row",
+                "bounds": [
+                  1976,
+                  298,
+                  2037,
+                  359
+                ],
+                "clickable": true,
+                "children": []
+              },
+              {
+                "type": "Row",
+                "bounds": [
+                  2044,
+                  328,
+                  2059,
+                  329
+                ],
+                "clickable": true,
+                "children": []
+              },
+              {
+                "type": "Row",
+                "bounds": [
+                  2059,
+                  290,
+                  2682,
+                  366
+                ],
+                "clickable": true,
+                "children": [
+                  {
+                    "id": "FileManager_SearchBarComp_Input",
+                    "type": "TextInput",
+                    "bounds": [
+                      2119,
+                      290,
+                      2683,
+                      366
+                    ],
+                    "clickable": true,
+                    "longClickable": true,
+                    "scrollable": true,
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "type": "Row",
+                "bounds": [
+                  2682,
+                  328,
+                  2728,
+                  329
+                ],
+                "clickable": true,
+                "children": []
+              },
+              {
+                "id": "TOOL_BAR",
+                "type": "Row",
+                "bounds": [
+                  392,
+                  381,
+                  2728,
+                  473
+                ],
+                "clickable": true,
+                "children": [
+                  {
+                    "id": "ITEM_CREATE",
+                    "type": "Row",
+                    "bounds": [
+                      429,
+                      389,
+                      631,
+                      465
+                    ],
+                    "clickable": true,
+                    "children": [
+                      {
+                        "type": "Text",
+                        "text": "新建",
+                        "bounds": [
+                          505,
+                          409,
+                          570,
+                          445
+                        ],
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "id": "group_create",
+                    "type": "Row",
+                    "bounds": [
+                      638,
+                      408,
+                      640,
+                      446
+                    ],
+                    "children": []
+                  },
+                  {
+                    "id": "ITEM_CUT",
+                    "type": "Row",
+                    "bounds": [
+                      647,
+                      389,
+                      723,
+                      465
+                    ],
+                    "children": []
+                  },
+                  {
+                    "id": "ITEM_COPY",
+                    "type": "Row",
+                    "bounds": [
+                      737,
+                      389,
+                      813,
+                      465
+                    ],
+                    "children": []
+                  },
+                  {
+                    "id": "ITEM_PASTE",
+                    "type": "Row",
+                    "bounds": [
+                      827,
+                      389,
+                      903,
+                      465
+                    ],
+                    "children": []
+                  },
+                  {
+                    "id": "ITEM_RENAME",
+                    "type": "Row",
+                    "bounds": [
+                      917,
+                      389,
+                      993,
+                      465
+                    ],
+                    "children": []
+                  },
+                  {
+                    "id": "ITEM_SHARE",
+                    "type": "Row",
+                    "bounds": [
+                      1007,
+                      389,
+                      1083,
+                      465
+                    ],
+                    "children": []
+                  },
+                  {
+                    "id": "ITEM_DELETE",
+                    "type": "Row",
+                    "bounds": [
+                      1097,
+                      389,
+                      1173,
+                      465
+                    ],
+                    "children": []
+                  },
+                  {
+                    "id": "FileManager_RightBarKey_ToolBarMulChoices",
+                    "type": "Row",
+                    "bounds": [
+                      1187,
+                      389,
+                      1263,
+                      465
+                    ],
+                    "clickable": true,
+                    "children": []
+                  },
+                  {
+                    "id": "group_operation",
+                    "type": "Row",
+                    "bounds": [
+                      1269,
+                      408,
+                      1271,
+                      446
+                    ],
+                    "children": []
+                  },
+                  {
+                    "id": "FileManager_RightBarKey_ToolBarSort",
+                    "type": "Row",
+                    "bounds": [
+                      1278,
+                      389,
+                      1479,
+                      465
+                    ],
+                    "clickable": true,
+                    "children": [
+                      {
+                        "type": "Text",
+                        "text": "排序",
+                        "bounds": [
+                          1354,
+                          409,
+                          1419,
+                          445
+                        ],
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "id": "FileManager_RightBarKey_ToolBarView",
+                    "type": "Row",
+                    "bounds": [
+                      1493,
+                      389,
+                      1694,
+                      465
+                    ],
+                    "clickable": true,
+                    "children": [
+                      {
+                        "type": "Text",
+                        "text": "查看",
+                        "bounds": [
+                          1569,
+                          409,
+                          1634,
+                          445
+                        ],
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Row",
+                    "bounds": [
+                      2553,
+                      389,
+                      2698,
+                      465
+                    ],
+                    "clickable": true,
+                    "children": [
+                      {
+                        "type": "Text",
+                        "text": "预览",
+                        "bounds": [
+                          2622,
+                          406,
+                          2683,
+                          448
+                        ],
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "FileManager_FileViewComp",
+                "type": "Row",
+                "bounds": [
+                  774,
+                  473,
+                  2728,
+                  1397
+                ],
+                "children": [
+                  {
+                    "id": "FileManager_FileListViewComp_OrderMenu_0",
+                    "type": "Row",
+                    "bounds": [
+                      819,
+                      489,
+                      1535,
+                      534
+                    ],
+                    "children": [
+                      {
+                        "type": "Flex",
+                        "bounds": [
+                          819,
+                          489,
+                          1503,
+                          534
+                        ],
+                        "clickable": true,
+                        "children": [
+                          {
+                            "type": "Text",
+                            "text": "名称",
+                            "bounds": [
+                              819,
+                              496,
+                              873,
+                              527
+                            ],
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Divider",
+                        "bounds": [
+                          1518,
+                          489,
+                          1520,
+                          534
+                        ],
+                        "clickable": true,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "id": "FileManager_FileListViewComp_OrderMenu_1",
+                    "type": "Row",
+                    "bounds": [
+                      1535,
+                      489,
+                      1934,
+                      534
+                    ],
+                    "children": [
+                      {
+                        "type": "Flex",
+                        "bounds": [
+                          1535,
+                          489,
+                          1901,
+                          534
+                        ],
+                        "clickable": true,
+                        "children": [
+                          {
+                            "type": "Text",
+                            "text": "修改日期",
+                            "bounds": [
+                              1535,
+                              496,
+                              1642,
+                              527
+                            ],
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Divider",
+                        "bounds": [
+                          1916,
+                          489,
+                          1918,
+                          534
+                        ],
+                        "clickable": true,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "id": "FileManager_FileListViewComp_OrderMenu_3",
+                    "type": "Row",
+                    "bounds": [
+                      1934,
+                      489,
+                      2173,
+                      534
+                    ],
+                    "children": [
+                      {
+                        "type": "Flex",
+                        "bounds": [
+                          1934,
+                          489,
+                          2141,
+                          534
+                        ],
+                        "clickable": true,
+                        "children": [
+                          {
+                            "type": "Text",
+                            "text": "类型",
+                            "bounds": [
+                              1934,
+                              496,
+                              1988,
+                              527
+                            ],
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Divider",
+                        "bounds": [
+                          2156,
+                          489,
+                          2158,
+                          534
+                        ],
+                        "clickable": true,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "id": "FileManager_FileListViewComp_OrderMenu_4",
+                    "type": "Row",
+                    "bounds": [
+                      2172,
+                      489,
+                      2411,
+                      534
+                    ],
+                    "children": [
+                      {
+                        "type": "Flex",
+                        "bounds": [
+                          2172,
+                          489,
+                          2379,
+                          534
+                        ],
+                        "clickable": true,
+                        "children": [
+                          {
+                            "type": "Text",
+                            "text": "大小",
+                            "bounds": [
+                              2172,
+                              496,
+                              2226,
+                              527
+                            ],
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Divider",
+                        "bounds": [
+                          2394,
+                          489,
+                          2396,
+                          534
+                        ],
+                        "clickable": true,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Grid",
+                    "bounds": [
+                      774,
+                      550,
+                      2698,
+                      1398
+                    ],
+                    "clickable": true,
+                    "longClickable": true,
+                    "scrollable": true,
+                    "children": [
+                      {
+                        "type": "Text",
+                        "text": "安全访问文件",
+                        "bounds": [
+                          924,
+                          588,
+                          1107,
+                          624
+                        ],
+                        "children": []
+                      },
+                      {
+                        "type": "Text",
+                        "text": "应用仅可访问您选定的文件或文件夹，无法访问文件夹其他内容。进一步了解",
+                        "bounds": [
+                          924,
+                          627,
+                          1829,
+                          658
+                        ],
+                        "clickable": true,
+                        "children": []
+                      },
+                      {
+                        "type": "Row",
+                        "bounds": [
+                          2321,
+                          585,
+                          2362,
+                          625
+                        ],
+                        "clickable": true,
+                        "children": []
+                      },
+                      {
+                        "type": "GridItem",
+                        "bounds": [
+                          804,
+                          697,
+                          2396,
+                          775
+                        ],
+                        "clickable": true,
+                        "children": [
+                          {
+                            "id": "FileManager_FileListViewComp_0file://docs/storage/Users/currentUser/Music/PBSO4.XRA",
+                            "type": "Row",
+                            "bounds": [
+                              805,
+                              698,
+                              2395,
+                              774
+                            ],
+                            "longClickable": true,
+                            "children": [
+                              {
+                                "type": "Row",
+                                "bounds": [
+                                  806,
+                                  709,
+                                  1522,
+                                  763
+                                ],
+                                "longClickable": true,
+                                "children": [
+                                  {
+                                    "id": "file://docs/storage/Users/currentUser/Music/PBSO4.XRA_image",
+                                    "type": "CachedImage",
+                                    "bounds": [
+                                      821,
+                                      713,
+                                      867,
+                                      759
+                                    ],
+                                    "longClickable": true,
+                                    "children": []
+                                  },
+                                  {
+                                    "type": "Row",
+                                    "bounds": [
+                                      878,
+                                      718,
+                                      1041,
+                                      754
+                                    ],
+                                    "longClickable": true,
+                                    "children": [
+                                      {
+                                        "type": "Row",
+                                        "bounds": [
+                                          878,
+                                          718,
+                                          1041,
+                                          754
+                                        ],
+                                        "longClickable": true,
+                                        "children": [
+                                          {
+                                            "id": "file://docs/storage/Users/currentUser/Music/PBSO4.XRA",
+                                            "type": "Text",
+                                            "text": "PBSO4.XRA",
+                                            "bounds": [
+                                              878,
+                                              718,
+                                              1041,
+                                              754
+                                            ],
+                                            "clickable": true,
+                                            "children": []
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "Row",
+                                "bounds": [
+                                  1522,
+                                  718,
+                                  1921,
+                                  754
+                                ],
+                                "longClickable": true,
+                                "children": [
+                                  {
+                                    "type": "Row",
+                                    "bounds": [
+                                      1537,
+                                      718,
+                                      1896,
+                                      754
+                                    ],
+                                    "longClickable": true,
+                                    "children": [
+                                      {
+                                        "type": "Text",
+                                        "text": "2026年10月15日 下午1:12",
+                                        "bounds": [
+                                          1537,
+                                          718,
+                                          1896,
+                                          754
+                                        ],
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "Row",
+                                "bounds": [
+                                  1921,
+                                  718,
+                                  2160,
+                                  754
+                                ],
+                                "longClickable": true,
+                                "children": [
+                                  {
+                                    "type": "Row",
+                                    "bounds": [
+                                      1936,
+                                      718,
+                                      1997,
+                                      754
+                                    ],
+                                    "longClickable": true,
+                                    "children": [
+                                      {
+                                        "type": "Text",
+                                        "text": "其他",
+                                        "bounds": [
+                                          1936,
+                                          718,
+                                          1997,
+                                          754
+                                        ],
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "Row",
+                                "bounds": [
+                                  2159,
+                                  718,
+                                  2398,
+                                  754
+                                ],
+                                "longClickable": true,
+                                "children": [
+                                  {
+                                    "type": "Row",
+                                    "bounds": [
+                                      2300,
+                                      718,
+                                      2383,
+                                      754
+                                    ],
+                                    "longClickable": true,
+                                    "children": [
+                                      {
+                                        "type": "Text",
+                                        "text": "50 KB",
+                                        "bounds": [
+                                          2300,
+                                          718,
+                                          2383,
+                                          754
+                                        ],
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Column",
+                    "bounds": [
+                      2698,
+                      565,
+                      2728,
+                      1460
+                    ],
+                    "clickable": true,
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "type": "Text",
+                "text": "文件名",
+                "bounds": [
+                  819,
+                  1440,
+                  971,
+                  1476
+                ],
+                "children": []
+              },
+              {
+                "id": "pickerFileNameTextInput",
+                "type": "TextInput",
+                "text": "PBSO4.XRA",
+                "bounds": [
+                  971,
+                  1426,
+                  2685,
+                  1490
+                ],
+                "clickable": true,
+                "longClickable": true,
+                "scrollable": true,
+                "children": []
+              },
+              {
+                "type": "Text",
+                "text": "文件格式",
+                "bounds": [
+                  819,
+                  1522,
+                  971,
+                  1558
+                ],
+                "children": []
+              },
+              {
+                "id": "PickerSuffixesSelect",
+                "type": "Flex",
+                "bounds": [
+                  972,
+                  1511,
+                  2682,
+                  1570
+                ],
+                "clickable": true,
+                "children": []
+              },
+              {
+                "type": "Button",
+                "text": "新建文件夹",
+                "bounds": [
+                  819,
+                  1633,
+                  1031,
+                  1709
+                ],
+                "clickable": true,
+                "children": []
+              },
+              {
+                "type": "Button",
+                "text": "取消",
+                "bounds": [
+                  2197,
+                  1633,
+                  2425,
+                  1709
+                ],
+                "clickable": true,
+                "children": []
+              },
+              {
+                "type": "Button",
+                "text": "保存",
+                "bounds": [
+                  2455,
+                  1633,
+                  2683,
+                  1709
+                ],
+                "clickable": true,
+                "children": []
+              },
+              {
+                "id": "FileManager_leftBarKey_Flex",
+                "type": "Column",
+                "bounds": [
+                  392,
+                  473,
+                  772,
+                  1755
+                ],
+                "clickable": true,
+                "children": [
+                  {
+                    "type": "Grid",
+                    "bounds": [
+                      392,
+                      473,
+                      772,
+                      1603
+                    ],
+                    "scrollable": true,
+                    "children": [
+                      {
+                        "id": "FileManager_LeftBarColItemComp_key_home",
+                        "type": "Row",
+                        "bounds": [
+                          422,
+                          488,
+                          742,
+                          570
+                        ],
+                        "clickable": true,
+                        "longClickable": true,
+                        "children": [
+                          {
+                            "id": "FileManager_LeftBarColItemComp_key_0_home_LOCAL",
+                            "type": "Row",
+                            "bounds": [
+                              425,
+                              491,
+                              739,
+                              567
+                            ],
+                            "children": [
+                              {
+                                "id": "home_LOCAL",
+                                "type": "Text",
+                                "text": "主页",
+                                "bounds": [
+                                  501,
+                                  491,
+                                  724,
+                                  567
+                                ],
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "FileManager_LeftBarCollapseComp_key_1",
+                        "type": "Flex",
+                        "bounds": [
+                          422,
+                          585,
+                          742,
+                          661
+                        ],
+                        "clickable": true,
+                        "children": [
+                          {
+                            "type": "Text",
+                            "text": "快速访问",
+                            "bounds": [
+                              440,
+                              612,
+                              547,
+                              643
+                            ],
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "id": "FileManager_LeftBarColItemComp_key_file://docs/storage/Users/currentUser/Desktop",
+                        "type": "Row",
+                        "bounds": [
+                          422,
+                          665,
+                          742,
+                          747
+                        ],
+                        "clickable": true,
+                        "longClickable": true,
+                        "children": [
+                          {
+                            "id": "FileManager_LeftBarColItemComp_key_1_file://docs/storage/Users/currentUser/Desktop_LOCAL",
+                            "type": "Row",
+                            "bounds": [
+                              425,
+                              668,
+                              679,
+                              744
+                            ],
+                            "children": [
+                              {
+                                "id": "file://docs/storage/Users/currentUser/Desktop_LOCAL",
+                                "type": "Text",
+                                "text": "桌面",
+                                "bounds": [
+                                  501,
+                                  668,
+                                  665,
+                                  744
+                                ],
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "FileManager_LeftBarColItemComp_key_file://docs/storage/Users/currentUser/Documents",
+                        "type": "Row",
+                        "bounds": [
+                          422,
+                          751,
+                          742,
+                          833
+                        ],
+                        "clickable": true,
+                        "longClickable": true,
+                        "children": [
+                          {
+                            "id": "FileManager_LeftBarColItemComp_key_1_file://docs/storage/Users/currentUser/Documents_LOCAL",
+                            "type": "Row",
+                            "bounds": [
+                              425,
+                              754,
+                              679,
+                              830
+                            ],
+                            "children": [
+                              {
+                                "id": "file://docs/storage/Users/currentUser/Documents_LOCAL",
+                                "type": "Text",
+                                "text": "文档",
+                                "bounds": [
+                                  501,
+                                  754,
+                                  665,
+                                  830
+                                ],
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "FileManager_LeftBarColItemComp_key_file://docs/storage/Users/currentUser/Download",
+                        "type": "Row",
+                        "bounds": [
+                          422,
+                          837,
+                          742,
+                          919
+                        ],
+                        "clickable": true,
+                        "longClickable": true,
+                        "children": [
+                          {
+                            "id": "FileManager_LeftBarColItemComp_key_1_file://docs/storage/Users/currentUser/Download_LOCAL",
+                            "type": "Row",
+                            "bounds": [
+                              425,
+                              840,
+                              679,
+                              916
+                            ],
+                            "children": [
+                              {
+                                "id": "file://docs/storage/Users/currentUser/Download_LOCAL",
+                                "type": "Text",
+                                "text": "下载",
+                                "bounds": [
+                                  501,
+                                  840,
+                                  665,
+                                  916
+                                ],
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "FileManager_LeftBarColItemComp_key_file://docs/storage/Users/currentUser/Images",
+                        "type": "Row",
+                        "bounds": [
+                          422,
+                          922,
+                          742,
+                          1004
+                        ],
+                        "clickable": true,
+                        "longClickable": true,
+                        "children": [
+                          {
+                            "id": "FileManager_LeftBarColItemComp_key_1_file://docs/storage/Users/currentUser/Images_LOCAL",
+                            "type": "Row",
+                            "bounds": [
+                              425,
+                              925,
+                              679,
+                              1001
+                            ],
+                            "children": [
+                              {
+                                "id": "file://docs/storage/Users/currentUser/Images_LOCAL",
+                                "type": "Text",
+                                "text": "图片",
+                                "bounds": [
+                                  501,
+                                  925,
+                                  665,
+                                  1001
+                                ],
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "FileManager_LeftBarColItemComp_key_file://docs/storage/Users/currentUser/Music",
+                        "type": "Row",
+                        "bounds": [
+                          422,
+                          1008,
+                          742,
+                          1090
+                        ],
+                        "clickable": true,
+                        "longClickable": true,
+                        "children": [
+                          {
+                            "id": "FileManager_LeftBarColItemComp_key_1_file://docs/storage/Users/currentUser/Music_LOCAL",
+                            "type": "Row",
+                            "bounds": [
+                              425,
+                              1011,
+                              679,
+                              1087
+                            ],
+                            "children": [
+                              {
+                                "id": "file://docs/storage/Users/currentUser/Music_LOCAL",
+                                "type": "Text",
+                                "text": "音频",
+                                "bounds": [
+                                  501,
+                                  1011,
+                                  665,
+                                  1087
+                                ],
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "FileManager_LeftBarColItemComp_key_file://docs/storage/Users/currentUser/Videos",
+                        "type": "Row",
+                        "bounds": [
+                          422,
+                          1094,
+                          742,
+                          1176
+                        ],
+                        "clickable": true,
+                        "longClickable": true,
+                        "children": [
+                          {
+                            "id": "FileManager_LeftBarColItemComp_key_1_file://docs/storage/Users/currentUser/Videos_LOCAL",
+                            "type": "Row",
+                            "bounds": [
+                              425,
+                              1097,
+                              679,
+                              1173
+                            ],
+                            "children": [
+                              {
+                                "id": "file://docs/storage/Users/currentUser/Videos_LOCAL",
+                                "type": "Text",
+                                "text": "视频",
+                                "bounds": [
+                                  501,
+                                  1097,
+                                  665,
+                                  1173
+                                ],
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "c961c947-10b5-40f8-b3ec-d90eb2c469e2",
+                        "type": "Row",
+                        "bounds": [
+                          422,
+                          1197,
+                          742,
+                          1279
+                        ],
+                        "clickable": true,
+                        "children": [
+                          {
+                            "type": "Flex",
+                            "bounds": [
+                              425,
+                              1200,
+                              739,
+                              1276
+                            ],
+                            "clickable": true,
+                            "children": [
+                              {
+                                "type": "Text",
+                                "text": "存储位置",
+                                "bounds": [
+                                  440,
+                                  1230,
+                                  547,
+                                  1261
+                                ],
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "eeea697e-e906-4a20-bf73-4656d2aa0e4d",
+                        "type": "Row",
+                        "bounds": [
+                          422,
+                          1283,
+                          742,
+                          1365
+                        ],
+                        "clickable": true,
+                        "children": [
+                          {
+                            "type": "Row",
+                            "bounds": [
+                              432,
+                              1294,
+                              492,
+                              1354
+                            ],
+                            "clickable": true,
+                            "children": []
+                          },
+                          {
+                            "type": "Flex",
+                            "bounds": [
+                              499,
+                              1286,
+                              739,
+                              1362
+                            ],
+                            "longClickable": true,
+                            "children": [
+                              {
+                                "id": "FileManager_LeftBarColItemComp_key_3_myPC_LOCAL",
+                                "type": "Row",
+                                "bounds": [
+                                  499,
+                                  1286,
+                                  739,
+                                  1362
+                                ],
+                                "children": [
+                                  {
+                                    "id": "file://docs/storage/Users/currentUser image",
+                                    "type": "Image",
+                                    "bounds": [
+                                      499,
+                                      1301,
+                                      545,
+                                      1347
+                                    ],
+                                    "children": []
+                                  },
+                                  {
+                                    "id": "myPC_LOCAL",
+                                    "type": "Text",
+                                    "text": "user",
+                                    "bounds": [
+                                      560,
+                                      1306,
+                                      740,
+                                      1342
+                                    ],
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Text",
+                    "text": "仅可访问所选项目",
+                    "bounds": [
+                      507,
+                      1664,
+                      690,
+                      1694
+                    ],
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "Dialog",
+            "bounds": [
+              390,
+              197,
+              2730,
+              1757
+            ],
+            "clickable": true,
+            "children": [
+              {
+                "type": "Text",
+                "text": "“PBSO4.XRA”文件已存在，要替换它？",
+                "bounds": [
+                  1187,
+                  869,
+                  1934,
+                  980
+                ],
+                "children": []
+              },
+              {
+                "type": "Button",
+                "bounds": [
+                  1217,
+                  980,
+                  1546,
+                  1056
+                ],
+                "clickable": true,
+                "children": [
+                  {
+                    "type": "Text",
+                    "text": "取消",
+                    "bounds": [
+                      1351,
+                      1000,
+                      1412,
+                      1036
+                    ],
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "type": "Button",
+                "bounds": [
+                  1576,
+                  980,
+                  1905,
+                  1056
+                ],
+                "clickable": true,
+                "children": [
+                  {
+                    "type": "Text",
+                    "text": "替换",
+                    "bounds": [
+                      1710,
+                      1000,
+                      1771,
+                      1036
+                    ],
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "containerModalButtonRowId",
+        "type": "Row",
+        "bounds": [
+          2640,
+          197,
+          2730,
+          273
+        ],
+        "children": [
+          {
+            "id": "EnhanceCloseBtn",
+            "type": "Button",
+            "bounds": [
+              2662,
+              208,
+              2715,
+              262
+            ],
+            "clickable": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  }
+]

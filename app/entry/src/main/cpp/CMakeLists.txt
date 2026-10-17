@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.5.0)
+project(gsas_fileio)
+add_library(gsas_fileio SHARED file_exporter.cpp)
+target_compile_features(gsas_fileio PRIVATE cxx_std_17)
+target_compile_options(gsas_fileio PRIVATE -Wall -Wextra -Werror -Wno-unused-command-line-argument)
+target_link_libraries(gsas_fileio PUBLIC libace_napi.z.so libohfileuri.so)

@@ -1,0 +1,6 @@
+This product includes software produced by UChicago Argonne, LLC under Contract No. DE-AC02-06CH11357 with the Department of Energy.
+
+The test fixtures in tests/fixtures/ are unmodified copies from GSAS-II commit
+2b4aba1bc44de63a3da9d4495944c3b99e389399. See LICENSE and
+docs/LICENSE_AUDIT.md for the applicable notices and distribution conditions.
+
