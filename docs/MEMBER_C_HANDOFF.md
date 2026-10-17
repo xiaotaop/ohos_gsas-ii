@@ -46,14 +46,14 @@ python3 scripts/Build-App.py --check --build-mode release
 | 配置 | 当前实现 |
 |---|---|
 | 应用显示名 | GSAS PC · 开发版 |
-| bundleName | com.xiaotaop.gsaspc |
+| bundleName | com.gsasii.desktop |
 | 版本 | 0.1.0 / versionCode 1 |
 | 设备 | 2in1 |
 | 最低/目标 API | 20 / 24，沿用 M1 版本范围 |
 | 本机工具链 | DevEco Studio 26.0.0.821，编译 SDK API 26，DevEco CLI 1.3.5 |
 | 构建模式 | debug、release |
 
-名称和包名是开发接入配置，上架名称尚未确定。API 26 编译不表示最低兼容版本升级；API 20/24 真机兼容仍待验收。
+应用显示名是开发接入配置，上架名称尚未确定。组长已于 2026-10-17 确认开发 bundleName 为 `com.gsasii.desktop`；该标识与个人 GitHub 账号解耦，正式签名及提交上架后原则上不再变更。API 26 编译不表示最低兼容版本升级；API 20/24 真机兼容仍待验收。
 
 跨成员方案在此给出可运行实现，**不是新增团队批准记录**。冻结 CORE_API、请求/事件 Schema 和原始示例未修改。组长仍需确认 A01～A07 中的工程/角色/错误结构/产物交接选择，以及 B03 的日志可发现方式。
 

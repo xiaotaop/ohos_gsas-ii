@@ -11,7 +11,7 @@
 | 事项 | C 已交付的实现 | 剩余接入/确认及负责人 |
 |---|---|---|
 | A01 工程入口 | `app/entry`、EntryAbility、`pages/Index`，公共文件类型在 `contracts/Files.ets` | A 迁移真实页面；组长确认工程入口，保留 ui-mock 作为演示/测试 |
-| A02 工具链与应用 | 开发包 `com.xiaotaop.gsaspc`、0.1.0，最低20/目标24，SDK26 编译；debug/release 及英文目录构建脚本 | 组长确认团队工具链和真机系统；C 完成真机签名及 API20/24 兼容验证，上架名待定 |
+| A02 工具链与应用 | 开发包 `com.gsasii.desktop`、0.1.0，最低20/目标24，SDK26 编译；debug/release 及英文目录构建脚本 | bundleName 已由组长确认；组长仍需确认团队工具链和真机系统，C 完成真机签名及 API20/24 兼容验证，上架名待定 |
 | A03 初始化 | Ability 预热文件服务；AppServices 提供同一实例及失败重试 | B 提供 CoreService；B/C 完成运行时和核心初始化，A 消费就绪/失败/重试状态 |
 | A04 类型 | FileRole、AppFile、FileServiceError、CoreConfig 已有 ArkTS 实现 | B/C 对齐共享类型，B 补 JobSnapshot 和 Promise 错误；组长批准跨层选择 |
 | A05 文件选择 | FilePickerService；导入取消返回 undefined，导出取消返回 false；三种输入角色 | A 接入五份输入关联和反馈，B 确认可计算格式，组长确认选择器与角色方案 |
@@ -57,7 +57,7 @@ A 的后续会话接入准备位于 `docs/github-integration-readiness@27dce33`�
 | A06 | **jobId 分配时序**：契约允许核心“生成或确认”，需选定实际路径。明确 UI 在首个事件之前如何知道 jobId，避免同步 accepted 事件早于 Promise 返回而丢失 | B、A |
 | A07 | **内部文件解析与产物登记**：B 如何通过 C 的文件服务解析输入 fileId；谁登记新 GPX/JSON/日志并返回可查询、可导出的 fileId。具体内部调用和模块归属需双方确认，UI 不参与路径解析 | B、C |
 
-M1 临时值仅供比对：`ui-mock/`、`pages/Index`、`com.example.gsas.uimock`、目标 API24/最低 API20。C 的正式工程实现为 `app/`、`pages/Index`、`com.xiaotaop.gsaspc`、相同兼容/目标 API 范围。M1 `Refinement.ts` 的 role 为 string、Snapshot 为本地投影；C 的 FileRole 实现及所有跨层选择仍需按本文件确认，不自动成为新的冻结契约。
+M1 临时值仅供比对：`ui-mock/`、`pages/Index`、`com.example.gsas.uimock`、目标 API24/最低 API20。C 的正式工程实现为 `app/`、`pages/Index`、`com.gsasii.desktop`、相同兼容/目标 API 范围。M1 `Refinement.ts` 的 role 为 string、Snapshot 为本地投影；C 的 FileRole 实现及所有跨层选择仍需按本文件确认，不自动成为新的冻结契约。
 
 ## 3. 联调前需要关闭的行为差异
 
@@ -102,6 +102,8 @@ M1 临时值仅供比对：`ui-mock/`、`pages/Index`、`com.example.gsas.uimock
 
 | 事项编号 | 确认结论 | 确认人/日期 | 实现或契约提交 |
 |---|---|---|---|
-| 待填写 | 尚无新增团队决议 | — | — |
+| A02（bundleName） | 开发包名统一为 `com.gsasii.desktop`，与个人 GitHub 账号解耦；正式签名及提交上架后原则上不再变更 | 组长 / 2026-10-17 | 本次变更提交 |
+
+除上述 bundleName 子项外，其余待确认项仍保持待确认；本记录不代表 A02 的工具链、真机系统、签名和兼容性验证已经通过。
 
 M1 子集已按声明的 mock 范围完成审核并合入 `main`。本文的待确认项用于后续真实集成，不表示已实现；后续结论涉及契约字段时，仍须按本节流程同步更新并重新审核。

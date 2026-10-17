@@ -24,3 +24,5 @@
 - 环境：DevEco CLI 1.3.5、Node 24.14.1、Python 3.11.3；HAP 记录编译 SDK 26.0.0.105，PC 模拟器 MateBook Pro 1。SDK 仍有既有异常传播/原生声明验证等警告及未签名提示，本次不声称零警告或签名已验收。
 
 构建记录和内容清单哈希已用独立脚本从归档字节重算并一致；`runtimeId: null`、`signingVerified: false`、`releaseCandidateApproved: false`。未重复 C01/C02 的完整设备文件测试，未声称应用已可执行 Python 精修。HAP 的字节哈希可能因构建路径/工具输出而变化，留档用于追溯，不声称跨机器二进制逐字节可重现。
+
+> 历史证据说明（2026-10-17）：组长确认开发 bundleName 由 `com.xiaotaop.gsaspc` 改为 `com.gsasii.desktop`。本页引用的 HAP、构建记录和逐文件清单均来自改名前的真实构建，保留原始字节、哈希和元数据仅用于历史追溯，不得作为新 bundleName 的构建验收证据。新包名的 DevEco 构建、HAP 审计、安装和数据隔离验证需重新执行并另行留档。

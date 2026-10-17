@@ -348,7 +348,7 @@ def audit_hap(hap, manifest=None, mode='development'):
             members[name] = item
             inventory.append(item)
     require(metadata is not None and isinstance(metadata.get('app'), dict), 'HAP module.json missing/invalid')
-    require(metadata['app'].get('bundleName') == 'com.xiaotaop.gsaspc', 'unexpected bundleName')
+    require(metadata['app'].get('bundleName') == 'com.gsasii.desktop', 'unexpected bundleName')
     for name in expected:
         require(name in members, f'missing packaged runtime file: {name}')
     for name in BASE_LIBS:

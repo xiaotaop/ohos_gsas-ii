@@ -56,7 +56,7 @@ def payload_fixture(root):
 
 
 def base_hap(path, extra=None, omit=(), debug=False):
-    content = {'module.json': json.dumps({'app': {'bundleName': 'com.xiaotaop.gsaspc',
+    content = {'module.json': json.dumps({'app': {'bundleName': 'com.gsasii.desktop',
                 'debug': debug, 'buildMode': 'debug' if debug else 'release'}}).encode(),
                **{name: elf() for name in rt.BASE_LIBS}}
     for p in (rt.REPO / 'app/entry/src/main/resources/rawfile/licenses').iterdir():
