@@ -96,7 +96,7 @@ Special handling is required."——分布于成员 C 既有文件与 B 的新�
 - B03 的“先登记再发终态”已获批准，但失败/取消终态尚未公开日志 artifact；
   当前实现只完成落盘和登记，不能计为 UI 可发现/可导出。私有 traceback 只写
   `jobs/<jobId>/logs/`，从不登记。
-- `RefinementPanel` 在核心就绪瞬间重挂，表单文本会被清空（A 侧组件契约
-  如此约定；页面加载早期通常先于用户输入完成）。
+- `RefinementPanel` 在核心就绪瞬间重挂；A 的 2026-10-19 接入收尾将表单
+  状态提升至父页面，保留已填写参数。真实载荷下的就绪切换仍待设备验证。
 - Windows 本机 `file-service-host.test.cjs` 因 `os.tmpdir()` 盘符路径被
   服务根校验拒绝，属宿主环境限制；CI（ubuntu）不受影响。

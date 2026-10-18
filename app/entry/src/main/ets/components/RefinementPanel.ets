@@ -18,6 +18,9 @@ export struct RefinementPanel {
   readyCore: CoreService | undefined = undefined;
   knownJobId: string = '';
   @Prop filesReady: boolean = false;
+  @Prop coreStatus: string = '';
+  @Prop coreOpening: boolean = false;
+  retryCore: () => void = () => {};
   prepareInputs: () => Promise<RefinementInputs> = async () => { throw new Error('Files unavailable'); };
   exportArtifact: (fileId: string) => Promise<boolean> = async () => { throw new Error('Files unavailable'); };
   onTaskChange: (jobId: string, active: boolean) => void = () => {};
@@ -25,9 +28,9 @@ export struct RefinementPanel {
   @State private cancelRequested: boolean = false;
   @State private notice: string = '';
   @State private formError: string = '';
-  @State private cycles: string = '';
-  @State private phaseName: string = '';
-  @State private projectName: string = '';
+  @Link cycles: string;
+  @Link phaseName: string;
+  @Link projectName: string;
   @State private submitting: boolean = false;
   @State private exporting: boolean = false;
   private session: RefinementSession | undefined = undefined;
@@ -113,7 +116,9 @@ export struct RefinementPanel {
       Column({ space: 12 }) {
         Text(this.title()).fontSize(18).fontWeight(FontWeight.Bold).width('100%')
         if (!this.readyCore) {
-          Text('计算服务尚未接入。可以准备输入和参数，当前不能开始精修。').fontSize(14).fontColor('#805400').width('100%')
+          Text(this.coreStatus || '计算服务尚未就绪。可以准备输入和参数。').fontSize(14).fontColor('#805400').width('100%')
+          Button(this.coreOpening ? 'Initializing...' : 'Retry initialization').refinementButton()
+            .id('retry-core').enabled(this.filesReady && !this.coreOpening).onClick(() => { this.retryCore(); })
         }
         Text('X 射线 + 中子 + CIF · 当前仅支持已验证的 PbSO4 样例组合').fontSize(13).width('100%')
         Text('填写本次任务参数；其他参数页的本地草稿不会自动提交。').fontSize(13).fontColor('#555555').width('100%')
@@ -173,6 +178,18 @@ export struct RefinementPanel {
           Text('任务消息').fontSize(14).fontWeight(FontWeight.Bold).width('100%')
           Text(this.view.history.join('\n')).fontSize(12).width('100%')
           Text('任务消息不是日志文件；只有已登记的产物才能导出。').fontSize(12).fontColor('#555555').width('100%')
+        }
+        if (this.view.state === 'failed' || this.view.state === 'cancelled') {
+          if (this.view.terminalArtifacts.length === 0) {
+            Text('核心尚未返回可导出的日志。可到文件库查看已登记文件。').fontSize(13).fontColor('#555555').width('100%')
+          }
+          ForEach(this.view.terminalArtifacts, (artifact: Artifact) => {
+            Row({ space: 8 }) {
+              Text(`${artifact.displayName} · ${artifact.kind}`).fontSize(13).layoutWeight(1)
+              Button('Export...').refinementButton().enabled(this.filesReady && !this.exporting)
+                .onClick(() => { this.saveArtifact(artifact); })
+            }.width('100%')
+          }, (artifact: Artifact) => artifact.fileId)
         }
       }.width('100%').padding(16).alignItems(HorizontalAlign.Start)
     }.align(Alignment.TopStart).width('100%').height('100%').backgroundColor('#F0F0F0')

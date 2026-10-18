@@ -1,4 +1,4 @@
-// A-side v1.0 UI projection. B must confirm public snapshot/error types before integration.
+// Shared application types reviewed in INTEGRATION_ALIGNMENT A04.
 import { CoreConfig, FileServiceError } from '../contracts/Files';
 import { RefinementInputs } from './RefinementInputs';
 
@@ -26,6 +26,9 @@ export interface EventPayload {
   state?: string; stage?: string; stageIndex?: number; stageCount?: number; percent?: number;
   message?: string; level?: string; source?: string; result?: RefinementResult;
   error?: CoreError; reason?: string;
+  // B03 approved direction: B must publish registered artifacts and update the
+  // wire schema/examples before real integration; older terminals omit this.
+  artifacts?: Artifact[];
 }
 export interface CoreEvent {
   schemaVersion: string; eventId: string; jobId: string; sequence: number;
@@ -73,7 +76,7 @@ export function prepareRefinementRequest(jobId: string, inputs: RefinementInputs
     inputs: frozen, options: { cycleCount: Number(cycles) }, output: { projectName: name, overwrite: false } };
 }
 
-function callError(error: Object): CoreError {
+export function callError(error: Object): CoreError {
   // Error and plain Promise rejection shapes are not yet shared by B/C. Preserve
   // known codes using local safe text, never arbitrary exception messages/detail.
   const candidate = error as CoreError;
@@ -81,6 +84,9 @@ function callError(error: Object): CoreError {
     'INVALID_REQUEST': '精修请求无效，请检查输入和参数。', 'UNSUPPORTED_SCHEMA': '核心接口版本不匹配。',
     'UNSUPPORTED_RECIPE': '核心不支持此精修流程。', 'JOB_ALREADY_EXISTS': '任务编号重复，请重新提交。',
     'CORE_NOT_READY': '计算核心尚未就绪，请稍后重试。', 'CORE_ALREADY_INITIALIZED': '核心初始化配置不一致。',
+    'RUNTIME_NOT_PACKAGED': '当前安装包未包含计算运行时，请安装完整运行时版本。',
+    'RUNTIME_INVALID_MANIFEST': '计算运行时清单无效，请更换安装包。',
+    'RUNTIME_UNPACK_FAILED': '计算运行时装配失败，请重试或检查可用空间。',
     'BUSY': '已有任务运行，请等待该任务结束。', 'FILE_NOT_FOUND': '输入文件不存在，请重新选择。',
     'FILE_HASH_MISMATCH': '输入文件已变化，请重新导入。', 'UNSUPPORTED_FILE': '不支持此文件格式。',
     'INVALID_INSTRUMENT_FILE': '仪器参数文件无法读取。', 'INVALID_PHASE_FILE': '相文件无法读取。',
@@ -102,6 +108,7 @@ export class RefinementView {
   history: string[] = [];
   result?: RefinementResult;
   error?: CoreError;
+  terminalArtifacts: Artifact[] = [];
 }
 
 // Pure UI transition; old jobs, duplicate events and post-terminal events cannot change the screen.
@@ -122,6 +129,7 @@ function applyPayload(view: RefinementView, sequence: number, type: string, p: E
   next.message = view.message;
   next.result = view.result;
   next.error = view.error;
+  next.terminalArtifacts = view.terminalArtifacts;
   next.history = view.history.slice();
   if (type === 'job.accepted') {
     next.state = 'queued'; next.message = '任务已接受，等待开始';
@@ -139,9 +147,11 @@ function applyPayload(view: RefinementView, sequence: number, type: string, p: E
     next.message = '五阶段精修已完成';
   } else if (type === 'job.failed') {
     next.state = 'failed'; next.error = p.error;
+    next.terminalArtifacts = p.artifacts ? p.artifacts.slice() : [];
     next.message = p.error ? p.error.message : '任务执行失败';
   } else if (type === 'job.cancelled') {
     next.state = 'cancelled'; next.message = p.reason || '任务已取消';
+    next.terminalArtifacts = p.artifacts ? p.artifacts.slice() : [];
   }
   next.history.push(next.message);
   return next;
@@ -207,9 +217,16 @@ export class RefinementSession {
       this.view = receiveSnapshot(this.view, snapshot);
       this.cancelRequested = isActive(this.view.state) &&
         (this.cancelRequested || this.view.state === 'cancelling');
-    } catch {
+    } catch (error) {
       if (generation !== this.generation || this.view.jobId !== jobId) { return; }
-      this.notice = '无法读取任务快照，请重新连接或等待后续事件。';
+      if (callError(error).code === 'JOB_NOT_FOUND' && this.view.sequence < 0) {
+        // A persisted recent ID can outlive B's process-local snapshot. This is
+        // absence of a record, not evidence that the old computation failed.
+        this.view = new RefinementView();
+        this.notice = '未找到上次任务记录。可提交新任务；旧任务结果请到文件库查找。';
+      } else if (!isTerminal(this.view.state)) {
+        this.notice = '无法读取任务快照，请重新连接或等待后续事件。';
+      }
     }
     this.changed();
   }
