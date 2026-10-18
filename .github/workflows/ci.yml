@@ -81,6 +81,7 @@ jobs:
           GSAS_TYPESCRIPT_PATH=/tmp/gsas-file-tests/node_modules/typescript node --test tests/input-selection.test.cjs
           GSAS_TYPESCRIPT_PATH=/tmp/gsas-file-tests/node_modules/typescript node --test tests/parameter-drafts.test.cjs
           GSAS_TYPESCRIPT_PATH=/tmp/gsas-file-tests/node_modules/typescript node --test tests/runtime-installer-host.test.cjs
+          GSAS_TYPESCRIPT_PATH=/tmp/gsas-file-tests/node_modules/typescript node --test tests/core-bridge-host.test.cjs
 
       - name: Test ArkUI mock model
         run: |
