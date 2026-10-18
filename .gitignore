@@ -29,3 +29,10 @@ signing-local.json
 
 # Native build intermediates.
 .cxx/
+
+# RUNTIME_PACKAGING §2 payload: member B drops the expanded runtime here at
+# build time (headers, libpython, rawfile tree). Binaries must never enter git.
+app/entry/src/main/cpp/python/include/
+app/entry/src/main/cpp/python/libs/
+app/entry/src/main/resources/rawfile/runtime/
+app/entry/libs/
