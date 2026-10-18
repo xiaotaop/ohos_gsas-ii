@@ -6,7 +6,9 @@
 - 门面按决议顺序"先持久化并登记脱敏日志、再发终态"；登记未完成时事件不携带 `artifacts`，页面提示"日志登记未完成"，不从路径、文件名或历史消息推导。
 - 终态快照持久化到 `outputs/<jobId>/core/terminal-snapshot.json`，进程重启后 `getJobSnapshot` 在原生台账缺失时按 jobId 恢复并再校验形状；`PROCESS_INTERRUPTED` 合成快照补齐 `state` 字段；未知/已清理 ID 保持 `JOB_NOT_FOUND`，A 端仅对失效近期 ID 降级。
 - 快照与已登记产物一致性纳入断言：交付事件、内存视图与磁盘快照的终态载荷同形（宿主桥测试与 Python 捕获脚本）。
-- 新增依赖：无。真实 CPython/GSAS-II 载荷、`GSAS_HAS_PYTHON` 编译/加载与真机证据仍未关闭；本次未构建 HAP。
+- 修复嵌入层缺陷：`python_host.cpp` 的 `EmitCallback` 注册为 METH_O 却按元组解析参数，真实 CPython 经 §8 调用 `emit_event` 必然抛 TypeError（桩构建与纯 Python 测试均无法暴露）。
+- 新增宿主嵌入冒烟 `tests/python-host-embed-smoke.cpp`（不进 CI，需本机 libpython 开发包）：真实嵌入解释器加载真实 bridge 包并跑任务到唯一 `CORE_NOT_READY` 终态，事件跨越 C capsule 边界；已在 x86_64 验证，非 OHOS aarch64 证据。
+- 新增运行时依赖：无。真实 CPython/GSAS-II 载荷、OHOS aarch64 上启用 `GSAS_HAS_PYTHON` 的编译/加载与真机证据仍未关闭；本次未构建 HAP。
 
 ## Unreleased — Phase 3
 

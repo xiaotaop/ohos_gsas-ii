@@ -85,6 +85,13 @@ GSAS_TYPESCRIPT_PATH=<typescript@5.4.5 路径> node --test tests/runtime-install
 GSAS_TYPESCRIPT_PATH=<同上> node --test tests/core-bridge-host.test.cjs
 ```
 
+嵌入式 §8 通道另有宿主冒烟（不进 CI：需要本机 libpython 开发包；复现命令见
+`tests/python-host-embed-smoke.cpp` 头注释）。它用真实嵌入 CPython 加载真实
+`bridge` 包并跑一个任务到唯一终态——在无 GSAS-II 载荷的宿主上必须恰好得到
+`job.failed / CORE_NOT_READY` 且事件跨越 C capsule 边界。该冒烟曾暴露并促成
+修复 `EmitCallback` 的 METH_O 参数缺陷（见 §5）。它不是 OHOS aarch64 证据，
+也不做真实数值计算。
+
 宿主套件用真实文件系统跑实际 `.ets` 源码，但只转译不类型检查；
 真实类型检查以 DevEco `default@CompileArkTS` 为准（本文写作时 0 错误；
 65 项警告均为项目既有类别的建议性提示——"Function may throw exceptions.
@@ -93,8 +100,13 @@ Special handling is required."——分布于成员 C 既有文件与 B 的新�
 
 ## 5. 已知限制
 
-- `GSAS_HAS_PYTHON` 分支尚未在任何环境编译过：本机没有 aarch64 的
-  Python 头/库；真实载荷到位后需先跑一次带定义的交叉编译。
+- `GSAS_HAS_PYTHON` 分支已在宿主 x86_64（发行版 libpython3.10-dev，
+  `-DGSAS_HAS_PYTHON` + `tests/python-host-embed-smoke.cpp`）编译、链接并
+  完成一次真实嵌入解释器加载冒烟；期间发现并修复了 `EmitCallback` 把
+  METH_O 单参数当元组解析的缺陷（修复前 §8 execute 在真实解释器下必然
+  抛 TypeError，桩构建与纯 Python 测试均无法暴露）。**OHOS aarch64 交叉
+  编译、CPython 3.12.9 真载荷与设备 dlopen 链仍未关闭**：本机没有 aarch64
+  的 Python 头/库，真实载荷到位后仍需先跑一次带定义的交叉编译。
 - 门面/安装器的行为由宿主测试证明，设备端实际加载（dlopen 链、
   `libs/arm64-v8a` 的 `libpython3.12.so` 解析、沙箱权限）未在真机验证；
   无签名材料，`assembleHap` 产物为未签名 HAP。
