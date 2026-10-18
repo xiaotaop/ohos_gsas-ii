@@ -1,6 +1,6 @@
 # ArkUI、核心与文件服务接入对齐清单
 
-更新日期：2026-10-17。面向成员 A（界面）、B（核心）、C（文件服务与打包）及组长/集成负责人。
+更新日期：2026-10-18。面向成员 A（界面）、B（核心）、C（文件服务与打包）及组长/集成负责人。
 
 当前界面基线源自成员 A 分支 `ui/mock-refinement`，已完成 [M1 模拟器验收](M1_ARKUI.md)并合入 `main`。本文同时记录已经完成的组长审核和后续仍需决断的事项；**仅第 6 节确认记录中的结论视为团队决议，其余待确认项不修改或取代冻结的 [CORE_API v1.0](CORE_API.md)**。真实核心、文件服务联调及真机 GUI 验收尚未完成。
 
@@ -22,13 +22,23 @@
 | B03 日志 | C 可登记并导出 log 产物 | B 落盘脱敏的失败/取消日志；B/C 提议日志 fileId 的发现方式，组长批准；私有 traceback 不导出 |
 | B04/B05 重启与终态 | 旧租约恢复为 interrupted job IDs；清理 input/work，保留输入、日志、输出 | B 持久化快照并标记 PROCESS_INTERRUPTED、处理唯一终态/取消；A 恢复页面与退出提示 |
 
-A 的后续会话接入准备位于 `docs/github-integration-readiness@27dce33`，其中基于 `main@12db7e7` 的“C 尚未提供工程/文件服务”描述已被本分支交付补齐；其会话代码仍需由 A 合入正式 app 并适配 ArkTS。B 的 Python Bridge 已在 main，但计算 N-API/CPython 应用集成仍未交付。各分支不能分别使用旧文档判断另一成员仍缺相同成果。
+A 的后续会话接入准备位于 `docs/github-integration-readiness@27dce33`。本分支现已同步 `main@b188667` 的 C 端交付，并在正式 `app/entry` 接入下述输入准备页面；会话代码仍在 `ui-mock/`，待 B 的公共类型和服务入口就绪后适配 ArkTS。B 的 Python Bridge 已在 main，但计算 N-API/CPython 应用集成仍未交付。各分支不能分别使用旧文档判断另一成员仍缺相同成果。
 
 接入顺序：C01/C02 已完成审核合并 → A 接文件选择/持久化列表，同时 B 接配置、输入和任务租约 → 各成员提交跨层方案与可运行增量，组长只审核仍待决断的接口和合并请求 → B/C 接运行时及真实核心 → 产物登记后开放导出 → 组长执行本文件第 5 节的正式集成验收。运行时清单、装配脚本和许可审计可由 C 并行准备。
 
-### 本分支 A 端已完成的准备
+### 本分支正式 app 输入准备（2026-10-18）
 
-- `Refinement.ts` 的 `RefinementSession` 接收已就绪的 CoreService，负责先订阅再启动、取消等待和页面退订；`Index.ets` 已使用它。页面销毁只让会话退订，真实服务由应用持有；演示页面仍单独释放自己创建的 mock。
+- `app/entry/src/main/ets/pages/Index.ets` 使用 C 的 `AppServices.files` 和 `FilePickerService`，提供 X 射线数据/仪器参数、中子数据/仪器参数、CIF 相文件五个明确槽位。可选择文件库已有文件或导入并关联；不根据文件名猜测 X 射线/中子用途，显示文件名及 SHA-256 前缀。
+- `model/RefinementInputs.ets` 只保存槽位和 fileId，Preferences 持久化页面关联。重选保留旧文件，取消选择保留原关联；删除或重启恢复时移除失效关联，不替代 C 的文件目录与活动任务租约。保存失败明确提示关联尚未持久化。
+- “校验五份输入”逐个调用真实 `getFile` 校验存在性与哈希，按冻结请求的 inputs 形状准备两组 histogram 和 phase。该类型是 A 的局部投影，后续替换为 B 的共享类型；`GSAS powder` 是当前准备范围，phase 名称为占位值，不代表解析了 CIF。未解析科学格式，也未决定 cycleCount 默认值；开始精修保持禁用。
+- 新增 `tests/input-selection.test.cjs`：5 项通过，覆盖明确关联、重选/删除、持久化记录损坏、文件校验错误及异步校验期间输入固定；已加入现有 CI。使用本机 DevEco Studio 自带 SDK API24 完成 ArkTS 编译及 ARM64 unsigned HAP 构建，开发包内容审计通过（20 个条目）。这是本次增量验证，不替代第 6 节已确认的另一套 CLI/SDK 构建基线。
+- HarmonyOS PC 6.1.1/API24 x86_64 模拟器已验证：从文件库选择五份输入，显示“两组粉末数据、仪器参数和一份相文件”完整性校验成功；打开系统选择器后取消，显示原关联保留；强制停止并重启应用后恢复全部五个关联，再次校验成功。模拟器包由忽略目录中的工程副本临时切换 ABI 构建，正式工程 ABI 未改。测试文件来自仓库的五份公开 PbSO4 样例，经临时副本调用真实 FileService 导入沙箱，随后重装无导入钩子的干净包再验证页面；不把这种样例准备记作系统选择器导入成功。
+
+本轮只迁移真实输入准备。M1 的菜单、数据树、任务状态和 `RefinementSession` 尚未整体迁入正式 app。系统选择器实际导入、真实计算、任务租约调用、产物导出、真机 GUI 和签名验收仍待执行。
+
+### 本分支 M1 会话接入准备
+
+- `ui-mock/` 中 `Refinement.ts` 的 `RefinementSession` 接收已就绪的 CoreService，负责先订阅再启动、取消等待和页面退订；M1 的 `Index.ets` 已使用它。页面销毁只让会话退订，真实服务由应用持有；演示页面仍单独释放自己创建的 mock。
 - `connect(knownJobId)` 先订阅后读取快照，恢复进度和成功/失败/取消摘要。旧快照、旧任务事件、退订后返回的 Promise 不覆盖当前页面；迟到的启动/取消响应不覆盖终态或新任务。`connect()` 用于开始一个空闲页面，`disconnect()` 不取消核心任务。
 - 快照恢复支持 B 当前字段、初始 `lastSequence: -1` / `stage: null`。成功终态在 UI 显示 100%，不要求 B 的原始快照也写成 100%；不伪造 eventId、timestamp 或持久化记录。恢复不重建快照未提供的历史日志。
 - `tests/capture_bridge_ui.py` 在临时测试沙箱实际运行 B 的 LocalCoreService + FakeFiveStageRefiner，捕获成功、异常、取消事件和快照，再由 `tests/ui-mock.test.cjs` 驱动 A 的状态/会话代码比较结果。捕获前执行已有契约语义校验，结束清理测试产物。它只用于离线测试，不是供页面调用的 Python 通信层。
@@ -63,7 +73,7 @@ A 的后续会话接入准备位于 `docs/github-integration-readiness@27dce33`�
 | A02 | 上架显示名、真机验收系统版本、签名流程和 API20/24 兼容证据是否满足发布要求 | C 按原分工提交真机/签名记录 | bundleName 与 Windows 开发构建基线已确认；其余待审核 |
 | A03 | 初始化责任、CoreService/FileService 就绪时机及失败重试是否形成单一实现入口 | B/C 提交服务装配实现，A 提交消费方式 | 等待 B 的真实 CoreService 后审核 |
 | A04 | FileRole、JobSnapshot、终态摘要和 Promise 错误结构是否完整，公共类型由谁维护 | B/C 提交类型对照和必要的契约变更 | FileService 类型已有；跨层完整方案待审核 |
-| A05 | 选择器归属、取消/失败语义、三个输入角色及允许格式是否一致 | A/B/C 提交五份输入文件的实际调用示例 | C 的选择器实现已有；A/B 接入结果待审核 |
+| A05 | 选择器归属、取消/失败语义、三个输入角色及允许格式是否一致 | A/B/C 提交五份输入文件的实际调用示例 | C 的选择器实现已有；本分支 A 已接五槽位关联/校验，待 B 格式校验及完整导入联调后审核 |
 | A06 | jobId 由哪一层生成，Promise 返回与首个事件的时序是否不会丢事件 | B/A 提交时序说明和并发测试 | 等待真实 CoreService 实现后审核 |
 | A07 | 输入 fileId 解析、GPX/JSON/日志登记及 fileId 回传归属是否明确 | B/C 提交一个真实任务的调用链和产物证据 | C 的文件接口已有；真实核心调用链待审核 |
 

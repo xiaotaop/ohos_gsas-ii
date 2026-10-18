@@ -22,6 +22,8 @@ A/B/C 接入前需确认的工程入口、公共类型、文件服务、初始�
 
 成员 C 的 C01/C02 接收人、复现步骤和剩余确认见 [交接入口](docs/MEMBER_C_HANDOFF.md#0-交接入口与接收顺序2026-10-17)；C 的交付已合入主线；A/B 可开始接入，组长继续审核后续增量和跨层选择，真实计算与真机验收单独执行。
 
+本分支 A 已在正式 `app/` 接入五份精修输入的选择、关联持久化和真实文件完整性校验；重选保留旧文件，取消保留原关联。输入模型 5 项测试及 ArkTS/HAP 构建通过，验证范围见 [接入对齐清单](docs/INTEGRATION_ALIGNMENT.md)。M1 任务会话仍在 `ui-mock/`，B 的应用内 CoreService 和真实精修尚未接通，开始精修保持禁用。
+
 后续打包准备提供 [运行时装配与构建留档](docs/RUNTIME_PACKAGING.md)：Build-App 自动保留源码/工具链记录、HAP 和内容清单；Prepare-Runtime 按 B 的清单校验载荷；Audit-Hap 核对实际包内容。当前未打包真实 Python，发布条件见 [验收与材料清单](docs/RELEASE_ACCEPTANCE.md)。
 
 ## 持续集成

@@ -68,6 +68,7 @@ jobs:
         run: |
           npm install --prefix /tmp/gsas-file-tests --no-package-lock --no-save typescript@5.4.5
           GSAS_TYPESCRIPT_PATH=/tmp/gsas-file-tests/node_modules/typescript node --test tests/file-service-host.test.cjs
+          GSAS_TYPESCRIPT_PATH=/tmp/gsas-file-tests/node_modules/typescript node --test tests/input-selection.test.cjs
 
       - name: Test ArkUI mock model
         run: |
