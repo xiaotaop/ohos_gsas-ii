@@ -7,6 +7,12 @@ import { FilePickerService } from '../services/FilePickerService';
 import { runFileServiceChecks } from '../verification/FileServiceCheck';
 import { INPUT_SLOTS, InputSlot, InputSlotInfo, InputBinding, InputSelection } from '../model/RefinementInputs';
 
+@Extend(Button) function desktopButton() {
+  .type(ButtonType.Normal).height(28).fontSize(13).fontColor('#202020')
+  .backgroundColor('#EEEEEE').borderRadius(2).border({ width: 1, color: '#B8B8B8' })
+  .padding({ left: 10, right: 10 })
+}
+
 @Entry
 @Component
 struct Index {
@@ -17,6 +23,17 @@ struct Index {
   @State private checks: string = '';
   @State private bindings: InputBinding[] = [];
   @State private prepared: boolean = false;
+  @State private panelWidth: number = 1100;
+  @State private treeWidth: number = 270;
+  private dragStartWidth: number = 270;
+  @State private page: string = 'Controls';
+  @State private rootOpen: boolean = true;
+  @State private phasesOpen: boolean = true;
+  @State private xrayOpen: boolean = true;
+  @State private neutronOpen: boolean = true;
+  private readonly projectNodes: string[] = ['Notebook', 'Controls', 'Covariance', 'Constraints', 'Restraints', 'Rigid bodies'];
+  private readonly powderNodes: string[] = ['Comments', 'Limits', 'Background', 'Instrument Parameters',
+    'Sample Parameters', 'Peak List', 'Index Peak List', 'Unit Cells List', 'Reflection Lists'];
   private selection: InputSelection = new InputSelection();
   private settings: preferences.Preferences | undefined = undefined;
   private service: FileLibrary | undefined = undefined;
@@ -172,66 +189,360 @@ struct Index {
     finally { this.busy = false; }
   }
 
-  build() {
+  private boundFile(slot: InputSlot): AppFile | undefined {
+    const binding = this.bindings.find((item: InputBinding): boolean => item.slot === slot);
+    return this.files.find((file: AppFile): boolean => file.fileId === binding?.fileId);
+  }
+
+  private powderName(slot: InputSlot): string {
+    return `PWDR ${this.boundFile(slot)?.displayName ?? ''}`;
+  }
+
+  private expandAll(): void {
+    this.rootOpen = true; this.phasesOpen = true; this.xrayOpen = true; this.neutronOpen = true;
+  }
+
+  private importPowder(): void {
+    this.getUIContext().showActionSheet({
+      title: 'Import Powder Data',
+      message: '选择本次输入用途（当前精修契约支持 X 射线和中子各一组）。',
+      sheets: [
+        { title: 'X-ray powder data', action: () => { this.page = 'xray'; this.importForSlot(INPUT_SLOTS[0]); } },
+        { title: 'Neutron powder data', action: () => { this.page = 'neutron'; this.importForSlot(INPUT_SLOTS[2]); } }
+      ]
+    });
+  }
+
+  private confirmDelete(file: AppFile): void {
+    this.getUIContext().showAlertDialog({
+      title: `删除 ${file.displayName}？`, message: '仅删除应用内副本，并移除引用它的输入关联。原文件不受影响。',
+      primaryButton: { value: '取消', action: () => {} },
+      secondaryButton: { value: '删除副本', action: () => { this.deleteFile(file.fileId); } }
+    });
+  }
+
+  @Builder
+  fileMenu() {
+    Menu() {
+      MenuItem({ content: 'Open project...', labelInfo: 'Ctrl+O' }).enabled(false)
+      MenuItem({ content: 'Open in new window...' }).enabled(false)
+      MenuItem({ content: 'Reopen recent...', labelInfo: 'Ctrl+E' }).enabled(false)
+      MenuItem({ content: 'Open w/project browser', labelInfo: 'Ctrl+B' }).enabled(false)
+      MenuItem({ content: 'Save project', labelInfo: 'Ctrl+S' }).enabled(false)
+      MenuItem({ content: 'Save project as...' }).enabled(false)
+      MenuItem({ content: 'New project' }).enabled(false)
+      MenuItem({ content: 'Preferences' }).enabled(false)
+      MenuItem({ content: 'Exit', labelInfo: 'Alt+F4' }).enabled(!this.busy)
+        .onClick(() => { this.context?.terminateSelf(); })
+      MenuItemGroup({ header: 'HarmonyOS files' }) {
+        MenuItem({ content: 'Imported files...' }).onClick(() => { this.page = 'files'; })
+        MenuItem({ content: 'Input associations...' }).onClick(() => { this.page = 'Loaded Data'; })
+      }
+    }
+  }
+
+  @Builder
+  dataMenu() {
+    Menu() {
+      ForEach(['Read Powder Pattern Peaks...', 'Sum or Average powder data', 'Sum image data',
+        'Add new phase', 'Delete phase entries', 'Rename data entry', 'Delete data entries',
+        'Delete plots', 'Delete sequential result entries'], (label: string) => {
+        MenuItem({ content: label }).enabled(false)
+      })
+      MenuItem({ content: 'Expand tree items' }).onClick(() => { this.expandAll(); })
+      MenuItem({ content: 'Move tree items' }).enabled(false)
+    }
+  }
+
+  @Builder
+  calculateMenu() {
+    Menu() {
+      MenuItem({ content: 'Setup PDFs' }).enabled(false)
+      MenuItem({ content: 'View LS parms', labelInfo: 'Ctrl+L' }).enabled(false)
+      MenuItem({ content: 'Refine', labelInfo: 'Ctrl+R' }).enabled(false)
+      MenuItem({ content: 'Compute partials' }).enabled(false)
+      MenuItem({ content: 'Parameter Impact', labelInfo: 'Ctrl+I' }).enabled(false)
+      ForEach(['Evaluate expression and s.u.', 'Setup Cluster Analysis', 'Run Fprime', 'Run Absorb', 'Run PlotXNFF'],
+        (label: string) => { MenuItem({ content: label }).enabled(false) })
+    }
+  }
+
+  @Builder
+  phaseImportMenu() {
+    Menu() {
+      MenuItem({ content: 'from CIF file' }).enabled(this.ready && !this.busy)
+        .onClick(() => { this.page = 'phase'; this.importForSlot(INPUT_SLOTS[4]); })
+    }
+  }
+
+  @Builder
+  powderImportMenu() {
+    Menu() {
+      MenuItem({ content: 'from GSAS powder file' }).enabled(this.ready && !this.busy)
+        .onClick(() => { this.importPowder(); })
+    }
+  }
+
+  @Builder
+  importMenu() {
+    Menu() {
+      MenuItem({ content: 'Image' }).enabled(false)
+      MenuItem({ content: 'Phase', builder: this.phaseImportMenu })
+      MenuItem({ content: 'Powder Data', builder: this.powderImportMenu })
+      ForEach(['Fit instr. profile from fundamental parms...', 'Structure Factor', 'Small Angle Data',
+        'Reflectometry Data', 'PDF G(R) Data', 'Read Powder Pattern Peaks...', 'Column metadata test'],
+        (label: string) => { MenuItem({ content: label }).enabled(false) })
+    }
+  }
+
+  @Builder
+  exportMenu() {
+    Menu() {
+      ForEach(['Entire project as', 'Phase as', 'Powder data as', 'Small angle data as', 'Reflectometry data as',
+        'Single crystal data as', 'Image data as', 'Maps as', 'Sequential project as CIF', 'Sequential phases',
+        'Sequential histograms', 'Export All Peak Lists...', 'Export HKLs...', 'Export MTZ file...', 'Export PDF...'],
+        (label: string) => { MenuItem({ content: label }).enabled(false) })
+    }
+  }
+
+  @Builder
+  helpMenu() {
+    Menu() {
+      MenuItem({ content: 'About GSAS-II' }).onClick(() => { this.page = 'about'; })
+      ForEach(['Check for updates', 'Regress to old GSAS-II version', 'Add packages for more functionality',
+        'Tutorials', 'Help on GSAS-II', 'Help on current data tree item', 'Help via LLM Docs Search', 'Citation information'],
+        (label: string) => { MenuItem({ content: label }).enabled(false) })
+    }
+  }
+
+  @Builder
+  menuBar() {
+    Row({ space: 0 }) {
+      Button('File').desktopButton().borderWidth(0).bindMenu(this.fileMenu)
+      Button('Data').desktopButton().borderWidth(0).bindMenu(this.dataMenu)
+      Button('Calculate').desktopButton().borderWidth(0).bindMenu(this.calculateMenu)
+      Button('Import').desktopButton().borderWidth(0).bindMenu(this.importMenu)
+      Button('Export').desktopButton().borderWidth(0).bindMenu(this.exportMenu)
+      Button('Help').desktopButton().borderWidth(0).bindMenu(this.helpMenu)
+    }.width('100%').height(30).backgroundColor('#EEEEEE')
+  }
+
+  @Builder
+  treeLeaf(key: string, label: string, depth: number) {
+    Button(label).type(ButtonType.Normal).fontSize(13).fontColor('#171717')
+      .backgroundColor(this.page === key ? '#CBE4FA' : Color.Transparent).borderRadius(0)
+      .width('100%').height(27).align(Alignment.Start).padding({ left: depth * 18 + 22, right: 4 })
+      .onClick(() => { this.page = key; })
+  }
+
+  @Builder
+  treeBranch(key: string, label: string, depth: number, open: boolean) {
+    Row({ space: 0 }) {
+      Button(open ? '▾' : '▸').type(ButtonType.Normal).fontSize(14).fontColor('#333333')
+        .backgroundColor(Color.Transparent).borderRadius(0).width(22).height(27).padding(0)
+        .accessibilityText(`${open ? 'Collapse' : 'Expand'} ${label}`)
+        .onClick(() => {
+          if (key === 'Loaded Data') { this.rootOpen = !this.rootOpen; }
+          if (key === 'Phases') { this.phasesOpen = !this.phasesOpen; }
+          if (key === 'xray') { this.xrayOpen = !this.xrayOpen; }
+          if (key === 'neutron') { this.neutronOpen = !this.neutronOpen; }
+        })
+      Button(label).type(ButtonType.Normal).fontSize(13).fontColor('#171717')
+        .backgroundColor(Color.Transparent).borderRadius(0).height(27).layoutWeight(1)
+        .align(Alignment.Start).padding({ left: 0, right: 4 }).onClick(() => { this.page = key; })
+    }.padding({ left: depth * 18 }).width('100%')
+      .backgroundColor(this.page === key ? '#CBE4FA' : Color.Transparent)
+  }
+
+  @Builder
+  dataTree() {
     Scroll() {
-      Column({ space: 18 }) {
-        Text('GSAS PC').fontSize(30).fontWeight(FontWeight.Bold)
-        Text('粉末精修 · 输入准备').fontSize(20)
-        Text('先准备 X 射线、中子粉末数据，各自的仪器参数和 CIF 相文件。').fontColor('#526174').fontSize(15)
-        Text('当前准备 GSAS powder 五阶段输入。请选择每个位置对应的文件；相同文件名不会自动关联。').fontColor('#526174').fontSize(14)
-        ForEach(INPUT_SLOTS, (slot: InputSlotInfo) => {
-          Column({ space: 8 }) {
-            Text(slot.label).fontSize(17).fontWeight(FontWeight.Bold).width('100%')
-            Flex({ wrap: FlexWrap.Wrap, alignItems: ItemAlign.Center }) {
-              Select(this.selectOptions(slot)).selected(this.selectedIndex(slot))
-                .value(this.selectedName(slot.id)).width(360).margin({ right: 12, bottom: 8 })
-                .id(`select-${slot.id}`).enabled(this.ready && !this.busy)
-                .onSelect((index: number) => { this.chooseExisting(slot, index); })
-              Button('导入并关联').id(`import-${slot.id}`).enabled(this.ready && !this.busy)
-                .onClick(() => { this.importForSlot(slot); }).margin({ bottom: 8 })
+      Column({ space: 0 }) {
+        this.treeBranch('Loaded Data', 'Loaded Data:', 0, this.rootOpen)
+        if (this.rootOpen) {
+          ForEach(this.projectNodes, (label: string) => { this.treeLeaf(label, label, 1) })
+          if (this.boundFile(InputSlot.PHASE)) {
+            this.treeBranch('Phases', 'Phases', 1, this.phasesOpen)
+            if (this.phasesOpen) { this.treeLeaf('phase', this.boundFile(InputSlot.PHASE)?.displayName ?? '', 2) }
+          }
+          if (this.boundFile(InputSlot.XRAY_DATA)) {
+            this.treeBranch('xray', this.powderName(InputSlot.XRAY_DATA), 1, this.xrayOpen)
+            if (this.xrayOpen) {
+              ForEach(this.powderNodes, (label: string) => { this.treeLeaf(`xray:${label}`, label, 2) })
             }
-          }.padding(14).width('100%').backgroundColor('#EFF4F9').borderRadius(10)
-        }, (slot: InputSlotInfo) => slot.id)
-        Flex({ wrap: FlexWrap.Wrap }) {
-          Button(this.prepared ? '重新校验输入' : '校验五份输入').id('verify-inputs')
-            .enabled(this.ready && !this.busy).onClick(() => { this.verifyInputs(); }).margin({ right: 12, bottom: 8 })
-          Button('Refine / 开始精修').id('refine-unavailable').enabled(false)
+          }
+          if (this.boundFile(InputSlot.NEUTRON_DATA)) {
+            this.treeBranch('neutron', this.powderName(InputSlot.NEUTRON_DATA), 1, this.neutronOpen)
+            if (this.neutronOpen) {
+              ForEach(this.powderNodes, (label: string) => { this.treeLeaf(`neutron:${label}`, label, 2) })
+            }
+          }
         }
-        Text('计算服务尚未接入。可先保存输入关联；当前不会运行精修或生成结果。').fontColor('#526174').width('100%')
-        Divider()
-        Text('文件库').fontSize(20).fontWeight(FontWeight.Bold)
-        Flex({ wrap: FlexWrap.Wrap }) {
-          Button('导入粉末数据').id('import-powder').onClick(() => { this.importFile(FileRole.POWDER_DATA); })
-            .enabled(this.ready && !this.busy).margin({ right: 12, bottom: 12 })
-          Button('导入仪器参数').id('import-instrument').onClick(() => { this.importFile(FileRole.INSTRUMENT); })
-            .enabled(this.ready && !this.busy).margin({ right: 12, bottom: 12 })
-          Button('导入相文件').id('import-phase').onClick(() => { this.importFile(FileRole.PHASE); })
-            .enabled(this.ready && !this.busy).margin({ right: 12, bottom: 12 })
+      }.alignItems(HorizontalAlign.Start).width('100%').padding({ top: 5, bottom: 12 })
+    }.align(Alignment.TopStart).height('100%').width(this.treeWidth)
+      .clip(true).backgroundColor(Color.White)
+  }
+
+  @Builder
+  pageTitle(title: string) {
+    Text(title).fontSize(16).fontWeight(FontWeight.Bold).width('100%').margin({ bottom: 8 })
+  }
+
+  @Builder
+  unavailable(message: string) {
+    Text(message).fontSize(13).fontColor('#555555').width('100%').margin({ top: 8, bottom: 8 })
+  }
+
+  @Builder
+  inputRow(slot: InputSlotInfo) {
+    Column({ space: 6 }) {
+      Text(slot.label).fontSize(13).width('100%')
+      Flex({ wrap: FlexWrap.Wrap, alignItems: ItemAlign.Center }) {
+        Select(this.selectOptions(slot)).selected(this.selectedIndex(slot)).value(this.selectedName(slot.id))
+          .font({ size: 13 }).height(30).width(290).borderRadius(2).margin({ right: 8, bottom: 6 })
+          .id(`select-${slot.id}`).enabled(this.ready && !this.busy)
+          .onSelect((index: number) => { this.chooseExisting(slot, index); })
+        Button('Import...').desktopButton().id(`import-${slot.id}`).enabled(this.ready && !this.busy)
+          .onClick(() => { this.importForSlot(slot); }).margin({ bottom: 6 })
+      }
+    }.width('100%').margin({ bottom: 12 })
+  }
+
+  @Builder
+  controlsPage() {
+    this.pageTitle('Refinement Controls')
+    this.unavailable('参数编辑与计算服务尚未接入。下列字段暂不可用，未写入任何精修默认值。')
+    Row({ space: 10 }) {
+      Text('Refinement type:').fontSize(13)
+      Button('—').desktopButton().width(190).enabled(false)
+    }.width('100%').margin({ bottom: 12 })
+    Flex({ wrap: FlexWrap.Wrap }) {
+      ForEach(['Min delta-M/M:', 'Max cycles:', 'Initial lambda = 10**', 'SVD zero tolerance:'], (label: string) => {
+        Row({ space: 8 }) {
+          Text(label).fontSize(13).width(145)
+          TextInput({ text: '—' }).width(85).height(28).fontSize(13).borderRadius(1).enabled(false)
+        }.width(250).margin({ bottom: 10 })
+      })
+    }
+    Divider().margin({ top: 12, bottom: 12 })
+    this.pageTitle('Sequential Settings')
+    Text('Select datasets to switch to sequential refinement').fontSize(13).width('100%')
+    Button('Select datasets').desktopButton().enabled(false).margin({ top: 8, bottom: 14 })
+    Divider().margin({ bottom: 12 })
+    this.pageTitle('Global Settings')
+    Row({ space: 8 }) {
+      Text('CIF Author (last, first):').fontSize(13)
+      TextInput({ text: '' }).height(28).layoutWeight(1).borderRadius(1).enabled(false)
+    }.width('100%')
+  }
+
+  @Builder
+  inputPage() {
+    this.pageTitle('Loaded Data')
+    this.unavailable('当前树节点表示已关联的输入文件；文件内容尚未解析为 GSAS-II 工程对象。')
+    ForEach(INPUT_SLOTS, (slot: InputSlotInfo) => { this.inputRow(slot) }, (slot: InputSlotInfo) => slot.id)
+    Button(this.prepared ? 'Recheck input files' : 'Check input files').desktopButton().id('verify-inputs')
+      .enabled(this.ready && !this.busy).onClick(() => { this.verifyInputs(); })
+    this.unavailable('检查文件存在性与完整性，不执行科学格式检查或精修。')
+  }
+
+  @Builder
+  powderPage(data: InputSlotInfo, instrument: InputSlotInfo) {
+    this.pageTitle(this.powderName(data.id))
+    this.inputRow(data)
+    this.inputRow(instrument)
+    this.unavailable('已保存输入关联。强度曲线、数据范围和参数值需在文件解析接入后显示。')
+  }
+
+  @Builder
+  filesPage() {
+    this.pageTitle('Imported files — HarmonyOS')
+    this.unavailable('应用内文件库。导入副本不会自动改变数据树关联；原始输入可从这里导出。')
+    Flex({ wrap: FlexWrap.Wrap }) {
+      Button('Powder data...').desktopButton().enabled(this.ready && !this.busy)
+        .onClick(() => { this.importFile(FileRole.POWDER_DATA); }).margin({ right: 8, bottom: 8 })
+      Button('Instrument...').desktopButton().enabled(this.ready && !this.busy)
+        .onClick(() => { this.importFile(FileRole.INSTRUMENT); }).margin({ right: 8, bottom: 8 })
+      Button('Phase...').desktopButton().enabled(this.ready && !this.busy)
+        .onClick(() => { this.importFile(FileRole.PHASE); }).margin({ bottom: 8 })
+    }
+    if (this.files.length === 0) { this.unavailable('文件库为空。导入的应用内副本会在重启后保留。') }
+    ForEach(this.files, (file: AppFile) => {
+      Column({ space: 5 }) {
+        Text(file.displayName).fontSize(14).fontWeight(FontWeight.Bold).width('100%')
+        Text(`${file.role} · ${file.size} bytes`).fontSize(12).width('100%')
+        Text(`SHA-256 ${file.sha256}`).fontSize(11).width('100%')
+        Row({ space: 8 }) {
+          Button('Export copy...').desktopButton().enabled(!this.busy).onClick(() => { this.exportFile(file.fileId); })
+          Button('Delete copy...').desktopButton().enabled(!this.busy).onClick(() => { this.confirmDelete(file); })
+        }.width('100%')
+        Divider().margin({ top: 8 })
+      }.width('100%').margin({ bottom: 12 })
+    }, (file: AppFile) => file.fileId)
+    Button('Run file service checks').desktopButton().id('file-checks').enabled(this.ready && !this.busy)
+      .onClick(() => { this.checkFiles(); })
+    if (this.checks.length > 0) { Text(this.checks).fontSize(12).width('100%') }
+  }
+
+  @Builder
+  dataPage() {
+    Scroll() {
+      Column({ space: 0 }) {
+        if (this.page === 'Controls') { this.controlsPage() }
+        else if (this.page === 'Loaded Data') { this.inputPage() }
+        else if (this.page === 'files') { this.filesPage() }
+        else if (this.page === 'Phases' || this.page === 'phase') {
+          this.pageTitle('Phases')
+          this.inputRow(INPUT_SLOTS[4])
+          this.unavailable('当前关联 CIF 文件。晶胞、原子和约束编辑页尚未移植；文件名不代表解析后的相名。')
+        } else if (this.page === 'xray') { this.powderPage(INPUT_SLOTS[0], INPUT_SLOTS[1]) }
+        else if (this.page === 'neutron') { this.powderPage(INPUT_SLOTS[2], INPUT_SLOTS[3]) }
+        else if (this.page === 'xray:Instrument Parameters' || this.page === 'neutron:Instrument Parameters') {
+          this.pageTitle('Instrument Parameters')
+          this.inputRow(this.page.startsWith('xray') ? INPUT_SLOTS[1] : INPUT_SLOTS[3])
+          this.unavailable('仪器文件已保存；参数表需等待解析服务接入。')
+        } else if (this.page === 'about') {
+          this.pageTitle('GSAS-II — HarmonyOS port')
+          this.unavailable('原版界面依据 GSAS-II 2.0.0，源码版本 2b4aba1bc44de63a3da9d4495944c3b99e389399。当前为桌面界面移植第一批。')
+          this.unavailable('This product includes software produced by UChicago Argonne, LLC under Contract No. DE-AC02-06CH11357 with the Department of Energy.')
+        } else {
+          this.pageTitle(this.page.includes(':') ? this.page.split(':')[1] : this.page)
+          this.unavailable('此原版数据页面尚未移植。菜单和数据树保留原版入口，当前不显示示例参数或模拟结果。')
         }
-        Text(this.status).fontSize(15).fontColor('#24486B').width('100%')
-        if (!this.ready) { Button('重新打开文件库').onClick(() => { this.openFiles(); }) }
-        if (this.files.length === 0) {
-          Text('文件库为空。导入后将保存应用内副本，重启后仍可使用。')
-            .width('100%').padding(22).backgroundColor('#EFF4F9').borderRadius(12)
+        if (!this.ready) {
+          Button('重新打开文件库').desktopButton().enabled(!this.busy).onClick(() => { this.openFiles(); })
         }
-        ForEach(this.files, (file: AppFile) => {
-          Column({ space: 9 }) {
-            Text(file.displayName).fontWeight(FontWeight.Bold).fontSize(18).width('100%')
-            Text(`${file.role} · ${file.size} 字节`).fontColor('#526174').width('100%')
-            Text(`SHA-256 ${file.sha256}`).fontSize(11).fontColor('#526174').width('100%')
-            Row({ space: 12 }) {
-              Button('导出副本').onClick(() => { this.exportFile(file.fileId); }).enabled(!this.busy)
-              Button('删除副本').onClick(() => { this.deleteFile(file.fileId); }).enabled(!this.busy)
-            }.width('100%')
-          }.padding(18).width('100%').backgroundColor('#EFF4F9').borderRadius(12)
-        }, (file: AppFile) => file.fileId)
-        Text('计算核心尚待接入；当前可导入、保存和导出真实文件。').fontColor('#526174').width('100%')
-        Divider()
-        Button('运行文件服务验证').id('file-checks').onClick(() => { this.checkFiles(); }).enabled(this.ready && !this.busy)
-        if (this.checks.length > 0) { Text(this.checks).fontSize(13).width('100%') }
-        Text('This product includes software produced by UChicago Argonne, LLC under Contract No. DE-AC02-06CH11357 with the Department of Energy.')
-          .fontSize(10).fontColor('#64748B').width('100%')
-      }.alignItems(HorizontalAlign.Start).padding(28).width('100%').constraintSize({ maxWidth: 1100 })
-    }.width('100%').height('100%').align(Alignment.TopStart).backgroundColor('#FFFFFF')
+      }.alignItems(HorizontalAlign.Start).width('100%').padding(16)
+    }.align(Alignment.TopStart).height('100%').layoutWeight(1)
+      .clip(true).backgroundColor('#F0F0F0')
+  }
+
+  build() {
+    Column({ space: 0 }) {
+      this.menuBar()
+      Divider()
+      Row({ space: 0 }) {
+        this.dataTree()
+        Column() {}.width(8).height('100%').backgroundColor('#D0D0D0')
+          .accessibilityText('Resize data tree').gesture(
+            PanGesture({ direction: PanDirection.Horizontal, distance: 1 })
+              .onActionStart(() => { this.dragStartWidth = this.treeWidth; })
+              .onActionUpdate((event: GestureEvent) => {
+                this.treeWidth = Math.max(190, Math.min(450, this.panelWidth - 268, this.dragStartWidth + event.offsetX));
+              })
+          )
+        this.dataPage()
+      }.layoutWeight(1).width('100%')
+      Divider()
+      Row({ space: 8 }) {
+        Text(this.status).fontSize(12).fontColor('#303030').layoutWeight(1).maxLines(3)
+        Divider().vertical(true).height(28)
+        Text(this.busy ? 'Working...' : 'Core: unavailable').fontSize(12).fontColor('#555555').width(110)
+      }.width('100%').height(54).padding({ left: 8, right: 8 }).backgroundColor('#EEEEEE')
+    }.width('100%').height('100%').backgroundColor('#F0F0F0')
+      .onAreaChange((_old: Area, area: Area) => {
+        this.panelWidth = Number(area.width);
+        this.treeWidth = Math.max(190, Math.min(this.treeWidth, this.panelWidth - 268));
+      })
   }
 }
