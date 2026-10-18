@@ -22,7 +22,7 @@ function load(filename) {
   vm.runInThisContext(`(function(require,module,exports){${code}\n})`, { filename })(localRequire, module, module.exports);
   return module.exports;
 }
-const { InputSelection, InputSlot, INPUT_SLOTS } = load(path.join(root, 'model/RefinementInputs.ets'));
+const { InputSelection, InputSlot, INPUT_SLOTS, draftScope } = load(path.join(root, 'model/RefinementInputs.ets'));
 const { FileRole, FileServiceError } = load(path.join(root, 'contracts/Files.ets'));
 const files = INPUT_SLOTS.map((slot, index) => ({
   fileId: `file_explicit_${index}`, displayName: 'same-name.dat', role: slot.role, size: 12, sha256: 'A'.repeat(64)
@@ -102,4 +102,23 @@ test('selection changes during asynchronous checks cannot mix input generations'
   release();
   assert.equal((await prepared).histograms[0].dataFileId, files[0].fileId);
   assert.equal((await selection.verify(library)).histograms[0].dataFileId, files[2].fileId);
+});
+
+test('notebook is application-local; comments follow powder file identity, not unrelated inputs or slots', () => {
+  const selection = filled();
+  const original = selection.entries();
+  assert.equal(draftScope('Notebook', []), 'Notebook|local-v1');
+  assert.equal(draftScope('Notebook', original), 'Notebook|local-v1');
+  assert.equal(draftScope('xray:Comments', []), '');
+  assert.equal(draftScope('xray:Comments', original), 'Comments|file_explicit_0');
+  assert.equal(draftScope('neutron:Comments', original), 'Comments|file_explicit_2');
+  selection.clear(InputSlot.PHASE); selection.clear(InputSlot.XRAY_INSTRUMENT);
+  assert.equal(draftScope('xray:Comments', selection.entries()), 'Comments|file_explicit_0');
+  selection.select(InputSlot.XRAY_DATA, files[2]);
+  assert.equal(draftScope('xray:Comments', selection.entries()), 'Comments|file_explicit_2');
+  selection.select(InputSlot.XRAY_DATA, files[0]);
+  assert.equal(draftScope('xray:Comments', selection.entries()), 'Comments|file_explicit_0');
+  assert.equal(draftScope('Controls', original),
+    'Controls|neutron-data=file_explicit_2|neutron-instrument=file_explicit_3|phase=file_explicit_4|xray-data=file_explicit_0|xray-instrument=file_explicit_1');
+  assert.equal(draftScope('Controls', original.slice().reverse()), draftScope('Controls', original));
 });

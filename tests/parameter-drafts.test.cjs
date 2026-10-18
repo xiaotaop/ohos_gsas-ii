@@ -102,3 +102,36 @@ test('all 36 background coefficients fit Preferences string limit without persis
   assert.deepEqual(Object.keys(JSON.parse(json).fields[0]).sort(), ['key', 'refine', 'value']);
   assert.equal(restoreParameters('Background', scope, json).find(f => f.key === 'b35').value, '0.' + '1'.repeat(62));
 });
+
+test('Notebook and Comments preserve multiline text verbatim across save and reopen', () => {
+  for (const panel of ['Notebook', 'Comments']) {
+    const fields = parameterFields(panel);
+    const text = '  PbSO4 实验记录\n\n第一轮：待确认仪器参数\n- 比较两组输入  ';
+    set(fields, 'notes', text);
+    const json = serializeParameters(panel, 'notes-scope', fields);
+    const reopened = restoreParameters(panel, 'notes-scope', json);
+    assert.equal(reopened[0].value, text);
+    assert.equal(reopened[0].multiline, true);
+    assert.equal(reopened[0].refinable, false);
+    assert.deepEqual(Object.keys(JSON.parse(json).fields[0]).sort(), ['key', 'refine', 'value']);
+    assert.throws(() => restoreParameters(panel, 'other-file', json));
+    assert.equal(parameterFields(panel)[0].value, ''); // clearing an unsaved form leaves its source untouched
+    assert.equal(fields[0].value, text);
+  }
+});
+
+test('notes reject oversized or refinable records without widening existing parameter limits', () => {
+  const fields = parameterFields('Notebook');
+  set(fields, 'notes', '记'.repeat(4096));
+  const json = serializeParameters('Notebook', 'local', fields);
+  assert.equal(restoreParameters('Notebook', 'local', json)[0].value.length, 4096);
+  for (const text of ['x'.repeat(4097), ' '.repeat(4097), '\n'.repeat(4096)]) {
+    set(fields, 'notes', text);
+    assert.throws(() => serializeParameters('Notebook', 'local', fields));
+  }
+  const record = JSON.parse(json);
+  record.fields[0].refine = true;
+  assert.throws(() => restoreParameters('Notebook', 'local', JSON.stringify(record)));
+  const controls = parameterFields('Controls'); set(controls, 'author', ' '.repeat(513));
+  assert.throws(() => serializeParameters('Controls', 'c', controls));
+});
