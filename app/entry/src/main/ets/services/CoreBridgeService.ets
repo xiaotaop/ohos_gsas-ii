@@ -316,7 +316,6 @@ export class CoreBridgeService implements CoreService {
   private async cleanupTerminal(jobId: string): Promise<void> {
     this.logLines.delete(jobId);
     try { await this.files.finishJob(jobId); } catch { /* retried; outputs survive */ }
-    try { this.native.releaseJob(jobId); } catch { /* best effort */ }
     try { await this.jobs.save(jobId); } catch { /* in-memory state stays usable */ }
   }
 
@@ -394,7 +393,7 @@ export class CoreBridgeService implements CoreService {
     }
   }
 
-  /** The frozen five-shape request binds exactly these five input ids. */
+  /** Bind every histogram's data/instrument ids plus the phase id. */
   private static inputFileIds(request: RefinementRequest): string[] {
     const ids: string[] = [];
     for (const histogram of request.inputs.histograms) {
@@ -404,8 +403,8 @@ export class CoreBridgeService implements CoreService {
     for (const id of ids) {
       if (!FILE_ID.test(id)) { throw new FileServiceError('INVALID_REQUEST', '输入文件标识无效。'); }
     }
-    if (ids.length < 5) {
-      throw new FileServiceError('INVALID_REQUEST', '五阶段请求必须绑定两份数据、两份仪器参数和一个相文件。');
+    if (ids.length < 3) {
+      throw new FileServiceError('INVALID_REQUEST', '精修请求至少需要一份数据、一份仪器参数和一个相文件。');
     }
     const unique: string[] = [];
     for (const id of ids) { if (!unique.includes(id)) { unique.push(id); } }

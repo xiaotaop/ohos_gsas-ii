@@ -179,12 +179,15 @@ int main()
     assert(Contains(result, "\"lastSequence\":-1"));
     assert(Contains(result, "\"stage\":null"));
     assert(Contains(result, "\"terminal\":null"));
-    // Releasing drops the snapshot; the id stops being "already seen".
+    // Releasing an unstarted reservation drops its transient snapshot but
+    // does not weaken the process-lifetime jobId uniqueness guarantee.
     service.ReleaseJob("job_gate_first_001");
     assert(!service.GetJobSnapshot("job_gate_first_001", &result, &error));
     ExpectReject(error, "JOB_NOT_FOUND");
-    assert(service.AcquireJob("job_gate_first_001", &error));
-    service.ReleaseJob("job_gate_first_001");
+    assert(!service.AcquireJob("job_gate_first_001", &error));
+    ExpectReject(error, "JOB_ALREADY_EXISTS");
+    assert(service.AcquireJob("job_gate_released_03", &error));
+    service.ReleaseJob("job_gate_released_03");
 
     // 4. synchronous request validation rejects without events.
     Recorder recorder;
@@ -222,6 +225,8 @@ int main()
     assert(Contains(result, "\"percent\":55"));
     assert(Contains(result, "\"stage\":\"cells\""));
     assert(Contains(result, "\"terminal\":{\"type\":\"job.completed\",\"payload\":{\"state\":\"succeeded\""));
+    assert(!service.AcquireJob("job_happy_path_01", &error));
+    ExpectReject(error, "JOB_ALREADY_EXISTS");
     // Snapshot stays queryable after the job slot frees; a new job may start.
     assert(service.AcquireJob("job_happy_path_02", &error));
     service.ReleaseJob("job_happy_path_02");
@@ -293,6 +298,13 @@ int main()
              "file_inst_d1a_001", "file_pbso4_cif_001"}) {
         assert(std::find(ids.begin(), ids.end(), std::string(expected)) != ids.end());
     }
+    std::string oneHistogram =
+        "{\"schemaVersion\":\"1.0\",\"jobId\":\"job_ids_single_01\",\"operation\":\"powder-refinement\","
+        "\"recipeId\":\"powder-five-stage-v1\",\"inputs\":{\"histograms\":[{\"dataFileId\":\"file_data_single_01\","
+        "\"instrumentFileId\":\"file_inst_single_01\"}],\"phase\":{\"fileId\":\"file_phase_single_01\"}},"
+        "\"options\":{},\"output\":{}}";
+    assert(CoreService::RequestInputIds(oneHistogram, &ids));
+    assert(ids.size() == 3);
 
     // 11. after shutdown the service refuses new work instead of hanging.
     service.Shutdown();

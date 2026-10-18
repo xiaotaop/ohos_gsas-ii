@@ -549,7 +549,6 @@ void CoreService::ReleaseJob(const std::string& job_id)
     if (m_active_job == job_id) {
         m_active_job.clear();
     }
-    m_seen_job_ids.erase(job_id);
     m_cancel_flags.erase(job_id);
     m_snapshots.erase(job_id);
 }
@@ -629,9 +628,9 @@ bool CoreService::RequestInputIds(const std::string& request_json, std::vector<s
 {
     std::vector<std::string> found = CollectKeyValues(request_json, {"dataFileId", "instrumentFileId", "fileId"});
     ids->assign(found.begin(), found.end());
-    // The request carries two histograms (data+instrument each) and one
-    // phase; anything smaller cannot be the frozen five-stage shape.
-    return ids->size() >= 5;
+    // The frozen contract permits one to eight histograms. Each histogram
+    // contributes data+instrument ids and the phase contributes one id.
+    return ids->size() >= 3;
 }
 
 bool CoreService::sync_validate(const std::string& request_json, ServiceError* error, std::string* job_id_out)

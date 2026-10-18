@@ -268,7 +268,7 @@ test('job.completed registers real artifacts before the page is delivered the ev
   assert.deepEqual(files.sequence.filter(step => step.startsWith('register') || step.startsWith('deliver')),
     ['register:PbSO4-refined.gpx']);
   assert.equal(files.sequence.indexOf(`finish:${JOB}`), files.sequence.length - 1);
-  assert.deepEqual(native.calls.release, [JOB]);
+  assert.deepEqual(native.calls.release, []);
 }));
 
 test('a failed terminal writes the sanitized user log, registers it, then finishes', () => makeFixture(async ({ core, native, files, root, store }) => {
@@ -288,7 +288,18 @@ test('a failed terminal writes the sanitized user log, registers it, then finish
   assert.deepEqual(files.registered, [{ jobId: JOB, fileId: `file_log_${JOB.slice(4)}`, displayName: 'job-log.txt', kind: 'log' }]);
   assert.equal(store.value, JOB);
   assert.deepEqual(files.finished, [JOB]);
-  assert.deepEqual(native.calls.release, [JOB]);
+  assert.deepEqual(native.calls.release, []);
+}));
+
+test('one-histogram requests accepted by the frozen contract bind all three inputs', () => makeFixture(async ({ core, native, files }) => {
+  await core.initialize(files.getCoreConfig());
+  const single = request('job_single_histogram_01');
+  single.inputs.histograms = [single.inputs.histograms[0]];
+  await core.startRefinement(single);
+  assert.deepEqual(files.leases.get(single.jobId), [
+    'file_xray_data_0001', 'file_xray_inst_0002', 'file_phase_cif_0005'
+  ]);
+  assert.deepEqual(native.calls.acquire, [single.jobId]);
 }));
 
 test('a cancelled terminal records the reason in the user log', () => makeFixture(async ({ core, native, files, root }) => {
