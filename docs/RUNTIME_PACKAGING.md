@@ -1,6 +1,6 @@
 # 运行时装配与构建留档（成员 C）
 
-本增量提供宿主装配工具、HAP 内容门禁和发布验收清单。B 的真实运行时、计算 N-API 和应用内初始化仍未交付；工具通过不代表 C03 应用沙箱加载、真实精修或最终发布验收完成。基于 C01/C02 交接分支开发，原交接 PR 单独审核。
+本增量提供宿主装配工具、HAP 内容门禁和发布验收清单。B 的计算 N-API、设备侧 runtimeRoot 装配与应用内初始化已在 `core/napi-runtime` 分支交付（见 [PHASE3_NAPI_CORE](PHASE3_NAPI_CORE.md)）；真实 aarch64 运行时载荷、C03 应用沙箱加载、真实精修与最终发布验收仍未完成，工具通过不代表这些环节闭环。基于 C01/C02 交接分支开发，原交接 PR 单独审核。
 
 ## 1. 无运行时的开发包
 
@@ -60,7 +60,7 @@ python3 scripts/Build-App.py --check --build-mode release
 python3 scripts/Prepare-Runtime.py --manifest /work/runtime-manifest.json --payload /work/runtime-payload --output /work/prepared-v1
 ```
 
-先验证完整清单和所有源文件，再复制并复核目标字节；成功后才写 `runtime-receipt.json`。失败删除本次新建目录；已存在的输出目录一律拒绝，不覆盖旧版本。升级应使用新的 runtimeId/输出目录，并保留旧版本便于对比。这个机制只管理宿主装配版本，**没有实现设备 runtimeRoot 的解包、激活、回滚或升级迁移**；这些须与 B 的初始化/动态库加载方式对齐后实现。
+先验证完整清单和所有源文件，再复制并复核目标字节；成功后才写 `runtime-receipt.json`。失败删除本次新建目录；已存在的输出目录一律拒绝，不覆盖旧版本。升级应使用新的 runtimeId/输出目录，并保留旧版本便于对比。这个机制只管理宿主装配版本；设备 runtimeRoot 的解包、激活与升级迁移由 B 的 `RuntimeInstaller.ets` 实现（影子解包 `runtime-next`、逐项哈希复核、`.activation` 标记、目录交换发布与崩溃恢复；回滚即再次激活旧 runtimeId），设备侧 `runtime/manifest.json` 由 `scripts/Write-RuntimeManifest.py` 与发布清单同批生成，详见 [PHASE3_NAPI_CORE](PHASE3_NAPI_CORE.md)。
 
 收到真实载荷后可在全新构建副本中装配并校验包内实际字节：
 
@@ -68,7 +68,7 @@ python3 scripts/Prepare-Runtime.py --manifest /work/runtime-manifest.json --payl
 python3 scripts/Build-App.py --check --build-mode release --runtime-manifest /work/runtime-manifest.json --runtime-payload /work/runtime-payload
 ```
 
-清单中的 native target 是否实际进入 HAP，最终按 ZIP 中的路径、大小、哈希核对；SDK 打包遗漏或修改会导致构建留档失败。准备目录和源码工作区分离，运行时二进制不提交 Git。此选项准备包内容，不增加 ArkTS 解包逻辑、链接配置或计算桥接，也不冒充已能启动 Python 的应用。
+清单中的 native target 是否实际进入 HAP，最终按 ZIP 中的路径、大小、哈希核对；SDK 打包遗漏或修改会导致构建留档失败。准备目录和源码工作区分离，运行时二进制不提交 Git。此选项只准备包内容；ArkTS 解包逻辑（`RuntimeInstaller.ets`）、链接配置与计算桥接由 B 在 `core/napi-runtime` 分支另行交付，装配了真实载荷的应用才可能启动 Python，本工具的通过本身不构成该证明。
 
 ## 4. HAP 内容审计
 

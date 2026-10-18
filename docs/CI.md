@@ -30,6 +30,9 @@
 8. 宿主运行时装配、HAP 内容门禁和构建记录测试（合成载荷，不证明真实运行时加载）。
 9. ArkUI mock 状态模型的 TypeScript 类型检查、14 项行为/会话测试及契约示例同步检查。
 10. A 的输入关联模型 5 项、参数草稿模型 10 项，以及正式 `.ets` 模型的契约/会话/宿主回放套件 18 项；后者复用 mock 套件的服务夹具，正式 HAP 不引入 mock。普通 TypeScript 转译只用于执行纯模型测试，ArkTS/HAP 检查仍由 DevEco 完成。
+11. 核心服务 C++ 编排（`bridge/service.py` 移植）的宿主原生测试。
+12. 设备运行时清单生成：合成载荷必须通过成员 C 的权威门禁并与 `Prepare-Runtime` 端到端一致。
+13. 设备运行时装配器与核心门面在宿主环境运行实际 `.ets` 源码（装配器用真实文件系统，门面用注入接缝），固化成员 C 交接 §5 的调用顺序断言。
 
 任意步骤失败时，流水线返回失败状态，不应合并对应 Pull Request。
 
@@ -69,7 +72,18 @@ GSAS_TYPESCRIPT_PATH=/tmp/gsas-file-tests/node_modules/typescript node --test te
 
 ```sh
 python3 -m unittest discover -s tests -p 'test_release_tools.py' -v
+python3 -m unittest discover -s tests -p 'test_runtime_manifest_tool.py' -v
 ```
+
+B 的设备侧门面与装配器宿主测试（同需 typescript@5.4.5 与上面的 C++ 编排原生测试命令）：
+
+```sh
+GSAS_TYPESCRIPT_PATH=/tmp/gsas-file-tests/node_modules/typescript node --test tests/runtime-installer-host.test.cjs
+GSAS_TYPESCRIPT_PATH=/tmp/gsas-file-tests/node_modules/typescript node --test tests/core-bridge-host.test.cjs
+```
+
+真实 ArkTS 类型检查与 `arm64-v8a` 原生编译不进云端 CI，本机使用 DevEco 自带
+hvigor 执行，见 [PHASE3_NAPI_CORE](PHASE3_NAPI_CORE.md) §3。
 
 ## 5. GitHub 启用要求
 

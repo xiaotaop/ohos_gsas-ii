@@ -47,10 +47,15 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\Run-BridgeSelfTest
 
 ## 4. 真机侧未完成项（依赖成员 C 的 HAP 工程）
 
-1. C++ N-API 模块：嵌入 CPython 3.12.9、按 §8 签名调用本包两个入口、
-   线程安全函数切回 ArkTS。本包接口即 N-API 的稳定边界。
+1. ~~C++ N-API 模块：嵌入 CPython 3.12.9、按 §8 签名调用本包两个入口、
+   线程安全函数切回 ArkTS。本包接口即 N-API 的稳定边界。~~
+   已在 `core/napi-runtime` 分支交付（`napi_core.cpp`、`python_host.cpp`、
+   `CoreBridgeService.ets`），含真实 DevEco 无签名构建验证；
+   `GSAS_HAS_PYTHON` 的载荷编译与真机加载仍待真实 aarch64 载荷，
+   详见 [PHASE3_NAPI_CORE](PHASE3_NAPI_CORE.md)。
 2. 应用沙箱内验证 `runtime`/`jobs`/`outputs` 目录与重签名后的
-   NumPy/SciPy/PyCifRW/GSAS-II 加载。
+   NumPy/SciPy/PyCifRW/GSAS-II 加载。（`RuntimeInstaller` 已提供解包/激活，
+   设备端执行未验证。）
 3. 发布构建排除 `pydiffax`：本包不含任何 `pydiffax` 引用，自测有静态检查；
    真机 wheel 裁剪由成员 C 构建流程落实。
 
