@@ -28,12 +28,19 @@ ArkTS 核心门面的实现、构建方式与已知限制。契约依据：
    `artifacts` 剪除（界面拿到的 fileId 均可查询/导出）。
 5. 失败/取消：先写脱敏用户日志到 `outputs/<jobId>/job-log.txt`（仅契约级
    code/message/reason 与过滤后的 `job.log` 行；不含沙箱路径与 traceback），
-   登记为 `log`，再交付终态；所有终态后 `finishJob` + `releaseJob`。
-   组长已在 2026-10-19 批准该顺序，但当前终态未返回登记后的 artifact/fileId，
-   UI 仍无法可靠发现日志；须按 `INTEGRATION_ALIGNMENT.md` 的 B03 决议补齐
-   契约、Schema、示例、类型、UI 和测试后才能关闭。
+   登记为 `log`，再把登记返回的 `artifacts`（v1.1 可选字段）放入终态载荷交付；
+   所有终态后 `finishJob` + `releaseJob`。登记未完成时载荷不携带 `artifacts`，
+   页面如实提示"日志登记未完成"，绝不从路径/文件名/历史消息推导 fileId。
+   组长已在 2026-10-19 批准该顺序并要求同步契约、Schema、示例、类型、UI 和
+   测试；该同步已在增量 PR `core/b03-terminal-artifacts` 完成宿主级实现，
+   待组长复核后方可关闭。
 6. 重启：`listInterruptedJobs` 标记并 `finishJob`；其快照由门面合成 seq-0
-   `job.failed`（`PROCESS_INTERRUPTED`），计算永不恢复。
+   `job.failed`（`PROCESS_INTERRUPTED`，payload 形状 `{state:'failed',
+   error:{code,retryable:true}}`），计算永不恢复。任何终态（completed/failed/
+   cancelled/中断合成）都持久化到 `outputs/<jobId>/core/terminal-snapshot.json`
+   （与交付事件同形，含已登记 `artifacts`），供进程重启后 `getJobSnapshot` 在
+   原生台账缺失时按 jobId 恢复；读回快照经形状再校验，未知/已清理 ID 保持
+   `JOB_NOT_FOUND`，由 A 端只做失效近期 ID 的降级，不伪造中断。
 
 ## 3. 构建与载荷装配
 
@@ -93,9 +100,9 @@ Special handling is required."——分布于成员 C 既有文件与 B 的新�
   无签名材料，`assembleHap` 产物为未签名 HAP。
 - 事件通道队满丢弃（快照仍完整，符合空 sink 规则）；第二次终态被丢弃
   （Python 侧此情形抛异常，端口有意不复制崩溃行为）。
-- B03 的“先登记再发终态”已获批准，但失败/取消终态尚未公开日志 artifact；
-  当前实现只完成落盘和登记，不能计为 UI 可发现/可导出。私有 traceback 只写
-  `jobs/<jobId>/logs/`，从不登记。
+- B03 增量（终态 `artifacts`、跨进程终态快照与恢复）仅以宿主测试证明：
+  未启用 `GSAS_HAS_PYTHON`、未构建 HAP、未上真机，不能计为真实载荷下的
+  UI 可发现/可导出证据。私有 traceback 只写 `jobs/<jobId>/logs/`，从不登记。
 - `RefinementPanel` 在核心就绪瞬间重挂，表单文本会被清空（A 侧组件契约
   如此约定；页面加载早期通常先于用户输入完成）。
 - Windows 本机 `file-service-host.test.cjs` 因 `os.tmpdir()` 盘符路径被

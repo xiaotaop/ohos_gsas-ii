@@ -424,6 +424,94 @@ class BridgeFakeCoreTest(unittest.TestCase, SandboxMixin):
             jsonschema.validate(event, schema)
 
 
+class TerminalLogArtifactsTest(unittest.TestCase, SandboxMixin):
+    """B03: the delivery view the facade composes for failed/cancelled terminals.
+
+    Registration itself lives in the ArkTS file service (pinned by
+    tests/core-bridge-host.test.cjs); the Python side pins that a terminal
+    stream enriched with a registered log artifact still passes the very
+    validator the group lead gates on, that its absence stays valid, and
+    that malformed artifact claims are rejected there.
+    """
+
+    FILE_ID = re.compile(r"file_[A-Za-z0-9_-]{8,64}")
+
+    def setUp(self):
+        self.files = self.build_sandbox()
+
+    def _run_terminal(self, scenario: str):
+        job_id = f"job_artifacts_{scenario}"
+        refiner = FakeFiveStageRefiner(stage_delay=0, boom=True) if scenario == "failed" \
+            else FakeFiveStageRefiner(stage_delay=0.2)
+        service = self.make_service(refiner=refiner, files=self.files)
+        events: list[dict] = []
+
+        def listener(event: dict) -> None:
+            events.append(event)
+            if (scenario == "cancelled" and event["type"] == "job.progress"
+                    and event["payload"].get("stage") == "cells"):
+                service.cancel_job(job_id)
+
+        service.on_event(listener)
+        service.start_refinement(json.dumps(make_request(job_id)))
+        self.assertTrue(service.wait_idle(timeout=30))
+        expected = "job.failed" if scenario == "failed" else "job.cancelled"
+        self.assertEqual(events[-1]["type"], expected)
+        return service, job_id, events
+
+    def _deliver_with_log(self, job_id: str, events: list[dict]) -> dict:
+        """Facade order: sanitized log on disk, registration token, enriched payload."""
+        log_dir = self.files / "outputs" / job_id
+        log_dir.mkdir(parents=True, exist_ok=True)
+        lines = [event["payload"]["message"] for event in events if event["type"] == "job.log"]
+        (log_dir / "job-log.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
+        artifact = {"fileId": f"file_log_{job_id[4:]}", "kind": "log",
+                    "displayName": "job-log.txt", "mediaType": "text/plain"}
+        events[-1]["payload"]["artifacts"] = [artifact]
+        return artifact
+
+    def test_failed_terminal_with_registered_log_stays_contract_valid(self):
+        service, job_id, events = self._run_terminal("failed")
+        # Copy before enrichment: the reference bridge hands out the payload by
+        # shared reference, while the device native copies the raw event at emit.
+        raw_snapshot = json.loads(json.dumps(service.get_job_snapshot(job_id)))
+        artifact = self._deliver_with_log(job_id, events)
+        self.validate(events, f"b03-{job_id}")
+        self.assertTrue((self.files / "outputs" / job_id / "job-log.txt").is_file())
+        self.assertEqual(events[-1]["payload"]["artifacts"], [artifact])
+        # The raw bridge ledger predates registration: the artifact claim is
+        # added only by the delivery layer, so snapshot and delivery view
+        # agree on the error itself and the token comes from the file service.
+        self.assertEqual(raw_snapshot["terminal"]["payload"]["error"], events[-1]["payload"]["error"])
+        self.assertNotIn("artifacts", raw_snapshot["terminal"]["payload"])
+
+    def test_cancelled_terminal_with_registered_log_stays_contract_valid(self):
+        _, job_id, events = self._run_terminal("cancelled")
+        artifact = self._deliver_with_log(job_id, events)
+        self.validate(events, f"b03-{job_id}")
+        self.assertEqual(artifact["kind"], "log")
+        self.assertTrue(self.FILE_ID.fullmatch(artifact["fileId"]))
+
+    def test_missing_artifacts_stay_valid_and_malformed_ones_are_rejected(self):
+        _, job_id, events = self._run_terminal("failed")
+        self.validate(events, f"b03-{job_id}-no-artifacts")  # optional: absence is legal
+        good = {"fileId": f"file_log_{job_id[4:]}", "kind": "log",
+                "displayName": "job-log.txt", "mediaType": "text/plain"}
+        mutations = [
+            [],                                                  # empty array
+            [{**good, "kind": "result"}],                        # not a registered log
+            [{**good, "fileId": "file_log_" + str(self.files)}],  # path-derived, not a token
+            [{**good, "extra": 1}],                              # unregistered fields
+            [dict(good), dict(good)],                            # duplicate token
+            [good, []],                                          # non-object entry
+        ]
+        for mutation in mutations:
+            with self.subTest(artifacts=mutation):
+                payload = dict(events[-1]["payload"], artifacts=mutation)
+                with self.assertRaises(ValueError):
+                    contract.validate_terminal_log_artifacts(payload, "mutation")
+
+
 def _register_native_dll_dirs() -> None:
     """Windows: expose MinGW runtime dirs (libgfortran etc.) to the loader.
 

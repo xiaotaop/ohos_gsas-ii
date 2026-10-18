@@ -104,6 +104,7 @@ class FakeNative {
     this.callback = null; this.configJson = null;
     this.calls = { acquire: [], release: [], start: [], cancel: [], snapshot: [], init: 0, shutdown: 0 };
     this.fail = {}; this.ack = JSON.stringify({ requested: true }); this.snapshots = {};
+    this.ledger = {};  // mirrors napi_core.cpp's record_event for emitted events
     this.info = { schemaVersion: '1.0', ready: true, pythonVersion: '3.12.9',
       gsasCommit: '2b4aba1bc44de63a3da9d4495944c3b99e389399', supportedRecipes: ['powder-five-stage-v1'] };
   }
@@ -126,12 +127,33 @@ class FakeNative {
   getJobSnapshot(jobId) {
     this.calls.snapshot.push(jobId);
     if (this.snapshots[jobId]) return this.snapshots[jobId];
+    if (this.ledger[jobId]) return JSON.stringify(this.ledger[jobId]);
     const error = new Error('未找到此任务。'); error.code = 'JOB_NOT_FOUND'; error.retryable = false; throw error;
   }
   async shutdownCore() { this.calls.shutdown += 1; }
   emit(event) {
-    this.callback(JSON.stringify({ schemaVersion: '1.0', eventId: `evt_${event.sequence}`,
-      timestamp: '2026-10-18T00:00:00Z', ...event }));
+    const full = { schemaVersion: '1.0', eventId: `evt_${event.sequence}`,
+      timestamp: '2026-10-18T00:00:00Z', ...event };
+    let snapshot = this.ledger[full.jobId];
+    if (!snapshot) {
+      snapshot = { jobId: full.jobId, state: 'queued', lastSequence: -1, percent: 0, stage: null, terminal: null };
+      this.ledger[full.jobId] = snapshot;
+    }
+    const terminalMap = { 'job.completed': 'succeeded', 'job.cancelled': 'cancelled', 'job.failed': 'failed' };
+    if (Object.prototype.hasOwnProperty.call(terminalMap, full.type)) {
+      if (!snapshot.terminal) {  // exactly one terminal, like the native ledger
+        snapshot.terminal = { type: full.type, payload: full.payload };
+        snapshot.state = terminalMap[full.type];
+      }
+    } else if (full.type === 'job.progress') {
+      snapshot.state = full.payload.state;
+      snapshot.percent = full.payload.percent;
+      snapshot.stage = full.payload.stage;
+    } else if (full.type === 'job.accepted') {
+      snapshot.state = 'queued';
+    }
+    snapshot.lastSequence = full.sequence;
+    this.callback(JSON.stringify(full));
   }
 }
 
@@ -140,7 +162,7 @@ class FakeNative {
 class FakeFiles {
   constructor(root) {
     this.root = root; this.leases = new Map(); this.finished = []; this.registered = [];
-    this.interrupted = []; this.sequence = [];
+    this.interrupted = []; this.sequence = []; this.failRegister = false;
     this.config = { schemaVersion: '1.0', runtimeRoot: posixJoin(root, 'runtime'),
       workspaceRoot: posixJoin(root, 'jobs'), outputRoot: posixJoin(root, 'outputs'),
       maxConcurrentJobs: 1, logLevel: 'info' };
@@ -155,6 +177,7 @@ class FakeFiles {
   }
   async finishJob(jobId) { this.sequence.push(`finish:${jobId}`); this.finished.push(jobId); this.leases.delete(jobId); }
   async registerOutput(jobId, fileId, displayName, kind) {
+    if (this.failRegister) { const error = new Error('登记服务不可用。'); error.code = 'INTERNAL_ERROR'; throw error; }
     const location = posixJoin(this.root, 'outputs', jobId, displayName);
     if (!fs.existsSync(location)) { const error = new Error('产物尚未写出。'); error.code = 'INVALID_REQUEST'; throw error; }
     this.sequence.push(`register:${displayName}`);
@@ -291,6 +314,44 @@ test('a failed terminal writes the sanitized user log, registers it, then finish
   assert.deepEqual(native.calls.release, []);
 }));
 
+test('B03: the failed terminal event carries the registered log artifact', () => makeFixture(async ({ core, native, files, root }) => {
+  await core.initialize(files.getCoreConfig());
+  const delivered = [];
+  core.onEvent(event => delivered.push(event));
+  await core.startRefinement(request());
+  native.emit(event('job.failed', JOB, 1, { error: { code: 'REFINEMENT_FAILED', message: '精修失败，请检查输入。', retryable: false } }));
+  await core.flushEvents();
+  const failed = delivered[0];
+  assert.equal(failed.type, 'job.failed');
+  assert.deepEqual(failed.payload.artifacts, [
+    { fileId: `file_log_${JOB.slice(4)}`, kind: 'log', displayName: 'job-log.txt', mediaType: 'text/plain' }]);
+  // Consistency evidence: the snapshot answers with exactly the payload the page received,
+  // its artifact token is the one the file service registered, and the sidecar on disk says the same.
+  const snapshot = await core.getJobSnapshot(JOB);
+  assert.deepEqual(snapshot.terminal.payload, failed.payload);
+  assert.equal(snapshot.terminal.payload.artifacts[0].fileId, files.registered[0].fileId);
+  const persisted = JSON.parse(fs.readFileSync(posixJoin(root, 'outputs', JOB, 'core', 'terminal-snapshot.json'), 'utf8'));
+  assert.deepEqual(persisted.terminal.payload.artifacts, failed.payload.artifacts);
+  assert.equal(persisted.state, 'failed');
+}));
+
+test('B03: an incomplete log registration delivers the terminal without artifacts', () => makeFixture(async ({ core, native, files, root }) => {
+  await core.initialize(files.getCoreConfig());
+  const delivered = [];
+  core.onEvent(event => delivered.push(event));
+  await core.startRefinement(request());
+  files.failRegister = true;  // the log file is written but the registry rejects
+  native.emit(event('job.failed', JOB, 1, { error: { code: 'REFINEMENT_FAILED', message: '精修失败，请检查输入。', retryable: false } }));
+  await core.flushEvents();
+  assert.ok(fs.existsSync(posixJoin(root, 'outputs', JOB, 'job-log.txt')));
+  assert.deepEqual(files.registered, []);
+  assert.equal(delivered[0].type, 'job.failed');
+  assert.equal(delivered[0].payload.artifacts, undefined);
+  const snapshot = await core.getJobSnapshot(JOB);
+  assert.equal(snapshot.terminal.payload.artifacts, undefined);
+  assert.deepEqual(files.finished, [JOB]);
+}));
+
 test('one-histogram requests accepted by the frozen contract bind all three inputs', () => makeFixture(async ({ core, native, files }) => {
   await core.initialize(files.getCoreConfig());
   const single = request('job_single_histogram_01');
@@ -304,6 +365,8 @@ test('one-histogram requests accepted by the frozen contract bind all three inpu
 
 test('a cancelled terminal records the reason in the user log', () => makeFixture(async ({ core, native, files, root }) => {
   await core.initialize(files.getCoreConfig());
+  const delivered = [];
+  core.onEvent(event => delivered.push(event));
   await core.startRefinement(request());
   native.emit(event('job.cancelled', JOB, 4, { reason: '用户请求取消' }));
   await core.flushEvents();
@@ -311,6 +374,101 @@ test('a cancelled terminal records the reason in the user log', () => makeFixtur
   assert.ok(log.includes('状态: 已取消'));
   assert.ok(log.includes('用户请求取消'));
   assert.equal(log.includes(root), false);
+  assert.deepEqual(delivered[0].payload.artifacts, [
+    { fileId: `file_log_${JOB.slice(4)}`, kind: 'log', displayName: 'job-log.txt', mediaType: 'text/plain' }]);
+  assert.deepEqual((await core.getJobSnapshot(JOB)).terminal.payload, delivered[0].payload);
+}));
+
+test('terminal snapshots recover across a process restart', () => makeFixture(async ({ core, native, files, root, store }) => {
+  await core.initialize(files.getCoreConfig());
+  const delivered = [];
+  core.onEvent(event => delivered.push(event));
+  await core.startRefinement(request());
+  fs.writeFileSync(posixJoin(root, 'outputs', JOB, 'PbSO4-refined.gpx'), 'gpx-bytes\n');
+  native.emit(event('job.completed', JOB, 3, { result: { artifacts: [
+    { fileId: 'file_out_x_gpx', kind: 'project', displayName: 'PbSO4-refined.gpx', mediaType: 'application/octet-stream' }] } }));
+  await core.flushEvents();
+  assert.deepEqual(files.finished, [JOB]);
+
+  // New "process": empty native ledger and empty in-memory views; only the
+  // filesystem and the persisted job id survive, like a real restart.
+  const native2 = new FakeNative();
+  const files2 = new FakeFiles(root);
+  const store2 = { value: store.value, async load() { return store2.value; }, async save(jobId) { store2.value = jobId; } };
+  const core2 = new CoreBridgeService({ native: native2, files: files2, runtime: runtimeSource(), jobs: store2 });
+  await core2.initialize(files2.getCoreConfig());
+  assert.equal(await core2.restoreJobId(), JOB);
+  const recovered = await core2.getJobSnapshot(JOB);
+  assert.equal(native2.calls.snapshot.length, 1);  // the ledger really was gone
+  assert.equal(recovered.state, 'succeeded');
+  assert.deepEqual(recovered.terminal.payload.result.artifacts.map(a => a.fileId), ['file_out_x_gpx']);
+  assert.deepEqual(recovered.terminal.payload, delivered[0].payload);
+}));
+
+test('a recovered failed terminal keeps its registered log artifact across restart', () => makeFixture(async ({ core, native, files, root, store }) => {
+  await core.initialize(files.getCoreConfig());
+  const delivered = [];
+  core.onEvent(event => delivered.push(event));
+  await core.startRefinement(request());
+  native.emit(event('job.failed', JOB, 1, { error: { code: 'REFINEMENT_FAILED', message: '精修失败，请检查输入。', retryable: false } }));
+  await core.flushEvents();
+  const registeredFileId = files.registered[0].fileId;
+
+  const native2 = new FakeNative();
+  const files2 = new FakeFiles(root);
+  const store2 = { value: store.value, async load() { return store2.value; }, async save(jobId) { store2.value = jobId; } };
+  const core2 = new CoreBridgeService({ native: native2, files: files2, runtime: runtimeSource(), jobs: store2 });
+  await core2.initialize(files2.getCoreConfig());
+  const recovered = await core2.getJobSnapshot(JOB);
+  assert.deepEqual(recovered.terminal.payload, delivered[0].payload);
+  assert.equal(recovered.terminal.payload.artifacts[0].fileId, registeredFileId);
+}));
+
+test('an interrupted job stays PROCESS_INTERRUPTED across repeated restarts', () => makeFixture(async ({ files, root }) => {
+  // The lease directory survives the crash — listInterruptedJobs only ever
+  // reports jobs whose outputs/<jobId> exists from the previous process.
+  fs.mkdirSync(posixJoin(root, 'outputs', JOB), { recursive: true });
+  const native1 = new FakeNative();
+  const store1 = { value: JOB, async load() { return store1.value; }, async save(jobId) { store1.value = jobId; } };
+  const core1 = new CoreBridgeService({ native: native1, files, runtime: runtimeSource(), jobs: store1 });
+  files.interrupted = [JOB];
+  await core1.initialize(files.getCoreConfig());
+  assert.deepEqual(files.finished, [JOB]);
+
+  // Second process: the lease is already released, so only the persisted
+  // synthesized view answers — still PROCESS_INTERRUPTED, never a live job.
+  const files2 = new FakeFiles(root);
+  const native2 = new FakeNative();
+  const core2 = new CoreBridgeService({ native: native2, files: files2, runtime: runtimeSource(), jobs: store1 });
+  await core2.initialize(files2.getCoreConfig());
+  const snapshot = await core2.getJobSnapshot(JOB);
+  assert.equal(snapshot.state, 'failed');
+  assert.equal(snapshot.lastSequence, 0);
+  assert.equal(snapshot.terminal.type, 'job.failed');
+  assert.equal(snapshot.terminal.payload.error.code, 'PROCESS_INTERRUPTED');
+  assert.equal(snapshot.terminal.payload.error.retryable, true);
+  assert.equal(snapshot.terminal.payload.artifacts, undefined);
+}));
+
+test('a missing or malformed persisted snapshot degrades to JOB_NOT_FOUND, never a fake result', () => makeFixture(async ({ core, native, files, root }) => {
+  await core.initialize(files.getCoreConfig());
+  await core.startRefinement(request());
+  native.emit(event('job.failed', JOB, 1, { error: { code: 'REFINEMENT_FAILED', message: '精修失败，请检查输入。', retryable: false } }));
+  await core.flushEvents();
+  const sidecar = posixJoin(root, 'outputs', JOB, 'core', 'terminal-snapshot.json');
+  fs.writeFileSync(sidecar, '{"jobId":"broken');
+
+  const native2 = new FakeNative();
+  const files2 = new FakeFiles(root);
+  const core2 = new CoreBridgeService({ native: native2, files: files2, runtime: runtimeSource(), jobs: { value: JOB, async load() { return JOB; }, async save() {} } });
+  await core2.initialize(files2.getCoreConfig());
+  await assert.rejects(core2.getJobSnapshot(JOB), error => error.code === 'JOB_NOT_FOUND');
+
+  // A path-derived fileId (not a registration token) is rejected the same way.
+  fs.writeFileSync(sidecar, JSON.stringify({ jobId: JOB, state: 'failed', lastSequence: 1, percent: 0, stage: null,
+    terminal: { type: 'job.failed', payload: { error: { code: 'REFINEMENT_FAILED', message: 'x', retryable: false },
+      artifacts: [{ fileId: 'file_log_../escape', kind: 'log', displayName: 'job-log.txt', mediaType: 'text/plain' }] } } }));
+  await assert.rejects(core2.getJobSnapshot(JOB), error => error.code === 'JOB_NOT_FOUND');
 }));
 
 test('cancelJob forwards the ack and getJobSnapshot passes the native snapshot', () => makeFixture(async ({ core, native, files }) => {

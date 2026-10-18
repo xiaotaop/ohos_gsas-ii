@@ -5,9 +5,13 @@
 // the single-task gate before the worker starts; every artifact registered
 // before job.completed reaches the page; the lease finished on ALL terminal
 // states; interrupted jobs marked PROCESS_INTERRUPTED and never resumed.
-// The failed/cancelled user log written before registration is C's
-// recommended scheme (B03) and still awaits 组长 approval; private tracebacks
-// never enter it.
+// B03 (组长-approved, v1.1): failed/cancelled terminals first persist and
+// register the sanitized user log, then deliver the terminal event whose
+// payload carries the registered log artifact; private tracebacks never
+// enter it. The same terminal view (event payload included) is persisted
+// under outputs/<jobId>/core/ so a restarted process can answer
+// getJobSnapshot for finished or interrupted jobs; released/unknown ids
+// keep returning JOB_NOT_FOUND for the page to degrade.
 // All dependencies are injected so host tests can drive this facade without
 // the native module.
 import { fileIo as fs } from '@kit.CoreFileKit';
@@ -62,9 +66,18 @@ const OPERATION = 'powder-refinement';
 const RUNTIME_SUFFIX = '/runtime';
 const LOG_NAME = 'job-log.txt';
 const LOG_ID_PREFIX = 'file_log_';
+const LOG_MEDIA_TYPE = 'text/plain';
 const MAX_LOG_LINES = 400;
 const MAX_LOG_LINE = 500;
 const MAX_LOG_BYTES = 65536;
+// The terminal view lives in a per-job subdirectory that no registered
+// displayName can collide with (C's checkName forbids '/' in names).
+const SNAPSHOT_DIR = 'core';
+const SNAPSHOT_NAME = 'terminal-snapshot.json';
+const SNAPSHOT_STATES = ['succeeded', 'failed', 'cancelled'];
+const SNAPSHOT_TERMINAL_TYPES = ['job.completed', 'job.failed', 'job.cancelled'];
+const ARTIFACT_FILE_ID = /^file_[A-Za-z0-9_-]{8,64}$/;
+const ERROR_CODE = /^[A-Z][A-Z0-9_]{2,63}$/;
 
 function toArtifactKind(kind: string): ArtifactKind | undefined {
   if (kind === 'project') { return 'project'; }
@@ -84,6 +97,10 @@ export class CoreBridgeService implements CoreService {
   private queue: Promise<void> = Promise.resolve();
   private logLines: Map<string, string[]> = new Map();
   private interrupted: Set<string> = new Set();
+  // jobId -> terminal view (exactly the payload the page received/will
+  // receive, registered artifacts included), kept for the process lifetime
+  // and persisted for cross-process recovery.
+  private terminalViews: Map<string, string> = new Map();
 
   constructor(deps: CoreBridgeDeps) {
     this.native = deps.native;
@@ -110,10 +127,15 @@ export class CoreBridgeService implements CoreService {
     this.config = config;
     for (const jobId of this.files.listInterruptedJobs()) {
       // §5 step 7: mark the persisted lease as interrupted, then release it.
-      // Computation is never resumed; the snapshot layer answers instead.
+      // Computation is never resumed; the snapshot layer answers instead, and
+      // the synthesized terminal view is persisted so later restarts keep
+      // answering PROCESS_INTERRUPTED for this jobId instead of losing it.
       this.interrupted.add(jobId);
+      const view = CoreBridgeService.interruptedSnapshot(jobId);
+      this.terminalViews.set(jobId, view);
       try { this.native.releaseJob(jobId); } catch { /* no ledger entry in a new process */ }
       try { await this.files.finishJob(jobId); } catch { /* retried at next start */ }
+      await this.persistSnapshot(jobId, view);
     }
     this.native.setEventCallback((eventJson: string): void => this.observe(eventJson));
     let infoJson: string;
@@ -215,15 +237,25 @@ export class CoreBridgeService implements CoreService {
     if (!JOB_ID.test(jobId)) { throw new FileServiceError('INVALID_REQUEST', '任务标识无效。'); }
     if (this.interrupted.has(jobId)) {
       // Synthesized exactly like a §8 pre-event failure: seq-0 job.failed.
-      const error: CoreError = { code: 'PROCESS_INTERRUPTED', message: '上次任务因进程退出而中断。', retryable: true };
-      return { jobId, state: 'failed', lastSequence: 0, percent: 0, stage: null,
-        terminal: { type: 'job.failed', payload: { error } } };
+      return JSON.parse(CoreBridgeService.interruptedSnapshot(jobId)) as JobSnapshot;
     }
     if (this.info === undefined) { throw new FileServiceError('CORE_NOT_READY', '计算核心尚未就绪，请稍后重试。', true); }
+    // Drain queued terminal handling first: a returned terminal view must
+    // carry exactly the artifacts the delivered terminal event carries.
+    await this.flushEvents();
+    const view = this.terminalViews.get(jobId);
+    if (view !== undefined) { return JSON.parse(view) as JobSnapshot; }
     let snapshotJson: string;
     try {
       snapshotJson = this.native.getJobSnapshot(jobId);
     } catch (error) {
+      if (CoreBridgeService.isNotFound(error)) {
+        // Cross-process recovery: a finished or interrupted job keeps its
+        // terminal view under outputs/<jobId>/core/ even after the native
+        // ledger (and the C lease) was released.
+        const recovered = await this.readPersistedSnapshot(jobId);
+        if (recovered !== undefined) { return recovered; }
+      }
       throw CoreBridgeService.wrapNative(error);
     }
     return JSON.parse(snapshotJson) as JobSnapshot;
@@ -254,12 +286,19 @@ export class CoreBridgeService implements CoreService {
   private async handle(event: CoreEvent): Promise<void> {
     if (event.type === 'job.completed') {
       await this.registerArtifacts(event);
+      await this.persistTerminalSnapshot(event);
       this.dispatch(event);
       await this.cleanupTerminal(event.jobId);
       return;
     }
     if (event.type === 'job.failed' || event.type === 'job.cancelled') {
-      await this.writeUserLog(event);
+      // B03 order: persist + register the sanitized log first, then deliver
+      // the terminal event carrying the registered artifact. If registration
+      // did not complete the payload simply has no artifacts (optional); the
+      // page shows "log not registered" instead of guessing a fileId.
+      const artifact = await this.writeUserLog(event);
+      if (artifact !== undefined) { event.payload.artifacts = [artifact]; }
+      await this.persistTerminalSnapshot(event);
       this.dispatch(event);
       await this.cleanupTerminal(event.jobId);
       return;
@@ -285,19 +324,24 @@ export class CoreBridgeService implements CoreService {
       if (kind === undefined || !FILE_ID.test(artifact.fileId) || typeof artifact.displayName !== 'string'
         || artifact.displayName.length === 0 || artifact.displayName.length > 180) { continue; }
       try {
-        await this.files.registerOutput(event.jobId, artifact.fileId, artifact.displayName, kind);
-        kept.push(artifact);
+        const registered = await this.files.registerOutput(event.jobId, artifact.fileId, artifact.displayName, kind);
+        // Deliver the registered record, not the locally proposed one.
+        kept.push({ fileId: registered.fileId, kind, displayName: registered.displayName,
+          mediaType: artifact.mediaType });
       } catch { /* an unexportable artifact must not swallow the result */ }
     }
     result.artifacts = kept;
   }
 
-  /** §5 step 6: failed/cancelled first land a sanitized user log in outputs. */
-  private async writeUserLog(event: CoreEvent): Promise<void> {
+  /** §5 step 6 + B03: failed/cancelled first land a sanitized user log in
+   * outputs and register it; the returned artifact is the registered record
+   * (fileId included) that the terminal payload then carries. Undefined means
+   * registration did not complete, so the payload stays without artifacts. */
+  private async writeUserLog(event: CoreEvent): Promise<Artifact | undefined> {
     const config = this.config;
-    if (config === undefined) { return; }  // closed mid-event; dispatch still runs
+    if (config === undefined) { return undefined; }  // closed mid-event; dispatch still runs
     const text = this.buildUserLog(event, config);
-    if (text.length === 0) { return; }
+    if (text.length === 0) { return undefined; }
     const path = `${config.outputRoot}/${event.jobId}/${LOG_NAME}`;
     const fileId = `${LOG_ID_PREFIX}${event.jobId.substring(4)}`;
     try {
@@ -309,8 +353,108 @@ export class CoreBridgeService implements CoreService {
       } finally {
         await fs.close(file);
       }
-      await this.files.registerOutput(event.jobId, fileId, LOG_NAME, 'log');
-    } catch { /* best effort: the terminal event must still reach the page */ }
+      const registered = await this.files.registerOutput(event.jobId, fileId, LOG_NAME, 'log');
+      return { fileId: registered.fileId, kind: 'log', displayName: registered.displayName,
+        mediaType: LOG_MEDIA_TYPE };
+    } catch { return undefined; /* best effort: the terminal event must still reach the page */ }
+  }
+
+  /** §4.2: persist the exact terminal view (event payload, registered
+   * artifacts included) beside the outputs so a later process can answer
+   * getJobSnapshot for this jobId. Best effort — persistence failure never
+   * delays or drops the terminal event. */
+  private async persistTerminalSnapshot(event: CoreEvent): Promise<void> {
+    let snapshotJson: string;
+    try {
+      snapshotJson = this.native.getJobSnapshot(event.jobId);
+    } catch { return; }  // ledger vanished mid-shutdown; events still dispatch
+    const merged = CoreBridgeService.parseSnapshot(snapshotJson, event.jobId);
+    if (merged === undefined) { return; }
+    merged.terminal = { type: event.type, payload: event.payload };
+    merged.state = event.type === 'job.completed' ? 'succeeded'
+      : event.type === 'job.cancelled' ? 'cancelled' : 'failed';
+    await this.persistSnapshot(event.jobId, JSON.stringify(merged));
+  }
+
+  private async persistSnapshot(jobId: string, rendered: string): Promise<void> {
+    const config = this.config;
+    if (config === undefined) { return; }
+    this.terminalViews.set(jobId, rendered);
+    const base = `${config.outputRoot}/${jobId}`;
+    const dir = `${base}/${SNAPSHOT_DIR}`;
+    try {
+      try { await fs.mkdir(base); } catch { /* already exists */ }
+      try { await fs.mkdir(dir); } catch { /* already exists */ }
+      const file = await fs.open(`${dir}/${SNAPSHOT_NAME}`, fs.OpenMode.CREATE | fs.OpenMode.WRITE_ONLY
+        | fs.OpenMode.TRUNC | fs.OpenMode.NOFOLLOW);
+      try {
+        await fs.write(file.fd, rendered);
+        await fs.fsync(file.fd);
+      } finally {
+        await fs.close(file);
+      }
+    } catch { /* recovery degrades to JOB_NOT_FOUND; delivery is unaffected */ }
+  }
+
+  private async readPersistedSnapshot(jobId: string): Promise<JobSnapshot | undefined> {
+    const config = this.config;
+    if (config === undefined) { return undefined; }
+    let text: string;
+    try {
+      text = await fs.readText(`${config.outputRoot}/${jobId}/${SNAPSHOT_DIR}/${SNAPSHOT_NAME}`);
+    } catch { return undefined; }
+    return CoreBridgeService.parseSnapshot(text, jobId);
+  }
+
+  /** Trust boundary for a snapshot read back from disk: revalidate the
+   * contract shape (ids, terminal types, registered artifact fields) and
+   * reject anything malformed instead of replaying it to the page. */
+  private static parseSnapshot(text: string, jobId: string): JobSnapshot | undefined {
+    let value: JobSnapshot;
+    try {
+      value = JSON.parse(text) as JobSnapshot;
+    } catch { return undefined; }
+    if (value === null || typeof value !== 'object' || value.jobId !== jobId
+      || typeof value.state !== 'string' || !SNAPSHOT_STATES.includes(value.state)
+      || !Number.isSafeInteger(value.lastSequence) || value.lastSequence < 0
+      || typeof value.percent !== 'number' || value.percent < 0 || value.percent > 100
+      || !(value.stage === null || typeof value.stage === 'string')) { return undefined; }
+    const terminal = value.terminal;
+    if (terminal === null || terminal === undefined) { return undefined; }  // only terminal views persist
+    if (typeof terminal.type !== 'string' || !SNAPSHOT_TERMINAL_TYPES.includes(terminal.type)) { return undefined; }
+    const payload = terminal.payload;
+    if (payload === null || typeof payload !== 'object') { return undefined; }
+    if (terminal.type === 'job.failed' && (payload.error === undefined || payload.error === null
+      || typeof payload.error.code !== 'string' || !ERROR_CODE.test(payload.error.code))) { return undefined; }
+    if (terminal.type === 'job.cancelled' && typeof payload.reason !== 'string') { return undefined; }
+    if (terminal.type === 'job.completed' && (payload.result === undefined || payload.result === null)) { return undefined; }
+    const artifacts = payload.artifacts;
+    if (artifacts !== undefined) {
+      if (!Array.isArray(artifacts) || artifacts.length === 0 || artifacts.length > 16) { return undefined; }
+      for (const artifact of artifacts) {
+        if (artifact === null || typeof artifact !== 'object' || artifact.kind !== 'log'
+          || typeof artifact.fileId !== 'string' || !ARTIFACT_FILE_ID.test(artifact.fileId)
+          || typeof artifact.displayName !== 'string' || artifact.displayName.length === 0
+          || artifact.displayName.length > 180 || artifact.displayName.includes('/')
+          || artifact.displayName.includes('\\')
+          || typeof artifact.mediaType !== 'string' || artifact.mediaType.length === 0) { return undefined; }
+      }
+    }
+    return value;
+  }
+
+  /** Synthesized exactly like a §8 pre-event failure: seq-0 job.failed with
+   * the contract-conformant { state, error } payload (no artifacts — there
+   * is no registered log for an interrupted process). */
+  private static interruptedSnapshot(jobId: string): string {
+    const error: CoreError = { code: 'PROCESS_INTERRUPTED', message: '上次任务因进程退出而中断。', retryable: true };
+    const snapshot: JobSnapshot = { jobId, state: 'failed', lastSequence: 0, percent: 0, stage: null,
+      terminal: { type: 'job.failed', payload: { state: 'failed', error } } };
+    return JSON.stringify(snapshot);
+  }
+
+  private static isNotFound(error: Object): boolean {
+    return (error as NativeErrorShape).code === 'JOB_NOT_FOUND';
   }
 
   private async cleanupTerminal(jobId: string): Promise<void> {

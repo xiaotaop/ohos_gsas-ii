@@ -15,3 +15,5 @@
 
 第二阶段开工前需要确定：HarmonyOS PC 设备架构、SDK/编译器版本、Python/NumPy/SciPy 可用版本及来源、是否拥有真实设备测试条件。未确定这些条件前，不能声称“可移植已验证”。
 
+增量核对（2026-10-19，B03 终态 artifact PR `core/b03-terminal-artifacts`）：该增量为纯契约/ArkTS/测试改动，未新增或变更任何运行时依赖；上表状态全部不变。真实 CPython/GSAS-II 载荷、启用 `GSAS_HAS_PYTHON` 的编译与加载证据仍未关闭，本 PR 的验证仅限宿主（无 HAP、无真机、无真实数值计算）。
+
