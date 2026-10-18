@@ -64,6 +64,13 @@ jobs:
           c++ -std=c++17 -Wall -Wextra -Werror tests/file-exporter-native.test.cpp -o /tmp/gsas-exclusive-test
           /tmp/gsas-exclusive-test
 
+      - name: Test core service orchestration (C++ port of bridge/service.py)
+        run: |
+          c++ -std=c++17 -Wall -Wextra -Werror -pthread \
+            tests/core-service-native.test.cpp app/entry/src/main/cpp/core/core_service.cpp \
+            -o /tmp/gsas-core-service-test
+          /tmp/gsas-core-service-test
+
       - name: Test file service on host filesystem
         run: |
           npm install --prefix /tmp/gsas-file-tests --no-package-lock --no-save typescript@5.4.5
