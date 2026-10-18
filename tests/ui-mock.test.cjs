@@ -2,9 +2,12 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const {
-  RefinementView, receiveEvent, receiveSnapshot, RefinementSession, MockCoreService, newMockRequest
-} = require('../ui-mock/build/test-model/Refinement.js');
+const mockModel = require('../ui-mock/build/test-model/Refinement.js');
+const { MockCoreService, newMockRequest } = mockModel;
+// Replay the same public-boundary cases against the formal ArkTS implementation.
+// The mock service remains test-only and is never copied into app/.
+const { RefinementView, receiveEvent, receiveSnapshot, RefinementSession } =
+  process.env.GSAS_FORMAL_MODEL ? require(process.env.GSAS_FORMAL_MODEL) : mockModel;
 
 const example = name => JSON.parse(fs.readFileSync(path.join(__dirname, '../contracts/examples', name), 'utf8'));
 const data = {

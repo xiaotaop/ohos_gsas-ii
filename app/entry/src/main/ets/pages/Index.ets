@@ -1,11 +1,14 @@
+import { ParameterPanel } from '../components/ParameterPanel';
+import { RefinementPanel } from '../components/RefinementPanel';
+import { window } from '@kit.ArkUI';
 import { common } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { preferences } from '@kit.ArkData';
-import { AppFile, FileLibrary, FileRole, describeFileError } from '../contracts/Files';
+import { AppFile, FileLibrary, FileRole, FileServiceError, describeFileError } from '../contracts/Files';
 import { AppServices } from '../services/AppServices';
 import { FilePickerService } from '../services/FilePickerService';
 import { runFileServiceChecks } from '../verification/FileServiceCheck';
-import { INPUT_SLOTS, InputSlot, InputSlotInfo, InputBinding, InputSelection } from '../model/RefinementInputs';
+import { INPUT_SLOTS, InputSlot, InputSlotInfo, InputBinding, InputSelection, RefinementInputs } from '../model/RefinementInputs';
 
 @Extend(Button) function desktopButton() {
   .type(ButtonType.Normal).height(28).fontSize(13).fontColor('#202020')
@@ -20,6 +23,7 @@ struct Index {
   @State private status: string = '正在打开文件库…';
   @State private ready: boolean = false;
   @State private busy: boolean = false;
+  @State private taskActive: boolean = false;
   @State private checks: string = '';
   @State private bindings: InputBinding[] = [];
   @State private prepared: boolean = false;
@@ -38,11 +42,58 @@ struct Index {
   private settings: preferences.Preferences | undefined = undefined;
   private service: FileLibrary | undefined = undefined;
   private context: common.UIAbilityContext | undefined = undefined;
+  private mainWindow: window.Window | undefined = undefined;
+  private mounted: boolean = false;
+  private closeHandler: () => Promise<boolean> = async (): Promise<boolean> => this.blockClose();
 
-  aboutToAppear(): void { this.openFiles(); }
+  aboutToAppear(): void {
+    this.mounted = true; this.openFiles(); this.observeClose();
+  }
+
+  aboutToDisappear(): void {
+    this.mounted = false;
+    try { this.mainWindow?.off('windowWillClose', this.closeHandler); } catch { /* Window may already be gone. */ }
+    this.mainWindow = undefined;
+  }
+
+  onBackPress(): boolean { return this.blockClose(); }
+
+  private async observeClose(): Promise<void> {
+    try {
+      const context = this.getUIContext().getHostContext() as common.UIAbilityContext;
+      const mainWindow = await window.getLastWindow(context);
+      if (!this.mounted) { return; }
+      this.mainWindow = mainWindow; mainWindow.on('windowWillClose', this.closeHandler);
+    } catch { this.status = '窗口关闭提示未能启用，请等待文件操作和任务结束后再退出。'; }
+  }
+
+  private blockClose(): boolean {
+    if (!this.taskActive && !this.busy) { return false; }
+    this.getUIContext().showAlertDialog({ title: '操作尚未结束',
+      message: this.taskActive ? '精修任务尚未结束。可以保持应用在后台运行，或在任务页请求取消并等待终态后退出。' : '文件操作正在进行，请完成或取消文件选择后再退出。',
+      confirm: { value: '返回应用', action: () => { if (this.taskActive) { this.page = 'refinement'; } } } });
+    return true;
+  }
+
+  private async exit(): Promise<void> {
+    if (this.blockClose()) { return; }
+    try { await this.context?.terminateSelf(); } catch { this.status = '退出未完成，请重试。'; }
+  }
+
+  private async prepareTaskInputs(): Promise<RefinementInputs> {
+    if (!this.service || !this.ready || this.busy) { throw new FileServiceError('CORE_NOT_READY', '文件服务尚未就绪。', true); }
+    return this.selection.verify(this.service);
+  }
+
+  private async exportTaskArtifact(fileId: string): Promise<boolean> {
+    if (!this.context || !this.service || this.busy) { throw new FileServiceError('BUSY', '请等待当前文件操作完成。', true); }
+    this.busy = true;
+    try { return await new FilePickerService(this.context, this.service).selectAndExport(fileId); }
+    finally { this.busy = false; }
+  }
 
   private async openFiles(): Promise<void> {
-    if (this.busy) { return; }
+    if (this.busy || this.taskActive) { return; }
     this.busy = true;
     this.ready = false;
     this.settings = undefined;
@@ -102,7 +153,7 @@ struct Index {
   }
 
   private async chooseExisting(slot: InputSlotInfo, index: number): Promise<void> {
-    if (this.busy || !this.ready) { return; }
+    if (this.busy || this.taskActive || !this.ready) { return; }
     this.busy = true;
     try {
       if (index === 0) { this.selection.clear(slot.id); }
@@ -118,7 +169,7 @@ struct Index {
   }
 
   private async importForSlot(slot: InputSlotInfo): Promise<void> {
-    if (!this.context || !this.service || !this.ready || this.busy) { return; }
+    if (!this.context || !this.service || !this.ready || this.busy || this.taskActive) { return; }
     this.busy = true;
     try {
       const file = await new FilePickerService(this.context, this.service).selectAndImport(slot.role);
@@ -132,7 +183,7 @@ struct Index {
   }
 
   private async verifyInputs(): Promise<void> {
-    if (!this.service || !this.ready || this.busy) { return; }
+    if (!this.service || !this.ready || this.busy || this.taskActive) { return; }
     this.busy = true;
     this.prepared = false;
     try {
@@ -144,7 +195,7 @@ struct Index {
   }
 
   private async importFile(role: FileRole): Promise<void> {
-    if (!this.context || !this.service || this.busy) { return; }
+    if (!this.context || !this.service || this.busy || this.taskActive) { return; }
     this.busy = true;
     try {
       const file = await new FilePickerService(this.context, this.service).selectAndImport(role);
@@ -155,7 +206,7 @@ struct Index {
   }
 
   private async exportFile(fileId: string): Promise<void> {
-    if (!this.context || !this.service || this.busy) { return; }
+    if (!this.context || !this.service || this.busy || this.taskActive) { return; }
     this.busy = true;
     try {
       const done = await new FilePickerService(this.context, this.service).selectAndExport(fileId);
@@ -165,7 +216,7 @@ struct Index {
   }
 
   private async deleteFile(fileId: string): Promise<void> {
-    if (!this.service || this.busy) { return; }
+    if (!this.service || this.busy || this.taskActive) { return; }
     this.busy = true;
     try {
       await this.service.deleteFile(fileId); this.files = await this.service.listFiles();
@@ -177,7 +228,7 @@ struct Index {
   }
 
   private async checkFiles(): Promise<void> {
-    if (!this.context || this.busy) { return; }
+    if (!this.context || this.busy || this.taskActive) { return; }
     this.busy = true; this.checks = '正在验证…';
     try {
       const report = await runFileServiceChecks(this.context);
@@ -232,8 +283,7 @@ struct Index {
       MenuItem({ content: 'Save project as...' }).enabled(false)
       MenuItem({ content: 'New project' }).enabled(false)
       MenuItem({ content: 'Preferences' }).enabled(false)
-      MenuItem({ content: 'Exit', labelInfo: 'Alt+F4' }).enabled(!this.busy)
-        .onClick(() => { this.context?.terminateSelf(); })
+      MenuItem({ content: 'Exit', labelInfo: 'Alt+F4' }).onClick(() => { this.exit(); })
       MenuItemGroup({ header: 'HarmonyOS files' }) {
         MenuItem({ content: 'Imported files...' }).onClick(() => { this.page = 'files'; })
         MenuItem({ content: 'Input associations...' }).onClick(() => { this.page = 'Loaded Data'; })
@@ -259,7 +309,7 @@ struct Index {
     Menu() {
       MenuItem({ content: 'Setup PDFs' }).enabled(false)
       MenuItem({ content: 'View LS parms', labelInfo: 'Ctrl+L' }).enabled(false)
-      MenuItem({ content: 'Refine', labelInfo: 'Ctrl+R' }).enabled(false)
+      MenuItem({ content: 'Refine...', labelInfo: 'Ctrl+R' }).onClick(() => { this.page = 'refinement'; })
       MenuItem({ content: 'Compute partials' }).enabled(false)
       MenuItem({ content: 'Parameter Impact', labelInfo: 'Ctrl+I' }).enabled(false)
       ForEach(['Evaluate expression and s.u.', 'Setup Cluster Analysis', 'Run Fprime', 'Run Absorb', 'Run PlotXNFF'],
@@ -270,7 +320,7 @@ struct Index {
   @Builder
   phaseImportMenu() {
     Menu() {
-      MenuItem({ content: 'from CIF file' }).enabled(this.ready && !this.busy)
+      MenuItem({ content: 'from CIF file' }).enabled(this.ready && !this.busy && !this.taskActive)
         .onClick(() => { this.page = 'phase'; this.importForSlot(INPUT_SLOTS[4]); })
     }
   }
@@ -278,7 +328,7 @@ struct Index {
   @Builder
   powderImportMenu() {
     Menu() {
-      MenuItem({ content: 'from GSAS powder file' }).enabled(this.ready && !this.busy)
+      MenuItem({ content: 'from GSAS powder file' }).enabled(this.ready && !this.busy && !this.taskActive)
         .onClick(() => { this.importPowder(); })
     }
   }
@@ -321,9 +371,11 @@ struct Index {
       Button('File').desktopButton().borderWidth(0).bindMenu(this.fileMenu)
       Button('Data').desktopButton().borderWidth(0).bindMenu(this.dataMenu)
       Button('Calculate').desktopButton().borderWidth(0).bindMenu(this.calculateMenu)
+        .keyboardShortcut('r', [ModifierKey.CTRL], () => { this.page = 'refinement'; })
       Button('Import').desktopButton().borderWidth(0).bindMenu(this.importMenu)
       Button('Export').desktopButton().borderWidth(0).bindMenu(this.exportMenu)
       Button('Help').desktopButton().borderWidth(0).bindMenu(this.helpMenu)
+        .keyboardShortcut(FunctionKey.F1, [], () => { this.page = 'about'; })
     }.width('100%').height(30).backgroundColor('#EEEEEE')
   }
 
@@ -400,40 +452,25 @@ struct Index {
       Flex({ wrap: FlexWrap.Wrap, alignItems: ItemAlign.Center }) {
         Select(this.selectOptions(slot)).selected(this.selectedIndex(slot)).value(this.selectedName(slot.id))
           .font({ size: 13 }).height(30).width(290).borderRadius(2).margin({ right: 8, bottom: 6 })
-          .id(`select-${slot.id}`).enabled(this.ready && !this.busy)
+          .id(`select-${slot.id}`).enabled(this.ready && !this.busy && !this.taskActive)
           .onSelect((index: number) => { this.chooseExisting(slot, index); })
-        Button('Import...').desktopButton().id(`import-${slot.id}`).enabled(this.ready && !this.busy)
+        Button('Import...').desktopButton().id(`import-${slot.id}`).enabled(this.ready && !this.busy && !this.taskActive)
           .onClick(() => { this.importForSlot(slot); }).margin({ bottom: 6 })
       }
     }.width('100%').margin({ bottom: 12 })
   }
 
+  private parameterScope(): string {
+    // Include file IDs, never filenames: changing an input cannot reuse another input's draft.
+    const ids = this.bindings.map((item: InputBinding): string => `${item.slot}=${item.fileId}`).sort().join('|');
+    return `${this.page}|${ids}`;
+  }
+
   @Builder
-  controlsPage() {
-    this.pageTitle('Refinement Controls')
-    this.unavailable('参数编辑与计算服务尚未接入。下列字段暂不可用，未写入任何精修默认值。')
-    Row({ space: 10 }) {
-      Text('Refinement type:').fontSize(13)
-      Button('—').desktopButton().width(190).enabled(false)
-    }.width('100%').margin({ bottom: 12 })
-    Flex({ wrap: FlexWrap.Wrap }) {
-      ForEach(['Min delta-M/M:', 'Max cycles:', 'Initial lambda = 10**', 'SVD zero tolerance:'], (label: string) => {
-        Row({ space: 8 }) {
-          Text(label).fontSize(13).width(145)
-          TextInput({ text: '—' }).width(85).height(28).fontSize(13).borderRadius(1).enabled(false)
-        }.width(250).margin({ bottom: 10 })
-      })
-    }
-    Divider().margin({ top: 12, bottom: 12 })
-    this.pageTitle('Sequential Settings')
-    Text('Select datasets to switch to sequential refinement').fontSize(13).width('100%')
-    Button('Select datasets').desktopButton().enabled(false).margin({ top: 8, bottom: 14 })
-    Divider().margin({ bottom: 12 })
-    this.pageTitle('Global Settings')
-    Row({ space: 8 }) {
-      Text('CIF Author (last, first):').fontSize(13)
-      TextInput({ text: '' }).height(28).layoutWeight(1).borderRadius(1).enabled(false)
-    }.width('100%')
+  parameters(panel: string) {
+    if (this.ready) {
+      ParameterPanel({ panel, scope: this.parameterScope() })
+    } else { this.unavailable('正在恢复输入关联，参数草稿将在文件库就绪后打开。') }
   }
 
   @Builder
@@ -442,7 +479,7 @@ struct Index {
     this.unavailable('当前树节点表示已关联的输入文件；文件内容尚未解析为 GSAS-II 工程对象。')
     ForEach(INPUT_SLOTS, (slot: InputSlotInfo) => { this.inputRow(slot) }, (slot: InputSlotInfo) => slot.id)
     Button(this.prepared ? 'Recheck input files' : 'Check input files').desktopButton().id('verify-inputs')
-      .enabled(this.ready && !this.busy).onClick(() => { this.verifyInputs(); })
+      .enabled(this.ready && !this.busy && !this.taskActive).onClick(() => { this.verifyInputs(); })
     this.unavailable('检查文件存在性与完整性，不执行科学格式检查或精修。')
   }
 
@@ -459,11 +496,11 @@ struct Index {
     this.pageTitle('Imported files — HarmonyOS')
     this.unavailable('应用内文件库。导入副本不会自动改变数据树关联；原始输入可从这里导出。')
     Flex({ wrap: FlexWrap.Wrap }) {
-      Button('Powder data...').desktopButton().enabled(this.ready && !this.busy)
+      Button('Powder data...').desktopButton().enabled(this.ready && !this.busy && !this.taskActive)
         .onClick(() => { this.importFile(FileRole.POWDER_DATA); }).margin({ right: 8, bottom: 8 })
-      Button('Instrument...').desktopButton().enabled(this.ready && !this.busy)
+      Button('Instrument...').desktopButton().enabled(this.ready && !this.busy && !this.taskActive)
         .onClick(() => { this.importFile(FileRole.INSTRUMENT); }).margin({ right: 8, bottom: 8 })
-      Button('Phase...').desktopButton().enabled(this.ready && !this.busy)
+      Button('Phase...').desktopButton().enabled(this.ready && !this.busy && !this.taskActive)
         .onClick(() => { this.importFile(FileRole.PHASE); }).margin({ bottom: 8 })
     }
     if (this.files.length === 0) { this.unavailable('文件库为空。导入的应用内副本会在重启后保留。') }
@@ -473,13 +510,13 @@ struct Index {
         Text(`${file.role} · ${file.size} bytes`).fontSize(12).width('100%')
         Text(`SHA-256 ${file.sha256}`).fontSize(11).width('100%')
         Row({ space: 8 }) {
-          Button('Export copy...').desktopButton().enabled(!this.busy).onClick(() => { this.exportFile(file.fileId); })
-          Button('Delete copy...').desktopButton().enabled(!this.busy).onClick(() => { this.confirmDelete(file); })
+          Button('Export copy...').desktopButton().enabled(!this.busy && !this.taskActive).onClick(() => { this.exportFile(file.fileId); })
+          Button('Delete copy...').desktopButton().enabled(!this.busy && !this.taskActive).onClick(() => { this.confirmDelete(file); })
         }.width('100%')
         Divider().margin({ top: 8 })
       }.width('100%').margin({ bottom: 12 })
     }, (file: AppFile) => file.fileId)
-    Button('Run file service checks').desktopButton().id('file-checks').enabled(this.ready && !this.busy)
+    Button('Run file service checks').desktopButton().id('file-checks').enabled(this.ready && !this.busy && !this.taskActive)
       .onClick(() => { this.checkFiles(); })
     if (this.checks.length > 0) { Text(this.checks).fontSize(12).width('100%') }
   }
@@ -488,7 +525,7 @@ struct Index {
   dataPage() {
     Scroll() {
       Column({ space: 0 }) {
-        if (this.page === 'Controls') { this.controlsPage() }
+        if (this.page === 'Controls') { this.parameters('Controls') }
         else if (this.page === 'Loaded Data') { this.inputPage() }
         else if (this.page === 'files') { this.filesPage() }
         else if (this.page === 'Phases' || this.page === 'phase') {
@@ -498,22 +535,24 @@ struct Index {
         } else if (this.page === 'xray') { this.powderPage(INPUT_SLOTS[0], INPUT_SLOTS[1]) }
         else if (this.page === 'neutron') { this.powderPage(INPUT_SLOTS[2], INPUT_SLOTS[3]) }
         else if (this.page === 'xray:Instrument Parameters' || this.page === 'neutron:Instrument Parameters') {
-          this.pageTitle('Instrument Parameters')
           this.inputRow(this.page.startsWith('xray') ? INPUT_SLOTS[1] : INPUT_SLOTS[3])
-          this.unavailable('仪器文件已保存；参数表需等待解析服务接入。')
+          this.parameters('Instrument Parameters')
+        } else if (this.page.endsWith(':Limits') || this.page.endsWith(':Background') || this.page.endsWith(':Sample Parameters')) {
+          this.parameters(this.page.split(':')[1])
         } else if (this.page === 'about') {
           this.pageTitle('GSAS-II — HarmonyOS port')
-          this.unavailable('原版界面依据 GSAS-II 2.0.0，源码版本 2b4aba1bc44de63a3da9d4495944c3b99e389399。当前为桌面界面移植第一批。')
+          this.unavailable('原版界面依据 GSAS-II 2.0.0，源码版本 2b4aba1bc44de63a3da9d4495944c3b99e389399。当前为五阶段精修界面开发版，真实核心服务尚未接入。')
+          this.unavailable('Ctrl+R：打开精修任务页；F1：帮助与版本；Tab / Shift+Tab：切换控件。计算服务接入后，在任务页明确填写相名、Max cycles 与 .gpx 输出名称；取消需要等待当前阶段结束。')
           this.unavailable('This product includes software produced by UChicago Argonne, LLC under Contract No. DE-AC02-06CH11357 with the Department of Energy.')
         } else {
           this.pageTitle(this.page.includes(':') ? this.page.split(':')[1] : this.page)
           this.unavailable('此原版数据页面尚未移植。菜单和数据树保留原版入口，当前不显示示例参数或模拟结果。')
         }
         if (!this.ready) {
-          Button('重新打开文件库').desktopButton().enabled(!this.busy).onClick(() => { this.openFiles(); })
+          Button('重新打开文件库').desktopButton().enabled(!this.busy && !this.taskActive).onClick(() => { this.openFiles(); })
         }
       }.alignItems(HorizontalAlign.Start).width('100%').padding(16)
-    }.align(Alignment.TopStart).height('100%').layoutWeight(1)
+    }.align(Alignment.TopStart).height('100%').width('100%')
       .clip(true).backgroundColor('#F0F0F0')
   }
 
@@ -531,13 +570,23 @@ struct Index {
                 this.treeWidth = Math.max(190, Math.min(450, this.panelWidth - 268, this.dragStartWidth + event.offsetX));
               })
           )
-        this.dataPage()
+        Stack() {
+          Column() { this.dataPage() }.width('100%').height('100%')
+            .visibility(this.page === 'refinement' ? Visibility.None : Visibility.Visible)
+          // B will inject its initialized service and persisted active/recent job ID here.
+          // Keeping the panel mounted preserves subscription while browsing the data tree.
+          RefinementPanel({ filesReady: this.ready && !this.busy,
+            prepareInputs: async (): Promise<RefinementInputs> => this.prepareTaskInputs(),
+            exportArtifact: async (fileId: string): Promise<boolean> => this.exportTaskArtifact(fileId),
+            onTaskChange: (_jobId: string, active: boolean): void => { this.taskActive = active; } })
+            .visibility(this.page === 'refinement' ? Visibility.Visible : Visibility.None)
+        }.height('100%').layoutWeight(1)
       }.layoutWeight(1).width('100%')
       Divider()
       Row({ space: 8 }) {
         Text(this.status).fontSize(12).fontColor('#303030').layoutWeight(1).maxLines(3)
         Divider().vertical(true).height(28)
-        Text(this.busy ? 'Working...' : 'Core: unavailable').fontSize(12).fontColor('#555555').width(110)
+        Text(this.taskActive ? 'Task active' : this.busy ? 'Working...' : 'Core: unavailable').fontSize(12).fontColor('#555555').width(110)
       }.width('100%').height(54).padding({ left: 8, right: 8 }).backgroundColor('#EEEEEE')
     }.width('100%').height('100%').backgroundColor('#F0F0F0')
       .onAreaChange((_old: Area, area: Area) => {

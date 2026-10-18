@@ -22,7 +22,7 @@
 | B03 日志 | C 可登记并导出 log 产物 | B 落盘脱敏的失败/取消日志；B/C 提议日志 fileId 的发现方式，组长批准；私有 traceback 不导出 |
 | B04/B05 重启与终态 | 旧租约恢复为 interrupted job IDs；清理 input/work，保留输入、日志、输出 | B 持久化快照并标记 PROCESS_INTERRUPTED、处理唯一终态/取消；A 恢复页面与退出提示 |
 
-A 的后续会话接入准备位于 `docs/github-integration-readiness@27dce33`。本分支现已同步 `main@b188667` 的 C 端交付，并在正式 `app/entry` 接入下述输入准备页面；会话代码仍在 `ui-mock/`，待 B 的公共类型和服务入口就绪后适配 ArkTS。B 的 Python Bridge 已在 main，但计算 N-API/CPython 应用集成仍未交付。各分支不能分别使用旧文档判断另一成员仍缺相同成果。
+A 的后续会话接入准备始于 `docs/github-integration-readiness@27dce33`。本分支已同步 `main@b188667` 的 C 端交付，在正式 `app/entry` 接入输入页面，并将会话和任务页面适配为 `.ets`；当前状态见下方成员 A 开发交接。B 的 Python Bridge 已在 main，但计算 N-API/CPython 应用集成仍未交付。各分支不能分别使用旧文档判断另一成员仍缺相同成果。
 
 接入顺序：C01/C02 已完成审核合并 → A 接文件选择/持久化列表，同时 B 接配置、输入和任务租约 → 各成员提交跨层方案与可运行增量，组长只审核仍待决断的接口和合并请求 → B/C 接运行时及真实核心 → 产物登记后开放导出 → 组长执行本文件第 5 节的正式集成验收。运行时清单、装配脚本和许可审计可由 C 并行准备。
 
@@ -62,7 +62,47 @@ A 的后续会话接入准备位于 `docs/github-integration-readiness@27dce33`�
 
 后续批次仍需实现：动态/上下文菜单及快捷键、各参数编辑器和科学文件解析、工程打开/保存及对话框、原版独立绘图窗口、真实任务进度与结果。第一批菜单仍有禁用项，About 采用页内展示，粉末用途选择是当前双数据集契约的适配；不宣称逐像素或完整操作等价。当前验证不覆盖完整键盘导航、任意极窄窗口、真机或 API20，也不替代真实计算及发布签名验收。
 
-### 本分支 M1 会话接入准备
+### 成员 A 开发交接（2026-10-18，跳过设备验证）
+
+本轮按用户授权，以组长冻结的 CORE_API v1.0 五阶段 MVP 和 `RELEASE_ACCEPTANCE.md` 的 A 端责任优先推进。完整原版 GUI 继续作为后续目标；此次不把高级科学编辑器、GPX 工程读写或独立绘图窗口记为已完成，也不把本轮优先级决定写成组长批准的接口变更。
+
+**状态：A 可独立推进的 MVP 页面与会话代码已具备交接条件；真实服务接入、跨成员确认及发布验收未完成，个人任务尚未整体结项。** 远端只读核对时 `main=b188667`、`core/python-bridge=a3d197e`，未发现新的应用内 CoreService。
+
+| 本轮交付 | 实现与边界 |
+|---|---|
+| 正式任务页 | Calculate → Refine 或 Ctrl+R；明确填写相名、0～50 整数 cycles、无路径的 `.gpx` 输出名，无示例默认值。当前 B recipe 只支持已验证 PbSO4 五文件组合。开始前通过真实 FileService 再校验输入，固定请求副本；参数草稿不会自动变成计算请求 |
+| 正式会话 | `app/entry/src/main/ets/model/Refinement.ets`：先订阅后启动、取消 ACK 非终态、迟到响应/过期快照保护、页面退订不取消后台任务。快照只恢复摘要，不伪造历史消息；Promise 错误保留已知错误码并使用安全文本 |
+| 任务与结果组件 | `components/RefinementPanel.ets`：队列/进度/三种终态、错误、五阶段 Rwp、择优取向、基线校验摘要；结果返回的 artifact.fileId 经 C 的真实保存选择器与文件服务导出，取消明确反馈。页面不捏造产物或日志 ID |
+| 生命周期与键鼠 | 在 Index 切换数据树时任务组件保持挂载；输入检查/活动任务期间禁止输入重选、删除和文件自测。File → Exit、返回及系统标题栏关闭回调提示未完成操作。F1 提供版本、快捷键和操作帮助；设备端行为本轮未验 |
+| 参数草稿 | Controls、Limits、Background、Instrument Parameters、Sample Parameters 的对话框编辑、校验、保存、取消及恢复。字段/分支依据锁定上游；空白表示未设置，不假装已解析科学文件。CW/TOF 需用户明确选择模板。未接入的高级背景、排除区间等保持说明状态 |
+| 草稿可靠性 | 切换模板保留隐藏字段；保存仅含 key/value/refine 与范围身份，不保存描述符。使用 70 字符 SHA-256 键满足 Preferences 的 80 字符限制，紧凑值及长度检查满足 8192 字符上限；记录内仍验证完整 scope。异步读取、保存和组件卸载通过代次检查隔离 |
+
+#### B/C 接入点与剩余责任
+
+1. **B** 交付并初始化真实 CoreService 后，在 `Index.ets` 创建 `RefinementPanel` 时传入 `readyCore`，通过 `knownJobId` 提供持久化的活动/最近任务 ID。两者是组件创建时的输入；初始化完成或替换服务时重新挂载组件，不用 `@Prop` 深复制应用服务实例。当前两个值未注入，组件不会启动 mock，Refine 按钮禁用。初始化及重启记录继续由 B/C 的应用服务持有，A 不建立替代传输层或猜测任务 ID。
+2. **B/A/组长** 确认 A 的本地 Snapshot 投影与正式共享类型。页面当前生成 UUID 请求 ID，仍需 B 确认并做唯一性校验；显式 cycles 输入遵循冻结范围，但 B06 的实际可编辑范围仍需确认。此实现不修改 Schema 或自行批准 A04/A06/B06。
+3. **B/C** 在 completed 前登记真实产物；失败/取消日志目前没有冻结的 fileId 发现字段。待 B03 方案确定后，A 接上对应日志入口。不能从历史消息、文件名或 private traceback 推导可导出日志。
+4. **A** 收到上述服务和类型后完成实际注入与必要适配，并验证真实开始/取消/结果/日志导出；**组长** 审核正式页面接入、跨层选择和合并。`ui-mock/` 暂保留，未把旧演示替换成发布载荷。正式模型复用原会话结构，由同一组契约/竞态测试覆盖；共享类型交付后再统一。
+5. **C/组长/A** 后续执行签名、运行时/许可审计、API20/24 兼容、真机窗口/快捷键/关闭提示及同版本真实截图。已有开发图标继续复用，最终显示名与发布素材按发布清单确认。本轮没有新增设备截图、启动模拟器或访问真机。
+
+#### 无设备验证与复现
+
+- 输入关联套件 5 项通过；参数草稿套件 10 项通过；正式模型契约/会话/宿主回放套件 18 项通过（复用原 14 项，含测试专用 mock 服务，再增加正式请求、错误与快照历史检查）。宿主捕获使用 `LocalCoreService + FakeFiveStageRefiner`，不代表真实数值计算。
+- 正式 ARM64 工程通过本机 DevEco Studio SDK API24 / 6.1.1.125、Hvigor 6.24.4 的 ArkTS 编译与 unsigned debug HAP 构建；开发内容审计通过（20 个条目）。HAP SHA-256：`a3571197c4cb83d9aa8bf86285238554ea1ca4241fd9de28a08767c6d934dd8f`。构建记录、源码指纹、包内容清单及日志保存在本地忽略目录 `app/build/deliverables/a-ui-20261018/`。SDK 构建告警仍包含原文件服务 API 异常处理提示和未配置签名，未隐藏或削弱检查。
+- 本轮不会重用上一版模拟器截图证明新版页面正确；对话框布局、真实 Preferences 写入/重启、快捷键和系统关闭拦截仍待设备验收。云端 CI 与本地检查分开记录。
+
+```powershell
+$env:GSAS_TYPESCRIPT_PATH = 'E:\Apps\DevEco\DevEco Studio\sdk\default\openharmony\ets\build-tools\ets-loader\node_modules\typescript'
+$env:TEMP = Join-Path (Get-Location) 'app/build'
+$env:TMP = $env:TEMP
+# 首次复现先编译 ui-mock 的测试服务；不会启动演示应用。
+powershell -NoProfile -File scripts/Test-UiMock.ps1 -DevEcoHome 'E:\Apps\DevEco\DevEco Studio'
+node --test tests/input-selection.test.cjs tests/parameter-drafts.test.cjs tests/formal-refinement.test.cjs
+```
+
+HAP 使用本机 DevEco SDK/Hvigor 构建，产物与构建日志位于忽略的 `app/build/` 和 `app/entry/build/`；当前开发 HAP 无真实 Python/GSAS-II 运行时，不能作为上架候选。提交发布还需按[华为官方发布入口](https://developer.huawei.com/consumer/cn/app/submit)及项目发布清单完成 APP 打包、正式签名和审核，开发 HAP 构建不替代这些步骤。
+
+### 本分支 M1 会话接入准备（历史基线）
 
 - `ui-mock/` 中 `Refinement.ts` 的 `RefinementSession` 接收已就绪的 CoreService，负责先订阅再启动、取消等待和页面退订；M1 的 `Index.ets` 已使用它。页面销毁只让会话退订，真实服务由应用持有；演示页面仍单独释放自己创建的 mock。
 - `connect(knownJobId)` 先订阅后读取快照，恢复进度和成功/失败/取消摘要。旧快照、旧任务事件、退订后返回的 Promise 不覆盖当前页面；迟到的启动/取消响应不覆盖终态或新任务。`connect()` 用于开始一个空闲页面，`disconnect()` 不取消核心任务。
