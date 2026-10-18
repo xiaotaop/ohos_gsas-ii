@@ -102,6 +102,13 @@ node --test tests/input-selection.test.cjs tests/parameter-drafts.test.cjs tests
 
 HAP 使用本机 DevEco SDK/Hvigor 构建，产物与构建日志位于忽略的 `app/build/` 和 `app/entry/build/`；当前开发 HAP 无真实 Python/GSAS-II 运行时，不能作为上架候选。提交发布还需按[华为官方发布入口](https://developer.huawei.com/consumer/cn/app/submit)及项目发布清单完成 APP 打包、正式签名和审核，开发 HAP 构建不替代这些步骤。
 
+#### 云端 CI 确认与合并建议（2026-10-18）
+
+- 应用实现提交 `dc54357aad89ffc1482c2931f3bfa511ad8b0d1f` 的 [GitHub Actions #39126417543](https://github.com/xiaotaop/ohos_gsas-ii/actions/runs/39126417543) 已完成，结论为 `success`；Repository verification 于北京时间 **2026-10-18 20:14:12** 完成。核对依据为 Actions 返回的提交 SHA、作业及各步骤状态。
+- 全部步骤通过，覆盖 Python 语法、JSON、冻结契约、样例完整性、Python Bridge、运行时装配/HAP 审计工具、原生排他文件创建、宿主 FileService、输入关联与参数草稿，以及 ArkUI mock/正式会话模型。流水线未执行 DevEco HAP 构建、真实科学计算、模拟器或真机验收；本地 HAP 的独立证据见上节。
+- 本分支相对 `main@b188667` 的主要行为边界已自查，未发现阻止作为 **A 端开发增量** 合入的明确代码问题。建议组长审核 A01 正式页面接入及本次范围，并在 PR 最新提交检查通过、无冲突后解除草稿状态并决定合并；本记录不是组长批准，也不关闭尚待确认的跨层事项。
+- B 的真实 CoreService、应用初始化与任务 ID 恢复、共享快照/错误类型及产物/日志发现方案仍是 **真实联调与发布的前置条件**，不应把 CI 通过解读为这些依赖已交付。当前不注入服务、开始精修禁用，允许组长将页面准备作为独立增量评审；若按“完整精修功能交付”验收，本分支尚不可据此结项或发布。
+
 ### 本分支 M1 会话接入准备（历史基线）
 
 - `ui-mock/` 中 `Refinement.ts` 的 `RefinementSession` 接收已就绪的 CoreService，负责先订阅再启动、取消等待和页面退订；M1 的 `Index.ets` 已使用它。页面销毁只让会话退订，真实服务由应用持有；演示页面仍单独释放自己创建的 mock。
