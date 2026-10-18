@@ -14,6 +14,18 @@ export const INPUT_SLOTS: InputSlotInfo[] = [
   { id: InputSlot.PHASE, label: 'CIF 相文件', role: FileRole.PHASE }
 ];
 export interface InputBinding { slot: InputSlot; fileId: string; }
+// Existing scientific drafts retain their exact keys. Notes have narrower ownership:
+// one application notebook, and comments per imported powder file (not per filename).
+export function draftScope(page: string, bindings: InputBinding[]): string {
+  if (page === 'Notebook') { return 'Notebook|local-v1'; }
+  if (page === 'xray:Comments' || page === 'neutron:Comments') {
+    const slot = page === 'xray:Comments' ? InputSlot.XRAY_DATA : InputSlot.NEUTRON_DATA;
+    const binding = bindings.find((item: InputBinding): boolean => item.slot === slot);
+    return binding ? `Comments|${binding.fileId}` : '';
+  }
+  const ids = bindings.map((item: InputBinding): string => `${item.slot}=${item.fileId}`).sort().join('|');
+  return `${page}|${ids}`;
+}
 interface SavedBindings { version: number; bindings: InputBinding[]; }
 // The frozen request's inputs only; no new request fields or default cycle count.
 export interface HistogramInput {

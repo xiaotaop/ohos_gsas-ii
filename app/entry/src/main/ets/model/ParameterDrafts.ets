@@ -2,19 +2,24 @@
 // Labels/choices: pinned GSAS-II dataGUI.UpdateControls and pwdGUI parameter panels.
 export interface ParameterField {
   key: string; label: string; group: string; value: string; choices: string[];
-  numeric: boolean; min: number; max: number; refinable: boolean; refine: boolean;
+  numeric: boolean; min: number; max: number; refinable: boolean; refine: boolean; multiline: boolean;
 }
 export interface SavedParameterField { key: string; value: string; refine: boolean; }
 export interface ParameterRecord { version: number; panel?: string; scope: string; fields: SavedParameterField[]; }
 
 function field(key: string, label: string, group: string, choices: string[] = [],
-  numeric: boolean = true, min: number = -Infinity, max: number = Infinity, refinable: boolean = false): ParameterField {
-  return { key, label, group, value: '', choices, numeric, min, max, refinable, refine: false };
+  numeric: boolean = true, min: number = -Infinity, max: number = Infinity, refinable: boolean = false,
+  multiline: boolean = false): ParameterField {
+  return { key, label, group, value: '', choices, numeric, min, max, refinable, refine: false, multiline };
 }
+export function parameterTextLimit(item: ParameterField): number { return item.multiline ? 4096 : item.numeric ? 64 : 512; }
 export function parameterValue(fields: ParameterField[], key: string): string {
   return fields.find((item: ParameterField): boolean => item.key === key)?.value ?? '';
 }
 export function parameterFields(panel: string): ParameterField[] {
+  if (panel === 'Notebook' || panel === 'Comments') {
+    return [field('notes', '本地记录（最多 4096 字符）', panel, [], false, -Infinity, Infinity, false, true)];
+  }
   if (panel === 'Controls') {
     return [
       field('method', 'Refinement type', 'Refinement Controls', ['analytic Jacobian', 'numeric', 'analytic Hessian', 'Hessian SVD'], false),
@@ -84,7 +89,9 @@ export function validateParameters(panel: string, fields: ParameterField[]): str
   // so switching back never exposes an invalid value restored from storage.
   for (const item of fields) {
     const value = item.value.trim();
-    if (value.length > (item.numeric ? 64 : 512)) { return `${item.label}: value is too long.`; }
+    // Text is preserved verbatim, so its whitespace also counts toward storage limits.
+    const length = item.numeric || item.choices.length > 0 ? value.length : item.value.length;
+    if (length > parameterTextLimit(item)) { return `${item.label}: value is too long.`; }
     if (!value) { if (item.refine) { return `${item.label}: Refine requires a value.`; } continue; }
     if (item.choices.length > 0 && !item.choices.includes(value)) { return `${item.label}: select a listed value.`; }
     if (item.numeric && (!/^[+-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+-]?[0-9]+)?$/.test(value) || !Number.isFinite(Number(value)) || Number(value) < item.min || Number(value) > item.max)) {
@@ -117,7 +124,7 @@ export function restoreParameters(panel: string, scope: string, json: string): P
   for (const saved of record.fields) {
     if (!saved || typeof saved.key !== 'string' || typeof saved.value !== 'string' || typeof saved.refine !== 'boolean' || seen.includes(saved.key)) { throw new Error('Invalid parameter field.'); }
     const target = result.find((item: ParameterField): boolean => item.key === saved.key);
-    if (!target || saved.value.length > 512 || (saved.refine && !target.refinable)) { throw new Error('Invalid parameter field.'); }
+    if (!target || saved.value.length > parameterTextLimit(target) || (saved.refine && !target.refinable)) { throw new Error('Invalid parameter field.'); }
     seen.push(saved.key); target.value = target.numeric || target.choices.length > 0 ? saved.value.trim() : saved.value; target.refine = saved.refine;
   }
   const error = validateParameters(panel, result);

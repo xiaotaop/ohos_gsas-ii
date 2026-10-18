@@ -9,7 +9,7 @@ import { AppServices } from '../services/AppServices';
 import { FilePickerService } from '../services/FilePickerService';
 import { SandboxFileService } from '../services/SandboxFileService';
 import { runFileServiceChecks } from '../verification/FileServiceCheck';
-import { INPUT_SLOTS, InputSlot, InputSlotInfo, InputBinding, InputSelection, RefinementInputs } from '../model/RefinementInputs';
+import { INPUT_SLOTS, InputSlot, InputSlotInfo, InputBinding, InputSelection, RefinementInputs, draftScope } from '../model/RefinementInputs';
 import { CoreService } from '../model/Refinement';
 
 @Extend(Button) function desktopButton() {
@@ -27,6 +27,10 @@ struct Index {
   @State private busy: boolean = false;
   @State private taskActive: boolean = false;
   @State private checks: string = '';
+  @State private fileQuery: string = '';
+  @State private fileRole: string = '';
+  private readonly fileRoles: string[] = ['', FileRole.POWDER_DATA, FileRole.INSTRUMENT,
+    FileRole.PHASE, FileRole.PROJECT, FileRole.RESULT, FileRole.LOG];
   @State private bindings: InputBinding[] = [];
   @State private prepared: boolean = false;
   @State private panelWidth: number = 1100;
@@ -481,16 +485,14 @@ struct Index {
   }
 
   private parameterScope(): string {
-    // Include file IDs, never filenames: changing an input cannot reuse another input's draft.
-    const ids = this.bindings.map((item: InputBinding): string => `${item.slot}=${item.fileId}`).sort().join('|');
-    return `${this.page}|${ids}`;
+    return draftScope(this.page, this.bindings);
   }
 
   @Builder
   parameters(panel: string) {
-    if (this.ready) {
+    if (this.ready && this.parameterScope()) {
       ParameterPanel({ panel, scope: this.parameterScope() })
-    } else { this.unavailable('正在恢复输入关联，参数草稿将在文件库就绪后打开。') }
+    } else { this.unavailable('请等待文件库就绪，并关联此页面需要的输入文件后编辑。') }
   }
 
   @Builder
@@ -511,6 +513,13 @@ struct Index {
     this.unavailable('已保存输入关联。强度曲线、数据范围和参数值需在文件解析接入后显示。')
   }
 
+  private visibleFiles(): AppFile[] {
+    const query = this.fileQuery.trim().toLowerCase();
+    return this.files.filter((file: AppFile): boolean => (!this.fileRole || file.role === this.fileRole) &&
+      (!query || file.displayName.toLowerCase().includes(query) || file.fileId.toLowerCase().includes(query) ||
+        file.sha256.toLowerCase().includes(query)));
+  }
+
   @Builder
   filesPage() {
     this.pageTitle('Imported files — HarmonyOS')
@@ -523,12 +532,26 @@ struct Index {
       Button('Phase...').desktopButton().enabled(this.ready && !this.busy && !this.taskActive)
         .onClick(() => { this.importFile(FileRole.PHASE); }).margin({ bottom: 8 })
     }
+    TextInput({ text: this.fileQuery, placeholder: '搜索文件名、fileId 或 SHA-256' }).fontSize(13).height(32)
+      .maxLength(256).id('file-library-search').accessibilityText('搜索文件库')
+      .onChange((value: string) => { this.fileQuery = value; })
+    Flex({ wrap: FlexWrap.Wrap, alignItems: ItemAlign.Center }) {
+      Select(this.fileRoles.map((role: string): SelectOption => ({ value: role || '全部类型' })))
+        .selected(this.fileRoles.indexOf(this.fileRole)).value(this.fileRole || '全部类型')
+        .font({ size: 13 }).height(30).width(220).margin({ right: 8, top: 8, bottom: 8 })
+        .accessibilityText('筛选文件类型').onSelect((index: number) => { this.fileRole = this.fileRoles[index] ?? ''; })
+      Button('Clear filters').desktopButton().enabled(this.fileQuery !== '' || this.fileRole !== '')
+        .onClick(() => { this.fileQuery = ''; this.fileRole = ''; })
+    }.width('100%')
+    Text(`显示 ${this.visibleFiles().length} / ${this.files.length} 个文件`).fontSize(12).width('100%').margin({ bottom: 12 })
     if (this.files.length === 0) { this.unavailable('文件库为空。导入的应用内副本会在重启后保留。') }
-    ForEach(this.files, (file: AppFile) => {
+    else if (this.visibleFiles().length === 0) { this.unavailable('没有匹配的文件，请调整搜索词或清除筛选。') }
+    ForEach(this.visibleFiles(), (file: AppFile) => {
       Column({ space: 5 }) {
         Text(file.displayName).fontSize(14).fontWeight(FontWeight.Bold).width('100%')
         Text(`${file.role} · ${file.size} bytes`).fontSize(12).width('100%')
-        Text(`SHA-256 ${file.sha256}`).fontSize(11).width('100%')
+        Text(`fileId ${file.fileId}`).fontSize(11).width('100%').copyOption(CopyOptions.LocalDevice)
+        Text(`SHA-256 ${file.sha256}`).fontSize(11).width('100%').copyOption(CopyOptions.LocalDevice)
         Row({ space: 8 }) {
           Button('Export copy...').desktopButton().enabled(!this.busy && !this.taskActive).onClick(() => { this.exportFile(file.fileId); })
           Button('Delete copy...').desktopButton().enabled(!this.busy && !this.taskActive).onClick(() => { this.confirmDelete(file); })
@@ -546,6 +569,11 @@ struct Index {
     Scroll() {
       Column({ space: 0 }) {
         if (this.page === 'Controls') { this.parameters('Controls') }
+        else if (this.page === 'Notebook') { this.parameters('Notebook') }
+        else if (this.page === 'xray:Comments' || this.page === 'neutron:Comments') {
+          this.pageTitle(this.powderName(this.page.startsWith('xray') ? InputSlot.XRAY_DATA : InputSlot.NEUTRON_DATA))
+          this.parameters('Comments')
+        }
         else if (this.page === 'Loaded Data') { this.inputPage() }
         else if (this.page === 'files') { this.filesPage() }
         else if (this.page === 'Phases' || this.page === 'phase') {
