@@ -26,6 +26,8 @@ A/B/C 的工程入口、公共类型、文件服务、初始化、日志产物�
 
 A 端最新收尾补齐核心初始化状态/重试、表单保留、失效任务 ID 恢复及 B03 可选日志产物消费入口；40 项会话/门面对接测试通过，ARM64 构建及 21 条目开发包审计通过，并有 API24 模拟器运行时缺失/重试实测。真实计算载荷及 B03 协议侧产物返回仍依赖 B，详见 [A 端接入收尾](docs/INTEGRATION_ALIGNMENT.md#a-端接入收尾2026-10-19)。
 
+正式开发版的 [UI 操作说明](docs/UI_USER_GUIDE.md) 和 [成员 A 页面／图标／截图交付](docs/UI_DELIVERY.md) 已独立整理，列明非计算交互的实测范围与 B/C 依赖；素材不冒充真实计算或发布验收证据。
+
 后续打包准备提供 [运行时装配与构建留档](docs/RUNTIME_PACKAGING.md)：Build-App 自动保留源码/工具链记录、HAP 和内容清单；Prepare-Runtime 按 B 的清单校验载荷；Audit-Hap 核对实际包内容。当前未打包真实 Python，发布条件见 [验收与材料清单](docs/RELEASE_ACCEPTANCE.md)。
 
 ## 持续集成

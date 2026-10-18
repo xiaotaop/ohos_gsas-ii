@@ -1,0 +1,23 @@
+{
+  "source": "app/AppScope/resources/base/media/app_icon.svg",
+  "sourceHistory": "3d6957d",
+  "status": "existing-project-icon-for-delivery-review",
+  "storeApproved": false,
+  "files": [
+    {
+      "path": "app/AppScope/resources/base/media/app_icon.svg",
+      "sha256": "2b358deeb4e88d4fcca93022a4b7bfb5b30ff1ec55f02749546327ca52752762",
+      "size": 314
+    },
+    {
+      "path": "docs/assets/app-icon-128.png",
+      "sha256": "55e9f4474d063d9c89e42a91cbbb2a505e8b08d70f9150b23d6495f0f5e0b000",
+      "size": 3177
+    },
+    {
+      "path": "docs/assets/app-icon-512.png",
+      "sha256": "b4791b036d2892546bb23d62a75e1bfe5b7b0643598b70ffba2b038abcf6f5f8",
+      "size": 18272
+    }
+  ]
+}

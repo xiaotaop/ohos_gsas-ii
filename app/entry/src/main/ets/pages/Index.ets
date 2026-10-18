@@ -495,7 +495,8 @@ struct Index {
       Text(slot.label).fontSize(13).width('100%')
       Flex({ wrap: FlexWrap.Wrap, alignItems: ItemAlign.Center }) {
         Select(this.selectOptions(slot)).selected(this.selectedIndex(slot)).value(this.selectedName(slot.id))
-          .font({ size: 13 }).height(30).width(290).borderRadius(2).margin({ right: 8, bottom: 6 })
+          .font({ size: 13 }).height(30).width(290).constraintSize({ maxWidth: '100%' })
+          .borderRadius(2).margin({ right: 8, bottom: 6 })
           .id(`select-${slot.id}`).enabled(this.ready && !this.busy && !this.taskActive)
           .onSelect((index: number) => { this.chooseExisting(slot, index); })
         Button('Import...').desktopButton().id(`import-${slot.id}`).enabled(this.ready && !this.busy && !this.taskActive)
@@ -609,8 +610,8 @@ struct Index {
           this.parameters(this.page.split(':')[1])
         } else if (this.page === 'about') {
           this.pageTitle('GSAS-II — HarmonyOS port')
-          this.unavailable('原版界面依据 GSAS-II 2.0.0，源码版本 2b4aba1bc44de63a3da9d4495944c3b99e389399。当前为五阶段精修界面开发版，真实核心服务尚未接入。')
-          this.unavailable('Ctrl+R：打开精修任务页；F1：帮助与版本；Tab / Shift+Tab：切换控件。计算服务接入后，在任务页明确填写相名、Max cycles 与 .gpx 输出名称；取消需要等待当前阶段结束。')
+          this.unavailable('原版界面依据 GSAS-II 2.0.0，源码版本 2b4aba1bc44de63a3da9d4495944c3b99e389399。当前为五阶段精修开发版；计算是否可用以任务页的初始化状态为准。')
+          this.unavailable('Ctrl+R：打开精修任务页；F1：帮助与版本；Tab / Shift+Tab：切换控件。在任务页明确填写相名、Max cycles 与 .gpx 输出名称；其他参数页仅保存本地草稿，不自动提交计算。取消需要等待当前阶段结束。')
           this.unavailable('This product includes software produced by UChicago Argonne, LLC under Contract No. DE-AC02-06CH11357 with the Department of Energy.')
         } else {
           this.pageTitle(this.page.includes(':') ? this.page.split(':')[1] : this.page)
