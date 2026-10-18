@@ -4,11 +4,13 @@ import { window } from '@kit.ArkUI';
 import { common } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { preferences } from '@kit.ArkData';
-import { AppFile, FileLibrary, FileRole, FileServiceError, describeFileError } from '../contracts/Files';
+import { AppFile, FileRole, FileServiceError, describeFileError } from '../contracts/Files';
 import { AppServices } from '../services/AppServices';
 import { FilePickerService } from '../services/FilePickerService';
+import { SandboxFileService } from '../services/SandboxFileService';
 import { runFileServiceChecks } from '../verification/FileServiceCheck';
 import { INPUT_SLOTS, InputSlot, InputSlotInfo, InputBinding, InputSelection, RefinementInputs, draftScope } from '../model/RefinementInputs';
+import { CoreService } from '../model/Refinement';
 
 @Extend(Button) function desktopButton() {
   .type(ButtonType.Normal).height(28).fontSize(13).fontColor('#202020')
@@ -44,7 +46,9 @@ struct Index {
     'Sample Parameters', 'Peak List', 'Index Peak List', 'Unit Cells List', 'Reflection Lists'];
   private selection: InputSelection = new InputSelection();
   private settings: preferences.Preferences | undefined = undefined;
-  private service: FileLibrary | undefined = undefined;
+  private service: SandboxFileService | undefined = undefined;
+  @State private core: CoreService | undefined = undefined;
+  @State private knownJobId: string = '';
   private context: common.UIAbilityContext | undefined = undefined;
   private mainWindow: window.Window | undefined = undefined;
   private mounted: boolean = false;
@@ -103,7 +107,7 @@ struct Index {
     this.settings = undefined;
     this.context = this.getUIContext().getHostContext() as common.UIAbilityContext;
     try {
-      this.service = await AppServices.files(this.context);
+      this.service = await AppServices.nativeFiles(this.context);
       this.files = await this.service.listFiles();
       this.settings = await preferences.getPreferences(this.context, { name: 'refinement-inputs' });
       const saved = await this.settings.get('bindings', '{"version":1,"bindings":[]}');
@@ -112,11 +116,27 @@ struct Index {
       this.ready = true;
       this.status = this.files.length > 0 ? `已恢复 ${this.files.length} 个文件` : '请选择粉末数据、仪器参数和相文件。';
       if (removed > 0) { this.status += ` ${removed} 项输入关联已失效，请重新选择。`; }
+      this.openCore();  // runtime unpacking and CPython boot run off the UI path
     } catch (error) {
       this.status = describeFileError(error);
       // A corrupt UI association must not make the persistent file library inaccessible.
       this.ready = this.service !== undefined && this.settings !== undefined;
     } finally { this.busy = false; }
+  }
+
+  /** Build and initialize the core facade; only then inject it as readyCore. */
+  private async openCore(): Promise<void> {
+    if (!this.context || !this.service) { return; }
+    try {
+      const core = await AppServices.core(this.context, this.service);
+      await core.initialize(this.service.getCoreConfig());
+      this.knownJobId = await core.restoreJobId();
+      this.core = core;
+      this.status = `${this.status} 计算核心已就绪。`;
+    } catch (error) {
+      // The panel keeps its "服务尚未接入" state; input preparation still works.
+      this.status = `${this.status} 计算核心未就绪：${describeFileError(error)}`;
+    }
   }
 
   private async saveSelection(): Promise<void> {
@@ -601,20 +621,31 @@ struct Index {
         Stack() {
           Column() { this.dataPage() }.width('100%').height('100%')
             .visibility(this.page === 'refinement' ? Visibility.None : Visibility.Visible)
-          // B will inject its initialized service and persisted active/recent job ID here.
-          // Keeping the panel mounted preserves subscription while browsing the data tree.
-          RefinementPanel({ filesReady: this.ready && !this.busy,
-            prepareInputs: async (): Promise<RefinementInputs> => this.prepareTaskInputs(),
-            exportArtifact: async (fileId: string): Promise<boolean> => this.exportTaskArtifact(fileId),
-            onTaskChange: (_jobId: string, active: boolean): void => { this.taskActive = active; } })
-            .visibility(this.page === 'refinement' ? Visibility.Visible : Visibility.None)
+          // B injects the initialized facade and the persisted job ID here.
+          // Branch swap remounts the panel exactly when initialization flips
+          // (panel contract: "mount a new panel when initialization finishes");
+          // keeping either branch mounted preserves subscription while browsing.
+          if (this.core === undefined) {
+            RefinementPanel({ filesReady: this.ready && !this.busy,
+              prepareInputs: async (): Promise<RefinementInputs> => this.prepareTaskInputs(),
+              exportArtifact: async (fileId: string): Promise<boolean> => this.exportTaskArtifact(fileId),
+              onTaskChange: (_jobId: string, active: boolean): void => { this.taskActive = active; } })
+              .visibility(this.page === 'refinement' ? Visibility.Visible : Visibility.None)
+          } else {
+            RefinementPanel({ readyCore: this.core, knownJobId: this.knownJobId,
+              filesReady: this.ready && !this.busy,
+              prepareInputs: async (): Promise<RefinementInputs> => this.prepareTaskInputs(),
+              exportArtifact: async (fileId: string): Promise<boolean> => this.exportTaskArtifact(fileId),
+              onTaskChange: (_jobId: string, active: boolean): void => { this.taskActive = active; } })
+              .visibility(this.page === 'refinement' ? Visibility.Visible : Visibility.None)
+          }
         }.height('100%').layoutWeight(1)
       }.layoutWeight(1).width('100%')
       Divider()
       Row({ space: 8 }) {
         Text(this.status).fontSize(12).fontColor('#303030').layoutWeight(1).maxLines(3)
         Divider().vertical(true).height(28)
-        Text(this.taskActive ? 'Task active' : this.busy ? 'Working...' : 'Core: unavailable').fontSize(12).fontColor('#555555').width(110)
+        Text(this.taskActive ? 'Task active' : this.busy ? 'Working...' : this.core ? 'Core: ready' : 'Core: unavailable').fontSize(12).fontColor('#555555').width(110)
       }.width('100%').height(54).padding({ left: 8, right: 8 }).backgroundColor('#EEEEEE')
     }.width('100%').height('100%').backgroundColor('#F0F0F0')
       .onAreaChange((_old: Area, area: Area) => {

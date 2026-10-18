@@ -59,10 +59,20 @@ jobs:
       - name: Test runtime assembly and HAP auditing
         run: python -m unittest discover -s tests -p 'test_release_tools.py' -v
 
+      - name: Test runtime manifest generation
+        run: python -m unittest discover -s tests -p 'test_runtime_manifest_tool.py' -v
+
       - name: Test native exclusive file creation
         run: |
           c++ -std=c++17 -Wall -Wextra -Werror tests/file-exporter-native.test.cpp -o /tmp/gsas-exclusive-test
           /tmp/gsas-exclusive-test
+
+      - name: Test core service orchestration (C++ port of bridge/service.py)
+        run: |
+          c++ -std=c++17 -Wall -Wextra -Werror -pthread \
+            tests/core-service-native.test.cpp app/entry/src/main/cpp/core/core_service.cpp \
+            -o /tmp/gsas-core-service-test
+          /tmp/gsas-core-service-test
 
       - name: Test file service on host filesystem
         run: |
@@ -70,6 +80,8 @@ jobs:
           GSAS_TYPESCRIPT_PATH=/tmp/gsas-file-tests/node_modules/typescript node --test tests/file-service-host.test.cjs
           GSAS_TYPESCRIPT_PATH=/tmp/gsas-file-tests/node_modules/typescript node --test tests/input-selection.test.cjs
           GSAS_TYPESCRIPT_PATH=/tmp/gsas-file-tests/node_modules/typescript node --test tests/parameter-drafts.test.cjs
+          GSAS_TYPESCRIPT_PATH=/tmp/gsas-file-tests/node_modules/typescript node --test tests/runtime-installer-host.test.cjs
+          GSAS_TYPESCRIPT_PATH=/tmp/gsas-file-tests/node_modules/typescript node --test tests/core-bridge-host.test.cjs
 
       - name: Test ArkUI mock model
         run: |
