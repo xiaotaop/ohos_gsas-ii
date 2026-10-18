@@ -29,7 +29,9 @@ ArkTS 核心门面的实现、构建方式与已知限制。契约依据：
 5. 失败/取消：先写脱敏用户日志到 `outputs/<jobId>/job-log.txt`（仅契约级
    code/message/reason 与过滤后的 `job.log` 行；不含沙箱路径与 traceback），
    登记为 `log`，再交付终态；所有终态后 `finishJob` + `releaseJob`。
-   该 B03 方案沿用成员 C 的建议，**仍待组长批准**。
+   组长已在 2026-10-19 批准该顺序，但当前终态未返回登记后的 artifact/fileId，
+   UI 仍无法可靠发现日志；须按 `INTEGRATION_ALIGNMENT.md` 的 B03 决议补齐
+   契约、Schema、示例、类型、UI 和测试后才能关闭。
 6. 重启：`listInterruptedJobs` 标记并 `finishJob`；其快照由门面合成 seq-0
    `job.failed`（`PROCESS_INTERRUPTED`），计算永不恢复。
 
@@ -91,7 +93,8 @@ Special handling is required."——分布于成员 C 既有文件与 B 的新�
   无签名材料，`assembleHap` 产物为未签名 HAP。
 - 事件通道队满丢弃（快照仍完整，符合空 sink 规则）；第二次终态被丢弃
   （Python 侧此情形抛异常，端口有意不复制崩溃行为）。
-- B03 失败/取消日志进用户可见产物仍待组长批准；私有 traceback 只写
+- B03 的“先登记再发终态”已获批准，但失败/取消终态尚未公开日志 artifact；
+  当前实现只完成落盘和登记，不能计为 UI 可发现/可导出。私有 traceback 只写
   `jobs/<jobId>/logs/`，从不登记。
 - `RefinementPanel` 在核心就绪瞬间重挂，表单文本会被清空（A 侧组件契约
   如此约定；页面加载早期通常先于用户输入完成）。

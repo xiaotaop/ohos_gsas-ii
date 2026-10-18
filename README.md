@@ -1,6 +1,6 @@
 # ohos_gsas-ii
 
-GSAS-II 面向 HarmonyOS PC 的移植准备仓库。**第二阶段：无 GUI 核心计算 PoC 已通过鸿蒙 PC 真机验证**；当前仍没有可上架的 GUI 安装包，第三阶段将进入原生桌面壳层与应用集成。
+GSAS-II 面向 HarmonyOS PC 的移植准备仓库。**第二阶段：无 GUI 核心计算 PoC 已通过鸿蒙 PC 真机验证**；第三阶段的正式 ArkUI 页面、文件服务、C++ N-API 和核心门面已合入主线，但应用内真实 Python/GSAS-II 运行时尚未装包，因此当前仍没有可上架的 GUI 安装包。
 
 代码仓库：[GitHub](https://github.com/xiaotaop/ohos_gsas-ii)、[GitCode](https://gitcode.com/2401_86708491/ohos_gsas-ii)。社区申请状态见 [发布交接](docs/PUBLISHING.md)。
 
@@ -16,13 +16,13 @@ ArkUI、文件服务、C++ N-API 和 Python/GSAS-II 核心之间的 v1.0 接口�
 
 M1 ArkUI 源码映射与接入说明见 [M1 ArkUI 演示](docs/M1_ARKUI.md)，工程位于 `ui-mock/`，按锁定上游 wxPython 源码翻译菜单、数据树、Controls 与 Refine 交互子集。成功、失败、取消、窗口适配及基本键鼠操作已通过 HarmonyOS PC 模拟器验收，附运行截图。演示使用模拟数据，未接入真实计算和文件导出；真机 GUI 验收与正式工程集成待完成。
 
-A/B/C 接入前需确认的工程入口、公共类型、文件服务、初始化、日志产物及集成验收，见 [接入对齐清单](docs/INTEGRATION_ALIGNMENT.md)。待确认项不改变冻结契约。
+A/B/C 的工程入口、公共类型、文件服务、初始化、日志产物及组长审核结论，见 [接入对齐清单](docs/INTEGRATION_ALIGNMENT.md)。代码级审核通过不等同于真实运行时、真机或发布验收通过。
 
-成员 C 的正式 PC 工程与持久化文件服务位于 `app/`，支持系统选择器导入、fileId 查询/删除、真实文件导出及原生产物登记。构建和 A/B 接入方式见 [成员 C 交接](docs/MEMBER_C_HANDOFF.md)，组件清单见 [应用依赖初稿](docs/APP_DEPENDENCY_INVENTORY.md)。当前是文件服务开发应用，Python/计算核心 N-API 与真实精修仍待接入；不表示已经形成可上架版本。中文工作目录可运行 `python3 scripts/Build-App.py --check`，脚本在英文临时目录调用 DevEco CLI。
+成员 C 的正式 PC 工程与持久化文件服务位于 `app/`，支持系统选择器导入、fileId 查询/删除、真实文件导出及原生产物登记。构建和 A/B 接入方式见 [成员 C 交接](docs/MEMBER_C_HANDOFF.md)，组件清单见 [应用依赖初稿](docs/APP_DEPENDENCY_INVENTORY.md)。应用已接入计算 CoreService/N-API 编排；没有真实 Python 头文件、原生库和 `rawfile/runtime/manifest.json` 时仍编译为 `CORE_NOT_READY` 桩，不表示已经形成可上架版本。中文工作目录可运行 `python3 scripts/Build-App.py --check`，脚本在英文临时目录调用 DevEco CLI。
 
-成员 C 的 C01/C02 接收人、复现步骤和剩余确认见 [交接入口](docs/MEMBER_C_HANDOFF.md#0-交接入口与接收顺序2026-10-17)；C 的交付已合入主线；A/B 可开始接入，组长继续审核后续增量和跨层选择，真实计算与真机验收单独执行。
+成员 C 的 C01/C02 接收人、复现步骤和剩余确认见 [交接入口](docs/MEMBER_C_HANDOFF.md#0-交接入口与接收顺序2026-10-17)；C 的交付及 A/B 的首轮应用接入均已合入主线。组长已完成 A03～A07、B01～B06 的代码级复核，未关闭项及真实计算、真机验收要求以接入对齐清单为准。
 
-本分支 A 已在正式 `app/` 接入五份精修输入的选择、关联持久化和真实文件完整性校验；重选保留旧文件，取消保留原关联。输入关联/记录归属模型 6 项、参数与本地记录草稿模型 12 项、正式会话/宿主回放模型 18 项测试及 ArkTS/HAP 构建均通过；五份样例的系统选择器实际导入、重启恢复及完整性校验已有模拟器记录。正式 app 现包含六组菜单、可拖动分栏、真实输入数据树、五类参数草稿编辑器，以及五阶段任务/取消/结果/产物导出页面。会话逻辑已移入正式 `.ets` 模型，`ui-mock/` 仍保留原演示和测试服务。B 的应用内 CoreService 尚未交付，正式页面未注入服务，开始精修保持禁用；不将草稿或宿主假核心测试视为真实计算。开发交接、验证范围和剩余依赖见 [接入对齐清单](docs/INTEGRATION_ALIGNMENT.md#成员-a-开发交接2026-10-18跳过设备验证)。完整原版 GUI、真实集成与发布验收尚未完成。
+正式 `app/` 已接入五份精修输入的选择、关联持久化和真实文件完整性校验；重选保留旧文件，取消保留原关联。应用包含六组菜单、可拖动分栏、真实输入数据树、参数草稿编辑器，以及五阶段任务/取消/结果/产物导出页面。PR #4 已把 CoreService/N-API、运行时安装器、任务快照和文件租约编排注入正式页面，相关宿主、契约及原生测试通过；但当前 HAP 未包含真实 CPython/GSAS-II 载荷，失败/取消日志也尚未通过终态事件向界面公开可导出的 fileId。开发交接、审核边界和剩余依赖见 [接入对齐清单](docs/INTEGRATION_ALIGNMENT.md)。完整原版 GUI、真实应用内计算与发布验收尚未完成。
 
 后续打包准备提供 [运行时装配与构建留档](docs/RUNTIME_PACKAGING.md)：Build-App 自动保留源码/工具链记录、HAP 和内容清单；Prepare-Runtime 按 B 的清单校验载荷；Audit-Hap 核对实际包内容。当前未打包真实 Python，发布条件见 [验收与材料清单](docs/RELEASE_ACCEPTANCE.md)。
 
