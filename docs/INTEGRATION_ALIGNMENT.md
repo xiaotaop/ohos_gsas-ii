@@ -1,6 +1,6 @@
 # ArkUI、核心与文件服务接入对齐清单
 
-更新日期：2026-10-17。面向成员 A（界面）、B（核心）、C（文件服务与打包）及组长/集成负责人。
+更新日期：2026-10-18。面向成员 A（界面）、B（核心）、C（文件服务与打包）及组长/集成负责人。
 
 当前界面基线源自成员 A 分支 `ui/mock-refinement`，已完成 [M1 模拟器验收](M1_ARKUI.md)并合入 `main`。本文同时记录已经完成的组长审核和后续仍需决断的事项；**仅第 6 节确认记录中的结论视为团队决议，其余待确认项不修改或取代冻结的 [CORE_API v1.0](CORE_API.md)**。真实核心、文件服务联调及真机 GUI 验收尚未完成。
 
@@ -10,7 +10,7 @@
 
 | 事项 | C 已交付的实现 | 剩余接入/确认及负责人 |
 |---|---|---|
-| A01 工程入口 | `app/entry`、EntryAbility、`pages/Index`，公共文件类型在 `contracts/Files.ets` | C 的工程入口已随 PR 审核合入；A 迁移真实页面后由组长审核接入结果，`ui-mock/` 去留仍待决断 |
+| A01 工程入口 | `app/entry`、EntryAbility、`pages/Index`，公共文件类型在 `contracts/Files.ets` | C 的工程入口已随 PR 审核合入；A 的正式页面已按阶段性开发增量通过组长审核，`ui-mock/` 暂保留为演示与测试且不进入正式 HAP |
 | A02 工具链与应用 | 开发包 `com.gsasii.desktop`、0.1.0，最低20/目标24；Windows Command Line Tools 26.0.0.851/SDK 26.0.0.105 的 Release 构建及 HAP 内容审计已通过 | bundleName 和当前 Windows 开发构建基线已由组长确认；C 按原分工完成真机签名及 API20/24 兼容验证，上架显示名与验收系统仍待最终确认 |
 | A03 初始化 | Ability 预热文件服务；AppServices 提供同一实例及失败重试 | B 提供 CoreService；B/C 完成运行时和核心初始化，A 消费就绪/失败/重试状态 |
 | A04 类型 | FileRole、AppFile、FileServiceError、CoreConfig 已有 ArkTS 实现 | B/C 对齐共享类型，B 补 JobSnapshot 和 Promise 错误；组长批准跨层选择 |
@@ -22,9 +22,110 @@
 | B03 日志 | C 可登记并导出 log 产物 | B 落盘脱敏的失败/取消日志；B/C 提议日志 fileId 的发现方式，组长批准；私有 traceback 不导出 |
 | B04/B05 重启与终态 | 旧租约恢复为 interrupted job IDs；清理 input/work，保留输入、日志、输出 | B 持久化快照并标记 PROCESS_INTERRUPTED、处理唯一终态/取消；A 恢复页面与退出提示 |
 
-A 的后续会话接入准备位于 `docs/github-integration-readiness@27dce33`，其中基于 `main@12db7e7` 的“C 尚未提供工程/文件服务”描述已被本分支交付补齐；其会话代码仍需由 A 合入正式 app 并适配 ArkTS。B 的 Python Bridge 已在 main，但计算 N-API/CPython 应用集成仍未交付。各分支不能分别使用旧文档判断另一成员仍缺相同成果。
+A 的后续会话接入准备始于 `docs/github-integration-readiness@27dce33`。本分支已同步 `main@b188667` 的 C 端交付，在正式 `app/entry` 接入输入页面，并将会话和任务页面适配为 `.ets`；当前状态见下方成员 A 开发交接。B 的 Python Bridge 已在 main，但计算 N-API/CPython 应用集成仍未交付。各分支不能分别使用旧文档判断另一成员仍缺相同成果。
 
 接入顺序：C01/C02 已完成审核合并 → A 接文件选择/持久化列表，同时 B 接配置、输入和任务租约 → 各成员提交跨层方案与可运行增量，组长只审核仍待决断的接口和合并请求 → B/C 接运行时及真实核心 → 产物登记后开放导出 → 组长执行本文件第 5 节的正式集成验收。运行时清单、装配脚本和许可审计可由 C 并行准备。
+
+### 本分支正式 app 输入准备（2026-10-18）
+
+- `app/entry/src/main/ets/pages/Index.ets` 使用 C 的 `AppServices.files` 和 `FilePickerService`，提供 X 射线数据/仪器参数、中子数据/仪器参数、CIF 相文件五个明确槽位。可选择文件库已有文件或导入并关联；不根据文件名猜测 X 射线/中子用途，显示文件名及 SHA-256 前缀。
+- `model/RefinementInputs.ets` 只保存槽位和 fileId，Preferences 持久化页面关联。重选保留旧文件，取消选择保留原关联；删除或重启恢复时移除失效关联，不替代 C 的文件目录与活动任务租约。保存失败明确提示关联尚未持久化。
+- “校验五份输入”逐个调用真实 `getFile` 校验存在性与哈希，按冻结请求的 inputs 形状准备两组 histogram 和 phase。该类型是 A 的局部投影，后续替换为 B 的共享类型；`GSAS powder` 是当前准备范围，phase 名称为占位值，不代表解析了 CIF。未解析科学格式，也未决定 cycleCount 默认值；开始精修保持禁用。
+- 新增 `tests/input-selection.test.cjs`：5 项通过，覆盖明确关联、重选/删除、持久化记录损坏、文件校验错误及异步校验期间输入固定；已加入现有 CI。使用本机 DevEco Studio 自带 SDK API24 完成 ArkTS 编译及 ARM64 unsigned HAP 构建，开发包内容审计通过（20 个条目）。这是本次增量验证，不替代第 6 节已确认的另一套 CLI/SDK 构建基线。
+- HarmonyOS PC 6.1.1/API24 x86_64 模拟器已验证：从文件库选择五份输入，显示“两组粉末数据、仪器参数和一份相文件”完整性校验成功；打开系统选择器后取消，显示原关联保留；强制停止并重启应用后恢复全部五个关联，再次校验成功。模拟器包由忽略目录中的工程副本临时切换 ABI 构建，正式工程 ABI 未改。测试文件来自仓库的五份公开 PbSO4 样例，经临时副本调用真实 FileService 导入沙箱，随后重装无导入钩子的干净包再验证页面；不把这种样例准备记作系统选择器导入成功。
+
+#### CI 与系统选择器补充验证（2026-10-18）
+
+- 提交 `43a0375552e989a0d0a4d8ecd30377343daf870f` 的 [GitHub Actions #39117201329](https://github.com/xiaotaop/ohos_gsas-ii/actions/runs/39117201329) 已完成且结论为 `success`，Repository verification 全部步骤通过，包含新增输入模型测试所在的文件服务步骤及原有 Bridge、打包工具、原生文件、ArkUI mock 检查。
+- 在同一 HarmonyOS PC 6.1.1/API24 x86_64 模拟器、干净应用包上完成系统选择器实际导入。包 SHA-256：`263CE42F56E85F1088C51F9F56C48E42278ED6E0A7CCA110AB0428DE03D55870`；本轮未改应用代码或重建包。
+- 复现步骤：将文件库中五份公开样例分别通过“导出副本”及系统保存选择器写入“文档”；依次点击五个槽位的“导入并关联”，通过系统打开选择器选入 `PBSO4.XRA`、`INST_XRY.PRM`、`PBSO4.CWN`、`inst_d1a.prm`、`PbSO4-Wyckoff.cif`。粉末数据、仪器参数、相文件筛选均能显示对应样例，包括大写扩展名。导入经过系统返回的 URI 和真实 FileService 复制/登记流程，不使用临时导入钩子。
+- 结果：最后一个槽位显示 CIF 关联成功；强制停止并重启后显示“已恢复 10 个文件”（原有五份与本次五份副本），五个输入关联全部恢复；再次点击“校验五份输入”，两组数据/仪器参数和相文件的存在性与完整性检查成功。显示的文件名与哈希前缀对应 [测试样例基准](TEST_PLAN.md)。这同时验证公开输入副本的保存及重新导入，不代表 GPX/JSON/日志等计算产物导出已验收。
+
+证据：[CIF 系统选择器](evidence/a-input-picker-cif-2026-10-18.jpeg)、[重启后五份输入校验成功](evidence/a-input-picker-verified-2026-10-18.jpeg)。截图仅含模拟器画面。
+
+上述记录对应五槽位输入准备版本。后续桌面布局见下一节；M1 的任务状态和 `RefinementSession` 仍待真实核心接入。系统选择器实际导入已通过模拟器验证；真实计算、任务租约调用、计算产物导出、真机 GUI 和签名验收仍待执行。
+
+### 原版完整界面目标：第一批桌面布局（2026-10-18）
+
+用户已确认按完整主窗口、菜单、参数面板及弹窗的目标分批推进，尽量保持原版布局、术语和操作路径。实现以锁定上游 `2b4aba1bc44de63a3da9d4495944c3b99e389399` 的 `GSASIIdataGUI.py` / `GSASIIctrlGUI.py` 为依据。本节记录 A 分支进展，不改变冻结核心接口，也不表示完整 GUI 已完成。
+
+- 正式 `app/entry` 采用 File / Data / Calculate / Import / Export / Help 菜单、Loaded Data 数据树、右侧页面和双区状态栏。使用紧凑控件、白色数据树与灰色参数区；公共根节点及粉末子节点按原版顺序组织。
+- 树节点来自真实输入关联；Phases 下暂用 CIF 文件名，PWDR 下显示实际数据文件名。它们尚不是解析完成的科学对象。Refinement Controls 保留参数区组织，但未接通的参数、计算和工程导出均禁用，不填入模拟值。
+- Import → Phase → from CIF file 调用真实相文件选择器；Powder Data → from GSAS powder file 先区分 X 射线/中子用途，再调用系统选择器。五槽位关联在 Loaded Data 页集中管理，仪器关联也可从相应 Instrument Parameters 节点进入。File → Imported files 保留真实文件库功能，并增加删除副本前的确认弹窗。
+- 修复模拟器发现的三处布局问题：分栏剩余宽度计算导致树被挤压、最大化后参数页不扩展、展开箭头被按钮内边距遮挡。使用普通 Row 分配剩余空间与受限拖动分隔栏，窗口变化时同步约束树宽；不依赖 RowSplit 缓存的子项宽度。
+
+验证：正式 ARM64 和隔离 x86_64 模拟器包均完成 ArkTS/HAP 构建。模拟器保留原数据升级安装，恢复 10 个文件和五份关联，实际文件完整性校验通过；验证常规窗口/最大化重排、分隔栏拖动、粉末树折叠、中子 Instrument Parameters 页面。粉末菜单可进入系统选择器，取消保留原关联；CIF 菜单完成一次实际导入及关联，File → Imported files 显示文件名、大小、哈希与导出/删除入口。文件库导出能力沿用前一节证据，本轮未重新执行导出或删除。
+
+- ARM64 未签名调试包 SHA-256：`FF5FB46F08E12115C8D42B1D1C0B166110068B300E7E072D6B64D669B094C0D0`。
+- x86_64 未签名模拟器包 SHA-256：`352C3796774F4A0A8A555A7129866B9EF6D6128EE8B0B029224BB756B606586A`。模拟器专用 ABI 修改仅存在隔离构建目录；正式工程未改 ABI，未加入导入钩子。
+- 截图：[Controls 与数据树](evidence/a-desktop-controls-2026-10-18.jpeg)、[正式文件库](evidence/a-desktop-files-2026-10-18.jpeg)，仅含模拟器画面。
+
+后续批次仍需实现：动态/上下文菜单及快捷键、各参数编辑器和科学文件解析、工程打开/保存及对话框、原版独立绘图窗口、真实任务进度与结果。第一批菜单仍有禁用项，About 采用页内展示，粉末用途选择是当前双数据集契约的适配；不宣称逐像素或完整操作等价。当前验证不覆盖完整键盘导航、任意极窄窗口、真机或 API20，也不替代真实计算及发布签名验收。
+
+### 成员 A 开发交接（2026-10-18，跳过设备验证）
+
+本轮按用户授权，以组长冻结的 CORE_API v1.0 五阶段 MVP 和 `RELEASE_ACCEPTANCE.md` 的 A 端责任优先推进。完整原版 GUI 继续作为后续目标；此次不把高级科学编辑器、GPX 工程读写或独立绘图窗口记为已完成，也不把本轮优先级决定写成组长批准的接口变更。
+
+**状态：A 可独立推进的 MVP 页面与会话代码已按阶段性开发增量通过组长审核；真实服务接入、跨成员确认及发布验收未完成，个人任务尚未整体结项。** 审核时 `main=b188667`、`core/python-bridge=a3d197e`，未发现新的应用内 CoreService。
+
+| 本轮交付 | 实现与边界 |
+|---|---|
+| 正式任务页 | Calculate → Refine 或 Ctrl+R；明确填写相名、0～50 整数 cycles、无路径的 `.gpx` 输出名，无示例默认值。当前 B recipe 只支持已验证 PbSO4 五文件组合。开始前通过真实 FileService 再校验输入，固定请求副本；参数草稿不会自动变成计算请求 |
+| 正式会话 | `app/entry/src/main/ets/model/Refinement.ets`：先订阅后启动、取消 ACK 非终态、迟到响应/过期快照保护、页面退订不取消后台任务。快照只恢复摘要，不伪造历史消息；Promise 错误保留已知错误码并使用安全文本 |
+| 任务与结果组件 | `components/RefinementPanel.ets`：队列/进度/三种终态、错误、五阶段 Rwp、择优取向、基线校验摘要；结果返回的 artifact.fileId 经 C 的真实保存选择器与文件服务导出，取消明确反馈。页面不捏造产物或日志 ID |
+| 生命周期与键鼠 | 在 Index 切换数据树时任务组件保持挂载；输入检查/活动任务期间禁止输入重选、删除和文件自测。File → Exit、返回及系统标题栏关闭回调提示未完成操作。F1 提供版本、快捷键和操作帮助；设备端行为本轮未验 |
+| 参数草稿 | Controls、Limits、Background、Instrument Parameters、Sample Parameters 的对话框编辑、校验、保存、取消及恢复。字段/分支依据锁定上游；空白表示未设置，不假装已解析科学文件。CW/TOF 需用户明确选择模板。未接入的高级背景、排除区间等保持说明状态 |
+| 草稿可靠性 | 切换模板保留隐藏字段；保存仅含 key/value/refine 与范围身份，不保存描述符。使用 70 字符 SHA-256 键满足 Preferences 的 80 字符限制，紧凑值及长度检查满足 8192 字符上限；记录内仍验证完整 scope。异步读取、保存和组件卸载通过代次检查隔离 |
+
+#### B/C 接入点与剩余责任
+
+1. **B** 交付并初始化真实 CoreService 后，在 `Index.ets` 创建 `RefinementPanel` 时传入 `readyCore`，通过 `knownJobId` 提供持久化的活动/最近任务 ID。两者是组件创建时的输入；初始化完成或替换服务时重新挂载组件，不用 `@Prop` 深复制应用服务实例。当前两个值未注入，组件不会启动 mock，Refine 按钮禁用。初始化及重启记录继续由 B/C 的应用服务持有，A 不建立替代传输层或猜测任务 ID。
+2. **B/A/组长** 确认 A 的本地 Snapshot 投影与正式共享类型。页面当前生成 UUID 请求 ID，仍需 B 确认并做唯一性校验；显式 cycles 输入遵循冻结范围，但 B06 的实际可编辑范围仍需确认。此实现不修改 Schema 或自行批准 A04/A06/B06。
+3. **B/C** 在 completed 前登记真实产物；失败/取消日志目前没有冻结的 fileId 发现字段。待 B03 方案确定后，A 接上对应日志入口。不能从历史消息、文件名或 private traceback 推导可导出日志。
+4. **A** 收到上述服务和类型后完成实际注入与必要适配，并验证真实开始/取消/结果/日志导出；**组长** 审核正式页面接入、跨层选择和合并。`ui-mock/` 暂保留，未把旧演示替换成发布载荷。正式模型复用原会话结构，由同一组契约/竞态测试覆盖；共享类型交付后再统一。
+5. **C/组长/A** 后续执行签名、运行时/许可审计、API20/24 兼容、真机窗口/快捷键/关闭提示及同版本真实截图。已有开发图标继续复用，最终显示名与发布素材按发布清单确认。本轮没有新增设备截图、启动模拟器或访问真机。
+
+#### 无设备验证与复现
+
+- 输入关联套件 5 项通过；参数草稿套件 10 项通过；正式模型契约/会话/宿主回放套件 18 项通过（复用原 14 项，含测试专用 mock 服务，再增加正式请求、错误与快照历史检查）。宿主捕获使用 `LocalCoreService + FakeFiveStageRefiner`，不代表真实数值计算。
+- 正式 ARM64 工程通过本机 DevEco Studio SDK API24 / 6.1.1.125、Hvigor 6.24.4 的 ArkTS 编译与 unsigned debug HAP 构建；开发内容审计通过（20 个条目）。HAP SHA-256：`a3571197c4cb83d9aa8bf86285238554ea1ca4241fd9de28a08767c6d934dd8f`。构建记录、源码指纹、包内容清单及日志保存在本地忽略目录 `app/build/deliverables/a-ui-20261018/`。SDK 构建告警仍包含原文件服务 API 异常处理提示和未配置签名，未隐藏或削弱检查。
+- 本轮不会重用上一版模拟器截图证明新版页面正确；对话框布局、真实 Preferences 写入/重启、快捷键和系统关闭拦截仍待设备验收。云端 CI 与本地检查分开记录。
+
+```powershell
+$env:GSAS_TYPESCRIPT_PATH = 'E:\Apps\DevEco\DevEco Studio\sdk\default\openharmony\ets\build-tools\ets-loader\node_modules\typescript'
+$env:TEMP = Join-Path (Get-Location) 'app/build'
+$env:TMP = $env:TEMP
+# 首次复现先编译 ui-mock 的测试服务；不会启动演示应用。
+powershell -NoProfile -File scripts/Test-UiMock.ps1 -DevEcoHome 'E:\Apps\DevEco\DevEco Studio'
+node --test tests/input-selection.test.cjs tests/parameter-drafts.test.cjs tests/formal-refinement.test.cjs
+```
+
+HAP 使用本机 DevEco SDK/Hvigor 构建，产物与构建日志位于忽略的 `app/build/` 和 `app/entry/build/`；当前开发 HAP 无真实 Python/GSAS-II 运行时，不能作为上架候选。提交发布还需按[华为官方发布入口](https://developer.huawei.com/consumer/cn/app/submit)及项目发布清单完成 APP 打包、正式签名和审核，开发 HAP 构建不替代这些步骤。
+
+#### 云端 CI 确认与合并建议（2026-10-18）
+
+- 应用实现提交 `dc54357aad89ffc1482c2931f3bfa511ad8b0d1f` 的 [GitHub Actions #39126417543](https://github.com/xiaotaop/ohos_gsas-ii/actions/runs/39126417543) 已完成，结论为 `success`；Repository verification 于北京时间 **2026-10-18 20:14:12** 完成。核对依据为 Actions 返回的提交 SHA、作业及各步骤状态。
+- 全部步骤通过，覆盖 Python 语法、JSON、冻结契约、样例完整性、Python Bridge、运行时装配/HAP 审计工具、原生排他文件创建、宿主 FileService、输入关联与参数草稿，以及 ArkUI mock/正式会话模型。流水线未执行 DevEco HAP 构建、真实科学计算、模拟器或真机验收；本地 HAP 的独立证据见上节。
+- 本分支相对 `main@b188667` 的主要行为边界已完成代码审查，未发现阻止作为 **A 端开发增量** 合入的明确代码问题。组长已确认 A01 正式页面接入、本阶段保持真实计算禁用及暂时保留 `ui-mock/`；该结论不关闭尚待确认的跨层事项。
+- B 的真实 CoreService、应用初始化与任务 ID 恢复、共享快照/错误类型及产物/日志发现方案仍是 **真实联调与发布的前置条件**，不应把 CI 通过解读为这些依赖已交付。当前不注入服务、开始精修禁用，允许组长将页面准备作为独立增量评审；若按“完整精修功能交付”验收，本分支尚不可据此结项或发布。
+
+#### 等待 B 期间的本地记录与文件管理（2026-10-18）
+
+- 正式数据树的 **Notebook** 和粉末 **Comments** 已接入现有草稿编辑/持久化组件，支持多行记录、保存、取消、恢复及复制文本。Notebook 是应用本地笔记，更换输入仍保留；Comments 按粉末文件 `fileId` 保存，不受仪器参数/CIF 重选影响。同一文件换回后恢复备注，同名的新导入副本使用独立备注。没有粉末关联时不允许写入无主备注。
+- 这些是用户手写的本地记录，不冒充已解析的原文件注释，也不写入 GPX 或精修请求。文本最多 4096 字符，序列化记录继续受 Preferences 总长度门禁约束；旧科学参数草稿的 scope 与格式不变。编辑器新增 Clear form，仅清空待保存表单，Cancel 保留原已保存草稿。
+- 文件库新增按文件名、fileId 或 SHA-256 的不区分大小写搜索、六种文件角色筛选、匹配数量及空结果提示；清除筛选可恢复完整列表。fileId 和哈希支持复制。筛选只改变显示，导出/删除仍以真实 fileId 调用 C 的服务，并保留活动任务保护。
+- 验证：输入关联/记录归属 **6 项**、草稿模型 **12 项**全部通过，包含多行/空白原样恢复、文件身份隔离、原草稿键兼容、长度与非法 Refine 标记拒绝。正式 ARM64 unsigned debug HAP 的 ArkTS 编译、构建和开发内容审计通过（20 条）；未新增模拟器或真机验证，界面交互与设备存储仍待实测。
+- 本轮 HAP SHA-256：`4a6abb09831d2207a1c95d5974721a9806f99f40e5945f46eb64ef2c7fe39237`。源码指纹、构建记录、包、清单与日志留存在本地忽略目录 `app/build/deliverables/a-local-notes-20261018/`。使用上一节相同 SDK/Hvigor，保留既有文件服务异常处理及未签名告警。真实核心、日志发现和完整原版 GUI 的依赖不因本增量完成而关闭。
+
+### 本分支 M1 会话接入准备（历史基线）
+
+- `ui-mock/` 中 `Refinement.ts` 的 `RefinementSession` 接收已就绪的 CoreService，负责先订阅再启动、取消等待和页面退订；M1 的 `Index.ets` 已使用它。页面销毁只让会话退订，真实服务由应用持有；演示页面仍单独释放自己创建的 mock。
+- `connect(knownJobId)` 先订阅后读取快照，恢复进度和成功/失败/取消摘要。旧快照、旧任务事件、退订后返回的 Promise 不覆盖当前页面；迟到的启动/取消响应不覆盖终态或新任务。`connect()` 用于开始一个空闲页面，`disconnect()` 不取消核心任务。
+- 快照恢复支持 B 当前字段、初始 `lastSequence: -1` / `stage: null`。成功终态在 UI 显示 100%，不要求 B 的原始快照也写成 100%；不伪造 eventId、timestamp 或持久化记录。恢复不重建快照未提供的历史日志。
+- `tests/capture_bridge_ui.py` 在临时测试沙箱实际运行 B 的 LocalCoreService + FakeFiveStageRefiner，捕获成功、异常、取消事件和快照，再由 `tests/ui-mock.test.cjs` 驱动 A 的状态/会话代码比较结果。捕获前执行已有契约语义校验，结束清理测试产物。它只用于离线测试，不是供页面调用的 Python 通信层。
+- B 假核心采用 `TEST_PLAN.md` 的最终 X 射线 Rwp 基线 `13.16483`；原 M1 示例约为 `13.1646`。两者分别按各自来源检查，不改动冻结示例，也不将假核心数字当作新科学计算结果。
+
+正式工程取得服务后，A 的接入顺序为：创建 `RefinementSession(readyCore, refreshUI)` → `connect()` 或 `connect(knownJobId)` → `start(request)` / `cancel()` → 页面离开时 `disconnect()`。服务初始化、已知任务 ID 的来源、进程重启后的任务记录由 B/C 提供，不由页面猜测。
 
 ## 1. 已确定的接口边界
 
@@ -49,11 +150,11 @@ A 的后续会话接入准备位于 `docs/github-integration-readiness@27dce33`�
 
 | 编号 | 成员提交后由组长审核的结论 | 提交前置/牵头 | 当前状态 |
 |---|---|---|---|
-| A01 | A 的正式页面是否正确进入 `app/entry`，公共类型和服务导入路径是否唯一；页面迁移稳定后决定保留或移除 `ui-mock/` | A 提交页面迁移 PR，C 仅协助工程问题 | 工程入口已合入；页面迁移与 `ui-mock/` 去留待审核 |
+| A01 | A 的正式页面是否正确进入 `app/entry`，公共类型和服务导入路径是否唯一；页面迁移稳定后决定保留或移除 `ui-mock/` | A 提交页面迁移 PR，C 仅协助工程问题 | 正式页面已按开发增量审核通过；真实计算保持禁用，`ui-mock/` 暂保留且不进入正式 HAP |
 | A02 | 上架显示名、真机验收系统版本、签名流程和 API20/24 兼容证据是否满足发布要求 | C 按原分工提交真机/签名记录 | bundleName 与 Windows 开发构建基线已确认；其余待审核 |
 | A03 | 初始化责任、CoreService/FileService 就绪时机及失败重试是否形成单一实现入口 | B/C 提交服务装配实现，A 提交消费方式 | 等待 B 的真实 CoreService 后审核 |
 | A04 | FileRole、JobSnapshot、终态摘要和 Promise 错误结构是否完整，公共类型由谁维护 | B/C 提交类型对照和必要的契约变更 | FileService 类型已有；跨层完整方案待审核 |
-| A05 | 选择器归属、取消/失败语义、三个输入角色及允许格式是否一致 | A/B/C 提交五份输入文件的实际调用示例 | C 的选择器实现已有；A/B 接入结果待审核 |
+| A05 | 选择器归属、取消/失败语义、三个输入角色及允许格式是否一致 | A/B/C 提交五份输入文件的实际调用示例 | 本分支 A 已完成五槽位实际选择器导入、重启恢复及文件校验的模拟器验证；待 B 科学格式校验和真机联调后审核 |
 | A06 | jobId 由哪一层生成，Promise 返回与首个事件的时序是否不会丢事件 | B/A 提交时序说明和并发测试 | 等待真实 CoreService 实现后审核 |
 | A07 | 输入 fileId 解析、GPX/JSON/日志登记及 fileId 回传归属是否明确 | B/C 提交一个真实任务的调用链和产物证据 | C 的文件接口已有；真实核心调用链待审核 |
 
@@ -107,6 +208,7 @@ M1 临时值仅供比对：`ui-mock/`、`pages/Index`、`com.example.gsas.uimock
 | C01/C02 交付 PR | 正式工程、FileService、运行时装配和 HAP 审计工具已完成代码审核并合入主线；这不代表真实核心、真机或上架验收通过 | 组长 / 2026-10-17 | `97206f1`、`4be5488` |
 | A02（bundleName） | 开发包名统一为 `com.gsasii.desktop`，与个人 GitHub 账号解耦；正式签名及提交上架后原则上不再变更 | 组长 / 2026-10-17 | `85f23b0` |
 | A02（Windows 开发构建基线） | 接受 DevEco CLI 1.3.5、Command Line Tools 26.0.0.851、SDK 26.0.0.105 作为当前 Windows 开发构建基线；现有 HAP 内容审计证据有效，但不等同于签名、真机或发布候选批准 | 组长 / 2026-10-17 | `a4c2f8c` |
+| A01（正式页面开发增量） | 接受正式 `app/entry` 的输入、参数草稿、任务与会话页面作为阶段性开发增量；B 的真实 CoreService 接入前精修保持禁用；`ui-mock/` 暂保留为演示与测试且不进入正式 HAP。本结论不代表真实联调、设备或发布验收通过 | 组长 / 2026-10-18 | GitHub PR #3 |
 
 除上述确认项外，其余事项按第 2、3 节前置条件等待成员提交后审核。A02 的真机系统、签名、API20/24 兼容性和上架显示名仍未确认。
 

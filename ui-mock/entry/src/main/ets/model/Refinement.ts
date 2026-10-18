@@ -1,5 +1,6 @@
 // UI-facing v1.0 structures, sourced from docs/CORE_API.md and contracts/*.json.
-// FileRole and JobSnapshot are local projections pending B/C's shared type module.
+// FileRole remains pending. Snapshot mirrors bridge/service.py for host integration;
+// it is a local projection, not an approved replacement for B/C's shared types.
 export interface HistogramInput {
   id: string; role: string; dataFileId: string; instrumentFileId: string; formatHint: string;
 }
@@ -38,9 +39,10 @@ export interface CoreEvent {
   schemaVersion: string; eventId: string; jobId: string; sequence: number;
   timestamp: string; type: string; payload: EventPayload;
 }
+export interface TerminalSummary { type: string; payload: EventPayload; }
 export interface JobSnapshot {
-  jobId: string; state: string; sequence: number; percent: number; stage: string;
-  terminalEvent?: CoreEvent;
+  jobId: string; state: string; lastSequence: number; percent: number; stage: string | null;
+  terminal: TerminalSummary | null;
 }
 export interface CoreService {
   initialize(config: CoreConfig): Promise<CoreInfo>;
@@ -91,39 +93,165 @@ export function receiveEvent(view: RefinementView, event: CoreEvent): Refinement
   if (event.jobId !== view.jobId || event.sequence <= view.sequence || isTerminal(view.state)) {
     return view;
   }
+  return applyPayload(view, event.sequence, event.type, event.payload);
+}
+
+function applyPayload(view: RefinementView, sequence: number, type: string, p: EventPayload): RefinementView {
   const next = new RefinementView();
   next.jobId = view.jobId;
   next.state = view.state;
-  next.sequence = event.sequence;
+  next.sequence = sequence;
   next.percent = view.percent;
   next.stage = view.stage;
   next.message = view.message;
   next.result = view.result;
   next.error = view.error;
   next.history = view.history.slice();
-  const p = event.payload;
-  if (event.type === 'job.accepted') {
+  if (type === 'job.accepted') {
     next.state = 'queued'; next.message = '任务已接受，等待开始';
-  } else if (event.type === 'job.progress') {
+  } else if (type === 'job.progress') {
     next.state = p.state || next.state;
     next.percent = Math.max(next.percent, p.percent || 0);
     next.stage = p.stage || '';
     next.message = p.message || stageLabel(next.stage);
-  } else if (event.type === 'job.log') {
+  } else if (type === 'job.log') {
     next.history.push(p.message || '');
     return next;
-  } else if (event.type === 'job.completed') {
+  } else if (type === 'job.completed') {
     next.state = 'succeeded'; next.percent = 100; next.result = p.result;
     next.stage = 'completed';
     next.message = '五阶段精修已完成';
-  } else if (event.type === 'job.failed') {
+  } else if (type === 'job.failed') {
     next.state = 'failed'; next.error = p.error;
     next.message = p.error ? p.error.message : '任务执行失败';
-  } else if (event.type === 'job.cancelled') {
+  } else if (type === 'job.cancelled') {
     next.state = 'cancelled'; next.message = p.reason || '任务已取消';
   }
   next.history.push(next.message);
   return next;
+}
+
+// Subscribe first, then merge a snapshot: an older response must not erase newer events.
+// Snapshots have no eventId/timestamp; do not fabricate a CoreEvent for restoration.
+export function receiveSnapshot(view: RefinementView, snapshot: JobSnapshot): RefinementView {
+  if (snapshot.jobId !== view.jobId || snapshot.lastSequence < view.sequence || isTerminal(view.state)) {
+    return view;
+  }
+  if (snapshot.lastSequence === view.sequence && view.sequence >= 0) { return view; }
+  const next = applyPayload(view, snapshot.lastSequence, 'job.progress', {
+    state: snapshot.state, percent: snapshot.percent, stage: snapshot.stage || '',
+    message: snapshot.stage ? stageLabel(snapshot.stage) : '等待执行'
+  });
+  if (snapshot.terminal) {
+    return applyPayload(next, snapshot.lastSequence, snapshot.terminal.type, snapshot.terminal.payload);
+  }
+  return next;
+}
+
+// Page-owned observation/commands; the injected CoreService remains application-owned.
+// initialize/config, active-job discovery and process persistence belong to B/C.
+export class RefinementSession {
+  view: RefinementView = new RefinementView();
+  cancelRequested: boolean = false;
+  notice: string = '';
+  private unsubscribe?: () => void;
+  private generation: number = 0;
+  private core: CoreService;
+  private changed: () => void;
+
+  constructor(core: CoreService, changed: () => void) {
+    this.core = core; this.changed = changed;
+  }
+
+  async connect(jobId: string = ''): Promise<void> {
+    this.disconnect();
+    const generation = this.generation;
+    this.view = new RefinementView();
+    this.view.jobId = jobId;
+    if (jobId) {
+      this.view.state = 'queued';
+      this.view.message = '正在恢复任务状态';
+    }
+    this.cancelRequested = false;
+    this.notice = '';
+    this.unsubscribe = this.core.onEvent((event: CoreEvent) => {
+      if (generation !== this.generation) { return; }
+      this.view = receiveEvent(this.view, event);
+      if (!isActive(this.view.state)) { this.cancelRequested = false; }
+      this.changed();
+    });
+    this.changed();
+    if (!jobId) { return; }
+    try {
+      const snapshot = await this.core.getJobSnapshot(jobId);
+      if (generation !== this.generation || this.view.jobId !== jobId) { return; }
+      this.view = receiveSnapshot(this.view, snapshot);
+      this.cancelRequested = isActive(this.view.state) &&
+        (this.cancelRequested || this.view.state === 'cancelling');
+    } catch {
+      if (generation !== this.generation || this.view.jobId !== jobId) { return; }
+      this.notice = '无法读取任务快照，请重新连接或等待后续事件。';
+    }
+    this.changed();
+  }
+
+  disconnect(): void {
+    this.generation++;
+    if (this.unsubscribe) { this.unsubscribe(); this.unsubscribe = undefined; }
+  }
+
+  async start(request: RefinementRequest): Promise<void> {
+    if (!this.unsubscribe || isActive(this.view.state)) { return; }
+    const generation = this.generation;
+    this.view = new RefinementView();
+    this.view.jobId = request.jobId;
+    this.view.state = 'queued';
+    this.view.message = '正在提交任务';
+    this.cancelRequested = false;
+    this.notice = '';
+    this.changed();
+    try {
+      const accepted = await this.core.startRefinement(request);
+      if (generation !== this.generation || this.view.jobId !== request.jobId) { return; }
+      if (accepted.jobId !== request.jobId) {
+        this.notice = '服务返回了不同的任务 ID，请核对核心接口。';
+        this.changed();
+      }
+      // Accepted is not a new state: events may already have completed the job.
+    } catch {
+      if (generation !== this.generation || this.view.jobId !== request.jobId) { return; }
+      if (this.view.sequence < 0) {
+        this.view = applyPayload(this.view, -1, 'job.failed', {
+          error: { code: 'INTERNAL_ERROR', message: '任务未能启动，请稍后重试。', retryable: true }
+        });
+      } else if (isActive(this.view.state)) {
+        this.notice = '启动响应异常，继续等待已接收任务的状态。';
+      }
+      this.changed();
+    }
+  }
+
+  async cancel(): Promise<void> {
+    if (!this.unsubscribe || !isActive(this.view.state) || this.cancelRequested) { return; }
+    const generation = this.generation;
+    const jobId = this.view.jobId;
+    this.cancelRequested = true;
+    this.notice = '';
+    this.changed();
+    try {
+      const ack = await this.core.cancelJob(jobId);
+      if (generation !== this.generation || this.view.jobId !== jobId || !isActive(this.view.state)) { return; }
+      if (!ack.requested || ack.jobId !== jobId) {
+        this.cancelRequested = false;
+        this.notice = '服务未确认取消请求，请重试或等待任务结束。';
+      }
+    } catch {
+      if (generation !== this.generation || this.view.jobId !== jobId || !isActive(this.view.state)) { return; }
+      this.cancelRequested = false;
+      this.notice = '取消请求未能送达，请重试或等待任务结束。';
+    }
+    this.changed();
+  }
 }
 
 let requestNumber = 0;
@@ -220,7 +348,7 @@ export class MockCoreService implements CoreService {
     const previous = this.snapshots.get(this.activeId);
     const event = JSON.parse(JSON.stringify(template)) as CoreEvent;
     event.jobId = this.activeId;
-    event.sequence = previous ? previous.sequence + 1 : 0;
+    event.sequence = previous ? previous.lastSequence + 1 : 0;
     event.eventId = `evt_${this.activeId}_${event.sequence}`;
     event.timestamp = new Date().toISOString();
     if (event.type === 'job.progress') {
@@ -234,14 +362,14 @@ export class MockCoreService implements CoreService {
     }
     const state = event.payload.state || (previous ? previous.state : 'queued');
     const snapshot: JobSnapshot = {
-      jobId: event.jobId, sequence: event.sequence, state,
+      jobId: event.jobId, lastSequence: event.sequence, state, terminal: null,
       percent: event.type === 'job.completed' ? 100 :
         (event.payload.percent === undefined ? (previous ? previous.percent : 0) : event.payload.percent),
       stage: event.type === 'job.completed' ? 'completed' :
         (event.payload.stage || (previous ? previous.stage : ''))
     };
     if (isTerminal(state)) {
-      snapshot.terminalEvent = event;
+      snapshot.terminal = { type: event.type, payload: event.payload };
       this.activeId = '';
       this.clearTimers();
     }

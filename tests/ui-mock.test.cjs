@@ -2,9 +2,12 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const {
-  RefinementView, receiveEvent, MockCoreService, newMockRequest
-} = require('../ui-mock/build/test-model/Refinement.js');
+const mockModel = require('../ui-mock/build/test-model/Refinement.js');
+const { MockCoreService, newMockRequest } = mockModel;
+// Replay the same public-boundary cases against the formal ArkTS implementation.
+// The mock service remains test-only and is never copied into app/.
+const { RefinementView, receiveEvent, receiveSnapshot, RefinementSession } =
+  process.env.GSAS_FORMAL_MODEL ? require(process.env.GSAS_FORMAL_MODEL) : mockModel;
 
 const example = name => JSON.parse(fs.readFileSync(path.join(__dirname, '../contracts/examples', name), 'utf8'));
 const data = {
@@ -98,7 +101,7 @@ test('cancel ack is not terminal; cancelling is visible before cancelled', { tim
     const ack = await service.cancelJob(request.jobId);
     assert.equal(ack.requested, true);
     assert.equal(view.state, 'queued');
-    assert.equal((await service.getJobSnapshot(request.jobId)).terminalEvent, undefined);
+    assert.equal((await service.getJobSnapshot(request.jobId)).terminal, null);
     await service.cancelJob(request.jobId); // Repeated clicks must not duplicate terminal events.
     await done;
     assert.deepEqual(states, ['queued', 'cancelling', 'cancelled']);
@@ -139,4 +142,201 @@ test('failure replay keeps the non-retryable contract and emits exactly one term
     assert.equal(end.payload.error.retryable, false);
     assert.equal((await service.getJobSnapshot(request.jobId)).state, 'failed');
   } finally { service.dispose(); }
+});
+
+function deferred() {
+  let resolve, reject;
+  const promise = new Promise((ok, fail) => { resolve = ok; reject = fail; });
+  return { promise, resolve, reject };
+}
+
+// Controllable public service boundary: no Python/transport behavior is reimplemented.
+function controlledService() {
+  let listener = () => {};
+  return {
+    onEvent(callback) { listener = callback; return () => { listener = () => {}; }; },
+    emit(event) { listener(event); },
+    async startRefinement(request) { return { jobId: request.jobId, state: 'queued' }; },
+    async cancelJob(jobId) { return { jobId, requested: true }; },
+    async getJobSnapshot() { throw new Error('snapshot not set for this test'); }
+  };
+}
+
+test('session sees synchronous events and never replaces completion with a late start response', async () => {
+  for (const rejects of [false, true]) {
+    const service = controlledService();
+    const response = deferred();
+    service.startRefinement = () => {
+      for (const event of data.success) service.emit(event);
+      return response.promise;
+    };
+    const session = new RefinementSession(service, () => {});
+    await session.connect();
+    const started = session.start({ ...data.request, jobId: data.success[0].jobId });
+    assert.equal(session.view.state, 'succeeded');
+    if (rejects) response.reject(new Error('late transport failure'));
+    else response.resolve({ jobId: session.view.jobId, state: 'queued' });
+    await started;
+    assert.equal(session.view.state, 'succeeded');
+    assert.equal(session.view.result.stages.length, 5);
+    session.disconnect();
+  }
+});
+
+test('start rejection without events gives a safe error and allows a new request', async () => {
+  const service = controlledService();
+  service.startRefinement = async () => { throw new Error('private traceback /user/secret'); };
+  const session = new RefinementSession(service, () => {});
+  await session.connect();
+  await session.start(data.request);
+  assert.equal(session.view.state, 'failed');
+  assert.equal(session.view.error.code, 'INTERNAL_ERROR');
+  assert.doesNotMatch(JSON.stringify(session.view), /traceback|secret/);
+  service.startRefinement = async request => ({ jobId: request.jobId });
+  await session.start(newMockRequest(data.request));
+  assert.equal(session.view.state, 'queued');
+  assert.equal(session.view.error, undefined);
+  session.disconnect();
+});
+
+test('snapshot restore preserves newer events and disconnect invalidates pending work', async () => {
+  const service = controlledService();
+  const response = deferred();
+  service.getJobSnapshot = () => response.promise;
+  let changes = 0;
+  const session = new RefinementSession(service, () => { changes++; });
+  const jobId = data.success[0].jobId;
+  const connecting = session.connect(jobId);
+  service.emit(data.success[2]); // cells, 55%, sequence 2, arrives during snapshot read
+  response.resolve({ jobId, state: 'queued', lastSequence: 0, percent: 0, stage: null, terminal: null });
+  await connecting;
+  assert.equal(session.view.percent, 55);
+  assert.equal(session.view.stage, 'cells');
+
+  const pending = deferred();
+  service.getJobSnapshot = () => pending.promise;
+  const reconnecting = session.connect(jobId);
+  session.disconnect();
+  const count = changes;
+  pending.resolve({ jobId, state: 'succeeded', lastSequence: 3, percent: 100,
+    stage: 'completed', terminal: { type: 'job.completed', payload: data.success[3].payload } });
+  service.emit(data.success[3]);
+  await reconnecting;
+  assert.equal(changes, count);
+  assert.notEqual(session.view.state, 'succeeded');
+});
+
+test('disconnect detaches the page without cancelling the service; reconnect restores a terminal result', async () => {
+  const service = new MockCoreService(data, 5);
+  const first = new RefinementSession(service, () => {});
+  try {
+    await first.connect();
+    const request = newMockRequest(data.request);
+    const done = terminal(service);
+    await first.start(request);
+    first.disconnect();
+    await done;
+    assert.equal(first.view.state, 'queued');
+    const restored = new RefinementSession(service, () => {});
+    await restored.connect(request.jobId);
+    assert.equal(restored.view.state, 'succeeded');
+    assert.equal(restored.view.percent, 100);
+    assert.equal(restored.view.result.stages.length, 5);
+    restored.disconnect();
+  } finally { first.disconnect(); service.dispose(); }
+});
+
+test('cancel ack waits for terminal and a late rejection cannot affect a new job', async () => {
+  const service = controlledService();
+  const session = new RefinementSession(service, () => {});
+  await session.connect();
+  await session.start(data.request);
+  await session.cancel();
+  assert.equal(session.view.state, 'queued');
+  assert.equal(session.cancelRequested, true);
+  service.emit({ ...data.cancelled[2], jobId: data.request.jobId });
+  assert.equal(session.view.state, 'cancelled');
+  assert.equal(session.cancelRequested, false);
+
+  await session.start(newMockRequest(data.request));
+  const response = deferred();
+  service.cancelJob = () => response.promise;
+  const cancelling = session.cancel();
+  service.emit({ ...data.success[3], jobId: session.view.jobId });
+  await session.start(newMockRequest(data.request));
+  response.reject(new Error('old cancel rejection'));
+  await cancelling;
+  assert.equal(session.view.state, 'queued');
+  assert.equal(session.cancelRequested, false);
+  assert.equal(session.notice, '');
+  session.disconnect();
+});
+
+test('unconfirmed cancellation remains active and can be retried', async () => {
+  const service = controlledService();
+  service.cancelJob = async jobId => ({ jobId, requested: false });
+  const session = new RefinementSession(service, () => {});
+  await session.connect();
+  await session.start(data.request);
+  await session.cancel();
+  assert.equal(session.view.state, 'queued');
+  assert.equal(session.cancelRequested, false);
+  assert.ok(session.notice);
+  session.disconnect();
+});
+
+test('snapshot supports null initial stage and interrupted-process error without inventing results', () => {
+  const view = new RefinementView();
+  view.jobId = data.request.jobId;
+  const queued = { jobId: view.jobId, state: 'queued', lastSequence: -1, percent: 0, stage: null, terminal: null };
+  const restored = receiveSnapshot(view, queued);
+  assert.equal(restored.state, 'queued');
+  assert.equal(restored.stage, '');
+  assert.equal(receiveSnapshot(restored, { ...queued, jobId: 'job_another_001' }), restored);
+  const failed = receiveSnapshot(restored, { ...queued, state: 'failed', lastSequence: 4,
+    terminal: { type: 'job.failed', payload: { state: 'failed', error: {
+      code: 'PROCESS_INTERRUPTED', message: '任务因进程退出中断', retryable: true
+    } } } });
+  assert.equal(failed.error.code, 'PROCESS_INTERRUPTED');
+  assert.equal(failed.result, undefined);
+  assert.equal(receiveSnapshot(failed, { ...queued, lastSequence: 99 }), failed);
+});
+
+test('actual Python host bridge events and snapshots produce matching UI terminal states', { timeout: 15000 }, async () => {
+  const { execFileSync } = require('node:child_process');
+  const captures = JSON.parse(execFileSync(process.env.PYTHON || 'python', [
+    path.join(__dirname, 'capture_bridge_ui.py')
+  ], { cwd: path.join(__dirname, '..'), encoding: 'utf8', timeout: 10000,
+    env: { ...process.env, PYTHONIOENCODING: 'utf-8' } }));
+  for (const [scenario, capture] of Object.entries(captures)) {
+    const live = replay(capture.events);
+    const service = controlledService();
+    service.getJobSnapshot = async () => capture.snapshot;
+    const session = new RefinementSession(service, () => {});
+    await session.connect(capture.accepted.jobId);
+    const restored = session.view;
+    assert.equal(live.state, { success: 'succeeded', failed: 'failed', cancelled: 'cancelled' }[scenario]);
+    assert.equal(restored.state, live.state);
+    assert.equal(restored.percent, live.percent);
+    assert.deepEqual(restored.result, live.result);
+    assert.deepEqual(restored.error, live.error);
+    assert.equal(restored.sequence, live.sequence);
+    for (const snapshot of capture.snapshots) {
+      assert.equal(receiveSnapshot(restored, snapshot), restored); // late snapshots cannot erase terminal
+    }
+    if (scenario === 'success') {
+      assert.equal(restored.result.stages.length, 5);
+      // docs/TEST_PLAN.md baseline (B fake core), distinct from M1's measured example.
+      assert.equal(restored.result.stages[4].rwpByHistogram.xray, 13.16483);
+      assert.deepEqual(restored.result.artifacts.map(a => a.kind).sort(), ['log', 'project', 'result']);
+    } else if (scenario === 'failed') {
+      assert.equal(restored.error.code, 'INTERNAL_ERROR');
+      assert.doesNotMatch(restored.message, /Traceback|simulated GSAS-II/);
+    } else {
+      assert.equal(capture.acks.length, 1);
+      assert.equal(capture.acks[0].requested, true);
+      assert.equal(restored.result, undefined);
+    }
+    session.disconnect();
+  }
 });
