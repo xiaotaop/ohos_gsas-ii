@@ -10,7 +10,7 @@
 
 | 事项 | C 已交付的实现 | 剩余接入/确认及负责人 |
 |---|---|---|
-| A01 工程入口 | `app/entry`、EntryAbility、`pages/Index`，公共文件类型在 `contracts/Files.ets` | C 的工程入口已随 PR 审核合入；A 迁移真实页面后由组长审核接入结果，`ui-mock/` 去留仍待决断 |
+| A01 工程入口 | `app/entry`、EntryAbility、`pages/Index`，公共文件类型在 `contracts/Files.ets` | C 的工程入口已随 PR 审核合入；A 的正式页面已按阶段性开发增量通过组长审核，`ui-mock/` 暂保留为演示与测试且不进入正式 HAP |
 | A02 工具链与应用 | 开发包 `com.gsasii.desktop`、0.1.0，最低20/目标24；Windows Command Line Tools 26.0.0.851/SDK 26.0.0.105 的 Release 构建及 HAP 内容审计已通过 | bundleName 和当前 Windows 开发构建基线已由组长确认；C 按原分工完成真机签名及 API20/24 兼容验证，上架显示名与验收系统仍待最终确认 |
 | A03 初始化 | Ability 预热文件服务；AppServices 提供同一实例及失败重试 | B 提供 CoreService；B/C 完成运行时和核心初始化，A 消费就绪/失败/重试状态 |
 | A04 类型 | FileRole、AppFile、FileServiceError、CoreConfig 已有 ArkTS 实现 | B/C 对齐共享类型，B 补 JobSnapshot 和 Promise 错误；组长批准跨层选择 |
@@ -66,7 +66,7 @@ A 的后续会话接入准备始于 `docs/github-integration-readiness@27dce33`�
 
 本轮按用户授权，以组长冻结的 CORE_API v1.0 五阶段 MVP 和 `RELEASE_ACCEPTANCE.md` 的 A 端责任优先推进。完整原版 GUI 继续作为后续目标；此次不把高级科学编辑器、GPX 工程读写或独立绘图窗口记为已完成，也不把本轮优先级决定写成组长批准的接口变更。
 
-**状态：A 可独立推进的 MVP 页面与会话代码已具备交接条件；真实服务接入、跨成员确认及发布验收未完成，个人任务尚未整体结项。** 远端只读核对时 `main=b188667`、`core/python-bridge=a3d197e`，未发现新的应用内 CoreService。
+**状态：A 可独立推进的 MVP 页面与会话代码已按阶段性开发增量通过组长审核；真实服务接入、跨成员确认及发布验收未完成，个人任务尚未整体结项。** 审核时 `main=b188667`、`core/python-bridge=a3d197e`，未发现新的应用内 CoreService。
 
 | 本轮交付 | 实现与边界 |
 |---|---|
@@ -106,7 +106,7 @@ HAP 使用本机 DevEco SDK/Hvigor 构建，产物与构建日志位于忽略的
 
 - 应用实现提交 `dc54357aad89ffc1482c2931f3bfa511ad8b0d1f` 的 [GitHub Actions #39126417543](https://github.com/xiaotaop/ohos_gsas-ii/actions/runs/39126417543) 已完成，结论为 `success`；Repository verification 于北京时间 **2026-10-18 20:14:12** 完成。核对依据为 Actions 返回的提交 SHA、作业及各步骤状态。
 - 全部步骤通过，覆盖 Python 语法、JSON、冻结契约、样例完整性、Python Bridge、运行时装配/HAP 审计工具、原生排他文件创建、宿主 FileService、输入关联与参数草稿，以及 ArkUI mock/正式会话模型。流水线未执行 DevEco HAP 构建、真实科学计算、模拟器或真机验收；本地 HAP 的独立证据见上节。
-- 本分支相对 `main@b188667` 的主要行为边界已自查，未发现阻止作为 **A 端开发增量** 合入的明确代码问题。建议组长审核 A01 正式页面接入及本次范围，并在 PR 最新提交检查通过、无冲突后解除草稿状态并决定合并；本记录不是组长批准，也不关闭尚待确认的跨层事项。
+- 本分支相对 `main@b188667` 的主要行为边界已完成代码审查，未发现阻止作为 **A 端开发增量** 合入的明确代码问题。组长已确认 A01 正式页面接入、本阶段保持真实计算禁用及暂时保留 `ui-mock/`；该结论不关闭尚待确认的跨层事项。
 - B 的真实 CoreService、应用初始化与任务 ID 恢复、共享快照/错误类型及产物/日志发现方案仍是 **真实联调与发布的前置条件**，不应把 CI 通过解读为这些依赖已交付。当前不注入服务、开始精修禁用，允许组长将页面准备作为独立增量评审；若按“完整精修功能交付”验收，本分支尚不可据此结项或发布。
 
 #### 等待 B 期间的本地记录与文件管理（2026-10-18）
@@ -150,7 +150,7 @@ HAP 使用本机 DevEco SDK/Hvigor 构建，产物与构建日志位于忽略的
 
 | 编号 | 成员提交后由组长审核的结论 | 提交前置/牵头 | 当前状态 |
 |---|---|---|---|
-| A01 | A 的正式页面是否正确进入 `app/entry`，公共类型和服务导入路径是否唯一；页面迁移稳定后决定保留或移除 `ui-mock/` | A 提交页面迁移 PR，C 仅协助工程问题 | 工程入口已合入；页面迁移与 `ui-mock/` 去留待审核 |
+| A01 | A 的正式页面是否正确进入 `app/entry`，公共类型和服务导入路径是否唯一；页面迁移稳定后决定保留或移除 `ui-mock/` | A 提交页面迁移 PR，C 仅协助工程问题 | 正式页面已按开发增量审核通过；真实计算保持禁用，`ui-mock/` 暂保留且不进入正式 HAP |
 | A02 | 上架显示名、真机验收系统版本、签名流程和 API20/24 兼容证据是否满足发布要求 | C 按原分工提交真机/签名记录 | bundleName 与 Windows 开发构建基线已确认；其余待审核 |
 | A03 | 初始化责任、CoreService/FileService 就绪时机及失败重试是否形成单一实现入口 | B/C 提交服务装配实现，A 提交消费方式 | 等待 B 的真实 CoreService 后审核 |
 | A04 | FileRole、JobSnapshot、终态摘要和 Promise 错误结构是否完整，公共类型由谁维护 | B/C 提交类型对照和必要的契约变更 | FileService 类型已有；跨层完整方案待审核 |
@@ -208,6 +208,7 @@ M1 临时值仅供比对：`ui-mock/`、`pages/Index`、`com.example.gsas.uimock
 | C01/C02 交付 PR | 正式工程、FileService、运行时装配和 HAP 审计工具已完成代码审核并合入主线；这不代表真实核心、真机或上架验收通过 | 组长 / 2026-10-17 | `97206f1`、`4be5488` |
 | A02（bundleName） | 开发包名统一为 `com.gsasii.desktop`，与个人 GitHub 账号解耦；正式签名及提交上架后原则上不再变更 | 组长 / 2026-10-17 | `85f23b0` |
 | A02（Windows 开发构建基线） | 接受 DevEco CLI 1.3.5、Command Line Tools 26.0.0.851、SDK 26.0.0.105 作为当前 Windows 开发构建基线；现有 HAP 内容审计证据有效，但不等同于签名、真机或发布候选批准 | 组长 / 2026-10-17 | `a4c2f8c` |
+| A01（正式页面开发增量） | 接受正式 `app/entry` 的输入、参数草稿、任务与会话页面作为阶段性开发增量；B 的真实 CoreService 接入前精修保持禁用；`ui-mock/` 暂保留为演示与测试且不进入正式 HAP。本结论不代表真实联调、设备或发布验收通过 | 组长 / 2026-10-18 | GitHub PR #3 |
 
 除上述确认项外，其余事项按第 2、3 节前置条件等待成员提交后审核。A02 的真机系统、签名、API20/24 兼容性和上架显示名仍未确认。
 
