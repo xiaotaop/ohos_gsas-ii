@@ -1,0 +1,295 @@
+[
+  {
+    "bounds": [
+      0,
+      0,
+      2605,
+      1675
+    ],
+    "children": [
+      {
+        "id": "ContainerModalTitleRow",
+        "type": "DecorBar",
+        "bounds": [
+          515,
+          281,
+          2605,
+          351
+        ],
+        "children": [
+          {
+            "id": "enhanceAppIcon",
+            "type": "Image",
+            "bounds": [
+              552,
+              297,
+              590,
+              335
+            ],
+            "children": []
+          },
+          {
+            "id": "enhanceAppLabel",
+            "type": "Text",
+            "text": "GSAS PC · 开发版",
+            "bounds": [
+              612,
+              298,
+              858,
+              334
+            ],
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "ContainerModalStack",
+        "type": "Stack",
+        "bounds": [
+          515,
+          351,
+          2605,
+          1675
+        ],
+        "children": [
+          {
+            "type": "Scroll",
+            "bounds": [
+              515,
+              351,
+              2605,
+              1675
+            ],
+            "scrollable": true,
+            "children": [
+              {
+                "type": "Text",
+                "text": "GSAS PC",
+                "bounds": [
+                  568,
+                  404,
+                  809,
+                  471
+                ],
+                "children": []
+              },
+              {
+                "type": "Text",
+                "text": "导入数据与管理结果",
+                "bounds": [
+                  568,
+                  505,
+                  911,
+                  550
+                ],
+                "children": []
+              },
+              {
+                "type": "Text",
+                "text": "先准备 X 射线、中子粉末数据，各自的仪器参数和 CIF 相文件。",
+                "bounds": [
+                  568,
+                  584,
+                  1372,
+                  617
+                ],
+                "children": []
+              },
+              {
+                "id": "import-powder",
+                "type": "Button",
+                "text": "导入粉末数据",
+                "bounds": [
+                  568,
+                  652,
+                  811,
+                  728
+                ],
+                "clickable": true,
+                "children": []
+              },
+              {
+                "id": "import-instrument",
+                "type": "Button",
+                "text": "导入仪器参数",
+                "bounds": [
+                  833,
+                  652,
+                  1076,
+                  728
+                ],
+                "clickable": true,
+                "children": []
+              },
+              {
+                "id": "import-phase",
+                "type": "Button",
+                "text": "导入相文件",
+                "bounds": [
+                  1098,
+                  652,
+                  1310,
+                  728
+                ],
+                "clickable": true,
+                "children": []
+              },
+              {
+                "type": "Text",
+                "text": "已取消导出。",
+                "bounds": [
+                  568,
+                  784,
+                  2552,
+                  817
+                ],
+                "children": []
+              },
+              {
+                "type": "Text",
+                "text": "PBSO4.XRA",
+                "bounds": [
+                  602,
+                  885,
+                  2518,
+                  925
+                ],
+                "children": []
+              },
+              {
+                "type": "Text",
+                "text": "powder-data · 49445 字节",
+                "bounds": [
+                  602,
+                  942,
+                  2518,
+                  978
+                ],
+                "children": []
+              },
+              {
+                "type": "Text",
+                "text": "SHA-256 CA2DA02FC7E17D2FC912DE22A979F8101BA6140F2E8104F9D3AA64F030CA58BB",
+                "bounds": [
+                  602,
+                  995,
+                  2518,
+                  1019
+                ],
+                "children": []
+              },
+              {
+                "type": "Button",
+                "text": "导出副本",
+                "bounds": [
+                  602,
+                  1036,
+                  784,
+                  1112
+                ],
+                "clickable": true,
+                "children": []
+              },
+              {
+                "type": "Button",
+                "text": "删除副本",
+                "bounds": [
+                  807,
+                  1036,
+                  989,
+                  1112
+                ],
+                "clickable": true,
+                "children": []
+              },
+              {
+                "type": "Text",
+                "text": "计算核心尚待接入；当前可导入、保存和导出真实文件。",
+                "bounds": [
+                  568,
+                  1181,
+                  2552,
+                  1217
+                ],
+                "children": []
+              },
+              {
+                "id": "file-checks",
+                "type": "Button",
+                "text": "运行文件服务验证",
+                "bounds": [
+                  568,
+                  1286,
+                  872,
+                  1362
+                ],
+                "clickable": true,
+                "children": []
+              },
+              {
+                "type": "Text",
+                "text": "18 项通过，0 项失败，1 项跳过\nPASS 导入及 SHA-256 PBSO4.XRA\nPASS 导入及 SHA-256 INST_XRY.PRM\nPASS 导入及 SHA-256 PBSO4.CWN\nPASS 导入及 SHA-256 inst_d1a.prm\nPASS 导入及 SHA-256 PbSO4-Wyckoff.cif\nPASS 重建服务后恢复 fileId 和元数据\nPASS 未知 fileId 与路径逃逸被拒绝\nPASS 格式不匹配不产生文件登记\nPASS 并发导入使用独立 ID 和串行持久化\nPASS 任务引用保护与进程中断租约恢复\nPASS 导出真实字节、拒绝覆盖已有文件\nPASS 已有空文件通过 URI 导出时也不覆盖\nPASS 真实 JSON 产物登记、查询和导出\nPASS 同一产物路径拒绝使用不同 fileId 重复登记\nSKIP 符号链接创建：API 11 起禁止第三方应用创建；需宿主真实文件系统补验\nPASS 内容变化被检出\nPASS 删除中断标记在重建时完成清理\nPASS 未登记的导入与暂存副本在重建时清理\nPASS 删除后查询与重建均保持删除状态",
+                "bounds": [
+                  568,
+                  1396,
+                  2552,
+                  1675
+                ],
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "containerModalButtonRowId",
+        "type": "Row",
+        "bounds": [
+          2340,
+          281,
+          2605,
+          351
+        ],
+        "children": [
+          {
+            "id": "EnhanceMaximizeBtn",
+            "type": "Button",
+            "bounds": [
+              2362,
+              290,
+              2415,
+              343
+            ],
+            "clickable": true,
+            "longClickable": true,
+            "children": []
+          },
+          {
+            "id": "EnhanceMinimizeBtn",
+            "type": "Button",
+            "bounds": [
+              2438,
+              290,
+              2491,
+              343
+            ],
+            "clickable": true,
+            "children": []
+          },
+          {
+            "id": "EnhanceCloseBtn",
+            "type": "Button",
+            "bounds": [
+              2514,
+              290,
+              2567,
+              343
+            ],
+            "clickable": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  }
+]

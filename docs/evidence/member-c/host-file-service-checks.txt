@@ -1,0 +1,17 @@
+✔ a symlink replacing input payload is rejected without changing its external target (20.799208ms)
+✔ a symlink replacing an input directory cannot escape through read or deletion (15.10625ms)
+✔ root and metadata directory symlinks are rejected on reopen (16.239709ms)
+✔ output symlinks cannot be registered, and a normal output has a single fileId owner (22.400708ms)
+✔ export rejects existing empty files and symlink destinations (15.297ms)
+✔ invalid deletion marker fails closed on reopen (9.1035ms)
+✔ export preserves an empty destination created concurrently by another writer (8.733417ms)
+✔ version-1 metadata without a deletion marker survives an upgrade (16.862708ms)
+✔ a save-picker reserved empty document is filled, while a nonempty document is preserved (17.959084ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 364.396458

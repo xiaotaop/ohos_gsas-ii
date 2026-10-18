@@ -1,0 +1,8 @@
+{
+  "name": "entry",
+  "version": "0.1.0",
+  "description": "Member C application scaffold and persistent file service",
+  "dependencies": {
+    "libgsas_fileio.so": "file:./src/main/cpp/types/libgsas_fileio"
+  }
+}

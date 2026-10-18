@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "status": "awaiting-payload",
+  "runtimeId": "cpython-3.12.9-ohos-aarch64-v1",
+  "target": "ohos-aarch64",
+  "components": [
+    {"id": "cpython", "version": "3.12.9", "sourceUrl": "", "sourceCodeUrl": "", "license": "REQUIRES-REVIEW", "licenseFiles": [], "dependsOn": [], "distributionReview": "pending"},
+    {"id": "numpy", "version": "2.2.6", "sourceUrl": "", "sourceCodeUrl": "", "license": "REQUIRES-REVIEW", "licenseFiles": [], "dependsOn": ["cpython"], "distributionReview": "pending"},
+    {"id": "scipy", "version": "1.16.3", "sourceUrl": "", "sourceCodeUrl": "", "license": "REQUIRES-REVIEW", "licenseFiles": [], "dependsOn": ["numpy"], "distributionReview": "pending"},
+    {"id": "pycifrw", "version": "5.0.1", "sourceUrl": "", "sourceCodeUrl": "", "license": "REQUIRES-REVIEW", "licenseFiles": [], "dependsOn": ["cpython"], "distributionReview": "pending"},
+    {"id": "gsas-ii", "version": "2.0.0", "upstreamCommit": "2b4aba1bc44de63a3da9d4495944c3b99e389399", "sourceUrl": "", "sourceCodeUrl": "", "license": "LicenseRef-GSAS-II", "licenseFiles": [], "dependsOn": ["numpy", "scipy", "pycifrw"], "distributionReview": "pending"}
+  ],
+  "files": []
+}

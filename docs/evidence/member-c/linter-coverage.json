@@ -1,0 +1,67 @@
+{
+  "issues": [
+    {
+      "file": "entry/src/main/ets/contracts/Files.ets",
+      "line": 62,
+      "column": 7,
+      "severity": "Error",
+      "rule": "@typescript-eslint/no-unused-vars",
+      "message": "'unusedLinterCoverageProbe' is assigned a value but never used."
+    },
+    {
+      "file": "entry/src/main/ets/entryability/EntryAbility.ets",
+      "line": 29,
+      "column": 7,
+      "severity": "Error",
+      "rule": "@typescript-eslint/no-unused-vars",
+      "message": "'unusedLinterCoverageProbe' is assigned a value but never used."
+    },
+    {
+      "file": "entry/src/main/ets/pages/Index.ets",
+      "line": 116,
+      "column": 7,
+      "severity": "Error",
+      "rule": "@typescript-eslint/no-unused-vars",
+      "message": "'unusedLinterCoverageProbe' is assigned a value but never used."
+    },
+    {
+      "file": "entry/src/main/ets/services/AppServices.ets",
+      "line": 24,
+      "column": 7,
+      "severity": "Error",
+      "rule": "@typescript-eslint/no-unused-vars",
+      "message": "'unusedLinterCoverageProbe' is assigned a value but never used."
+    },
+    {
+      "file": "entry/src/main/ets/services/FilePickerService.ets",
+      "line": 38,
+      "column": 7,
+      "severity": "Error",
+      "rule": "@typescript-eslint/no-unused-vars",
+      "message": "'unusedLinterCoverageProbe' is assigned a value but never used."
+    },
+    {
+      "file": "entry/src/main/ets/services/SandboxFileService.ets",
+      "line": 456,
+      "column": 7,
+      "severity": "Error",
+      "rule": "@typescript-eslint/no-unused-vars",
+      "message": "'unusedLinterCoverageProbe' is assigned a value but never used."
+    },
+    {
+      "file": "entry/src/main/ets/verification/FileServiceCheck.ets",
+      "line": 204,
+      "column": 7,
+      "severity": "Error",
+      "rule": "@typescript-eslint/no-unused-vars",
+      "message": "'unusedLinterCoverageProbe' is assigned a value but never used."
+    }
+  ],
+  "summary": {
+    "filesChecked": 7,
+    "issues": 7,
+    "errors": 7,
+    "warnings": 0,
+    "suggestions": 0
+  }
+}

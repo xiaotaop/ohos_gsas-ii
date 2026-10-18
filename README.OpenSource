@@ -5,10 +5,10 @@
 锁定版本：Git 提交 2b4aba1bc44de63a3da9d4495944c3b99e389399；该提交 pyproject.toml 中的 package version 为 2.0.0。准确来源以提交 SHA 为准。
 该版本源码包：https://github.com/AdvancedPhotonSource/GSAS-II/archive/2b4aba1bc44de63a3da9d4495944c3b99e389399.tar.gz
 上游许可：GSAS-II OPEN SOURCE LICENSE；原文见本仓库 LICENSE。上游另含 DIFFaX、Shapes 等不同授权组件，见 docs/LICENSE_AUDIT.md。
-本仓库当前引入内容：上游 tests/testinp 中的五个测试样例；不包含上游应用源码或第三方二进制。
-功能：计划为 HarmonyOS PC 提供 GSAS-II 结构分析能力；当前仅提供移植前审查与测试基准材料。
+本仓库当前引入内容：上游 tests/testinp 中的五个测试样例、按锁定上游界面译写的 ArkUI mock 子集、Python Bridge 与独立实现的应用文件服务。五份样例还作为 app 的 rawfile 验收资源逐字节打包；开发 HAP 的文件创建辅助模块会由 SDK 装配 libc++_shared.so，源码仓库不提交该二进制；其许可证保留于 app/entry/src/main/resources/rawfile/licenses，组件范围见 docs/APP_DEPENDENCY_INVENTORY.md。
+功能：已完成无 GUI 核心真机 PoC；提供 ArkUI mock 和真实文件服务开发工程，正式应用内精修与发布仍待完成。
 引入原因：为 HarmonyOS PC 科研用户提供衍射数据分析能力，并验证脚本化核心的可移植性。
 维护 Owner：2401_86708491（当前 GitCode 登录账户；社区建仓时可调整）。
 贡献者：2401_86708491（当前 GitCode 登录账户；社区建仓时可调整）。
-修改说明：本仓库文档为移植准备材料；测试样例逐字节复制自锁定的上游提交，未修改。
+修改说明：测试样例逐字节复制自锁定上游，未修改；ArkUI 上游界面映射见 docs/M1_ARKUI.md；成员 C 的独立文件服务与工程来源见 docs/MEMBER_C_HANDOFF.md。分发时保留 LICENSE 与 NOTICE。
 

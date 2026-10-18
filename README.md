@@ -18,11 +18,15 @@ M1 ArkUI 源码映射与接入说明见 [M1 ArkUI 演示](docs/M1_ARKUI.md)，�
 
 A/B/C 接入前需确认的工程入口、公共类型、文件服务、初始化、日志产物及集成验收，见 [接入对齐清单](docs/INTEGRATION_ALIGNMENT.md)。待确认项不改变冻结契约。
 
-[Python Bridge](docs/PHASE3_CORE_BRIDGE.md) 与 M1 界面已合入 `main`。截至 2026-10-14 的仓库检查，可推进公共类型对齐和最小联调准备；正式 HAP、ArkTS/N-API 门面及 FileService 仍待接入，不能将宿主侧自测视为真机 GUI 集成通过。
+成员 C 的正式 PC 工程与持久化文件服务位于 `app/`，支持系统选择器导入、fileId 查询/删除、真实文件导出及原生产物登记。构建和 A/B 接入方式见 [成员 C 交接](docs/MEMBER_C_HANDOFF.md)，组件清单见 [应用依赖初稿](docs/APP_DEPENDENCY_INVENTORY.md)。当前是文件服务开发应用，Python/计算核心 N-API 与真实精修仍待接入；不表示已经形成可上架版本。中文工作目录可运行 `python3 scripts/Build-App.py --check`，脚本在英文临时目录调用 DevEco CLI。
+
+成员 C 的 C01/C02 接收人、复现步骤和剩余确认见 [交接入口](docs/MEMBER_C_HANDOFF.md#0-交接入口与接收顺序2026-10-17)；C 的交付已合入主线；A/B 可开始接入，组长继续审核后续增量和跨层选择，真实计算与真机验收单独执行。
+
+后续打包准备提供 [运行时装配与构建留档](docs/RUNTIME_PACKAGING.md)：Build-App 自动保留源码/工具链记录、HAP 和内容清单；Prepare-Runtime 按 B 的清单校验载荷；Audit-Hap 核对实际包内容。当前未打包真实 Python，发布条件见 [验收与材料清单](docs/RELEASE_ACCEPTANCE.md)。
 
 ## 持续集成
 
-GitHub Actions 配置位于 `.github/workflows/ci.yml`，在分支推送、面向 `main` 的 Pull Request 以及手动触发时执行 Python 语法、JSON、接口契约、测试样例完整性、Python Bridge 自测和 ArkUI mock 状态模型测试。启用方法及云端 CI 的范围见 [持续集成说明](docs/CI.md)。
+GitHub Actions 配置位于 `.github/workflows/ci.yml`，在分支推送、面向 `main` 的 Pull Request 以及手动触发时执行 Python 语法、JSON、接口契约、测试样例完整性、Python Bridge 自测、原生文件排他创建、宿主文件服务和 ArkUI mock 状态模型测试。启用方法及云端 CI 的范围见 [持续集成说明](docs/CI.md)。
 
 ## 第一阶段成果
 

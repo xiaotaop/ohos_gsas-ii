@@ -16,4 +16,16 @@ oh_modules/
 node_modules/
 local.properties
 *.hap
+*.app
+*.hqf
+*.p12
+*.p7b
+*.cer
+*.csr
+*.keystore
+signing-local.json
+.cache/
+*.tsbuildinfo
 
+# Native build intermediates.
+.cxx/
