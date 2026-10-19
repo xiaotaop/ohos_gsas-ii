@@ -77,6 +77,51 @@ python3 scripts/Write-RuntimeManifest.py --payload /work/runtime-payload \
 生成的 `payload/runtime/manifest.json` 随 `rawfile/runtime` 一并入包；
 发布清单可直接交给 `Prepare-Runtime.py` / `Audit-Hap.py`，门禁不变。
 
+### 3.1 载荷装配配方（已提交）
+
+逐组件版本、下载地址、SHA-256、目录约定与每一步裁剪规则见
+[`scripts/payload/README.md`](../scripts/payload/README.md)；`components.json`
+是该目录下的 manifest 组件输入。2026-10-19 在宿主 x86_64 上按该配方完成了
+一次无中断的完整装配与两级门禁：
+
+- `Write-RuntimeManifest.py`：2214 个文件、约 178 MB、9 个组件，逐文件内容
+  门禁（AArch64 ELF、无归档/字节码/外平台库）通过；
+- `Prepare-Runtime.py`：再次复算全部哈希与内容，状态为
+  `prepared-not-device-validated`。
+
+装配过程暴露并记录了三类必须在发布载荷中处理的输入：CPython `ensurepip`
+与 numpy/scipy 轮子自带的 `.whl`/`.a`、GSAS-II `help/`/`install/` 下的
+`.gz`/`.tar.gz`，以及 SciPy 的 `_sobol_direction_numbers.npz`（ZIP 容器）。
+前两类直接删除；`.npz` 仅被 Sobol QMC 引擎惰性读取，故该功能在载荷中明确
+不可用，`scipy.stats` 的其余路径不受影响。门禁还要求文件大小 > 0，装配末尾
+把上游的零字节包标记规范化为一个换行（仍为合法 Python/`py.typed` 标记）。
+
+`GSASIIscriptable` 的静态导入闭包为 21 个模块级条目、缺失 0；函数内缺失
+12 项全部指向未构建的原生扩展（`pyspg`、`pypowder`、`pytexture`、`fmask`、
+`histogram2d`），见 §5。
+
+### 3.2 OHOS aarch64 交叉编译（真实 CPython 3.12.9 头/库）
+
+在 DevEco SDK 的 OHOS 工具链上，用 §3 所述载荷中的 `python/include` 与
+`python/libs/arm64-v8a/libpython3.12.so` 对 cpp 目录做了一次完整交叉编译与
+链接（Windows 侧 `cmake.exe`，源树为含本分支 CMakeLists 修复的副本）：
+
+```sh
+cmake.exe -G Ninja -S D:/gsas-cross/cpp -B D:/gsas-cross/build \
+  -DCMAKE_TOOLCHAIN_FILE="D:/DevEco Studio/sdk/default/openharmony/native/build/cmake/ohos.toolchain.cmake" \
+  -DOHOS_ARCH=arm64-v8a -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_MAKE_PROGRAM="D:/DevEco Studio/sdk/default/openharmony/native/build-tools/cmake/bin/ninja.exe"
+```
+
+编译启用 `-DGSAS_HAS_PYTHON` 并包含载荷头路径；`build.ninja` 记录了
+`libpython3.12.so` 链接项。产物 `libgsas_core.so` 经 `file`/`readelf` 验证为
+`ELF 64-bit LSB shared object, ARM aarch64 ... dynamically linked`，`SONAME`
+为 `libgsas_core.so`，`NEEDED` 含 `libace_napi.z.so`、`libpython3.12.so`、
+`libc++_shared.so`、`libc.so`；`Py_InitializeFromConfig` 等 25 个 `Py*`
+符号作为动态未定义符号留给 `NEEDED` 的 `libpython3.12.so` 在加载时解析，
+这正是共享库嵌入解释器的预期形态。该证据只覆盖交叉编译/链接，不含设备
+dlopen 与 `Py_Initialize` 运行。
+
 ## 4. 验证命令
 
 ```sh
@@ -100,13 +145,24 @@ Special handling is required."——分布于成员 C 既有文件与 B 的新�
 
 ## 5. 已知限制
 
-- `GSAS_HAS_PYTHON` 分支已在宿主 x86_64（发行版 libpython3.10-dev，
-  `-DGSAS_HAS_PYTHON` + `tests/python-host-embed-smoke.cpp`）编译、链接并
-  完成一次真实嵌入解释器加载冒烟；期间发现并修复了 `EmitCallback` 把
-  METH_O 单参数当元组解析的缺陷（修复前 §8 execute 在真实解释器下必然
-  抛 TypeError，桩构建与纯 Python 测试均无法暴露）。**OHOS aarch64 交叉
-  编译、CPython 3.12.9 真载荷与设备 dlopen 链仍未关闭**：本机没有 aarch64
-  的 Python 头/库，真实载荷到位后仍需先跑一次带定义的交叉编译。
+- `GSAS_HAS_PYTHON` 分支已在两类宿主上编译、链接：
+  1. 宿主 x86_64（发行版 libpython3.10-dev）完成一次真实嵌入解释器加载冒烟；
+     期间发现并修复了 `EmitCallback` 把 METH_O 单参数当元组解析的缺陷（修复前
+     §8 execute 在真实解释器下必然抛 TypeError，桩构建与纯 Python 测试均无法
+     暴露）。
+  2. 2026-10-19 使用 DevEco OHOS 工具链 + CPython 3.12.9 ohos-aarch64 载荷的
+     头文件与 `libpython3.12.so`，完成一次 `-DGSAS_HAS_PYTHON` 的 aarch64
+     交叉编译与链接（证据见 §3.2）。
+  仍**未关闭**：设备上 `libgsas_core.so` → `libpython3.12.so` 的 dlopen 链与
+  `Py_Initialize` 运行、rawfile 解包与沙箱权限，均未在真机验证；载荷也未装入
+  HAP 做端到端运行。
+- 原生扩展 `pyspg`/`pypowder`/`pytexture`/`fmask`/`histogram2d` 未构建：
+  `pyspg` 需要 flang 20.1.0，当前 DevEco SDK 与已核对的社区分发均未提供。
+  `GSASIIscriptable` 的模块级导入闭包完整，但这些函数内导入在设备上会抛
+  `ImportError`，对称性/部分粉末计算路径因此不可用；GSAS-II 载荷中不包含
+  任何 `.so` 扩展。
+- SciPy 的 Sobol QMC 因 `_sobol_direction_numbers.npz` 是 ZIP 容器而不随载荷
+  发布（见 §3.1），`scipy.stats` 其余功能与 GSAS-II 所用路径不受影响。
 - 门面/安装器的行为由宿主测试证明，设备端实际加载（dlopen 链、
   `libs/arm64-v8a` 的 `libpython3.12.so` 解析、沙箱权限）未在真机验证；
   无签名材料，`assembleHap` 产物为未签名 HAP。

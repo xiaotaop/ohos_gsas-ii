@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased — 运行时载荷装配与 aarch64 交叉编译（2026-10-19，成员 B，仅宿主验证）
+
+- 新增 `scripts/payload/`：可复现装配配方与 9 组件清单（`components.json`），锁定 CPython 3.12.9 ohos-aarch64、NumPy 2.2.6、SciPy 1.16.3、PyCifRW 5.0.1、prettytable 3.18.0、wcwidth 0.9.2、ply 3.11、GSAS-II 2.0.0@`2b4aba1b`、bridge 1.1.0，并记录每个下载的 SHA-256。
+- 载荷经 `Write-RuntimeManifest.py` 与 `Prepare-Runtime.py` 两级门禁：2214 个文件、约 178 MB，逐文件哈希与内容检查（AArch64 ELF、无归档/字节码/外平台库）通过，状态 `prepared-not-device-validated`。
+- 发布裁剪配方：pydiffax 导入块等价替换、25 个 wx/G2shapes GUI 模块删除与 12 处函数内导入中性化，AST 复扫保证无残留；去除 `help/`、`install/`、静态库 `.a`、测试数据与 `.npz` ZIP 容器。
+- 修复 `CMakeLists.txt` 在 OHOS 工具链下的库查找：`ohos.toolchain.cmake` 的 `CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY` 使 `find_library` 失效；改为校验并直接链接载荷中的 `libpython3.12.so`。
+- 使用 DevEco OHOS 工具链与真实 CPython 3.12.9 头/库完成 `-DGSAS_HAS_PYTHON` aarch64 交叉编译与链接；产物为 ELF64 AArch64 ET_DYN，`NEEDED` 含 `libpython3.12.so`。
+- 仍未关闭：设备 dlopen/`Py_Initialize`、HAP 内五阶段数值验收、`pyspg` 等原生扩展（缺 flang 20.1.0）、Sobol QMC（`.npz` 被发布门禁裁剪）。本次未构建 HAP、未上真机。
+
 ## Unreleased — B03 终态日志 artifact 与跨进程快照（2026-10-19，成员 B，仅宿主验证）
 
 - `job.failed`/`job.cancelled` 终态载荷新增**可选** `artifacts` 数组（CORE_API v1.1 兼容新增）：仅携带登记返回的 `log` artifact，fileId 必须是登记令牌；Schema、示例、语义验证器、ArkTS 共享模型与门面、UI、测试七处同步。

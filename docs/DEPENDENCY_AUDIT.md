@@ -15,5 +15,7 @@
 
 第二阶段开工前需要确定：HarmonyOS PC 设备架构、SDK/编译器版本、Python/NumPy/SciPy 可用版本及来源、是否拥有真实设备测试条件。未确定这些条件前，不能声称“可移植已验证”。
 
-增量核对（2026-10-19，B03 终态 artifact PR `core/b03-terminal-artifacts`）：该增量为纯契约/ArkTS/C++ 嵌入层修复/测试改动，未新增或变更任何运行时依赖；上表状态全部不变。`GSAS_HAS_PYTHON` 分支已在宿主 x86_64 编译/链接并完成真实嵌入解释器 §8 加载冒烟（并修复其间发现的 emit capsule 缺陷），但 **OHOS aarch64 交叉编译、CPython 3.12.9/GSAS-II 真载荷与设备加载证据仍未关闭**；本 PR 验证仅限宿主（无 HAP、无真机、无真实数值计算）。
+增量核对（2026-10-19，B03 终态 artifact PR `core/b03-terminal-artifacts`）：契约/ArkTS/C++ 嵌入层修复与测试未新增或变更运行时依赖。`GSAS_HAS_PYTHON` 分支已在宿主 x86_64 编译/链接并完成真实嵌入解释器 §8 加载冒烟（并修复其间发现的 emit capsule 缺陷）。
+
+载荷增量核对（2026-10-19）：已按 [RUNTIME_PACKAGING](RUNTIME_PACKAGING.md) §2 装配并过两级门禁的 aarch64 载荷锁定以下版本（逐项来源与 SHA-256 见 [`scripts/payload/README.md`](../scripts/payload/README.md)）：CPython 3.12.9（社区 ohos-aarch64，`libpython3.12.so` + 头文件 + stdlib）、NumPy 2.2.6、SciPy 1.16.3、PyCifRW 5.0.1、prettytable 3.18.0、wcwidth 0.9.2、ply 3.11、GSAS-II 2.0.0@`2b4aba1bc44de63a3da9d4495944c3b99e389399`、bridge 1.1.0。`Write-RuntimeManifest.py` 与 `Prepare-Runtime.py` 在宿主 x86_64 上通过（2214 文件、约 178 MB，状态 `prepared-not-device-validated`）；OHOS aarch64 的 `GSAS_HAS_PYTHON` 交叉编译/链接已完成（§3.2）。**仍未关闭**：设备 dlopen/`Py_Initialize`、HAP 内真实数值验收、五个 GSAS-II 原生扩展（`pyspg` 等，缺 flang 20.1.0）。SciPy Sobol QMC 的 `.npz` 数据因发布门禁不随包发送，属明确裁剪。`distributionReview` 全部仍为 `pending`。
 
