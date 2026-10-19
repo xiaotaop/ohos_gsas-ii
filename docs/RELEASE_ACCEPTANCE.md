@@ -7,7 +7,7 @@
 | 提供者 | 必需材料/接口 | 当前状态 |
 |---|---|---|
 | C | 正式工程、FileService、选择器、产物登记、构建留档和内容门禁 | C01/C02 及工具已审核合入；真实载荷后的签名、内容/许可审计和上架材料待交付 |
-| B | OHOS 运行时/原生库及完整清单、构建配方、链接依赖、源码/许可、strip/重签结果 | 载荷配方与两级门禁已交付（2214 文件、约 178 MB，`prepared-not-device-validated`），aarch64 交叉编译完成；`libgsas_core.so` 已 strip+自签名（`scripts/ohos/Sign-NativeModules.ps1`）；SBOM 草案见 `packaging/sbom.draft.cdx.json`。仍缺 8 个 GSAS-II 原生扩展（含 `pyspg`），`check_gsas_native.py` 判为不合格；正式签名与 `distributionReview` 待完成 |
+| B | OHOS 运行时/原生库及完整清单、构建配方、链接依赖、源码/许可、strip/重签结果 | 载荷配方与两级门禁已交付；在 HAD-W32 上取得 8 个扩展并本地组装 2230 文件载荷，`check_gsas_native.py` 不带 `--allow-missing` 通过，详见 [B 侧真机补充验证](B_DEVICE_VALIDATION_2026-10-19.md)。这是本地补充证据，最终可重建分发载荷未冻结；`libgsas_core.so` 已进行开发自签名，SBOM 草案见 `packaging/sbom.draft.cdx.json`。正式签名、最终清单与 `distributionReview` 由 C 闭环 |
 | B | 计算 CoreService/N-API、CPython 初始化、共享快照/错误、失败/取消用户日志 fileId | CoreService/N-API、共享快照与 B03 终态日志 `artifacts` 已在分支 `core/b03-terminal-artifacts` 实现（宿主测试 21/21 通过），待组长复核合入；真实 CPython 分支未上机 |
 | A | 正式 app 页面、真实五文件选择关联、任务/结果/日志/导出、正式图标和真实截图 | 正式页面已注入 CoreService；需补核心失败重试入口、B03 终态日志展示/导出，以及同一真实集成版本的图标和真机截图 |
 | 组长 | A01～A07/B01～B06 接口决议、目标真机/API、数值基线、验收及发布提交 | 代码级决议已记录；B03 实现复核、目标真机/API、发布候选验收及技术放行待完成 |
@@ -22,8 +22,8 @@
 | 1 干净安装 | 新设备/专用测试环境安装正式签名包，启动无外部终端依赖 | C，组长见证 | 待真机 |
 | 2 首次与冷启动 | 文件服务、运行时、原生模块初始化；可重试错误；界面响应 | B/C/A | 单例和初始化顺序代码级通过；真实载荷/设备及明确重试入口待验/待补 |
 | 3 输入导入 | 五份 fixture 从系统选择器导入，哈希正确；取消不误报；两组数据各绑定自己的仪器参数 | A/C | A 分支输入页面已有独立模拟器证据；本轮新版页面与真实集成包待验 |
-| 4 离线真实精修 | 断网完成 PbSO4 五阶段；不依赖 HiShell/用户目录/在线 pip | B，组长核验 | 待应用内真机；**前置阻断**：载荷缺 `pyspg` 等原生扩展，相文件无法导入 |
-| 5 数值一致性 | Rwp rtol=1e-4、atol=1e-7；择优取向 rtol=1e-3；保存结果与事件 | B/组长 | Windows 宿主基线可复跑；应用内待验 |
+| 4 离线真实精修 | 断网完成 PbSO4 五阶段；不依赖 HiShell/用户目录/在线 pip | B，组长核验 | HAD-W32 HiShell 中 8 个扩展及五阶段计算通过；本地组装载荷原生模块门禁通过。HAP 未能安装，应用沙箱内仍待验 |
+| 5 数值一致性 | Rwp rtol=1e-4、atol=1e-7；择优取向 rtol=1e-3；保存结果与事件 | B/组长 | Windows 宿主基线和 HAD-W32 HiShell 五阶段 PoC 通过；应用内待验 |
 | 6 三种终态与并发 | 成功、失败、取消各只有一个终态；第二任务 BUSY；用户不见 traceback | B/A | 原生/宿主测试通过；真实计算和设备竞态待验 |
 | 7 导出 | 已登记 GPX/JSON/用户日志字节可取回；失败/取消日志可找到；同名取消不改原文件 | A/B/C | 文件登记/导出代码通过；B03 终态日志 `artifacts` 已在分支实现并宿主验证，真实产物待验 |
 | 8 生命周期 | 活动输入不可删除；后台/页面重建不丢终态；重启显示 PROCESS_INTERRUPTED，不恢复旧计算 | A/B/C | 租约、快照、序号和中断恢复宿主测试通过；设备生命周期待验 |

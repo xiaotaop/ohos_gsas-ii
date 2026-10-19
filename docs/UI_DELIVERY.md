@@ -2,6 +2,8 @@
 
 日期：2026-10-19；分支 `ui/core-integration-finish`，PR #5。按 TEAM_ASSIGNMENT §4 和 PHASE3_HANDOFF §8 的五阶段 MVP 范围交付，不扩大到完整 GSAS-II GUI。
 
+组长复核更新：B 的 PR #6 已合入主线，并补充 [HAD-W32 设备验证记录](B_DEVICE_VALIDATION_2026-10-19.md)。8 个扩展在设备 HiShell 可导入，本地完整载荷门禁通过；签名 HAP 未在设备安装，以下 A 端旧记录仍不构成应用内精修、导出或发布验收。正式签名及发布审计由 C 负责。
+
 ## 交付入口
 
 - 正式页面：`app/entry/src/main/ets/pages/Index.ets`。
