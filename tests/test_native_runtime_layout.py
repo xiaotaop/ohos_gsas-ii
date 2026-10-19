@@ -174,6 +174,16 @@ class NativeRuntimeLayoutTest(unittest.TestCase):
             self.assertTrue(any('invalid native module map' in reason or 'forbidden' in reason
                                 for reason in failures))
 
+    def test_native_gate_does_not_fall_back_to_writable_extensions_with_a_map(self):
+        package = self.input / 'runtime/lib/python3.12/site-packages/GSASII'
+        package.mkdir(parents=True)
+        self.write('runtime/lib/python3.12/site-packages/GSASII/pyspg.so', elf())
+        self.write('runtime/bridge/native-module-map.json', json.dumps(
+            {'schemaVersion': 1, 'modules': {}}).encode())
+        _, failures, _, found = gate.check(self.input, required=('pyspg',))
+        self.assertIn('missing native map entry: GSASII.pyspg', failures)
+        self.assertNotIn('pyspg', found)
+
 
 if __name__ == '__main__':
     unittest.main()

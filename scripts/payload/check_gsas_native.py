@@ -82,7 +82,8 @@ def check(payload: Path, required=REQUIRED, forbidden=FORBIDDEN):
     found: dict[str, str] = {}
     module_map = {}
     map_path = payload / "runtime/bridge/native-module-map.json"
-    if map_path.is_file():
+    mapped_layout = map_path.is_file()
+    if mapped_layout:
         try:
             document = json.loads(map_path.read_text(encoding="utf-8"))
             module_map = document["modules"]
@@ -103,6 +104,9 @@ def check(payload: Path, required=REQUIRED, forbidden=FORBIDDEN):
             return gsasii, [f"invalid native module map: {error}"], warnings, found
     for name in required:
         mapped = module_map.get(f"GSASII.{name}")
+        if mapped_layout and mapped is None:
+            failures.append(f"missing native map entry: GSASII.{name}")
+            continue
         candidates = ([payload / "libs" / mapped] if mapped is not None
                       else sorted(gsasii.glob(f"{name}*.so")))
         if not candidates:

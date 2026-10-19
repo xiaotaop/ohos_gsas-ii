@@ -130,6 +130,10 @@ def add_native_provenance(bom, inventory, receipt):
         raise ValueError('invalid native build receipt')
     actual = {row['path']: row for row in inventory['files']}
     for row in rows:
+        expected_source = ('runtime/lib/python3.12/site-packages/GSASII/'
+                           + row['module'] + '.cpython-312-aarch64-linux-ohos.so')
+        if row.get('path') != expected_source:
+            raise ValueError('invalid native build receipt source path: ' + str(row.get('path')))
         target = 'libs/arm64-v8a/' + Path(row['path']).name
         if (target not in actual or actual[target]['sha256'] != row['sha256']
                 or actual[target].get('component') != 'gsas-ii'):

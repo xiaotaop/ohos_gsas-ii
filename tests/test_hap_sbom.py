@@ -75,9 +75,11 @@ class HapSbomTest(unittest.TestCase):
         required = ['pyspg', 'pypowder', 'pytexture', 'fmask', 'histogram2d', 'pack_f', 'unpack_cbf', 'kvec_general']
         receipt = {'kind': 'locally-built-ohos-native-extensions', 'target': 'aarch64-linux-ohos',
                    'fortranRuntime': {'version': '20.1.8', 'license': 'Apache-2.0 WITH LLVM-exception'},
-                   'files': [{'module': name, 'path': name + '.so', 'sha256': 'a' * 64} for name in required]}
+                   'files': [{'module': name, 'path': 'runtime/lib/python3.12/site-packages/GSASII/'
+                              + name + '.cpython-312-aarch64-linux-ohos.so', 'sha256': 'a' * 64}
+                             for name in required]}
         for row in receipt['files']:
-            inv['files'].append({'path': 'libs/arm64-v8a/' + row['path'], 'sha256': row['sha256'],
+            inv['files'].append({'path': 'libs/arm64-v8a/' + Path(row['path']).name, 'sha256': row['sha256'],
                                  'size': 64, 'component': 'gsas-ii'})
         inv['files'].append({'path': 'resources/rawfile/licenses/runtime/gsas-ii/LLVM-FortranRuntime-20.1.8-LICENSE.txt',
                              'sha256': 'b' * 64, 'size': 100, 'component': 'gsas-ii'})
@@ -86,6 +88,10 @@ class HapSbomTest(unittest.TestCase):
         self.assertTrue(any(c['bom-ref'] == 'component:llvm-fortran-runtime' for c in bom['components']))
         receipt['files'][0]['sha256'] = 'c' * 64
         with self.assertRaisesRegex(ValueError, 'does not match HAP'):
+            sbom.add_native_provenance(sbom.build_bom(inv), inv, receipt)
+        receipt['files'][0]['sha256'] = 'a' * 64
+        receipt['files'][0]['path'] = 'unrelated/pyspg.cpython-312-aarch64-linux-ohos.so'
+        with self.assertRaisesRegex(ValueError, 'source path'):
             sbom.add_native_provenance(sbom.build_bom(inv), inv, receipt)
 
     def test_soname_alone_and_sdk_names_are_not_runtime_proof(self):

@@ -1,6 +1,6 @@
 # C：实际 HAP 的 SBOM 与原生依赖检查
 
-使用 Python 3.13（载荷含 CPython 3.12 语法，Python 3.11 的源码审计不能替代）。从源码根目录运行：
+建议使用 Python 3.13；源码审计所用解释器至少应支持载荷的 CPython 3.12 语法，Python 3.11 不能替代。从源码根目录运行：
 
 ```sh
 python3.13 scripts/Build-HapSbom.py --hap FINAL.hap --manifest RUNTIME_MANIFEST.json --native-build-receipt native-modules.json --output NEW_EVIDENCE_DIR
