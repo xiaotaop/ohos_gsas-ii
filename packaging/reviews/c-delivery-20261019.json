@@ -309,7 +309,6 @@
     "byteIdenticalRepeatBuildPassed": true
   },
   "blockers": [
-    "New internaltesting Profile includes HAD-W32 and matches the release certificate. New HAP passes SDK verification; in-place install fails with 9568332 (sign info inconsistent) against the earlier debug-key app. Uninstall would clear application state and requires explicit user consent; only external input/output files are verified backed up.",
     "Prebuilt runtime embedded third-party source/version/license scope is not fully evidenced. Do not blanket-inherit parent component licenses or approve pending records.",
     "Two bundled GNU helper dependencies remain unmatched. Removal requires a new manifest/HAP and repeat device science; they were not silently removed from the tested candidate."
   ],
@@ -336,15 +335,76 @@
     "runtimeFiles": 2225,
     "trackedAppFilesCompared": 50,
     "privateSigningConfigExcludedFromComparison": true,
-    "installPassed": false,
-    "installationErrorCode": 9568332,
-    "installationError": "install sign info inconsistent",
-    "oldTestAppPreserved": true,
+    "installPassed": true,
     "externalInputOutputBackupFilesVerified": 8,
     "applicationDatabaseHistorySettingsFullyBackedUp": false,
-    "uninstallAuthorization": "pending",
     "releaseApproved": false,
     "samePackagedContentAsEarlierReleaseHap": true,
-    "cycloneDx15SchemaPassed": true
+    "cycloneDx15SchemaPassed": true,
+    "launchPassed": true,
+    "previousInPlaceInstallErrorCode": 9568332,
+    "oldTestAppUninstalledWithUserConsent": true,
+    "physicalAcceptance": {
+      "schemaVersion": 1,
+      "kind": "physical-device-release-HAP-acceptance",
+      "hapSha256": "88ea4528b69f40458b0a17acbf0bb70720d9f29af3691b78438059299d2ace9e",
+      "sourceCommit": "609df2cc79cc24cfdecd791871aa2345cf58023c",
+      "runtimeId": "c-native-8-zoifhpdn-v2",
+      "deviceModel": "HAD-W32",
+      "deviceType": "2in1",
+      "apiVersion": 23,
+      "abi": "arm64-v8a",
+      "buildMode": "release",
+      "profileType": "release",
+      "appDistributionType": "internaltesting",
+      "profileSha256": "96d5da5bfd5bf787345b5e1b9a4f52ee8efa27b290b2b8fd100cf8589da503da",
+      "userAuthorizedOldTestAppUninstall": true,
+      "oldTestAppUninstalled": true,
+      "externalInputOutputBackupFilesVerified": 8,
+      "applicationStateLossDisclosedBeforeConsent": true,
+      "installationPassed": true,
+      "launchPassed": true,
+      "coreReadyPassed": true,
+      "systemPickerFiveInputImportPassed": true,
+      "inputIntegrityPassed": true,
+      "realFiveStagePassed": true,
+      "jobId": "job_ebcaac7e-895a-40a0-9926-a4e477f15850",
+      "elapsedSeconds": 8.642,
+      "independentWindowsBaselineComparisonPassed": true,
+      "rwpChecks": 10,
+      "preferredOrientationChecks": 2,
+      "rwpRtol": 0.0001,
+      "poRtol": 0.001,
+      "atol": 1e-07,
+      "applicationValidationPerformed": false,
+      "gpxJsonLogSystemPickerExportPassed": true,
+      "successfulJobProcessRestartRecoveryPassed": true,
+      "restoredFileCount": 8,
+      "exports": [
+        {
+          "name": "Release.gpx",
+          "size": 709895,
+          "sha256": "9b7c4b78714b6978c9cd1ed071969c99c0465e3c10a026b4fd85cd5a04422199"
+        },
+        {
+          "name": "Release.json",
+          "size": 1661,
+          "sha256": "a7065234321c0e04df3ceca6044de22bf2c7195bdcc78cced86f6c0f8eebdacd"
+        },
+        {
+          "name": "Release.log",
+          "size": 5362,
+          "sha256": "6467e64b3ab20c9f4f331fa2513fd0f63cd6d57be2df579f2247611f249f075f"
+        }
+      ],
+      "distributionLicenseReviewApproved": false,
+      "step2Complete": false,
+      "releaseApproved": false,
+      "limitations": [
+        "Third-party prebuilt runtime source/version/license review is not closed.",
+        "Only API23 HAD-W32 tested in this record; not API20/API24 compatibility.",
+        "Clean install and completed-job process recovery tested; no same-signer versionCode upgrade or active-job interruption/cancellation claim."
+      ]
+    }
   }
 }
