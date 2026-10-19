@@ -1,5 +1,7 @@
 # 发布候选验收与材料清单
 
+最新 C 签名/真机交付复核见 [C_SIGNED_HAP_DELIVERY](C_SIGNED_HAP_DELIVERY.md)：调试 Profile 包已在 API23 真机完成基础验收；发布 Profile 包离线签名通过但实际覆盖安装报 9568322，第三方许可/源码范围仍待关闭，第 2 项尚未完成。
+
 2026-10-19 C 增量：已在同一 API26 ARM64 开发 HAP 中完成五阶段、独立数值比较、GPX 导出、取消及重启/中断恢复；224 ELF 的实际包/SBOM 草案审计通过。详见 [C_NATIVE_ACCEPTANCE](C_NATIVE_ACCEPTANCE.md)。下表保留 PR #8 前的设备验收快照；其中“尚无 HAP 内运行”的描述仅指旧包。正式签名及目标真机矩阵仍待关闭，不能用模拟器开发验收直接签署发布放行。
 
 PR #8 前的历史快照：适用版本待首次真实集成包冻结。当时已完成 A03～A07、B01～B06 以及 B03/A 消费端增量的代码级复核，PR #6、#5 已合入 `main`；HAD-W32 HiShell 补充验证见 [B 侧记录](B_DEVICE_VALIDATION_2026-10-19.md)。当时尚无 HAP 内真实运行、目标设备 GUI 或正式签名验收结论；`--build-mode release`、内容审计与开发代码合并均不替代组长技术放行。

@@ -1,0 +1,323 @@
+{
+  "schemaVersion": 1,
+  "kind": "C-signed-HAP-delivery-review",
+  "step2Complete": false,
+  "releaseApproved": false,
+  "sourceCommit": "609df2cc79cc24cfdecd791871aa2345cf58023c",
+  "reviewToolCommit": "0d07a70",
+  "releaseSignedHap": {
+    "hap": "gsasii-0.1.0-release-signed.hap",
+    "hapSize": 158785327,
+    "hapSha256": "16afa6b22cfcc5052e54e321f784944a5789d80cf3a3cf001f3ff3185d10a07a",
+    "buildMode": "release",
+    "certificateSha256": "2C:EB:D2:1F:F9:39:76:CA:B5:F0:9E:FB:30:00:2A:CD:AD:C4:25:26:05:2D:32:6B:3D:E3:78:7E:1D:AB:AC:9E",
+    "profileType": "release",
+    "sdkVerifyAppPassed": true,
+    "sdkCodeSignPassed": true,
+    "verifiedNativeLibraries": 224,
+    "runtimeId": "c-native-8-zoifhpdn-v2",
+    "runtimeContentAuditPassed": true
+  },
+  "releaseSignedHapDeviceAttempt": {
+    "deviceModel": "HAD-W32",
+    "apiVersion": 23,
+    "method": "hdc install -r; no uninstall/data reset",
+    "passed": false,
+    "errorCode": 9568322,
+    "message": "signature verification failed due to not trusted app source",
+    "debugPackageInstallationEvidenceDoesNotApply": true
+  },
+  "debugProfilePhysicalAcceptance": {
+    "sourceCommit": "609df2cc79cc24cfdecd791871aa2345cf58023c",
+    "deviceModel": "HAD-W32",
+    "deviceType": "2in1",
+    "apiVersion": 23,
+    "abi": "arm64-v8a",
+    "testHapSha256": "1a5705920f2a8c013b8a0b7f211f60a2d1b2b38e7012de2e4508c79d2a17e7e2",
+    "profileType": "debug",
+    "buildMode": "release",
+    "sameSourceAsReleaseSignedHap": true,
+    "physicalInstallAndLaunchPassed": true,
+    "coreReadyPassed": true,
+    "systemPickerFiveInputImportPassed": true,
+    "inputIntegrityPassed": true,
+    "realFiveStageSucceeded": true,
+    "jobId": "job_99103970-add3-47a3-9161-ceb6c379d62e",
+    "elapsedSeconds": 8.682,
+    "independentNumericalComparisonPassed": true,
+    "applicationValidationPerformed": false,
+    "gpxJsonLogSystemPickerExportPassed": true,
+    "successfulJobProcessRestartRecoveryPassed": true,
+    "exports": [
+      {
+        "name": "HAD3-first.gpx",
+        "size": 709898,
+        "sha256": "2f79e33fc7e3633a3b8a01de0ad03f7a12cc7976b86bd929ca7049cb8a6d3174"
+      },
+      {
+        "name": "HAD3-first.json",
+        "size": 1670,
+        "sha256": "f9af3cff3a6eeab35b5969ab3c09426cba13405c95ed1620f96709ae2cba982a"
+      },
+      {
+        "name": "HAD3-first.log",
+        "size": 5425,
+        "sha256": "70331984d2ae74bcf5c8aadfa6beb770deeef9e94f3153965a80a098a8b281f1"
+      }
+    ],
+    "cooperativeCancellationPhysicalTested": false,
+    "activeJobInterruptionPhysicalTested": false,
+    "versionCodeUpgradePhysicalTested": false,
+    "releaseSignedHapPhysicalInstallationTested": false,
+    "releaseApproved": false,
+    "scope": "Earlier debug Profile test; release Profile attempt recorded separately above."
+  },
+  "actualHapSbom": {
+    "fileCount": 2246,
+    "nativeELFs": 224,
+    "components": 19,
+    "unmatchedNames": [
+      "libc.musl-aarch64.so.1",
+      "libgcc_s.so.1"
+    ],
+    "sbomSha256": "624adb915e278a88f1322a835e8e857871a1c2dc9d085af269be12c6391cb718",
+    "inventorySha256": "134c95edca66be4e06e32714208e5539df97a2ad7d07030bcfb4265425b94f7a",
+    "dependencyReportSha256": "4d60983e1c287be44cc17c79e0452d43c5837b0416610bd24369c4772991eff9",
+    "pendingComponentIds": [
+      "app-core",
+      "app-fileio",
+      "app-resources",
+      "bridge",
+      "cpython",
+      "embedded-gdbm",
+      "embedded-gfortran-runtime",
+      "embedded-libffi",
+      "embedded-numpy-openblas",
+      "embedded-scipy-openblas",
+      "gsas-ii",
+      "numpy",
+      "ply",
+      "prettytable",
+      "pycifrw",
+      "scipy",
+      "sdk-libcxx",
+      "wcwidth",
+      "LLVM FortranRuntime and FortranDecimal"
+    ],
+    "cycloneDx15SchemaPassed": true
+  },
+  "embeddedLibraryObservations": [
+    {
+      "path": "libs/arm64-v8a/libffi.so.8",
+      "sha256": "d682f33f9ed3c1b757aa66bd6289e5dd4221c01b95e01ddcb400f4024ce920b0",
+      "needed": [
+        "libc.so"
+      ],
+      "consumedBy": [
+        "libs/arm64-v8a/_ctypes.cpython-312-aarch64-linux-ohos.so"
+      ],
+      "binaryStrings": [],
+      "versionAndLicenseReview": "pending; binary strings are observations, not complete source provenance"
+    },
+    {
+      "path": "libs/arm64-v8a/libgdbm.so.6",
+      "sha256": "7469ad46455799c3bda085f76e3dcd233a6a58879ffc58cb61df6adfaf5aa07b",
+      "needed": [
+        "libc.so"
+      ],
+      "consumedBy": [
+        "libs/arm64-v8a/_gdbm.cpython-312-aarch64-linux-ohos.so"
+      ],
+      "binaryStrings": [
+        "GDBM version 1.24. 02/07/2024 (built Aug 10 2026 10:25:34)"
+      ],
+      "versionAndLicenseReview": "pending; binary strings are observations, not complete source provenance"
+    },
+    {
+      "path": "libs/arm64-v8a/libgfortran.so.5",
+      "sha256": "1ce069ed5ed916bda01f3d98e302f4e4848d6b5fcfddd39b9ae10d2a20dbaf5e",
+      "needed": [
+        "libgcc_s.so.1",
+        "libc.musl-aarch64.so.1"
+      ],
+      "consumedBy": [
+        "libs/arm64-v8a/libscipy_openblas64_.so"
+      ],
+      "binaryStrings": [],
+      "versionAndLicenseReview": "pending; binary strings are observations, not complete source provenance"
+    },
+    {
+      "path": "libs/arm64-v8a/libscipy_openblas-80d8b5fa.so",
+      "sha256": "bd804fb7741e4a474770c8db844e17984890b87193dd6d94be42c4007449ace6",
+      "needed": [
+        "libc.so"
+      ],
+      "consumedBy": [
+        "libs/arm64-v8a/__odrpack.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/_arpack.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/_cpropack.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/_dierckx.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/_dpropack.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/_ellip_harm_2.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/_fblas.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/_flapack.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/_lbfgsb.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/_lsoda.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/_matfuncs_expm.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/_matfuncs_schur_sqrtm.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/_odepack.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/_slsqplib.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/_spropack.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/_superlu.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/_test_odeint_banded.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/_trlib.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/_ufuncs.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/_vode.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/_zpropack.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/cython_blas.cpython-312-aarch64-linux-ohos.so",
+        "libs/arm64-v8a/cython_lapack.cpython-312-aarch64-linux-ohos.so"
+      ],
+      "binaryStrings": [
+        "OpenBLAS 0.3.29 NO_AFFINITY ARMV8",
+        "OpenBLAS : Program is Terminated. Because you tried to allocate too many memory regions.",
+        "OpenBLAS : munmap failed:",
+        "OpenBLAS calls BLAS functions from many threads in parallel, or when your computer has more",
+        "OpenBLAS warning: precompiled NUM_THREADS exceeded, adding auxiliary array for thread metadata.",
+        "OpenBLAS was configured to handle.",
+        "OpenBLAS with a larger NUM_THREADS setting"
+      ],
+      "versionAndLicenseReview": "pending; binary strings are observations, not complete source provenance"
+    },
+    {
+      "path": "libs/arm64-v8a/libscipy_openblas64_.so",
+      "sha256": "57e3445e9724c1e8638f1d613c54338e50136c6f7716e0b86614dcf006aa5d2e",
+      "needed": [
+        "libgfortran.so.5",
+        "libc.musl-aarch64.so.1"
+      ],
+      "consumedBy": [],
+      "binaryStrings": [
+        "OpenBLAS 0.3.23.dev  USE64BITINT DYNAMIC_ARCH NO_AFFINITY ",
+        "OpenBLAS : Architecture Initialization failed. No initialization function found.",
+        "OpenBLAS : Program is Terminated. Because you tried to allocate too many memory regions.",
+        "OpenBLAS : munmap failed:",
+        "OpenBLAS Warning ... cannot install fork handler. You may meet hang after fork.",
+        "OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.",
+        "OpenBLAS blas_thread_init: RLIMIT_NPROC %ld current, %ld max",
+        "OpenBLAS blas_thread_init: calling exit(3)",
+        "OpenBLAS blas_thread_init: pthread_create failed for thread %ld of %d: %s",
+        "OpenBLAS calls BLAS functions from many threads in parallel, or when your computer has more",
+        "OpenBLAS warning: precompiled NUM_THREADS exceeded, adding auxiliary array for thread metadata.",
+        "OpenBLAS was configured to handle.",
+        "OpenBLAS with a larger NUM_THREADS setting"
+      ],
+      "versionAndLicenseReview": "pending; binary strings are observations, not complete source provenance"
+    }
+  ],
+  "additionalStaticDependencyReviewCandidates": [
+    {
+      "consumer": "libs/arm64-v8a/_ssl.cpython-312-aarch64-linux-ohos.so",
+      "sha256": "11cb449c02e5a2581badc7b9f7713720e0d46018d4100232c9c162957af9d763",
+      "candidateEmbeddedLibrary": "OpenSSL",
+      "evidenceScope": "standard-library module role; static build input/source/license/version must be supplied and checked",
+      "binaryStrings": [
+        "OpenSSL 1.1.1w  11 Sep 2023"
+      ],
+      "distributionReview": "pending"
+    },
+    {
+      "consumer": "libs/arm64-v8a/_hashlib.cpython-312-aarch64-linux-ohos.so",
+      "sha256": "024f05b2227ccfd4e8a27529751c58c241d75316a42d40a08d7de502fc5f74e8",
+      "candidateEmbeddedLibrary": "OpenSSL",
+      "evidenceScope": "standard-library module role; static build input/source/license/version must be supplied and checked",
+      "binaryStrings": [],
+      "distributionReview": "pending"
+    },
+    {
+      "consumer": "libs/arm64-v8a/_sqlite3.cpython-312-aarch64-linux-ohos.so",
+      "sha256": "da3721ac45eaba00284afb98ad42c280f52f32ee196c35ab31e2fbc6ac7f5195",
+      "candidateEmbeddedLibrary": "SQLite",
+      "evidenceScope": "standard-library module role; static build input/source/license/version must be supplied and checked",
+      "binaryStrings": [],
+      "distributionReview": "pending"
+    },
+    {
+      "consumer": "libs/arm64-v8a/_bz2.cpython-312-aarch64-linux-ohos.so",
+      "sha256": "17dbc3e2d2f7db63c07c3357ace1f004b67bc64815b17adaa06f19c588c918da",
+      "candidateEmbeddedLibrary": "bzip2",
+      "evidenceScope": "standard-library module role; static build input/source/license/version must be supplied and checked",
+      "binaryStrings": [],
+      "distributionReview": "pending"
+    },
+    {
+      "consumer": "libs/arm64-v8a/_lzma.cpython-312-aarch64-linux-ohos.so",
+      "sha256": "4ea3ba9885ca7a77d1bd1a056a3965bc5f25624d501196fa972ab669d0eaad06",
+      "candidateEmbeddedLibrary": "XZ/liblzma",
+      "evidenceScope": "standard-library module role; static build input/source/license/version must be supplied and checked",
+      "binaryStrings": [],
+      "distributionReview": "pending"
+    },
+    {
+      "consumer": "libs/arm64-v8a/readline.cpython-312-aarch64-linux-ohos.so",
+      "sha256": "8909779fce79fa533c3f3ca82a0f6423b4eab77b9e5d7da662b52a360047dceb",
+      "candidateEmbeddedLibrary": "libedit",
+      "evidenceScope": "standard-library module role; static build input/source/license/version must be supplied and checked",
+      "binaryStrings": [
+        "EditLine wrapper"
+      ],
+      "distributionReview": "pending"
+    },
+    {
+      "consumer": "libs/arm64-v8a/_curses.cpython-312-aarch64-linux-ohos.so",
+      "sha256": "72aaeda8fddfba3d98697cb78c28bf7e1fd3ee3355e101704ad6f85d8d326286",
+      "candidateEmbeddedLibrary": "ncurses",
+      "evidenceScope": "standard-library module role; static build input/source/license/version must be supplied and checked",
+      "binaryStrings": [],
+      "distributionReview": "pending"
+    },
+    {
+      "consumer": "libs/arm64-v8a/_curses_panel.cpython-312-aarch64-linux-ohos.so",
+      "sha256": "294d041723c53d202bb1f75830d8557dd0b2c8c423b0b860166ed5762f48d18b",
+      "candidateEmbeddedLibrary": "ncurses",
+      "evidenceScope": "standard-library module role; static build input/source/license/version must be supplied and checked",
+      "binaryStrings": [],
+      "distributionReview": "pending"
+    },
+    {
+      "consumer": "libs/arm64-v8a/pyexpat.cpython-312-aarch64-linux-ohos.so",
+      "sha256": "b44a007e13ec5b009f8e0e27749e08ecec3fbd84cac2a44988318b7180176c23",
+      "candidateEmbeddedLibrary": "Expat",
+      "evidenceScope": "standard-library module role; static build input/source/license/version must be supplied and checked",
+      "binaryStrings": [],
+      "distributionReview": "pending"
+    },
+    {
+      "consumer": "libs/arm64-v8a/_decimal.cpython-312-aarch64-linux-ohos.so",
+      "sha256": "207c3a1e778f01fc435cb4f093b430cbee6667b7cc4906c81da56f2cafa6af8a",
+      "candidateEmbeddedLibrary": "libmpdec",
+      "evidenceScope": "standard-library module role; static build input/source/license/version must be supplied and checked",
+      "binaryStrings": [],
+      "distributionReview": "pending"
+    }
+  ],
+  "sourceCompanion": {
+    "file": "gsas-source-companion-609df2c.tar.gz",
+    "sha256": "92125ab5792865e0b125d0d41c961c622bdb6f71f44e1a6c58963997ad309c57",
+    "portCommit": "609df2cc79cc24cfdecd791871aa2345cf58023c",
+    "upstreamCommit": "2b4aba1bc44de63a3da9d4495944c3b99e389399",
+    "scope": "tracked port and relevant GSAS sources/patch; excludes DIFFaX/G2shapes; does not close prebuilt runtime source review",
+    "byteIdenticalRepeatBuildPassed": true
+  },
+  "blockers": [
+    "Release Profile is not accepted as a trusted sideload source on HAD-W32. Prepare a supported device-release/testing distribution route; re-sign and re-verify that exact HAP.",
+    "Prebuilt runtime embedded third-party source/version/license scope is not fully evidenced. Do not blanket-inherit parent component licenses or approve pending records.",
+    "Two bundled GNU helper dependencies remain unmatched. Removal requires a new manifest/HAP and repeat device science; they were not silently removed from the tested candidate."
+  ],
+  "secretsExcluded": [
+    "private key and passwords",
+    "signing configuration",
+    "raw device identifiers",
+    "developer account session",
+    "raw system picker contents"
+  ]
+}
