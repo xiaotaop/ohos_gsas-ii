@@ -57,8 +57,8 @@ foreach ($file in $files) {
     # Drop a previous signature before signing, matching sign-native-modules.sh.
     & $objcopy --remove-section=.codesign $file.FullName
     if ($LASTEXITCODE -ne 0) { throw "llvm-objcopy failed: $($file.FullName)" }
-    & java -jar $signJar sign -inFile $file.FullName -outFile $file.FullName -selfSign 1 | Out-Null
+    & java -jar $signJar sign -inFile $file.FullName -outFile $file.FullName -selfSign 1 2>&1 | Out-Null
     if ($LASTEXITCODE -ne 0) { throw "binary-sign-tool failed: $($file.FullName)" }
     $hash = (Get-FileHash $file.FullName -Algorithm SHA256).Hash.ToLower()
-    '{0}  {1}' -f $hash, $file.FullName
+    Write-Output ('{0}  {1}' -f $hash, $file.FullName)
 }
