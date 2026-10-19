@@ -58,8 +58,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\Run-BridgeSelfTest
    激活、升级回滚与崩溃恢复；设备端执行未验证。）
 3. 发布构建排除 `pydiffax`：本包不含任何 `pydiffax` 引用，自测有静态检查；
    载荷门禁 [`scripts/payload/check_gsas_native.py`](../scripts/payload/check_gsas_native.py)
-   同时拒绝 `pydiffax` 并要求 8 个 GSAS-II 原生扩展。扩展尚未构建，是
-   设备端相文件导入与五阶段的发布阻断项（见 PHASE3_NAPI_CORE §5）。
+   同时拒绝 `pydiffax` 并要求 8 个 GSAS-II 原生扩展。本地补充组装物已通过门禁、
+   HiShell 五阶段通过；签名 HAP 未能安装，应用沙箱验证与最终分发审计仍是阻断项
+   （见 [补充验证](B_DEVICE_VALIDATION_2026-10-19.md) 和 PHASE3_NAPI_CORE §5）。
 
 ## 5. 已知限制（MVP 边界）
 

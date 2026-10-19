@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased — 真机补充验证与开发增量合并（2026-10-19）
+
+- B PR #6 与 A PR #5 已按依赖顺序通过代码级审核并合入主线；B03 日志 artifact、持久化终态快照、A 端初始化重试与展示/导出入口均为当前代码，不再列为待实现。
+- HAD-W32 / HarmonyOS 6.1.0.115 的 HiShell 中，8 个 OHOS aarch64 原生扩展导入、PbSO4 五阶段及 Python Bridge 真实任务通过；本地 2230 文件载荷在不带 `--allow-missing` 的门禁下通过，详见 [真机补充验证](docs/B_DEVICE_VALIDATION_2026-10-19.md)。此前 2214 文件、缺扩展的描述是初次装配版本的历史结果。
+- 开发内容审计已为 `libgsas_core.so` 登记 `app-core` 归属；未签名 HAP 的内容检查通过，但设备拒绝调试签名 HAP（`9568257 / fail to verify pkcs7 file`），应用内精修、导出及生命周期仍待验。正式签名、最终 SBOM/许可和发布审计仍由 C 负责；本次合并不是技术放行。
+
+以下 2026-10-19 条目记录各提交当时的状态；其中“未上真机”“缺 8 个扩展”不代表当前本地组装与 HiShell 补充验证的结论。
+
 ## Unreleased — 非真机收尾：strip/自签名、启动预检与 SBOM 草案（2026-10-19，成员 B，仅宿主验证）
 
 - 新增 `scripts/ohos/Sign-NativeModules.ps1`：在宿主用 DevEco `llvm-strip`/`llvm-objcopy` 与 `binary-sign-tool.jar` 完成 strip 与自签名，等价于设备侧 `sign-native-modules.sh`。已处理 aarch64 `libgsas_core.so`（348 976 → 243 584 字节，新增 `.codesign`，ELF64/AArch64 与 `NEEDED` 不变）；自签名只适用于开发包，正式证书链仍由成员 C 负责。

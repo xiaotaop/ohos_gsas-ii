@@ -1,9 +1,10 @@
 # 运行时载荷装配（成员 B）
 
-本目录是 [RUNTIME_PACKAGING](../docs/RUNTIME_PACKAGING.md) §2 所要求的
-"已展开 OHOS aarch64 目录" 的可复现装配配方。脚本只做复制、解包与裁剪，
-从不在载荷上运行解释器或构建工具；所有二进制均来自下表所列、可按 SHA-256
-复核的下载。
+本目录是 [RUNTIME_PACKAGING](../../docs/RUNTIME_PACKAGING.md) §2 所要求的
+"已展开 OHOS aarch64 目录" 的基础装配配方。脚本只做复制、解包与裁剪，
+从不在载荷上运行解释器或构建工具；初次 2214 文件装配的二进制来自下表所列、
+可按 SHA-256 复核的下载。后续 8 个 GSAS-II 扩展取自设备既有环境，来源与
+可重建分发步骤仍需 B 补齐，不能把这份基础配方视为最终完整载荷配方。
 
 ## 1. 组件版本与来源
 
@@ -90,32 +91,32 @@ python3 scripts/Prepare-Runtime.py --manifest "$GSAS_PAYLOAD_BASE/runtime-manife
 # {"runtimeId":"b-ohos-aarch64-3.12.9-p1","status":"prepared-not-device-validated"}
 ```
 
-结果：2214 个文件、约 178 MB；哈希复算、逐文件内容门禁（ELF AArch64、
-无归档/字节码/外平台库）全部通过；状态如实为
-`prepared-not-device-validated`。
+初次装配结果：2214 个文件、约 178 MB；哈希复算、逐文件内容门禁（ELF AArch64、
+无归档/字节码/外平台库）全部通过；该版本仍缺原生扩展，状态为
+`prepared-not-device-validated`。2026-10-19 从 HAD-W32 已有环境导出 8 个扩展后，本地重新组装为 2230 文件；`check_gsas_native.py` 不带 `--allow-missing` 通过。详见[补充验证记录](../../docs/B_DEVICE_VALIDATION_2026-10-19.md)。这不代表最终可重建分发载荷或应用内验证完成。
 
 SBOM 草案：`python3 scripts/payload/make_sbom.py` 从 `components.json` 生成
 [`packaging/sbom.draft.cdx.json`](../../packaging/sbom.draft.cdx.json)
 （CycloneDX 1.5，9 个组件，无文件哈希；`distributionReview` 保持 `pending`，
 最终 SBOM 须由成员 C 从签名 HAP 重新生成）。
 
-静态闭包：`GSASIIscriptable` 可达的模块级导入 21 项，缺失 0；函数内缺失 12 项，
-全部指向尚未构建的原生扩展（`pyspg`、`pypowder`、`pytexture`、`fmask`、
+初次装配的静态闭包：`GSASIIscriptable` 可达的模块级导入 21 项，缺失 0；函数内缺失 12 项，
+当时指向尚未装入的原生扩展（`pyspg`、`pypowder`、`pytexture`、`fmask`、
 `histogram2d`）。**`pyspg` 不是可选加速器**：GSAS-II 2.0.0 的
 `GSASIIobj.SetNewPhase` 以 `GSASIIspc.SpcGroup('P 1')` 初始化 `P1SGData`，
 而 `SpcGroup` 直接调用 `pyspg.sgforpy`；缺少 `pyspg` 时该调用抛
 `NameError: name 'P1SGData' is not defined`，任何相文件（含 PbSO4 CIF）都无法
-导入，五阶段精修在设备上必然失败。本载荷未包含任何 GSAS-II `.so`，因此
-`check_gsas_native.py` 会把发布载荷判为不合格；修复方式见 §5。
+导入，五阶段精修会失败。初次装配未包含任何 GSAS-II `.so`，因此
+`check_gsas_native.py` 判其不合格；后续 2230 文件本地组装物已通过此门禁，但 HAP 内执行仍待验。
 
 ## 5. 未闭环项
 
-- **设备侧加载**：`libpython3.12.so` 的 dlopen 链、rawfile 解包、沙箱权限
-  未在真机验证。
-- **原生扩展（发布阻断项）**：8 个编译模块（`pyspg`、`pypowder`、`pytexture`、
-  `fmask`、`histogram2d`、`pack_f`、`unpack_cbf`、`kvec_general`）均未随载荷
-  构建；`pyspg` 缺失时连相文件都无法导入（见 §4），五阶段数值验收因此不可达。
-  修复路径：按 `scripts/ohos/` 的第二阶段配置在设备上用 flang 20.1.0 重新构建
-  并签名，或复用第二阶段已签名的同一批模块（需先补来源/许可/SBOM 审查）。
-  门禁脚本：`check_gsas_native.py`；发布时必须通过且不带 `--allow-missing`。
+- **应用沙箱加载**：HiShell 中已导入 8 个扩展并完成五阶段，但
+  `libgsas_core.so` → `libpython3.12.so` 的加载链、`Py_Initialize`、rawfile
+  解包和沙箱权限仍未在已安装 HAP 内验证。
+- **最终原生载荷与分发审计**：8 个编译模块（`pyspg`、`pypowder`、
+  `pytexture`、`fmask`、`histogram2d`、`pack_f`、`unpack_cbf`、`kvec_general`）
+  已用于本地组装物，门禁通过；仍需将其来源、构建/复用方式、最终字节清单和
+  许可证审查与 C 的正式签名 HAP 对齐。最终发布时 `check_gsas_native.py`
+  必须不带 `--allow-missing` 通过，且不能只复用本地测试报告。
 - **Sobol QMC**：见 §3 的 `.npz` 说明，属发布门禁导致的明确功能裁剪。

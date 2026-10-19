@@ -32,8 +32,8 @@ ArkTS 核心门面的实现、构建方式与已知限制。契约依据：
    所有终态后 `finishJob` + `releaseJob`。登记未完成时载荷不携带 `artifacts`，
    页面如实提示"日志登记未完成"，绝不从路径/文件名/历史消息推导 fileId。
    组长已在 2026-10-19 批准该顺序并要求同步契约、Schema、示例、类型、UI 和
-   测试；该同步已在增量 PR `core/b03-terminal-artifacts` 完成宿主级实现，
-   待组长复核后方可关闭。
+   测试；该同步已在 PR #6 完成宿主级实现并通过组长代码级复核，
+   应用内验收仍待完成。
 6. 重启：`listInterruptedJobs` 标记并 `finishJob`；其快照由门面合成 seq-0
    `job.failed`（`PROCESS_INTERRUPTED`，payload 形状 `{state:'failed',
    error:{code,retryable:true}}`），计算永不恢复。任何终态（completed/failed/
@@ -82,7 +82,7 @@ python3 scripts/Write-RuntimeManifest.py --payload /work/runtime-payload \
 逐组件版本、下载地址、SHA-256、目录约定与每一步裁剪规则见
 [`scripts/payload/README.md`](../scripts/payload/README.md)；`components.json`
 是该目录下的 manifest 组件输入。2026-10-19 在宿主 x86_64 上按该配方完成了
-一次无中断的完整装配与两级门禁：
+初次装配与两级门禁；以下数据仅对应当时缺扩展的版本：
 
 - `Write-RuntimeManifest.py`：2214 个文件、约 178 MB、9 个组件，逐文件内容
   门禁（AArch64 ELF、无归档/字节码/外平台库）通过；
@@ -100,6 +100,11 @@ python3 scripts/Write-RuntimeManifest.py --payload /work/runtime-payload \
 12 项，涉及 `pyspg`、`pypowder`、`pytexture`、`fmask`、`histogram2d` 五个
 模块；发布门禁按 8 个模块收件（另含 `pack_f`、`unpack_cbf`、
 `kvec_general`），见 §5。
+
+同日补充：从 HAD-W32 上已有的已签名模块导出 8 个扩展，重新装配 2230 文件；
+`check_gsas_native.py` 不带 `--allow-missing` 通过，设备 HiShell 中导入与五阶段
+通过。原始哈希和范围见[真机补充验证](B_DEVICE_VALIDATION_2026-10-19.md)，
+不能将其当作 HAP 应用沙箱或正式发布证据。
 
 ### 3.2 OHOS aarch64 交叉编译（真实 CPython 3.12.9 头/库）
 
@@ -173,32 +178,33 @@ Special handling is required."——分布于成员 C 既有文件与 B 的新�
      头文件与 `libpython3.12.so`，完成一次 `-DGSAS_HAS_PYTHON` 的 aarch64
      交叉编译与链接（证据见 §3.2）。
   仍**未关闭**：设备上 `libgsas_core.so` → `libpython3.12.so` 的 dlopen 链与
-  `Py_Initialize` 运行、rawfile 解包与沙箱权限，均未在真机验证；载荷也未装入
-  HAP 做端到端运行。产物已完成 strip 与自签名（见 §3.3），但自签名不等于
+  `Py_Initialize` 运行、rawfile 解包与沙箱权限，均未在已安装 HAP 内验证；
+  本地完整载荷已装入未签名 HAP 并通过开发内容审计，但调试签名 HAP 在设备
+  安装时被 PKCS7 校验拒绝，未能端到端运行。原生产物的开发自签名不等于
   正式发布签名。
 - 原生扩展 `pyspg`/`pypowder`/`pytexture`/`fmask`/`histogram2d`/`pack_f`/
-  `unpack_cbf`/`kvec_general` 未构建：`pyspg` 需要 flang 20.1.0，当前 DevEco
-  SDK 与已核对的社区分发均未提供。
-  这**不是**"对称性/部分路径不可用"级别的裁剪：GSAS-II 2.0.0 的
+  `unpack_cbf`/`kvec_general` 在初次 2214 文件载荷中缺失；后续从设备既有环境
+  导出并用于本地 2230 文件组装物，8 项门禁及 HiShell 导入已通过。
+  `pyspg` **不是**"对称性/部分路径不可用"级别的可选裁剪：GSAS-II 2.0.0 的
   `GSASIIobj.SetNewPhase` 用 `GSASIIspc.SpcGroup('P 1')` 初始化 `P1SGData`，
   而 `SpcGroup` 直接调用 `pyspg.sgforpy`；缺少 `pyspg` 时该调用抛
-  `NameError`，任何相文件（含 PbSO4 CIF）都无法导入，五阶段精修在设备上
-  从第一步就失败。载荷中 GSAS-II 的 `.so` 数量为 0，因此这是发布的**功能
-  阻断项**，不能仅记为"设备未验证"。门禁脚本
+  `NameError`，任何相文件（含 PbSO4 CIF）都无法导入，五阶段精修会从第一步
+  失败。初次载荷中 GSAS-II 的 `.so` 数量为 0，因此当时构成功能阻断；
+  本地补充组装已通过门禁，但最终分发物的来源、许可、字节清单和签名仍待 C 审计。门禁脚本
   [`scripts/payload/check_gsas_native.py`](../scripts/payload/check_gsas_native.py)
   会拒绝缺少这些模块的载荷（`--allow-missing` 仅限开发包，并会打印
-  DEV-ONLY）。修复路径：按 `scripts/ohos/` 的第二阶段配置在设备上用
-  flang 20.1.0 重建并签名，或复用第二阶段已签名的同一批模块（先补来源、
-  许可与 SBOM 审查）。
+  DEV-ONLY）。后续须证明第二阶段模块的可复用来源，或按 `scripts/ohos/`
+  的配置重建，并与 C 的许可/SBOM、正式签名 HAP 对齐。
 - SciPy 的 Sobol QMC 因 `_sobol_direction_numbers.npz` 是 ZIP 容器而不随载荷
   发布（见 §3.1），`scipy.stats` 其余功能与 GSAS-II 所用路径不受影响。
-- 门面/安装器的行为由宿主测试证明，设备端实际加载（dlopen 链、
+- 门面/安装器的行为由宿主测试证明，应用沙箱内实际加载（dlopen 链、
   `libs/arm64-v8a` 的 `libpython3.12.so` 解析、沙箱权限）未在真机验证；
-  无签名材料，`assembleHap` 产物为未签名 HAP。
+  未签名 HAP 的开发内容审计通过；临时调试签名 HAP 在设备安装时被 PKCS7
+  校验拒绝，尚无可用于应用内验证的已安装包。
 - 事件通道队满丢弃（快照仍完整，符合空 sink 规则）；第二次终态被丢弃
   （Python 侧此情形抛异常，端口有意不复制崩溃行为）。
-- B03 的终态 `artifacts`、跨进程终态快照与 A 页面已在此分支整合；
-  宿主测试和不含真实运行时的开发构建不能替代应用内真实日志导出验收。
+- B03 的终态 `artifacts`、跨进程终态快照与 A 页面已随 PR #6、#5 合入主线；
+  宿主测试和本地组装/构建不能替代应用内真实日志导出验收。
   私有 traceback 只写 `jobs/<jobId>/logs/`，从不登记。
 - `RefinementPanel` 在核心就绪瞬间重挂；A 的 2026-10-19 接入收尾将表单
   状态提升至父页面，保留已填写参数。真实载荷下的就绪切换仍待设备验证。
