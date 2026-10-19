@@ -49,6 +49,8 @@ python3 scripts/payload/expand_pydeps.py           # 展开 prettytable / ply / 
 python3 scripts/payload/prune_release_payload.py   # 发布裁剪（见下）
 python3 scripts/payload/finalize_payload.py        # 零字节文件规范化 + 归档残留断言
 python3 scripts/payload/check_scriptable_closure.py # GSASIIscriptable 导入闭包
+python3 scripts/payload/check_gsas_native.py --payload "$GSAS_PAYLOAD_BASE/payload" --allow-missing
+                                                    # 原生扩展完整性（发布时必须去掉 --allow-missing）
 ```
 
 `assemble_payload.py` 的关键裁剪：
@@ -94,13 +96,21 @@ python3 scripts/Prepare-Runtime.py --manifest "$GSAS_PAYLOAD_BASE/runtime-manife
 
 静态闭包：`GSASIIscriptable` 可达的模块级导入 21 项，缺失 0；函数内缺失 12 项，
 全部指向尚未构建的原生扩展（`pyspg`、`pypowder`、`pytexture`、`fmask`、
-`histogram2d`）。`pyspg` 需要 flang 20.1.0，当前 DevEco SDK 与社区分发均未
-提供，故对称性运算相关分支在设备上仍不可用。
+`histogram2d`）。**`pyspg` 不是可选加速器**：GSAS-II 2.0.0 的
+`GSASIIobj.SetNewPhase` 以 `GSASIIspc.SpcGroup('P 1')` 初始化 `P1SGData`，
+而 `SpcGroup` 直接调用 `pyspg.sgforpy`；缺少 `pyspg` 时该调用抛
+`NameError: name 'P1SGData' is not defined`，任何相文件（含 PbSO4 CIF）都无法
+导入，五阶段精修在设备上必然失败。本载荷未包含任何 GSAS-II `.so`，因此
+`check_gsas_native.py` 会把发布载荷判为不合格；修复方式见 §5。
 
 ## 5. 未闭环项
 
 - **设备侧加载**：`libpython3.12.so` 的 dlopen 链、rawfile 解包、沙箱权限
   未在真机验证。
-- **原生扩展**：`pyspg` 等五个扩展未构建（缺 flang），因此未做 in-HAP 五阶段
-  数值验收。
+- **原生扩展（发布阻断项）**：8 个编译模块（`pyspg`、`pypowder`、`pytexture`、
+  `fmask`、`histogram2d`、`pack_f`、`unpack_cbf`、`kvec_general`）均未随载荷
+  构建；`pyspg` 缺失时连相文件都无法导入（见 §4），五阶段数值验收因此不可达。
+  修复路径：按 `scripts/ohos/` 的第二阶段配置在设备上用 flang 20.1.0 重新构建
+  并签名，或复用第二阶段已签名的同一批模块（需先补来源/许可/SBOM 审查）。
+  门禁脚本：`check_gsas_native.py`；发布时必须通过且不带 `--allow-missing`。
 - **Sobol QMC**：见 §3 的 `.npz` 说明，属发布门禁导致的明确功能裁剪。

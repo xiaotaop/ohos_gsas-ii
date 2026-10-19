@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — 载荷原生扩展门禁与影响如实化（2026-10-19，成员 B，仅宿主验证）
+
+- 新增 `scripts/payload/check_gsas_native.py`：发布载荷必须携带 8 个 GSAS-II 编译模块（`pyspg`、`pypowder`、`pytexture`、`fmask`、`histogram2d`、`pack_f`、`unpack_cbf`、`kvec_general`），验证 ELF64/AArch64/ET_DYN，并拒绝 `pydiffax`。缺模块时判为不合格；`--allow-missing` 仅用于开发载荷并打印 DEV-ONLY。新增 7 项合成载荷单元测试。
+- 更正原生扩展的影响描述：缺少 `pyspg` 时 `GSASIIobj.SetNewPhase` 无法初始化 `P1SGData`，任何相文件（含 PbSO4 CIF）都无法导入，五阶段精修在设备上不可达；原"对称性/部分路径不可用"低估了影响。同步更新 `PHASE3_NAPI_CORE`、`RUNTIME_PACKAGING`、`DEPENDENCY_AUDIT`、`RELEASE_ACCEPTANCE`、`INTEGRATION_ALIGNMENT` 与 `scripts/payload/README.md`。
+- 本机恢复 Windows 基线复跑环境后，`Run-BridgeSelfTest.ps1 -Python <gsas-poc> -DllDirectory D:\mingw64\bin` 23 项通过（2 项按环境跳过），真实 PbSO4 五阶段数值再次通过；设备侧证据仍为空。
+
 ## Unreleased — 运行时载荷装配与 aarch64 交叉编译（2026-10-19，成员 B，仅宿主验证）
 
 - 新增 `scripts/payload/`：可复现装配配方与 9 组件清单（`components.json`），锁定 CPython 3.12.9 ohos-aarch64、NumPy 2.2.6、SciPy 1.16.3、PyCifRW 5.0.1、prettytable 3.18.0、wcwidth 0.9.2、ply 3.11、GSAS-II 2.0.0@`2b4aba1b`、bridge 1.1.0，并记录每个下载的 SHA-256。

@@ -30,6 +30,8 @@ python3 scripts/Build-App.py --check --build-mode release
 4. 每个文件登记 `source`（相对载荷目录）、`target`（相对 HAP 根目录）、`sha256`、`size`、`component`。哈希为小写 64 位 SHA-256，大小为正整数；目录中的所有文件必须登记，不接收路径越界、符号链接或大小写碰撞。
 5. 将 `status` 改为 `ready` 仅表示文件清单已齐备。`distributionReview: pending` 可用于内部开发装配；改成 approved 必须附真实 `reviewReference`，正式审计要求全部批准。不得用测试引用代替审批。
 
+6. 载荷必须包含 GSAS-II 的编译模块（`pyspg`、`pypowder`、`pytexture`、`fmask`、`histogram2d`、`pack_f`、`unpack_cbf`、`kvec_general`），且不得包含 `pydiffax`。缺少 `pyspg` 时 `GSASIIobj.SetNewPhase` 无法初始化 `P1SGData`，相文件导入即失败，五阶段精修不可运行；装配后用 [`scripts/payload/check_gsas_native.py`](../scripts/payload/check_gsas_native.py) 校验，`--allow-missing` 只用于开发载荷并会标记 DEV-ONLY。
+
 允许的 target：
 
 | target 范围 | 英文构建工程内的位置 | 用途 |

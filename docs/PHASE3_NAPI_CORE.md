@@ -158,9 +158,17 @@ Special handling is required."——分布于成员 C 既有文件与 B 的新�
   HAP 做端到端运行。
 - 原生扩展 `pyspg`/`pypowder`/`pytexture`/`fmask`/`histogram2d` 未构建：
   `pyspg` 需要 flang 20.1.0，当前 DevEco SDK 与已核对的社区分发均未提供。
-  `GSASIIscriptable` 的模块级导入闭包完整，但这些函数内导入在设备上会抛
-  `ImportError`，对称性/部分粉末计算路径因此不可用；GSAS-II 载荷中不包含
-  任何 `.so` 扩展。
+  这**不是**"对称性/部分路径不可用"级别的裁剪：GSAS-II 2.0.0 的
+  `GSASIIobj.SetNewPhase` 用 `GSASIIspc.SpcGroup('P 1')` 初始化 `P1SGData`，
+  而 `SpcGroup` 直接调用 `pyspg.sgforpy`；缺少 `pyspg` 时该调用抛
+  `NameError`，任何相文件（含 PbSO4 CIF）都无法导入，五阶段精修在设备上
+  从第一步就失败。载荷中 GSAS-II 的 `.so` 数量为 0，因此这是发布的**功能
+  阻断项**，不能仅记为"设备未验证"。门禁脚本
+  [`scripts/payload/check_gsas_native.py`](../scripts/payload/check_gsas_native.py)
+  会拒绝缺少这些模块的载荷（`--allow-missing` 仅限开发包，并会打印
+  DEV-ONLY）。修复路径：按 `scripts/ohos/` 的第二阶段配置在设备上用
+  flang 20.1.0 重建并签名，或复用第二阶段已签名的同一批模块（先补来源、
+  许可与 SBOM 审查）。
 - SciPy 的 Sobol QMC 因 `_sobol_direction_numbers.npz` 是 ZIP 容器而不随载荷
   发布（见 §3.1），`scipy.stats` 其余功能与 GSAS-II 所用路径不受影响。
 - 门面/安装器的行为由宿主测试证明，设备端实际加载（dlopen 链、
