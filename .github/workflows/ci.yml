@@ -65,6 +65,12 @@ jobs:
       - name: Test GSAS-II native extension payload gate
         run: python -m unittest discover -s tests -p 'test_payload_native_check.py' -v
 
+      - name: Test native runtime staging, normalization and HAP SBOM
+        run: |
+          python -m unittest discover -s tests -p 'test_native_runtime_layout.py' -v
+          python -m unittest discover -s tests -p 'test_python_needed.py' -v
+          python -m unittest discover -s tests -p 'test_hap_sbom.py' -v
+
       - name: Test native exclusive file creation
         run: |
           c++ -std=c++17 -Wall -Wextra -Werror tests/file-exporter-native.test.cpp -o /tmp/gsas-exclusive-test
@@ -76,6 +82,23 @@ jobs:
             tests/core-service-native.test.cpp app/entry/src/main/cpp/core/core_service.cpp \
             -o /tmp/gsas-core-service-test
           /tmp/gsas-core-service-test
+
+      - name: Test embedded CPython initialization across native threads
+        run: |
+          mkdir -p /tmp/gsas-py-thread/rt/lib
+          python - <<'PYSETUP'
+          import pathlib, sys, sysconfig
+          root = pathlib.Path('/tmp/gsas-py-thread/rt')
+          (root / 'lib' / f'python{sys.version_info.major}.{sys.version_info.minor}').symlink_to(sysconfig.get_path('stdlib'))
+          (root / 'bridge').symlink_to(pathlib.Path('bridge').resolve())
+          PYSETUP
+          c++ -std=c++17 -Wall -Wextra -Werror -Wno-deprecated-declarations -DGSAS_HAS_PYTHON -pthread \
+            -I app/entry/src/main/cpp $(python3-config --includes) \
+            tests/python-host-thread-smoke.cpp app/entry/src/main/cpp/python/python_host.cpp \
+            app/entry/src/main/cpp/core/core_service.cpp $(python3-config --embed --ldflags) \
+            -o /tmp/gsas-python-thread-test
+          export LD_LIBRARY_PATH="$(python -c 'import sysconfig; print(sysconfig.get_config_var("LIBDIR"))')${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+          GSAS_SMOKE_ROOT=/tmp/gsas-py-thread timeout 30 /tmp/gsas-python-thread-test
 
       - name: Test file service on host filesystem
         run: |

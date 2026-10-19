@@ -122,7 +122,7 @@ print('GSAS-II pydiffax textual refs (meson wiring only if any):',
 # 5. Production bridge (§8 runtime), minus dev-only fake_core.py and tests.
 bdst = payload / 'runtime/bridge'
 for name in ('__init__.py', 'core.py', 'engine.py', 'errors.py', 'events.py', 'files.py',
-             'request.py', 'service.py'):
+             'request.py', 'service.py', 'native_loader.py'):
     copy(REPO / 'bridge' / name, bdst / name)
 
 # 6. License texts (one directory per component id).
@@ -153,7 +153,14 @@ def in_scientific_tree(path):
 
 for dirpath, dirnames, filenames in os.walk(payload, topdown=True):
     if 'tests' in dirnames and in_scientific_tree(dirpath):
-        shutil.rmtree(Path(dirpath) / 'tests')
+        tests = Path(dirpath) / 'tests'
+        # NumPy's public numpy.testing imports this runtime dtype helper.
+        utility = tests / '_natype.py' if Path(dirpath).name == '_core' and Path(dirpath).parent.name == 'numpy' else None
+        utility_data = utility.read_bytes() if utility and utility.is_file() else None
+        shutil.rmtree(tests)
+        if utility_data is not None:
+            tests.mkdir()
+            (tests / '_natype.py').write_bytes(utility_data)
         dirnames.remove('tests')
     for name in filenames:
         if name.endswith(ARCHIVE_SUFFIXES):

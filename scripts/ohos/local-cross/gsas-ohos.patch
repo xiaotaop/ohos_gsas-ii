@@ -1,0 +1,209 @@
+--- a/meson.build
++++ b/meson.build
+@@ -31,7 +31,7 @@
+ 
+ 
+ py = import('python').find_installation(pure: false)
+-py_dep = py.dependency()
++py_dep = declare_dependency(include_directories: include_directories('/runtime-input/extract/python-3.12.9-ohos-aarch64/include/python3.12'), link_args: ['-L/runtime-input/payload/libs', '-lpython3.12'])
+ 
+ # This is adopted from scipy's meson.build
+ #
+@@ -40,9 +40,9 @@
+ # Will work for numpy>=2.0, hence not required (it'll be a while until 2.0 is
+ # our minimum supported version). Using this now to be able to detect the
+ # version easily for >=2.0.
+-numpy_dep = dependency('numpy')
++numpy_dep = declare_dependency(include_directories: include_directories('/runtime-input/payload/runtime/lib/python3.12/site-packages/numpy/_core/include'))
+ f2py_freethreading_arg = []
+-if numpy_dep.found()
++if false
+   if numpy_dep.version().version_compare('>=2.1.0')
+     f2py_freethreading_arg = ['--free-threading']
+   endif
+@@ -117,6 +117,6 @@
+ 
+ 
+ 
+-subdir('GSASII')
++# Only the eight extension targets are installed by this local cross build.
+ subdir('sources')
+-subdir('backcompat')
++
+--- a/sources/meson.build
++++ b/sources/meson.build
+@@ -1,5 +1,5 @@
+ # Where is this source file ?
+-#py.extension_module('_core',
++#shared_module('_core',
+ #    'src/main.cpp',
+ #    subdir: 'gsas_ii',
+ #    install: true,
+@@ -8,12 +8,12 @@
+ 
+ #install_subdir('src/gsas_ii', install_dir: py.get_install_dir() / 'gsas_ii', strip_directory: true)
+ 
+-py.extension_module('fmask',
++shared_module('fmask',
+         'fmask.c',
+         dependencies : [py_dep, numpy_dep],
+ #        include_directories : ['include'],
+         install: true,
+-        subdir: 'GSASII',
++        link_language: 'c', name_prefix: '', name_suffix: 'cpython-312-aarch64-linux-ohos.so',
+         )
+ 
+ # Fortran compilation:
+@@ -25,12 +25,7 @@
+ #)
+ 
+ 
+-DIFFaXsubs_src = [
+-  'DIFFaXsubs/DIFFaXsubs.for',
+-]
+-DIFFaXsubs_lib = static_library('DIFFaXsubs_lib',
+- DIFFaXsubs_src,
+-)
++# C local OHOS build: DIFFaX library intentionally excluded.
+ NISTlatsubs_src = [
+ #  'NISTlatsubs/BLOCKDATA1.f',
+   'NISTlatsubs/CENTER.f',
+@@ -115,93 +110,84 @@
+ 
+ 
+ r = run_command(py, '-m', 'numpy.f2py', 'pypowder.for', '-m', 'pypowder', '--lower', check:true)
+-py.extension_module('pypowder',
++shared_module('pypowder',
+   ['pypowder.for', 'pypowdermodule.c', 'pypowder-f2pywrappers.f'],
+   dependencies : [py_dep, numpy_dep, fortranobject_dep],
+   install : true,
+-  subdir: 'GSASII',
++  link_language: 'c', name_prefix: '', name_suffix: 'cpython-312-aarch64-linux-ohos.so',
+   link_with: powsubs_lib
+ )
+ 
+ # r = run_command(py, '-m', 'numpy.f2py', 'polymask.for', '-m', 'polymask', '--lower', check:true)
+-# py.extension_module(
++# shared_module(
+ #   'polymask',
+ #   ['polymask.for', 'polymaskmodule.c', 'polymask-f2pywrappers.f'],
+ #   dependencies : [py_dep, numpy_dep, fortranobject_dep],
+ #   install : true,
+-#   subdir: 'GSASII',
++#   link_language: 'c', name_prefix: '', name_suffix: 'cpython-312-aarch64-linux-ohos.so',
+ # )
+ 
+-r = run_command(py, '-m', 'numpy.f2py', 'pydiffax.for', '-m', 'pydiffax', '--lower', check:true)
+-py.extension_module('pydiffax',
+-  ['pydiffax.for', 'pydiffaxmodule.c', 'pydiffax-f2pywrappers.f'],
+-  dependencies : [py_dep, numpy_dep, fortranobject_dep],
+-  install : true,
+-  subdir: 'GSASII',
+-  link_with: DIFFaXsubs_lib
+-)
++# C local OHOS build: pydiffax target and wrapper generation excluded.
+ 
+ r = run_command(py, '-m', 'numpy.f2py', 'histogram2d.for', '-m', 'histogram2d', '--lower', check:true)
+-py.extension_module('histogram2d',
++shared_module('histogram2d',
+   ['histogram2d.for', 'histogram2dmodule.c', 'histogram2d-f2pywrappers.f'],
+   dependencies : [py_dep, numpy_dep, fortranobject_dep],
+   install : true,
+-  subdir: 'GSASII',
++  link_language: 'c', name_prefix: '', name_suffix: 'cpython-312-aarch64-linux-ohos.so',
+ )
+ 
+ r = run_command(py, '-m', 'numpy.f2py', 'pack_f.for', '-m', 'pack_f', '--lower', check:true)
+-py.extension_module('pack_f',
++shared_module('pack_f',
+   ['pack_f.for', 'pack_fmodule.c', 'pack_f-f2pywrappers.f'],
+   dependencies : [py_dep, numpy_dep, fortranobject_dep],
+   install : true,
+-  subdir: 'GSASII',
++  link_language: 'c', name_prefix: '', name_suffix: 'cpython-312-aarch64-linux-ohos.so',
+ )
+ 
+ r = run_command(py, '-m', 'numpy.f2py', 'pytexture.for', '-m', 'pytexture', '--lower', check:true)
+-py.extension_module('pytexture',
++shared_module('pytexture',
+   ['pytexture.for', 'pytexturemodule.c', 'pytexture-f2pywrappers.f'],
+   dependencies : [py_dep, numpy_dep, fortranobject_dep],
+   install : true,
+-  subdir: 'GSASII',
++  link_language: 'c', name_prefix: '', name_suffix: 'cpython-312-aarch64-linux-ohos.so',
+   link_with: texturesubs_lib
+ )
+ 
+ #r = run_command(py, '-m', 'numpy.f2py', 'spotmask.for', '-m', 'spotmask', '--lower', check:true)
+-#py.extension_module('spotmask',
++#shared_module('spotmask',
+ #  ['spotmask.for', 'spotmaskmodule.c', 'spotmask-f2pywrappers.f'],
+ #  dependencies : [py_dep, numpy_dep, fortranobject_dep],
+ #  install : true,
+-#  subdir: 'GSASII',
++#  link_language: 'c', name_prefix: '', name_suffix: 'cpython-312-aarch64-linux-ohos.so',
+ #)
+ 
+ r = run_command(py, '-m', 'numpy.f2py', 'pyspg.for', '-m', 'pyspg', '--lower', check:true)
+-py.extension_module('pyspg',
++shared_module('pyspg',
+   ['pyspg.for', 'pyspgmodule.c', 'pyspg-f2pywrappers.f'],
+   dependencies : [py_dep, numpy_dep, fortranobject_dep],
+   install : true,
+-  subdir: 'GSASII',
++  link_language: 'c', name_prefix: '', name_suffix: 'cpython-312-aarch64-linux-ohos.so',
+   link_with: spsubs_lib
+ )
+ 
+ r = run_command(py, '-m', 'numpy.f2py', 'unpack_cbf.for', '-m', 'unpack_cbf', '--lower', check:true)
+-py.extension_module('unpack_cbf',
++shared_module('unpack_cbf',
+   ['unpack_cbf.for', 'unpack_cbfmodule.c', 'unpack_cbf-f2pywrappers.f'],
+   dependencies : [py_dep, numpy_dep, fortranobject_dep],
+   install : true,
+-  subdir: 'GSASII',
++  link_language: 'c', name_prefix: '', name_suffix: 'cpython-312-aarch64-linux-ohos.so',
+ )
+ 
+ #r = run_command(py, '-m', 'numpy.f2py', 'histosigma2d.for', '-m', 'histosigma2d', '--lower', check:true)
+-#py.extension_module('histosigma2d',
++#shared_module('histosigma2d',
+ #  ['histosigma2d.for', 'histosigma2dmodule.c', 'histosigma2d-f2pywrappers.f'],
+ #  dependencies : [py_dep, numpy_dep, fortranobject_dep],
+ #  install : true,
+-#  subdir: 'GSASII',
+-#)
+-
+-executable('convcell', files('convcell.f'), install:true)
++#  link_language: 'c', name_prefix: '', name_suffix: 'cpython-312-aarch64-linux-ohos.so',
++#)
++
+ #executable('LATTIC', files('LATTIC.f'), link_with:NISTlatsubs_lib, install:true)
+-executable('LATTIC', files('LATTIC.f','NISTlatsubs/BLOCKDATA1.f'), link_with:NISTlatsubs_lib, install:true)
+ subdir('k_vec_cython')
+ 
+ # create text file with version info
+--- a/sources/fmask.c
++++ b/sources/fmask.c
+@@ -437,6 +437,7 @@
+ };
+ 
+ PyMODINIT_FUNC PyInit_fmask(void) { /* initialize the module */
++    /* OHOS port, member C: initialize NumPy C API before returning. */
++    import_array();
+     return PyModule_Create(&fmaskmodule);
+-    import_array();
+-}
++}
+--- a/sources/k_vec_cython/meson.build
++++ b/sources/k_vec_cython/meson.build
+@@ -1,7 +1,7 @@
+-py.extension_module('kvec_general',
++shared_module('kvec_general',
+         'kvec_general.pyx',
+         dependencies : [py_dep, numpy_dep],
+ #        include_directories : ['include'],
+         install: true,
+-        subdir: 'GSASII',
++        link_language: 'c', name_prefix: '', name_suffix: 'cpython-312-aarch64-linux-ohos.so',
+         )

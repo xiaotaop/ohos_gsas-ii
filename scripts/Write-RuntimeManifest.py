@@ -54,8 +54,8 @@ def classify(rel):
     """Map a payload-relative path to (target, forced owner or None)."""
     parts = rel.split('/')
     if parts[0] == 'libs':
-        rt.require(len(parts) == 2 and parts[1].endswith('.so'),
-                   f'native payload must be libs/<name>.so: {rel}')
+        rt.require(len(parts) == 2 and ELF_NAME.search(parts[1]) is not None,
+                   f'native payload must be libs/<name>.so[.version]: {rel}')
         return f'libs/arm64-v8a/{parts[1]}', None
     if parts[0] == 'runtime':
         rt.require(len(parts) > 1, f'empty runtime path: {rel}')

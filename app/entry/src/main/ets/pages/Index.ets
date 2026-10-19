@@ -592,7 +592,8 @@ struct Index {
         if (this.page === 'Controls') { this.parameters('Controls') }
         else if (this.page === 'Notebook') { this.parameters('Notebook') }
         else if (this.page === 'xray:Comments' || this.page === 'neutron:Comments') {
-          this.pageTitle(this.powderName(this.page.startsWith('xray') ? InputSlot.XRAY_DATA : InputSlot.NEUTRON_DATA))
+          Text(this.powderName(this.page.startsWith('xray') ? InputSlot.XRAY_DATA : InputSlot.NEUTRON_DATA))
+            .fontSize(16).fontWeight(FontWeight.Bold).width('100%').margin({ bottom: 8 })
           this.parameters('Comments')
         }
         else if (this.page === 'Loaded Data') { this.inputPage() }
@@ -648,7 +649,7 @@ struct Index {
           // keeping either branch mounted preserves subscription while browsing.
           if (!this.coreReady) {
             RefinementPanel({ filesReady: this.ready && !this.busy,
-              phaseName: $phaseName, cycles: $cycles, projectName: $projectName,
+              phaseName: this.phaseName, cycles: this.cycles, projectName: this.projectName,
               coreStatus: this.coreStatus, coreOpening: this.coreOpening,
               retryCore: (): void => { this.openCore(); },
               prepareInputs: async (): Promise<RefinementInputs> => this.prepareTaskInputs(),
@@ -657,7 +658,7 @@ struct Index {
               .visibility(this.page === 'refinement' ? Visibility.Visible : Visibility.None)
           } else {
             RefinementPanel({ readyCore: this.core, knownJobId: this.knownJobId,
-              phaseName: $phaseName, cycles: $cycles, projectName: $projectName,
+              phaseName: this.phaseName, cycles: this.cycles, projectName: this.projectName,
               filesReady: this.ready && !this.busy,
               prepareInputs: async (): Promise<RefinementInputs> => this.prepareTaskInputs(),
               exportArtifact: async (fileId: string): Promise<boolean> => this.exportTaskArtifact(fileId),

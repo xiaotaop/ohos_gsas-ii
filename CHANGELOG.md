@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased — C 本地原生运行时与应用内验收（2026-10-19）
+
+- 新增可重建的 OHOS ARM64 8 扩展交叉编译补丁与 LLVM20.1.8 配方，排除 DIFFaX，修复 fmask 的 NumPy API 初始化。
+- 将运行时 ELF 装配到 HAP 原生目录，保留版本库名、133 个 Python 依赖名称修复、141 个扩展映射及空命名空间；避免后续 strip 破坏开发签名，并释放解释器初始化线程的 GIL。
+- 完成 API26 模拟器实际 HAP 的五阶段计算、数值独立比较、工程导出与取消/恢复验收；修复参数草稿刷新和 ArkTS 页面集成问题。新增实际 HAP 的逐文件 SBOM、静态 LLVM 义务核验与 CI 回归。详见 [C 验收记录](docs/C_NATIVE_ACCEPTANCE.md)。
+- 本次提交提供源码、配方和紧凑证据。完整运行时/HAP 留作本地交接；正式签名、API20/API24 真机、完整许可及发布审批仍待完成。
+
 ## Unreleased — 扩展来源与载荷冻结顺序（2026-10-19，成员 B）
 
 - 新增 [docs/EXTENSIONS_BUILD.md](docs/EXTENSIONS_BUILD.md)：8 个扩展的上游提交、设备侧 flang 20.1.0 / Meson 诊断构建与导出步骤（引用 `scripts/ohos/`）、既有归档 SHA-256、门禁方式，以及静态链接 LLVM FortranRuntime（Apache-2.0 WITH LLVM-exception）的许可义务；排除 `pydiffax` 的发布构建配方仍待固化。

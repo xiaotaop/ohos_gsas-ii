@@ -138,7 +138,8 @@ def inspect_content(name, data):
     if name.startswith('libs/'):
         require(name.startswith('libs/arm64-v8a/') and len(PurePosixPath(name).parts) == 3,
                 f'unsupported native target: {name}')
-        require(name.endswith('.so'), f'unsupported native library name: {name}')
+        require(re.search(r'\.so(?:\.\d+)*$', name) is not None,
+                f'unsupported native library name: {name}')
     if name.startswith('libs/') or re.search(r'\.so(?:\.\d+)*$', name):
         require(len(data) >= 64 and data[:6] == b'\x7fELF\x02\x01',
                 f'expected little-endian ELF64 shared library: {name}')
