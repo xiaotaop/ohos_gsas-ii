@@ -153,6 +153,25 @@ export struct RefinementPanel {
           Text(`${this.view.error.code}：${this.view.error.message}`).fontSize(14).fontColor('#B3261E').width('100%')
           Text(this.view.error.retryable ? '可在服务就绪且输入校验通过后重新提交。' : '请先修正输入或参数，再提交新任务。').fontSize(13).width('100%')
         }
+        // B03: failure/cancellation logs come only from the registered
+        // artifacts the terminal payload carried — never from names, paths
+        // or the message history. Older terminals and rejected starts may
+        // also omit artifacts, so do not infer a registration failure.
+        if (this.view.state === 'failed' || this.view.state === 'cancelled') {
+          if (this.view.terminalArtifacts.length > 0) {
+            Text(this.view.state === 'cancelled' ? '取消日志' : '失败日志').fontSize(14)
+              .fontWeight(FontWeight.Bold).width('100%')
+            ForEach(this.view.terminalArtifacts, (artifact: Artifact) => {
+              Row({ space: 8 }) {
+                Text(artifact.displayName).fontSize(13).layoutWeight(1)
+                Button('Export...').refinementButton().enabled(this.filesReady && !this.exporting)
+                  .onClick(() => { this.saveArtifact(artifact); })
+              }.width('100%')
+            }, (artifact: Artifact) => artifact.fileId)
+          } else {
+            Text('本次终态未提供已登记的日志，没有可导出的日志文件。').fontSize(12).fontColor('#805400').width('100%')
+          }
+        }
         if (this.view.result) {
           Text(`结果 · ${this.view.result.elapsedSeconds.toFixed(2)} 秒`).fontSize(16).fontWeight(FontWeight.Bold).width('100%')
           Text(`上游版本 ${this.view.result.upstreamCommit}`).fontSize(12).width('100%')
@@ -178,18 +197,6 @@ export struct RefinementPanel {
           Text('任务消息').fontSize(14).fontWeight(FontWeight.Bold).width('100%')
           Text(this.view.history.join('\n')).fontSize(12).width('100%')
           Text('任务消息不是日志文件；只有已登记的产物才能导出。').fontSize(12).fontColor('#555555').width('100%')
-        }
-        if (this.view.state === 'failed' || this.view.state === 'cancelled') {
-          if (this.view.terminalArtifacts.length === 0) {
-            Text('核心尚未返回可导出的日志。可到文件库查看已登记文件。').fontSize(13).fontColor('#555555').width('100%')
-          }
-          ForEach(this.view.terminalArtifacts, (artifact: Artifact) => {
-            Row({ space: 8 }) {
-              Text(`${artifact.displayName} · ${artifact.kind}`).fontSize(13).layoutWeight(1)
-              Button('Export...').refinementButton().enabled(this.filesReady && !this.exporting)
-                .onClick(() => { this.saveArtifact(artifact); })
-            }.width('100%')
-          }, (artifact: Artifact) => artifact.fileId)
         }
       }.width('100%').padding(16).alignItems(HorizontalAlign.Start)
     }.align(Alignment.TopStart).width('100%').height('100%').backgroundColor('#F0F0F0')

@@ -33,7 +33,15 @@
     "type": "job.cancelled",
     "payload": {
       "state": "cancelled",
-      "reason": "用户取消了精修任务"
+      "reason": "用户取消了精修任务",
+      "artifacts": [
+        {
+          "fileId": "file_log_20261012_003a",
+          "kind": "log",
+          "displayName": "job-log.txt",
+          "mediaType": "text/plain"
+        }
+      ]
     }
   }
 ]

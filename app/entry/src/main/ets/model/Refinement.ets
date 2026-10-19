@@ -1,4 +1,4 @@
-// Shared application types reviewed in INTEGRATION_ALIGNMENT A04.
+// Shared application types: A04 with B03 v1.1 optional terminal log artifacts.
 import { CoreConfig, FileServiceError } from '../contracts/Files';
 import { RefinementInputs } from './RefinementInputs';
 
@@ -26,8 +26,7 @@ export interface EventPayload {
   state?: string; stage?: string; stageIndex?: number; stageCount?: number; percent?: number;
   message?: string; level?: string; source?: string; result?: RefinementResult;
   error?: CoreError; reason?: string;
-  // B03 approved direction: B must publish registered artifacts and update the
-  // wire schema/examples before real integration; older terminals omit this.
+  // B03: only registered log artifacts; older terminals may omit this field.
   artifacts?: Artifact[];
 }
 export interface CoreEvent {
@@ -77,8 +76,8 @@ export function prepareRefinementRequest(jobId: string, inputs: RefinementInputs
 }
 
 export function callError(error: Object): CoreError {
-  // Error and plain Promise rejection shapes are not yet shared by B/C. Preserve
-  // known codes using local safe text, never arbitrary exception messages/detail.
+  // Preserve shared error codes using local safe text, never arbitrary
+  // exception messages/detail.
   const candidate = error as CoreError;
   const messages: Record<string, string> = {
     'INVALID_REQUEST': '精修请求无效，请检查输入和参数。', 'UNSUPPORTED_SCHEMA': '核心接口版本不匹配。',
@@ -147,11 +146,11 @@ function applyPayload(view: RefinementView, sequence: number, type: string, p: E
     next.message = '五阶段精修已完成';
   } else if (type === 'job.failed') {
     next.state = 'failed'; next.error = p.error;
-    next.terminalArtifacts = p.artifacts ? p.artifacts.slice() : [];
+    next.terminalArtifacts = Array.isArray(p.artifacts) ? p.artifacts.slice() : [];
     next.message = p.error ? p.error.message : '任务执行失败';
   } else if (type === 'job.cancelled') {
     next.state = 'cancelled'; next.message = p.reason || '任务已取消';
-    next.terminalArtifacts = p.artifacts ? p.artifacts.slice() : [];
+    next.terminalArtifacts = Array.isArray(p.artifacts) ? p.artifacts.slice() : [];
   }
   next.history.push(next.message);
   return next;
@@ -220,7 +219,7 @@ export class RefinementSession {
     } catch (error) {
       if (generation !== this.generation || this.view.jobId !== jobId) { return; }
       if (callError(error).code === 'JOB_NOT_FOUND' && this.view.sequence < 0) {
-        // A persisted recent ID can outlive B's process-local snapshot. This is
+        // A recent ID can outlive its persisted snapshot. This is
         // absence of a record, not evidence that the old computation failed.
         this.view = new RefinementView();
         this.notice = '未找到上次任务记录。可提交新任务；旧任务结果请到文件库查找。';

@@ -65,10 +65,11 @@ struct CancelBox {
     std::function<bool()> fn;
 };
 
-PyObject* EmitCallback(PyObject* self, PyObject* args)
+// METH_O hands the single argument directly (not a tuple): §8 emit_event(str).
+PyObject* EmitCallback(PyObject* self, PyObject* raw)
 {
-    PyObject* raw = nullptr;
-    if (!PyArg_ParseTuple(args, "O", &raw)) {
+    if (raw == nullptr) {
+        PyErr_SetString(PyExc_TypeError, "emit_event requires one argument");
         return nullptr;
     }
     const char* text = PyUnicode_AsUTF8(raw);

@@ -20,7 +20,32 @@ Promise.all([128, 512].map(size => sharp(source, { density: 384 })
   .resize(size, size).png().toFile(`docs/assets/app-icon-${size}.png`)));
 ```
 
-## 正式页面交互检查
+## B PR #6 整合与 A 端代码验证（2026-10-19）
+
+在 `ui/core-integration-finish` 上合入 B 的 PR #6 提交 `665c0013a4fc7d9e43a4c904ae1fdc2e5335915a`，保留双方提交历史；此操作没有合并主线，也不代替组长对 PR #6 契约与核心实现的审核。A 的整合前提交为 `7eac2766ef1cbb95973fcfe43137855b5711364c`。
+
+- 解决共享模型与核心说明两处冲突；失败／取消日志仅保留一套展示和导出入口。
+- 协议的 `artifacts` 仍为可选字段，正式页面统一映射为数组；缺字段显示未提供可导出日志，不猜测 fileId，也不把启动拒绝一律归因为日志登记失败。
+- 保留 A 的独立初始化重试、父页面表单、最小窗口与输入宽度约束；保留 B 的失效近期 ID 清理。`JOB_NOT_FOUND` 仅在没有收到新事件时释放恢复状态，迟到错误不清空进度或终态。
+- B 的终态日志返回和持久化快照已与 A 会话整合；新增四项组合测试覆盖失败／取消、登记成功／失败、登记返回令牌、重建服务后的快照以及新任务清除旧日志。
+
+验证：正式会话 **23 项** + 核心门面／A 会话组合 **27 项**，共 **50 项通过、0 跳过**；独立 mock 模型 **14 项通过**。包含真实 Python 宿主桥接事件与页面状态比对，但科学计算和原生模块使用测试替身。契约语义检查及四份 mock 资源同步检查通过；本机未安装 jsonschema，JSON Schema 扩展校验未运行。命令：
+
+```powershell
+$env:GSAS_TYPESCRIPT_PATH = '<DevEco>/sdk/default/openharmony/ets/build-tools/ets-loader/node_modules/typescript'
+$env:TEMP = Join-Path (Get-Location) 'app/build'
+$env:TMP = $env:TEMP
+# 先按 scripts/Test-UiMock.ps1 的 tsc 命令编译 ui-mock/build/test-model。
+node --test tests/formal-refinement.test.cjs tests/core-bridge-host.test.cjs
+python scripts/Validate-CoreContracts.py
+pwsh -NoProfile -File scripts/Sync-UiMockFixtures.ps1 -Check
+```
+
+正式 ARM64 unsigned debug HAP 的 ArkTS 编译和构建通过（SDK API24 / 6.1.1.125、Hvigor 6.24.4），development 内容审计 **21 条目通过**；SHA-256：`164125e00008724b1eb30b68cdf0459a27905499d522e4c047671aa7c4c4b511`。测试日志、构建日志与审计分别留在本地忽略目录 `app/build/a-b6-host-tests.log`、`app/build/a-b6-hap-build.log`、`app/build/a-b6-hap-audit.json`。仍有既有类别的异常处理建议和未配置签名提示。
+
+本轮未安装或运行新版 HAP，未新增模拟器／真机 UI 证据；以下截图与窗口检查仅对应整合前的 `7eac276`，不能作为本轮日志界面的运行证据。A 当前已完成代码整合与上述验证，个人剩余项是完整运行时下的真实 UI 验证和同版本正式功能截图，具体依赖见文末。宿主验证不证明设备导出或科学数值正确。
+
+## 正式页面交互检查（整合前 `7eac276`）
 
 本轮正式 `app/` 的 ARM64 与隔离 x86_64 工程均通过 ArkTS/HAP 构建（SDK API24 / 6.1.1.125、Hvigor 6.24.4）；ARM64 development 内容审计 21 条目通过。仍为未签名 debug 包，既有异常处理类告警未清除。模拟器以保留数据的升级安装运行最终 x86_64 包。
 
@@ -54,9 +79,9 @@ Promise.all([128, 512].map(size => sharp(source, { density: 384 })
 
 | 主责 | 尚缺交付 | A 后续动作 / 关闭条件 |
 |---|---|---|
-| B，C 配合部署 | 应用内真实 CPython/科学库载荷、开启真实 Python 的编译与加载证据 | 同一集成包完成五文件 → 五阶段精修 → GPX/JSON/日志导出；检查长任务 UI 响应 |
-| B，组长审核 | B03 失败／取消的可选 artifacts：契约、Schema、示例、验证器、门面返回及快照一致性 | A 消费端已准备；验证日志 fileId 真实可查可导出、缺字段兼容、唯一终态 |
-| B/C，组长组织 | 真实任务、后台、页面重建、进程中断的设备证据 | A 验证取消等待、退出提示、恢复展示；完成任务的长期恢复范围另经组长确认，不擅自扩大契约 |
+| B，C 配合部署 | B 已提供载荷配方和真实 Python 交叉编译支持；仍缺 `pyspg` 等 8 个 GSAS-II 原生扩展、完整载荷的应用内加载及可运行集成包 | A 在同一包上验证五文件 → 五阶段任务 UI → GPX/JSON/日志导出入口和长任务响应；扩展构建与科学数值判定由 B/组长负责 |
+| B，组长审核 | B03 契约／Schema／示例／验证器、终态日志返回及持久化快照已随 PR #6 在本分支整合，待组长审核；设备证据仍缺 | A 宿主组合验证已通过；在完整包验证日志 fileId 真实可查可导出、缺字段反馈和三种终态展示 |
+| B/C，组长组织 | 可运行真实任务的设备与集成包；宿主快照恢复已有实现和测试 | A 验证取消等待、退出提示、后台／页面重建及进程重启后的恢复展示；不恢复旧计算 |
 | C | 正式签名集成包、商店素材规格与最终显示名 | A 补同版本真机交互和正式截图；按规格提供图标导出物 |
 | 组长 | PR 审核合并、目标设备/API与发布候选确认 | A 修复 UI 审核问题并配合验收，不自行合并或签署放行 |
 

@@ -34,6 +34,8 @@ export interface EventPayload {
   state?: string; stage?: string; stageIndex?: number; stageCount?: number; percent?: number;
   message?: string; level?: string; source?: string; result?: RefinementResult;
   error?: CoreError; reason?: string;
+  // B03 (v1.1): optional registered log artifacts on failed/cancelled terminals.
+  artifacts?: Artifact[];
 }
 export interface CoreEvent {
   schemaVersion: string; eventId: string; jobId: string; sequence: number;
@@ -86,6 +88,7 @@ export class RefinementView {
   history: string[] = [];
   result?: RefinementResult;
   error?: CoreError;
+  terminalArtifacts?: Artifact[];
 }
 
 // Pure UI transition; old jobs, duplicate events and post-terminal events cannot change the screen.
@@ -106,6 +109,7 @@ function applyPayload(view: RefinementView, sequence: number, type: string, p: E
   next.message = view.message;
   next.result = view.result;
   next.error = view.error;
+  next.terminalArtifacts = view.terminalArtifacts;
   next.history = view.history.slice();
   if (type === 'job.accepted') {
     next.state = 'queued'; next.message = '任务已接受，等待开始';
@@ -123,9 +127,11 @@ function applyPayload(view: RefinementView, sequence: number, type: string, p: E
     next.message = '五阶段精修已完成';
   } else if (type === 'job.failed') {
     next.state = 'failed'; next.error = p.error;
+    next.terminalArtifacts = Array.isArray(p.artifacts) ? p.artifacts.slice() : undefined;
     next.message = p.error ? p.error.message : '任务执行失败';
   } else if (type === 'job.cancelled') {
     next.state = 'cancelled'; next.message = p.reason || '任务已取消';
+    next.terminalArtifacts = Array.isArray(p.artifacts) ? p.artifacts.slice() : undefined;
   }
   next.history.push(next.message);
   return next;

@@ -321,6 +321,18 @@ test('actual Python host bridge events and snapshots produce matching UI termina
     assert.deepEqual(restored.result, live.result);
     assert.deepEqual(restored.error, live.error);
     assert.equal(restored.sequence, live.sequence);
+    // B03: a failure/cancellation shows exactly the registered log token,
+    // whether the page reached the terminal by live events or by snapshot.
+    assert.deepEqual(restored.terminalArtifacts, live.terminalArtifacts);
+    if (scenario !== 'success') {
+      assert.deepEqual(live.terminalArtifacts, [{
+        fileId: `file_log_${capture.accepted.jobId.slice(4)}`, kind: 'log',
+        displayName: 'job-log.txt', mediaType: 'text/plain' }]);
+    } else {
+      // Both projections show no failure/cancellation logs on success;
+      // the formal page normalizes an absent optional field to an empty list.
+      assert.deepEqual(live.terminalArtifacts ?? [], []);
+    }
     for (const snapshot of capture.snapshots) {
       assert.equal(receiveSnapshot(restored, snapshot), restored); // late snapshots cannot erase terminal
     }

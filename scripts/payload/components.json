@@ -1,0 +1,115 @@
+[
+  {
+    "id": "cpython",
+    "version": "3.12.9",
+    "license": "PSF-2.0",
+    "sourceUrl": "https://artifacts-cn-beijing.volces.com/repository/ophcd.pkg/pkg/kernel-1.13.0/python/3.12.9/python-3.12.9-ohos-aarch64.tar.gz",
+    "sourceCodeUrl": "https://www.python.org/ftp/python/3.12.9/Python-3.12.9.tgz",
+    "distributionReview": "pending",
+    "dependsOn": [],
+    "payloadPrefixes": [
+      "libs/libpython3.12.so",
+      "runtime/lib/python3.12",
+      "runtime/lib/libffi.so.8",
+      "runtime/lib/libgdbm.so.6"
+    ]
+  },
+  {
+    "id": "numpy",
+    "version": "2.2.6",
+    "license": "BSD-3-Clause",
+    "sourceUrl": "https://pypi.cnb.cool/OpenHarmonyPCDeveloper/pypi/-/packages/simple/numpy/../../packages/46/d1/ec3f782abdf0d8a87398feb6f732731945db028a9e59023f3c2f021bd910/numpy-2.2.6-cp312-cp312-ohos_aarch64.whl",
+    "sourceCodeUrl": "https://pypi.org/project/numpy/2.2.6/",
+    "distributionReview": "pending",
+    "dependsOn": ["cpython"],
+    "payloadPrefixes": [
+      "runtime/lib/python3.12/site-packages/numpy",
+      "runtime/lib/python3.12/site-packages/numpy.libs",
+      "runtime/lib/python3.12/site-packages/numpy-2.2.6.dist-info"
+    ]
+  },
+  {
+    "id": "scipy",
+    "version": "1.16.3",
+    "license": "BSD-3-Clause",
+    "sourceUrl": "https://pypi.cnb.cool/OpenHarmonyPCDeveloper/pypi/-/packages/simple/scipy/../../packages/b5/eb/cb74cfabd35deed6c787d654513660eaefb062f275977043868d5cdb960b/scipy-1.16.3-cp312-cp312-ohos_aarch64.whl",
+    "sourceCodeUrl": "https://pypi.org/project/scipy/1.16.3/",
+    "distributionReview": "pending",
+    "dependsOn": ["cpython", "numpy"],
+    "payloadPrefixes": [
+      "runtime/lib/python3.12/site-packages/scipy",
+      "runtime/lib/python3.12/site-packages/scipy.libs",
+      "runtime/lib/python3.12/site-packages/scipy-1.16.3.dist-info"
+    ]
+  },
+  {
+    "id": "pycifrw",
+    "version": "5.0.1",
+    "license": "PSF-2.0",
+    "sourceUrl": "https://files.pythonhosted.org/packages/source/P/PyCifRW/pycifrw-5.0.1.tar.gz",
+    "sourceCodeUrl": "https://github.com/jamesrhester/pycifrw/blob/development/README.md",
+    "distributionReview": "pending",
+    "dependsOn": ["cpython", "numpy", "prettytable", "ply"],
+    "payloadPrefixes": ["runtime/lib/python3.12/site-packages/CifFile"]
+  },
+  {
+    "id": "prettytable",
+    "version": "3.18.0",
+    "license": "BSD-3-Clause",
+    "sourceUrl": "https://files.pythonhosted.org/packages/fe/be/2e6798ace5cc036f5d05d36b7b2fd85346f1a708c87060890b070d0ec607/prettytable-3.18.0-py3-none-any.whl",
+    "sourceCodeUrl": "https://github.com/jazzband/prettytable",
+    "distributionReview": "pending",
+    "dependsOn": ["cpython", "wcwidth"],
+    "payloadPrefixes": [
+      "runtime/lib/python3.12/site-packages/prettytable",
+      "runtime/lib/python3.12/site-packages/prettytable-3.18.0.dist-info"
+    ]
+  },
+  {
+    "id": "wcwidth",
+    "version": "0.9.2",
+    "license": "MIT",
+    "sourceUrl": "https://files.pythonhosted.org/packages/9c/b4/0bfa065af506540d9d558e3e5548cff00bc1f9b24e6e2a8512498e8628de/wcwidth-0.9.2-py3-none-any.whl",
+    "sourceCodeUrl": "https://github.com/jquast/wcwidth",
+    "distributionReview": "pending",
+    "dependsOn": ["cpython"],
+    "payloadPrefixes": [
+      "runtime/lib/python3.12/site-packages/wcwidth",
+      "runtime/lib/python3.12/site-packages/wcwidth-0.9.2.dist-info"
+    ]
+  },
+  {
+    "id": "ply",
+    "version": "3.11",
+    "license": "BSD-3-Clause",
+    "sourceUrl": "https://files.pythonhosted.org/packages/e5/69/882ee5c9d017149285cab114ebeab373308ef0f874fcdac9beb90e0ac4da/ply-3.11.tar.gz",
+    "sourceCodeUrl": "https://www.dabeaz.com/ply/",
+    "distributionReview": "pending",
+    "dependsOn": ["cpython"],
+    "payloadPrefixes": [
+      "runtime/lib/python3.12/site-packages/ply",
+      "runtime/lib/python3.12/site-packages/ply-3.11.dist-info"
+    ]
+  },
+  {
+    "id": "gsas-ii",
+    "version": "2.0.0",
+    "upstreamCommit": "2b4aba1bc44de63a3da9d4495944c3b99e389399",
+    "license": "GSAS-II Open Source License",
+    "sourceUrl": "https://github.com/AdvancedPhotons/GSAS-II/tree/2b4aba1bc44de63a3da9d4495944c3b99e389399",
+    "sourceCodeUrl": "https://github.com/AdvancedPhotons/GSAS-II",
+    "distributionReview": "pending",
+    "dependsOn": ["cpython", "numpy", "scipy", "pycifrw"],
+    "payloadPrefixes": ["runtime/lib/python3.12/site-packages/GSASII"]
+  },
+  {
+    "id": "bridge",
+    "version": "1.1.0",
+    "license": "GSAS-II Open Source License",
+    "sourceUrl": "https://github.com/xiaotaop/ohos_gsas-ii/tree/core/b03-terminal-artifacts",
+    "sourceCodeUrl": "https://github.com/xiaotaop/ohos_gsas-ii",
+    "distributionReview": "pending",
+    "dependsOn": ["cpython", "gsas-ii"],
+    "payloadPrefixes": ["runtime/bridge"]
+  }
+]

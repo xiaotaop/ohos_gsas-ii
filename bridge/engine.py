@@ -16,6 +16,7 @@ byte-for-byte contract-shaped event flows.
 from __future__ import annotations
 
 import contextlib
+import importlib
 import io
 import json
 import platform
@@ -38,6 +39,43 @@ CONFIG_FIELDS = {
     "maxConcurrentJobs",
     "logLevel",
 }
+
+# Compiled modules a release payload must provide (pydiffax is forbidden
+# instead: its downstream distribution basis is not cleared). pyspg is the
+# critical one: GSASIIobj.SetNewPhase builds P1SGData through
+# GSASIIspc.SpcGroup, which calls pyspg.sgforpy — without it *any* phase file
+# fails to import and the job would die with a cryptic G2ImportException.
+GSAS_NATIVE_MODULES = (
+    "pyspg",
+    "pypowder",
+    "pytexture",
+    "fmask",
+    "histogram2d",
+    "pack_f",
+    "unpack_cbf",
+    "kvec_general",
+)
+
+
+def gsas_native_problem() -> str | None:
+    """Return why the GSAS-II native payload is unusable, or None if it is fine.
+
+    Every module goes through ``importlib`` so tests can substitute the loader
+    without touching ``sys.path`` or requiring a real GSAS-II install.
+    """
+    try:
+        importlib.import_module("GSASII")
+    except Exception as exc:
+        return f"GSAS-II 无法导入 ({type(exc).__name__})"
+    missing = []
+    for name in GSAS_NATIVE_MODULES:
+        try:
+            importlib.import_module(f"GSASII.{name}")
+        except Exception:
+            missing.append(name)
+    if missing:
+        return "缺少 GSAS-II 原生扩展: " + ", ".join(missing)
+    return None
 ROOT_FIELDS = ("runtimeRoot", "workspaceRoot", "outputRoot")
 
 # Stage index/percent map; stageCount=7 as in the contract examples
@@ -94,6 +132,13 @@ class CoreRuntime:
         }
         if not all(Path(config[key]).is_absolute() for key in ROOT_FIELDS):
             raise BridgeError("INVALID_REQUEST", "三个根目录必须为绝对路径")
+        if getattr(self.refiner, "requires_gsasii", False):
+            problem = gsas_native_problem()
+            if problem:
+                # CORE_API §8: initialize reports readiness; a payload without
+                # the compiled modules can never run the recipe, so fail here
+                # with an actionable code instead of INTERNAL_ERROR per job.
+                raise BridgeError("CORE_NOT_READY", "核心运行时未就绪", detail=problem)
         if self._config is not None:
             if self._config == config:
                 return self.core_info_json()

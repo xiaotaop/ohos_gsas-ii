@@ -164,6 +164,7 @@ class FiveStageRefiner:
     """Refiner object consumed by :class:`bridge.engine.CoreRuntime`."""
 
     recipe_id = RECIPE_ID
+    requires_gsasii = True
     upstream_commit = UPSTREAM_COMMIT
     stages = STAGES
     validate_instrument = staticmethod(validate_instrument)
