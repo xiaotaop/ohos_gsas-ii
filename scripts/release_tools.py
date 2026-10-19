@@ -17,7 +17,11 @@ REPO = Path(__file__).resolve().parents[1]
 GSAS_COMMIT = '2b4aba1bc44de63a3da9d4495944c3b99e389399'
 VERSIONS = {'cpython': '3.12.9', 'numpy': '2.2.6', 'scipy': '1.16.3',
             'pycifrw': '5.0.1', 'gsas-ii': '2.0.0'}
-BASE_LIBS = {'libs/arm64-v8a/libgsas_fileio.so', 'libs/arm64-v8a/libc++_shared.so'}
+BASE_LIBS = {
+    'libs/arm64-v8a/libgsas_core.so',
+    'libs/arm64-v8a/libgsas_fileio.so',
+    'libs/arm64-v8a/libc++_shared.so',
+}
 IGNORED_DIRS = {'build', '.cxx', '.cache', '.hvigor', '.hvigor-user', 'oh_modules',
                 'node_modules', '.idea', '.preview', '__pycache__'}
 PRIVATE_SUFFIXES = {'.p12', '.p7b', '.cer', '.csr', '.keystore', '.pem', '.key'}
@@ -342,7 +346,12 @@ def audit_hap(hap, manifest=None, mode='development'):
                 raise ReleaseError(f'undeclared runtime payload: {name}')
             elif name.startswith('libs/'):
                 require(name in BASE_LIBS, f'unowned native library: {name}')
-                item['component'] = 'app-fileio' if name.endswith('libgsas_fileio.so') else 'sdk-libcxx'
+                if name.endswith('libgsas_core.so'):
+                    item['component'] = 'app-core'
+                elif name.endswith('libgsas_fileio.so'):
+                    item['component'] = 'app-fileio'
+                else:
+                    item['component'] = 'sdk-libcxx'
             if name == 'module.json':
                 metadata = json.loads(data)
             members[name] = item
