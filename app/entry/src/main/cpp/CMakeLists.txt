@@ -17,6 +17,9 @@ add_library(gsas_core SHARED
   core/core_service.cpp
   python/python_host.cpp
 )
+# Device dependencies live in the installed app library directory. Do not
+# embed the temporary host staging directory as a runtime search path.
+set_target_properties(gsas_core PROPERTIES SKIP_BUILD_RPATH TRUE)
 target_compile_features(gsas_core PRIVATE cxx_std_17)
 target_compile_options(gsas_core PRIVATE -Wall -Wextra -Werror -Wno-unused-command-line-argument)
 target_include_directories(gsas_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

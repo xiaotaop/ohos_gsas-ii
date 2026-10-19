@@ -9,7 +9,7 @@ assembled from the pure Python source tree therefore passes the manifest and
 ``Prepare-Runtime`` byte/hash gates while being functionally unusable.
 
 This checker closes that gap: it looks for each required extension next to the
-GSAS-II package, verifies that the file is an AArch64 shared object, and refuses
+GSAS-II package or through the declared HAP native-module map, verifies that the file is an AArch64 shared object, and refuses
 ``pydiffax`` (no downstream distribution basis yet). Run it on every release
 payload; ``--allow-missing`` is only for development payloads used to bring up
 the loader, and it marks the result as not release-ready.
@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import struct
 import sys
 from pathlib import Path
@@ -79,8 +80,35 @@ def check(payload: Path, required=REQUIRED, forbidden=FORBIDDEN):
     failures: list[str] = []
     warnings: list[str] = []
     found: dict[str, str] = {}
+    module_map = {}
+    map_path = payload / "runtime/bridge/native-module-map.json"
+    mapped_layout = map_path.is_file()
+    if mapped_layout:
+        try:
+            document = json.loads(map_path.read_text(encoding="utf-8"))
+            module_map = document["modules"]
+            if type(document.get("schemaVersion")) is not int or document.get("schemaVersion") != 1 or not isinstance(module_map, dict):
+                raise ValueError("invalid map shape")
+            native_names = set()
+            for module, filename in module_map.items():
+                if (not isinstance(module, str) or not isinstance(filename, str)
+                    or not re.fullmatch(r"[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*", module)
+                    or not re.fullmatch(r"[A-Za-z0-9_.-]+\.so", filename)):
+                    raise ValueError("invalid module or native filename")
+                if filename.casefold() in native_names:
+                    raise ValueError("colliding native filenames")
+                native_names.add(filename.casefold())
+                if any(module.split(".")[-1].lower().startswith(name) for name in forbidden):
+                    failures.append(f"forbidden extension present in native map: {module}")
+        except (OSError, ValueError, KeyError, TypeError) as error:
+            return gsasii, [f"invalid native module map: {error}"], warnings, found
     for name in required:
-        candidates = sorted(gsasii.glob(f"{name}*.so"))
+        mapped = module_map.get(f"GSASII.{name}")
+        if mapped_layout and mapped is None:
+            failures.append(f"missing native map entry: GSASII.{name}")
+            continue
+        candidates = ([payload / "libs" / mapped] if mapped is not None
+                      else sorted(gsasii.glob(f"{name}*.so")))
         if not candidates:
             failures.append(f"missing native extension: {name}*.so")
             continue

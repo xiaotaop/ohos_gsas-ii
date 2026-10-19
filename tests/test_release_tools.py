@@ -105,6 +105,21 @@ class ReleaseToolsTest(unittest.TestCase):
         self.assertEqual(report['runtimeId'], 'test-v1')
         self.assertEqual(sum('component' in x for x in report['files']), len(self.manifest['files']) + 3)
 
+    def test_versioned_native_dependency_preserves_exact_inventory(self):
+        data = elf()
+        path = self.payload / 'libffi.so.8'
+        path.write_bytes(data)
+        self.manifest['files'].append({'source': path.name,
+            'target': 'libs/arm64-v8a/libffi.so.8', 'sha256': rt.digest(data),
+            'size': len(data), 'component': 'cpython'})
+        self.prepare()
+        report = rt.audit_hap(self.full_hap(), self.manifest, 'release')
+        self.assertTrue(report['contentChecksPassed'])
+        with self.assertRaises(rt.ReleaseError):
+            rt.inspect_content('libs/arm64-v8a/libffi.so.backup', data)
+        with self.assertRaises(rt.ReleaseError):
+            rt.inspect_content('libs/arm64-v8a/libffi.so.8', elf(machine=62))
+
     def test_placeholder_and_missing_core_components_blocked(self):
         with self.assertRaises(rt.ReleaseError):
             rt.validate_manifest(rt.read_json(rt.REPO / 'packaging/runtime-manifest.example.json'))

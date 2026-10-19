@@ -9,6 +9,7 @@
 #if defined(GSAS_HAS_PYTHON)
 
 #include <Python.h>
+#include <dlfcn.h>
 
 namespace {
 
@@ -121,9 +122,14 @@ class CPythonHooks::Impl {
   public:
     ~Impl()
     {
+        if (!Py_IsInitialized()) {
+            return;
+        }
+        const PyGILState_STATE gil = PyGILState_Ensure();
         Py_XDECREF(initialize_fn);
         Py_XDECREF(execute_fn);
         Py_XDECREF(module);
+        PyGILState_Release(gil);
     }
 
     std::string runtime_root;
@@ -163,12 +169,27 @@ class CPythonHooks::Impl {
             *failure_message = "sys.path 不可用";
             return false;
         }
+        // CPython extensions are installed as HAP native libraries, rather
+        // than executed from the writable files/runtime tree. dladdr resolves
+        // the directory of the interpreter that this host is actually using.
+        Dl_info python_library {};
+        std::string native_library_dir;
+        if (dladdr(reinterpret_cast<const void*>(&Py_InitializeFromConfig), &python_library)
+            && python_library.dli_fname != nullptr) {
+            const std::string library_path(python_library.dli_fname);
+            const size_t slash = library_path.find_last_of('/');
+            if (slash != std::string::npos) {
+                native_library_dir = library_path.substr(0, slash);
+            }
+        }
         const std::string candidates[] = {
             runtime_root,
             runtime_root + "/lib/python3.12/site-packages",
             runtime_root + "/lib/python3.12",
+            native_library_dir,
         };
         for (const std::string& entry : candidates) {
+            if (entry.empty()) { continue; }
             PyObject* item = PyUnicode_DecodeUTF8(entry.c_str(), entry.size(), "strict");
             if (item == nullptr) {
                 PyErr_Clear();
@@ -179,6 +200,21 @@ class CPythonHooks::Impl {
             }
             Py_DECREF(item);
         }
+        // Nested NumPy/SciPy extensions keep their Python module names while
+        // their ELF files live in the immutable HAP native library directory.
+        PyObject* native_loader = PyImport_ImportModule("bridge.native_loader");
+        if (native_loader == nullptr) {
+            *failure_message = "无法导入原生扩展映射器: " + ErrorFromException().code;
+            return false;
+        }
+        PyObject* mapped = PyObject_CallMethod(native_loader, "install", "ss",
+            runtime_root.c_str(), native_library_dir.c_str());
+        Py_DECREF(native_loader);
+        if (mapped == nullptr) {
+            *failure_message = "无法装配原生扩展映射: " + ErrorFromException().code;
+            return false;
+        }
+        Py_DECREF(mapped);
         module = PyImport_ImportModule("bridge");
         if (module == nullptr) {
             *failure_message = "无法导入桥接模块: " + ErrorFromException().code;
@@ -203,9 +239,19 @@ bool CPythonHooks::EnsureBooted()
     }
     std::string message;
     if (!m_impl->Boot(&message)) {
+        if (Py_IsInitialized() && PyGILState_Check()) {
+            PyEval_SaveThread();
+        }
         throw BridgeFailure({"CORE_NOT_READY", message, true});
     }
     m_booted = true;
+    // Py_InitializeFromConfig leaves this initialization thread holding the
+    // GIL. CoreService currently serializes calls on one worker, but the
+    // public hooks also support callers on other native threads. Release
+    // initial ownership before the balanced PyGILState_Ensure/Release pairs
+    // so those callers cannot deadlock. Python lives for the app
+    // process lifetime; no interpreter finalization runs on this worker.
+    PyEval_SaveThread();
     return true;
 }
 

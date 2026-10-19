@@ -1,0 +1,26 @@
+[
+  {
+    "case": "cancelled-terminal-restored-after-process-restart",
+    "status": "PASS"
+  },
+  {
+    "case": "notebook-preserved-across-runtime-upgrade",
+    "status": "PASS"
+  },
+  {
+    "case": "xray-comments-preserved-across-runtime-upgrade",
+    "status": "PASS"
+  },
+  {
+    "case": "active-job-restores-as-process-interrupted-not-resumed",
+    "status": "PASS"
+  },
+  {
+    "case": "second-real-five-stage-task-succeeded",
+    "status": "PASS"
+  },
+  {
+    "case": "successful-result-and-artifacts-restored-after-process-restart",
+    "status": "PASS"
+  }
+]

@@ -96,8 +96,8 @@
     "version": "2.0.0",
     "upstreamCommit": "2b4aba1bc44de63a3da9d4495944c3b99e389399",
     "license": "GSAS-II Open Source License",
-    "sourceUrl": "https://github.com/AdvancedPhotons/GSAS-II/tree/2b4aba1bc44de63a3da9d4495944c3b99e389399",
-    "sourceCodeUrl": "https://github.com/AdvancedPhotons/GSAS-II",
+    "sourceUrl": "https://github.com/AdvancedPhotonSource/GSAS-II/tree/2b4aba1bc44de63a3da9d4495944c3b99e389399",
+    "sourceCodeUrl": "https://github.com/AdvancedPhotonSource/GSAS-II",
     "distributionReview": "pending",
     "dependsOn": ["cpython", "numpy", "scipy", "pycifrw"],
     "payloadPrefixes": ["runtime/lib/python3.12/site-packages/GSASII"]

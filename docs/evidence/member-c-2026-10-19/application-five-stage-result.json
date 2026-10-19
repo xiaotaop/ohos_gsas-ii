@@ -1,0 +1,70 @@
+{
+  "recipeId": "powder-five-stage-v1",
+  "upstreamCommit": "2b4aba1bc44de63a3da9d4495944c3b99e389399",
+  "elapsedSeconds": 5.444,
+  "stages": [
+    {
+      "name": "before_fitting",
+      "rwpByHistogram": {
+        "xray": 96.68109929991266,
+        "neutron": 99.74899353641875
+      }
+    },
+    {
+      "name": "scale_and_background",
+      "rwpByHistogram": {
+        "xray": 45.811996840393284,
+        "neutron": 17.86462947555275
+      }
+    },
+    {
+      "name": "cells",
+      "rwpByHistogram": {
+        "xray": 32.476216360375346,
+        "neutron": 15.024251645424473
+      }
+    },
+    {
+      "name": "microstrain_displacement_atoms",
+      "rwpByHistogram": {
+        "xray": 13.405893726281558,
+        "neutron": 6.361295249295007
+      }
+    },
+    {
+      "name": "preferred_orientation",
+      "rwpByHistogram": {
+        "xray": 13.164765200812706,
+        "neutron": 6.382313119503196
+      }
+    }
+  ],
+  "validation": {
+    "performed": false,
+    "passed": null
+  },
+  "artifacts": [
+    {
+      "fileId": "file_out_d7fb826d-0ade-4bcf-bf98-e8195458f581_gpx",
+      "kind": "project",
+      "displayName": "Cnative.gpx",
+      "mediaType": "application/octet-stream"
+    },
+    {
+      "fileId": "file_out_d7fb826d-0ade-4bcf-bf98-e8195458f581_json",
+      "kind": "result",
+      "displayName": "Cnative.json",
+      "mediaType": "application/json"
+    },
+    {
+      "fileId": "file_out_d7fb826d-0ade-4bcf-bf98-e8195458f581_log",
+      "kind": "log",
+      "displayName": "Cnative.log",
+      "mediaType": "text/plain"
+    }
+  ],
+  "preferredOrientation": {
+    "C(2,0)": 0.12738142465744678,
+    "C(2,2)": 0.09406617903303072
+  }
+}

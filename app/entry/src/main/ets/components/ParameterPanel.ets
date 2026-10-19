@@ -19,6 +19,7 @@ struct ParameterEditor {
   @State private form: ParameterField[] = [];
   @State private error: string = '';
   @State private saving: boolean = false;
+  @State private resetRevision: number = 0;
   aboutToAppear(): void {
     this.form = restoreParameters(this.panel, this.scope, serializeParameters(this.panel, this.scope, this.fields));
   }
@@ -70,18 +71,24 @@ struct ParameterEditor {
                 }
                 if (item.refinable) {
                   Checkbox({ name: item.key }).select(item.refine).enabled(!this.saving)
-                    .onChange((value: boolean) => { this.change(item.key, item.value, value); })
+                    .onChange((value: boolean) => {
+                      const current = this.form.find((field: ParameterField): boolean => field.key === item.key);
+                      this.change(item.key, current?.value ?? '', value);
+                    })
                   Text('Refine?').fontSize(13)
                 }
               }.width('100%')
             }.width('100%')
-          }, (item: ParameterField) => item.key)
+          }, (item: ParameterField) => `${this.resetRevision}:${item.key}`)
         }.width('100%').padding({ right: 12 })
       }.layoutWeight(1).width('100%').align(Alignment.TopStart)
       if (this.error) { Text(this.error).fontSize(13).fontColor('#B3261E').width('100%').id('parameter-error') }
       Flex({ wrap: FlexWrap.Wrap, justifyContent: FlexAlign.End }) {
         Button('Clear form').parameterButton().enabled(!this.saving).margin({ right: 12, bottom: 8 })
-          .onClick(() => { this.form = parameterFields(this.panel); this.error = '表单已清空，保存后生效；Cancel 可保留原草稿。'; })
+          .onClick(() => {
+            this.form = parameterFields(this.panel); this.resetRevision++;
+            this.error = '表单已清空，保存后生效；Cancel 可保留原草稿。';
+          })
         Button('Cancel').parameterButton().enabled(!this.saving).onClick(() => { this.controller.close(); })
           .margin({ right: 12, bottom: 8 })
         Button(this.saving ? 'Saving...' : 'Save local draft').parameterButton().enabled(!this.saving)
@@ -100,6 +107,7 @@ export struct ParameterPanel {
   @State private fields: ParameterField[] = [];
   @State private message: string = '';
   @State private loaded: boolean = false;
+  @State private displayRevision: number = 0;
   private settings: preferences.Preferences | undefined = undefined;
   private editor: CustomDialogController | undefined = undefined;
   private generation: number = 0;
@@ -126,6 +134,7 @@ export struct ParameterPanel {
       const fields = restoreParameters(panel, scope, json);
       if (this.generation !== generation || this.scope !== scope || this.panel !== panel) { return; }
       this.settings = settings; this.storageKey = key; this.fields = fields; this.loaded = true;
+      this.displayRevision++;
       this.message = json ? '已恢复本地草稿。尚未用于精修。' :
         (panel === 'Notebook' || panel === 'Comments' ? '尚无本地记录。' : '尚无本地草稿；参数值未从输入文件解析。');
     } catch {
@@ -145,6 +154,7 @@ export struct ParameterPanel {
         await settings.put(key, json); await settings.flush();
         if (this.generation !== generation) { return; }
         this.fields = restoreParameters(panel, scope, json); this.message = '本地草稿已保存；未修改文件或启动精修。';
+        this.displayRevision++;
       } }), autoCancel: false, customStyle: true, alignment: DialogAlignment.Center
     });
     this.editor.open();
@@ -193,7 +203,7 @@ export struct ParameterPanel {
           }.width('100%').constraintSize({ minHeight: 28 })
           }
         }, (item: ParameterField) => item.key)
-      })
+      }, (group: string) => `${this.displayRevision}:${group}`)
       if (this.panel === 'Controls') {
         Divider().margin({ top: 10 })
         Text('Sequential Settings').fontSize(14).fontWeight(FontWeight.Bold).width('100%')

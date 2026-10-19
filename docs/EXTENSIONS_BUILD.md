@@ -5,6 +5,9 @@ PoC 与 Python Bridge 真实任务（见 [B 侧真机补充验证](B_DEVICE_VALI
 **最终可重建、可分发的载荷与清单尚未冻结**；正式 strip/重签、最终 SBOM/许可与发布审计
 由成员 C 闭环。本文记录构建配方、校验方式和许可义务，供 C 与组长复核。
 
+C 的宿主交叉编译增量使用 Flang 20.1.8，并已在 API26 模拟器的正式应用进程内完成五阶段精修。
+可复建补丁与容器路径见 [local-cross 配方](../scripts/ohos/local-cross/README.md)，同一 HAP 的数值、导出与恢复记录见 [C 验收记录](C_NATIVE_ACCEPTANCE.md)。下列 B 设备配方继续保留 20.1.0 的独立记录，两个构建的归档与清单应分别核验。
+
 ## 1. 组件与上游
 
 | 项 | 值 |

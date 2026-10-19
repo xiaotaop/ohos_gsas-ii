@@ -1,0 +1,25 @@
+{
+  "jobId": "job_d27b515b-8165-4038-aa88-0196409b3cd9",
+  "scope": "same HAP, same successful task; actual system-picker GPX/JSON/log exports",
+  "files": [
+    {
+      "name": "Cfinal.gpx",
+      "sha256": "390afa43cc70a363c54cfe2851577c415b0bf4699afaf2eda2c8efeeafcafb4d",
+      "size": 709893,
+      "systemExportMatches": true
+    },
+    {
+      "name": "Cfinal.json",
+      "sha256": "b7cee5fdfb91bd0624fde8411bdc756ecfa9820fab70d52a0eedd27841a91ab5",
+      "size": 1658,
+      "systemExportMatches": true
+    },
+    {
+      "name": "Cfinal.log",
+      "sha256": "857053d741f2b0a7c60f1148af80cd5f2c57edb6f581b6e6acea7e6eefb7da85",
+      "size": 5341,
+      "systemExportMatches": true
+    }
+  ],
+  "passed": true
+}
