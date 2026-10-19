@@ -59,6 +59,11 @@ def build(components: list[dict]) -> dict:
                     "distributionReview values are pending. Regenerate from the signed "
                     "HAP and complete the licence review before release."
                 )},
+                {"name": "staticallyLinked", "value": (
+                    "LLVM FortranRuntime 20.1.0 (Apache-2.0 WITH LLVM-exception, "
+                    "https://github.com/llvm/llvm-project) is statically linked into the "
+                    "GSAS-II native extensions; include it in the final SBOM and licence bundle."
+                )},
             ],
         },
         "components": entries,

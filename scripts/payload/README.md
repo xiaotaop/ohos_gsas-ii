@@ -117,6 +117,30 @@ SBOM 草案：`python3 scripts/payload/make_sbom.py` 从 `components.json` 生�
 - **最终原生载荷与分发审计**：8 个编译模块（`pyspg`、`pypowder`、
   `pytexture`、`fmask`、`histogram2d`、`pack_f`、`unpack_cbf`、`kvec_general`）
   已用于本地组装物，门禁通过；仍需将其来源、构建/复用方式、最终字节清单和
-  许可证审查与 C 的正式签名 HAP 对齐。最终发布时 `check_gsas_native.py`
-  必须不带 `--allow-missing` 通过，且不能只复用本地测试报告。
+  许可证审查与 C 的正式签名 HAP 对齐。来源、构建步骤与许可义务见
+  [EXTENSIONS_BUILD](../../docs/EXTENSIONS_BUILD.md)；最终发布时
+  `check_gsas_native.py` 必须不带 `--allow-missing` 通过，且不能只复用本地测试报告。
 - **Sobol QMC**：见 §3 的 `.npz` 说明，属发布门禁导致的明确功能裁剪。
+
+## 6. 原生扩展与清单冻结顺序
+
+1. 把 8 个 `*.cpython-312-aarch64-linux-ohos.so` 放入
+   `runtime/lib/python3.12/site-packages/GSASII/`；`pydiffax` 不得出现。
+2. **先 strip、再生成清单**：对顶层 `libs/libpython3.12.so`（以及约定的
+   重签）执行 `llvm-strip` 之后，才运行 `Write-RuntimeManifest.py`。
+   2026-10-19 在设备侧验证过：用 strip 前字节生成的清单，会让 Hvigor 打包后的
+   `Audit-Hap.py` 报 `packaged runtime mismatch`。
+3. 生成并核对：
+
+   ```sh
+   python3 scripts/Write-RuntimeManifest.py --payload <payload> \
+     --components scripts/payload/components.json --runtime-id <id> --output <manifest.json>
+   python3 scripts/Prepare-Runtime.py --manifest <manifest.json> \
+     --payload <payload> --output <prepared-dir>
+   python3 scripts/payload/check_gsas_native.py --payload <payload>   # 不得带 --allow-missing
+   ```
+
+4. 本地补充组装为 2230 文件（初次装配 2214 + 16），冻结时逐项核对差异来源；
+   清单哈希与 runtimeId 交 C 记录，不同 HAP 的证据不得混用。
+5. 扩展静态链接 LLVM **FortranRuntime**（Apache-2.0 WITH LLVM-exception）；
+   SBOM 草案已标注该义务，最终许可清单由 C 汇总。

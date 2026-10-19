@@ -194,7 +194,8 @@ Special handling is required."——分布于成员 C 既有文件与 B 的新�
   [`scripts/payload/check_gsas_native.py`](../scripts/payload/check_gsas_native.py)
   会拒绝缺少这些模块的载荷（`--allow-missing` 仅限开发包，并会打印
   DEV-ONLY）。后续须证明第二阶段模块的可复用来源，或按 `scripts/ohos/`
-  的配置重建，并与 C 的许可/SBOM、正式签名 HAP 对齐。
+  的配置重建，并与 C 的许可/SBOM、正式签名 HAP 对齐；来源、构建与许可义务见
+  [EXTENSIONS_BUILD](EXTENSIONS_BUILD.md)。
 - SciPy 的 Sobol QMC 因 `_sobol_direction_numbers.npz` 是 ZIP 容器而不随载荷
   发布（见 §3.1），`scipy.stats` 其余功能与 GSAS-II 所用路径不受影响。
 - 门面/安装器的行为由宿主测试证明，应用沙箱内实际加载（dlopen 链、

@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — 扩展来源与载荷冻结顺序（2026-10-19，成员 B）
+
+- 新增 [docs/EXTENSIONS_BUILD.md](docs/EXTENSIONS_BUILD.md)：8 个扩展的上游提交、设备侧 flang 20.1.0 / Meson 诊断构建与导出步骤（引用 `scripts/ohos/`）、既有归档 SHA-256、门禁方式，以及静态链接 LLVM FortranRuntime（Apache-2.0 WITH LLVM-exception）的许可义务；排除 `pydiffax` 的发布构建配方仍待固化。
+- `scripts/payload/README.md` 新增 §6“原生扩展与清单冻结顺序”：冻结前必须先 strip 顶层 `libpython3.12.so` 再生成清单（设备侧已验证 `packaged runtime mismatch`），并记录 2230 与 2214 文件差异需逐项核对。
+- SBOM 草案 metadata 标注 FortranRuntime 静态链接义务；`distributionReview` 保持 `pending`。
+
 ## Unreleased — 真机补充验证与开发增量合并（2026-10-19）
 
 - B PR #6 与 A PR #5 已按依赖顺序通过代码级审核并合入主线；B03 日志 artifact、持久化终态快照、A 端初始化重试与展示/导出入口均为当前代码，不再列为待实现。
