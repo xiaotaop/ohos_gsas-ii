@@ -1,0 +1,257 @@
+{
+  "date": "2026-10-19",
+  "sourceBase": "b0e61a0e018c3405313e7a9939dc95d84f18dd06",
+  "workingTreeDirtyAtBuild": true,
+  "appSourceFingerprintSha256": "790eca10a147b86595dd0ea1113667d1b429d137e62f6c7689fe817becb8b393",
+  "appSourceFiles": [
+    {
+      "path": "AppScope/app.json5",
+      "sha256": "2457db3f7e3dc25416cb0d249eddd3cb46790520ac23e6859ecd0388b926c833"
+    },
+    {
+      "path": "AppScope/resources/base/element/string.json",
+      "sha256": "74546fb5b3f3790e906b374afd6f28da71807cfa749b6568d8a99ac82572231e"
+    },
+    {
+      "path": "AppScope/resources/base/media/app_icon.svg",
+      "sha256": "2b358deeb4e88d4fcca93022a4b7bfb5b30ff1ec55f02749546327ca52752762"
+    },
+    {
+      "path": "build-profile.json5",
+      "sha256": "cd5a5d943b3c0c92812ed4ad1cfd2aecaff0c0830f7decc7974856d7fbd3ce5d"
+    },
+    {
+      "path": "code-linter.json5",
+      "sha256": "de386cac6a6e41d19aa90be2809678849dd4993a0300cdfa38bfdf4b0d7f1a2b"
+    },
+    {
+      "path": "entry/build-profile.json5",
+      "sha256": "ea9f6858fc2a6d1e2e9106293e4dd6768d1d51293a58f9d54e639c28635ab26a"
+    },
+    {
+      "path": "entry/hvigorfile.ts",
+      "sha256": "f71679171099cb5c2260ab2a43e38164f169216c217ffdba7d0933e92ca8f733"
+    },
+    {
+      "path": "entry/oh-package-lock.json5",
+      "sha256": "dcc878743f4b17076f35f41747940fe98b629027316c0ce684898c0c11072f55"
+    },
+    {
+      "path": "entry/oh-package.json5",
+      "sha256": "6626e1ce9958dcd36b5e776d78d32ca5dbe86aaa8ffb2ebf8ebeb777a4fbe5cb"
+    },
+    {
+      "path": "entry/src/main/cpp/CMakeLists.txt",
+      "sha256": "cf3035b100efd3d74f9268da9f39b1034461b206f506c686672f8f779a536903"
+    },
+    {
+      "path": "entry/src/main/cpp/core/core_service.cpp",
+      "sha256": "ae1a622de08e3fa0b1f6400031f83a7413ed8205fa720ec81af724f510407e14"
+    },
+    {
+      "path": "entry/src/main/cpp/core/core_service.h",
+      "sha256": "5b4f4a58a456bf14b417315a50b81d3528212b1c90e9b9fccf08e77365a1ee7d"
+    },
+    {
+      "path": "entry/src/main/cpp/exclusive_file.h",
+      "sha256": "9b52e28725b307921e87d78009b361561ab2f182d4b76cc14a6d19ca49692398"
+    },
+    {
+      "path": "entry/src/main/cpp/file_exporter.cpp",
+      "sha256": "29e23d5308f6c7e699215703b1f5085f2eaa1e78048d0fd167343a4d4637ef8f"
+    },
+    {
+      "path": "entry/src/main/cpp/napi_core.cpp",
+      "sha256": "b911958e54a37a0d90a626e7a1d6cc8fc2d7b40c0326d7caaf05b9c2a7e5a498"
+    },
+    {
+      "path": "entry/src/main/cpp/python/python_host.cpp",
+      "sha256": "eac445e312947319b8732d475a275ee61241f02d25498c65109e0f17cf0bf60f"
+    },
+    {
+      "path": "entry/src/main/cpp/python/python_host.h",
+      "sha256": "aa7d799bed838704a3828248c2787dc5e517da2dbc77a161c05a50f0500ebac9"
+    },
+    {
+      "path": "entry/src/main/cpp/types/libgsas_core/index.d.ts",
+      "sha256": "204f4a4e76b635be94b2b3ec4f10e5ce01f96d781791c482b1f48c1124126d21"
+    },
+    {
+      "path": "entry/src/main/cpp/types/libgsas_core/oh-package.json5",
+      "sha256": "42250c166220b2e01d0882d5ab6ccef98cd8f94a1e09d8ed8ebf2f6b13dd7b4f"
+    },
+    {
+      "path": "entry/src/main/cpp/types/libgsas_fileio/index.d.ts",
+      "sha256": "7e63ecba29eda0e94d4c64bf73b55c804ea88659f69d08ac51d6eeaecd24681b"
+    },
+    {
+      "path": "entry/src/main/cpp/types/libgsas_fileio/oh-package.json5",
+      "sha256": "12803e53497e3a1f14e35e7a5b61ef97eefee075e02d0ddf407e758919118f01"
+    },
+    {
+      "path": "entry/src/main/ets/components/ParameterPanel.ets",
+      "sha256": "31b2f6415dac5320a6e2122c8de736f8c60d280a0962ac002379feee179bd21b"
+    },
+    {
+      "path": "entry/src/main/ets/components/RefinementPanel.ets",
+      "sha256": "97c344a3d0f44dfaea44e2e0589c96f37549535b25bca1d32c7552eef04c3ae8"
+    },
+    {
+      "path": "entry/src/main/ets/contracts/Files.ets",
+      "sha256": "12d16aaa9e0555921b3df097c0d441b8ed43be217ceb54c57bf5156213b1900e"
+    },
+    {
+      "path": "entry/src/main/ets/entryability/EntryAbility.ets",
+      "sha256": "81b9df95574d5e790d30f06f21f637f3c85a6dd6a0385e3c15d8912d68cd3561"
+    },
+    {
+      "path": "entry/src/main/ets/model/ParameterDrafts.ets",
+      "sha256": "a920e41b20d024cb26147042502d5e301650e9beb0d4d6a19567b9b99e8c4cb5"
+    },
+    {
+      "path": "entry/src/main/ets/model/Refinement.ets",
+      "sha256": "bfc6444c58c9b25a6597c9d87427bdcea3c1c9d77fd52d206f84f3dc18e357bc"
+    },
+    {
+      "path": "entry/src/main/ets/model/RefinementInputs.ets",
+      "sha256": "4232eb28ef2049bbf2f3140b973bad5f84b427f108fe08b47cf8a917ca25b1a9"
+    },
+    {
+      "path": "entry/src/main/ets/pages/Index.ets",
+      "sha256": "839e85eb84b4b42eaaf524a4932e89cc77851ec042fef6f3cd8d5fe4d3ba0a32"
+    },
+    {
+      "path": "entry/src/main/ets/services/AppServices.ets",
+      "sha256": "cc915ccedbc2e7df0c49013a556ccabc90563bcec1fd1695c00cd05ee3cf6d8d"
+    },
+    {
+      "path": "entry/src/main/ets/services/CoreBridgeService.ets",
+      "sha256": "27d69c5a95ab2be20a19e4d1c07a018bd957680535b8aa7ff6c16f3944b7bea7"
+    },
+    {
+      "path": "entry/src/main/ets/services/FilePickerService.ets",
+      "sha256": "c63e69f238fa2f3c7829ed61c89e4a7d18b96fc3355f28ec544355d0b39effc7"
+    },
+    {
+      "path": "entry/src/main/ets/services/RuntimeInstaller.ets",
+      "sha256": "1aba29541fa47aa5b5f864b56f5c78448c1b448bcf956559c2bc8a69991c42ae"
+    },
+    {
+      "path": "entry/src/main/ets/services/SandboxFileService.ets",
+      "sha256": "1d23bda881c72f065bd654ef53501aca4a0f82e9ec3d239ecc10728404092f3c"
+    },
+    {
+      "path": "entry/src/main/ets/verification/FileServiceCheck.ets",
+      "sha256": "fbd7b0f345e2a24f3e2bad614f3097b4fc86e202b2aa16ed8f48436bf9c6f756"
+    },
+    {
+      "path": "entry/src/main/module.json5",
+      "sha256": "34cde3defec57cd16c806eb69d567b0d1ca5bb9c3cd4ef4647102768acedbdc3"
+    },
+    {
+      "path": "entry/src/main/resources/base/element/color.json",
+      "sha256": "124305790c9fd64b536d0ededd2cb9bb401048a94aab66a9054b5cc61927142d"
+    },
+    {
+      "path": "entry/src/main/resources/base/profile/main_pages.json",
+      "sha256": "51fdd64180812e80cf58205d26c52812d324597333e0095a968e178037dc7772"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/fixtures/INST_XRY.PRM",
+      "sha256": "e59413059bc3b12a51f1c6eebc5d581470320d05a31f11a41dbb32e16d1d16b9"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/fixtures/PBSO4.CWN",
+      "sha256": "59462ba6d7c72c9800b0b6bf41903f9933ed5ac5adab101d27022d5d25cf18ba"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/fixtures/PBSO4.XRA",
+      "sha256": "ca2da02fc7e17d2fc912de22a979f8101ba6140f2e8104f9d3aa64f030ca58bb"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/fixtures/PbSO4-Wyckoff.cif",
+      "sha256": "22cba0b64fb6bf89178fe828fdf63570bffebed1485313e78c50c2918a47a970"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/fixtures/inst_d1a.prm",
+      "sha256": "a1031174a9b509f889377752f5c095a1dad49a25fb0a72c057f184f7b321fcea"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/licenses/GSAS-II-LICENSE.txt",
+      "sha256": "05f7d608ff9997aa4e89c380f936ee2b1ea6a20df3d4dabe362c522e3bf7218d"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/licenses/GSAS-II-NOTICE.txt",
+      "sha256": "e58dee871082ef2764aa7978871f59a4bcf182f19c6883b7d1652ddbe79019a6"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/licenses/LLVM-NOTICE.txt",
+      "sha256": "22208a1d78a9271ec1d6eaf7d21db5dda6049ed14af09d7d0f8d7787b6bffb77"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/licenses/libcxx-LICENSE.txt",
+      "sha256": "54fe8296021f29a40b7abccb174d440f650088807f8b84d4315e6ef9c3e323a7"
+    },
+    {
+      "path": "entry/src/main/resources/rawfile/licenses/libcxxabi-LICENSE.txt",
+      "sha256": "dd55121fdf68d349082de00243eb187fd01ab7afa07944be6d23f6a598b7b37e"
+    },
+    {
+      "path": "hvigor/hvigor-config.json5",
+      "sha256": "2a67a5bc578397522e2d0fd256e424f31c4ae3d64ca93aebce50da1d8d8f78aa"
+    },
+    {
+      "path": "hvigorfile.ts",
+      "sha256": "c08e821b017d4199cbc2f0d086bb329e27e469e4c7d575f4493dfc2f92c72143"
+    },
+    {
+      "path": "oh-package.json5",
+      "sha256": "a4999a48272eb0067b4233bced3c636d9a4eb64d45ec6af72f7c2027a2cbbc2a"
+    }
+  ],
+  "sdkVersion": "6.1.1.125",
+  "sdkApi": 24,
+  "hvigorVersion": "6.24.4",
+  "bundleName": "com.gsasii.desktop",
+  "version": "0.1.0",
+  "buildMode": "debug",
+  "arm64HapSha256": "ed757b26521940411c48f55f82a28bbfb8220ad28962a76e13a44cacff874a0f",
+  "emulatorHapSha256": "d684c768152a15744d40ddff3d842c01413eb479d2bf5d5273d8e3f509d9b5d3",
+  "emulator": "MateBook Pro / HarmonyOS 6.1.1 API24 / x86_64",
+  "minimumWindowVp": [
+    640,
+    480
+  ],
+  "observedMinimumWindowPx": [
+    1216,
+    912
+  ],
+  "screenshots": {
+    "minimum-dialog.png": "d03d19e0b502362a6b4315394a0c07f80e206f98fe2317dd5a9e197710a6e185",
+    "minimum-inputs.png": "448cc0bad6c5324e12956f7c482e75ee1f6c6cb36d810b582622f19ca5a9fafe",
+    "help.png": "73ee2bbb933ec7b3fe76759c19875c9655f32cec2088b8ce47b8e6ce2c401e73",
+    "runtime-unavailable.png": "3efdc28ed8e21c6bd056bc8fc5ea667303cd87bb187eb5442f7e931e9b0dfc18"
+  },
+  "checks": [
+    "minimum-window-clamps-resize",
+    "narrow-inputs-fit-after-divider-drag",
+    "input-bottom-reachable-by-swipe",
+    "draft-dialog-buttons-visible",
+    "Tab-focus-Enter-expand-Escape-close-ShiftTab-reverse",
+    "clear-form-then-cancel-keeps-original-empty-draft",
+    "search-no-match-and-clear-restores-11-files",
+    "library-scroll-reaches-file-actions",
+    "delete-confirm-cancel-keeps-file",
+    "F1-help-and-CtrlR-refinement",
+    "runtime-missing-refine-disabled",
+    "idle-window-close-and-reopen-preserves-11-files",
+    "native-mouse-wheel-scrolls-tree-with-right-pane-unchanged"
+  ],
+  "notVerified": [
+    "physical-device",
+    "active-task-exit-prompt",
+    "real-computation-and-terminal-export",
+    "release-signing"
+  ],
+  "releaseApproved": false
+}

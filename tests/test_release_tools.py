@@ -230,6 +230,18 @@ class ReleaseToolsTest(unittest.TestCase):
             with self.subTest(name=name), self.assertRaises(rt.ReleaseError):
                 rt.audit_hap(path)
 
+    def test_app_core_is_required_and_owned_without_approving_a_runtime(self):
+        path = self.root / 'base.hap'
+        base_hap(path)
+        inventory = rt.audit_hap(path)
+        core = next(f for f in inventory['files'] if f['path'] == 'libs/arm64-v8a/libgsas_core.so')
+        self.assertEqual(core['component'], 'app-core')
+        self.assertIsNone(inventory['runtimeId'])
+        self.assertFalse(inventory['releaseCandidateApproved'])
+        base_hap(path, omit=('libs/arm64-v8a/libgsas_core.so',))
+        with self.assertRaisesRegex(rt.ReleaseError, 'missing app library'):
+            rt.audit_hap(path)
+
     def test_hap_traversal_symlink_and_duplicate_rejected(self):
         path = self.root / 'base.hap'
         unsafe_names = ['../escape', '/absolute']

@@ -18,6 +18,9 @@ export struct RefinementPanel {
   readyCore: CoreService | undefined = undefined;
   knownJobId: string = '';
   @Prop filesReady: boolean = false;
+  @Prop coreStatus: string = '';
+  @Prop coreOpening: boolean = false;
+  retryCore: () => void = () => {};
   prepareInputs: () => Promise<RefinementInputs> = async () => { throw new Error('Files unavailable'); };
   exportArtifact: (fileId: string) => Promise<boolean> = async () => { throw new Error('Files unavailable'); };
   onTaskChange: (jobId: string, active: boolean) => void = () => {};
@@ -25,9 +28,9 @@ export struct RefinementPanel {
   @State private cancelRequested: boolean = false;
   @State private notice: string = '';
   @State private formError: string = '';
-  @State private cycles: string = '';
-  @State private phaseName: string = '';
-  @State private projectName: string = '';
+  @Link cycles: string;
+  @Link phaseName: string;
+  @Link projectName: string;
   @State private submitting: boolean = false;
   @State private exporting: boolean = false;
   private session: RefinementSession | undefined = undefined;
@@ -113,7 +116,9 @@ export struct RefinementPanel {
       Column({ space: 12 }) {
         Text(this.title()).fontSize(18).fontWeight(FontWeight.Bold).width('100%')
         if (!this.readyCore) {
-          Text('计算服务尚未接入。可以准备输入和参数，当前不能开始精修。').fontSize(14).fontColor('#805400').width('100%')
+          Text(this.coreStatus || '计算服务尚未就绪。可以准备输入和参数。').fontSize(14).fontColor('#805400').width('100%')
+          Button(this.coreOpening ? 'Initializing...' : 'Retry initialization').refinementButton()
+            .id('retry-core').enabled(this.filesReady && !this.coreOpening).onClick(() => { this.retryCore(); })
         }
         Text('X 射线 + 中子 + CIF · 当前仅支持已验证的 PbSO4 样例组合').fontSize(13).width('100%')
         Text('填写本次任务参数；其他参数页的本地草稿不会自动提交。').fontSize(13).fontColor('#555555').width('100%')
@@ -150,10 +155,10 @@ export struct RefinementPanel {
         }
         // B03: failure/cancellation logs come only from the registered
         // artifacts the terminal payload carried — never from names, paths
-        // or the message history. No artifacts means registration did not
-        // complete, and the page says so plainly.
+        // or the message history. Older terminals and rejected starts may
+        // also omit artifacts, so do not infer a registration failure.
         if (this.view.state === 'failed' || this.view.state === 'cancelled') {
-          if (this.view.terminalArtifacts !== undefined && this.view.terminalArtifacts.length > 0) {
+          if (this.view.terminalArtifacts.length > 0) {
             Text(this.view.state === 'cancelled' ? '取消日志' : '失败日志').fontSize(14)
               .fontWeight(FontWeight.Bold).width('100%')
             ForEach(this.view.terminalArtifacts, (artifact: Artifact) => {
@@ -164,7 +169,7 @@ export struct RefinementPanel {
               }.width('100%')
             }, (artifact: Artifact) => artifact.fileId)
           } else {
-            Text('日志登记未完成，本次终态没有可导出的日志文件。').fontSize(12).fontColor('#805400').width('100%')
+            Text('本次终态未提供已登记的日志，没有可导出的日志文件。').fontSize(12).fontColor('#805400').width('100%')
           }
         }
         if (this.view.result) {

@@ -71,6 +71,7 @@ function loadServiceModule(filename) {
   return module.exports;
 }
 const { CoreBridgeService } = loadServiceModule(path.join(repo, 'app/entry/src/main/ets/services/CoreBridgeService.ets'));
+const { RefinementSession } = loadServiceModule(path.join(repo, 'app/entry/src/main/ets/model/Refinement.ets'));
 
 const sha = bytes => crypto.createHash('sha256').update(Buffer.from(bytes)).digest('hex');
 
@@ -187,8 +188,11 @@ class FakeFiles {
 }
 
 function makeFixture(action, options = {}) {
-  fs.mkdirSync('/tmp', { recursive: true });
-  const base = fs.mkdtempSync('/tmp/gsas-bridge-host-');
+  // Drive-relative POSIX spelling keeps the production root checks intact on
+  // Windows while confining test writes to this checkout's ignored build area.
+  const temp = path.join(repo, 'app/build/host-tests').replace(/\\/g, '/').replace(/^[A-Za-z]:/, '');
+  fs.mkdirSync(temp, { recursive: true });
+  const base = fs.mkdtempSync(`${temp}/gsas-bridge-host-`);
   const root = posixJoin(base, 'files');
   fs.mkdirSync(root);
   const native = new FakeNative();
@@ -532,3 +536,81 @@ test('shutdown stops the worker and closes the facade', () => makeFixture(async 
   const restored = await core.restoreJobId();
   assert.equal(restored, '');
 }));
+
+test('A session consumes B facade events, cancellation ack and registered results', () => makeFixture(async ({ core, native, files, root }) => {
+  await core.initialize(files.getCoreConfig());
+  const session = new RefinementSession(core, () => {});
+  await session.connect();
+  await session.start(request());
+  native.emit(event('job.progress', JOB, 1, { state: 'running', percent: 30, stage: 'cells' }));
+  await core.flushEvents();
+  assert.equal(session.view.state, 'running');
+  assert.equal(session.view.percent, 30);
+  await session.cancel();
+  assert.equal(session.cancelRequested, true);
+  assert.equal(session.view.state, 'running'); // ACK is not a terminal.
+  fs.writeFileSync(posixJoin(root, 'outputs', JOB, 'PbSO4-refined.gpx'), 'host-test-only\n');
+  native.emit(event('job.completed', JOB, 2, { result: { artifacts: [
+    { fileId: 'file_result_project_01', displayName: 'PbSO4-refined.gpx', kind: 'project', mediaType: 'application/octet-stream' }
+  ] } }));
+  await core.flushEvents();
+  assert.equal(session.view.state, 'succeeded'); // Natural completion can win cancellation.
+  assert.equal(session.cancelRequested, false);
+  assert.equal(session.view.result.artifacts[0].fileId, files.registered[0].fileId);
+  session.disconnect();
+}));
+
+test('A session restores B interrupted records and tolerates expired recent IDs', () => makeFixture(async ({ core, files, store }) => {
+  files.interrupted = [JOB]; store.value = JOB;
+  await core.initialize(files.getCoreConfig());
+  const session = new RefinementSession(core, () => {});
+  await session.connect(await core.restoreJobId());
+  assert.equal(session.view.state, 'failed');
+  assert.equal(session.view.error.code, 'PROCESS_INTERRUPTED');
+  assert.deepEqual(session.view.history, []);
+  store.value = 'job_expired_recent_01';
+  await session.connect(await core.restoreJobId());
+  assert.equal(session.view.state, 'idle');
+  assert.equal(session.view.error, undefined);
+  session.disconnect();
+}));
+
+for (const state of ['failed', 'cancelled']) {
+  for (const registrationFails of [false, true]) {
+    test(`A session displays and restores B ${state} logs with registration failure=${registrationFails}`, () => makeFixture(async ({ core, native, files, root, store }) => {
+      files.failRegister = registrationFails;
+      const register = files.registerOutput.bind(files);
+      // A must consume the returned token even if it differs from B's proposal.
+      files.registerOutput = async (...args) => ({ ...await register(...args), fileId: 'file_registered_by_service_01' });
+      await core.initialize(files.getCoreConfig());
+      const session = new RefinementSession(core, () => {});
+      await session.connect();
+      await session.start(request());
+      if (state === 'cancelled') await session.cancel();
+      const payload = state === 'failed'
+        ? { error: { code: 'REFINEMENT_FAILED', message: '精修失败，请检查输入。', retryable: false } }
+        : { reason: '用户取消' };
+      native.emit(event(`job.${state}`, JOB, 1, payload));
+      await core.flushEvents();
+      assert.equal(session.view.state, state);
+      assert.equal(session.cancelRequested, false);
+      const expectedIds = registrationFails ? [] : ['file_registered_by_service_01'];
+      assert.deepEqual(session.view.terminalArtifacts.map(a => a.fileId), expectedIds);
+      const delivered = structuredClone(session.view.terminalArtifacts);
+      session.disconnect();
+
+      const files2 = new FakeFiles(root);
+      const core2 = new CoreBridgeService({ native: new FakeNative(), files: files2, runtime: runtimeSource(), jobs: store });
+      await core2.initialize(files2.getCoreConfig());
+      const restored = new RefinementSession(core2, () => {});
+      await restored.connect(await core2.restoreJobId());
+      assert.equal(restored.view.state, state);
+      assert.deepEqual(restored.view.terminalArtifacts, delivered);
+      assert.deepEqual(restored.view.history, []);
+      await restored.start(request('job_after_restore_01'));
+      assert.equal(restored.view.state, 'queued');
+      assert.deepEqual(restored.view.terminalArtifacts, []);
+      restored.disconnect();
+    }));
+  }
+}

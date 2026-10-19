@@ -1,6 +1,4 @@
-// A-side v1.1 UI projection (B-confirmed shared snapshot/error types; the
-// v1.1 addition is the optional registered `artifacts` on failed/cancelled
-// terminal payloads — B03).
+// Shared application types: A04 with B03 v1.1 optional terminal log artifacts.
 import { CoreConfig, FileServiceError } from '../contracts/Files';
 import { RefinementInputs } from './RefinementInputs';
 
@@ -28,8 +26,7 @@ export interface EventPayload {
   state?: string; stage?: string; stageIndex?: number; stageCount?: number; percent?: number;
   message?: string; level?: string; source?: string; result?: RefinementResult;
   error?: CoreError; reason?: string;
-  // B03: present only on failed/cancelled terminals whose sanitized log was
-  // registered before the terminal event; every entry has kind 'log'.
+  // B03: only registered log artifacts; older terminals may omit this field.
   artifacts?: Artifact[];
 }
 export interface CoreEvent {
@@ -78,14 +75,17 @@ export function prepareRefinementRequest(jobId: string, inputs: RefinementInputs
     inputs: frozen, options: { cycleCount: Number(cycles) }, output: { projectName: name, overwrite: false } };
 }
 
-function callError(error: Object): CoreError {
-  // Error and plain Promise rejection shapes are not yet shared by B/C. Preserve
-  // known codes using local safe text, never arbitrary exception messages/detail.
+export function callError(error: Object): CoreError {
+  // Preserve shared error codes using local safe text, never arbitrary
+  // exception messages/detail.
   const candidate = error as CoreError;
   const messages: Record<string, string> = {
     'INVALID_REQUEST': '精修请求无效，请检查输入和参数。', 'UNSUPPORTED_SCHEMA': '核心接口版本不匹配。',
     'UNSUPPORTED_RECIPE': '核心不支持此精修流程。', 'JOB_ALREADY_EXISTS': '任务编号重复，请重新提交。',
     'CORE_NOT_READY': '计算核心尚未就绪，请稍后重试。', 'CORE_ALREADY_INITIALIZED': '核心初始化配置不一致。',
+    'RUNTIME_NOT_PACKAGED': '当前安装包未包含计算运行时，请安装完整运行时版本。',
+    'RUNTIME_INVALID_MANIFEST': '计算运行时清单无效，请更换安装包。',
+    'RUNTIME_UNPACK_FAILED': '计算运行时装配失败，请重试或检查可用空间。',
     'BUSY': '已有任务运行，请等待该任务结束。', 'FILE_NOT_FOUND': '输入文件不存在，请重新选择。',
     'FILE_HASH_MISMATCH': '输入文件已变化，请重新导入。', 'UNSUPPORTED_FILE': '不支持此文件格式。',
     'INVALID_INSTRUMENT_FILE': '仪器参数文件无法读取。', 'INVALID_PHASE_FILE': '相文件无法读取。',
@@ -107,10 +107,7 @@ export class RefinementView {
   history: string[] = [];
   result?: RefinementResult;
   error?: CoreError;
-  // Registered log artifacts carried by a failed/cancelled terminal payload
-  // (B03). Only these entries may be exported; the view never synthesizes a
-  // fileId from names, paths or history.
-  terminalArtifacts?: Artifact[];
+  terminalArtifacts: Artifact[] = [];
 }
 
 // Pure UI transition; old jobs, duplicate events and post-terminal events cannot change the screen.
@@ -149,11 +146,11 @@ function applyPayload(view: RefinementView, sequence: number, type: string, p: E
     next.message = '五阶段精修已完成';
   } else if (type === 'job.failed') {
     next.state = 'failed'; next.error = p.error;
-    next.terminalArtifacts = Array.isArray(p.artifacts) ? p.artifacts.slice() : undefined;
+    next.terminalArtifacts = Array.isArray(p.artifacts) ? p.artifacts.slice() : [];
     next.message = p.error ? p.error.message : '任务执行失败';
   } else if (type === 'job.cancelled') {
     next.state = 'cancelled'; next.message = p.reason || '任务已取消';
-    next.terminalArtifacts = Array.isArray(p.artifacts) ? p.artifacts.slice() : undefined;
+    next.terminalArtifacts = Array.isArray(p.artifacts) ? p.artifacts.slice() : [];
   }
   next.history.push(next.message);
   return next;
@@ -221,13 +218,12 @@ export class RefinementSession {
         (this.cancelRequested || this.view.state === 'cancelling');
     } catch (error) {
       if (generation !== this.generation || this.view.jobId !== jobId) { return; }
-      // §4.2: an unknown or already-released historic jobId degrades to a
-      // neutral notice; the page must never claim PROCESS_INTERRUPTED or any
-      // other state from this failure.
-      if ((error as CoreError).code === 'JOB_NOT_FOUND') {
+      if (callError(error).code === 'JOB_NOT_FOUND' && this.view.sequence < 0) {
+        // A recent ID can outlive its persisted snapshot. This is
+        // absence of a record, not evidence that the old computation failed.
         this.view = new RefinementView();
-        this.notice = '该任务编号没有可用记录（旧进程任务或已清理），请提交新任务。';
-      } else {
+        this.notice = '未找到上次任务记录。可提交新任务；旧任务结果请到文件库查找。';
+      } else if (!isTerminal(this.view.state)) {
         this.notice = '无法读取任务快照，请重新连接或等待后续事件。';
       }
     }

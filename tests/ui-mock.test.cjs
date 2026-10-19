@@ -329,7 +329,9 @@ test('actual Python host bridge events and snapshots produce matching UI termina
         fileId: `file_log_${capture.accepted.jobId.slice(4)}`, kind: 'log',
         displayName: 'job-log.txt', mediaType: 'text/plain' }]);
     } else {
-      assert.equal(live.terminalArtifacts, undefined);
+      // Both projections show no failure/cancellation logs on success;
+      // the formal page normalizes an absent optional field to an empty list.
+      assert.deepEqual(live.terminalArtifacts ?? [], []);
     }
     for (const snapshot of capture.snapshots) {
       assert.equal(receiveSnapshot(restored, snapshot), restored); // late snapshots cannot erase terminal

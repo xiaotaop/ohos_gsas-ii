@@ -197,10 +197,10 @@ Special handling is required."——分布于成员 C 既有文件与 B 的新�
   无签名材料，`assembleHap` 产物为未签名 HAP。
 - 事件通道队满丢弃（快照仍完整，符合空 sink 规则）；第二次终态被丢弃
   （Python 侧此情形抛异常，端口有意不复制崩溃行为）。
-- B03 增量（终态 `artifacts`、跨进程终态快照与恢复）仅以宿主测试证明：
-  未启用 `GSAS_HAS_PYTHON`、未构建 HAP、未上真机，不能计为真实载荷下的
-  UI 可发现/可导出证据。私有 traceback 只写 `jobs/<jobId>/logs/`，从不登记。
-- `RefinementPanel` 在核心就绪瞬间重挂，表单文本会被清空（A 侧组件契约
-  如此约定；页面加载早期通常先于用户输入完成）。
+- B03 的终态 `artifacts`、跨进程终态快照与 A 页面已在此分支整合；
+  宿主测试和不含真实运行时的开发构建不能替代应用内真实日志导出验收。
+  私有 traceback 只写 `jobs/<jobId>/logs/`，从不登记。
+- `RefinementPanel` 在核心就绪瞬间重挂；A 的 2026-10-19 接入收尾将表单
+  状态提升至父页面，保留已填写参数。真实载荷下的就绪切换仍待设备验证。
 - Windows 本机 `file-service-host.test.cjs` 因 `os.tmpdir()` 盘符路径被
   服务根校验拒绝，属宿主环境限制；CI（ubuntu）不受影响。

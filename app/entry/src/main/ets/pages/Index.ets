@@ -10,7 +10,7 @@ import { FilePickerService } from '../services/FilePickerService';
 import { SandboxFileService } from '../services/SandboxFileService';
 import { runFileServiceChecks } from '../verification/FileServiceCheck';
 import { INPUT_SLOTS, InputSlot, InputSlotInfo, InputBinding, InputSelection, RefinementInputs, draftScope } from '../model/RefinementInputs';
-import { CoreService } from '../model/Refinement';
+import { CoreService, callError } from '../model/Refinement';
 
 @Extend(Button) function desktopButton() {
   .type(ButtonType.Normal).height(28).fontSize(13).fontColor('#202020')
@@ -47,11 +47,18 @@ struct Index {
   private selection: InputSelection = new InputSelection();
   private settings: preferences.Preferences | undefined = undefined;
   private service: SandboxFileService | undefined = undefined;
-  @State private core: CoreService | undefined = undefined;
+  private core: CoreService | undefined = undefined;
+  @State private coreReady: boolean = false;
+  @State private coreOpening: boolean = false;
+  @State private coreStatus: string = '等待文件服务就绪。';
+  @State private phaseName: string = '';
+  @State private cycles: string = '';
+  @State private projectName: string = '';
   @State private knownJobId: string = '';
   private context: common.UIAbilityContext | undefined = undefined;
   private mainWindow: window.Window | undefined = undefined;
   private mounted: boolean = false;
+  private coreGeneration: number = 0;
   private closeHandler: () => Promise<boolean> = async (): Promise<boolean> => this.blockClose();
 
   aboutToAppear(): void {
@@ -60,6 +67,8 @@ struct Index {
 
   aboutToDisappear(): void {
     this.mounted = false;
+    this.coreGeneration++;
+    this.coreOpening = false;
     try { this.mainWindow?.off('windowWillClose', this.closeHandler); } catch { /* Window may already be gone. */ }
     this.mainWindow = undefined;
   }
@@ -76,9 +85,10 @@ struct Index {
   }
 
   private blockClose(): boolean {
-    if (!this.taskActive && !this.busy) { return false; }
+    if (!this.taskActive && !this.busy && !this.coreOpening) { return false; }
     this.getUIContext().showAlertDialog({ title: '操作尚未结束',
-      message: this.taskActive ? '精修任务尚未结束。可以保持应用在后台运行，或在任务页请求取消并等待终态后退出。' : '文件操作正在进行，请完成或取消文件选择后再退出。',
+      message: this.taskActive ? '精修任务尚未结束。可以保持应用在后台运行，或在任务页请求取消并等待终态后退出。' :
+        this.coreOpening ? '正在初始化计算服务并恢复任务状态，请稍候。' : '文件操作正在进行，请完成或取消文件选择后再退出。',
       confirm: { value: '返回应用', action: () => { if (this.taskActive) { this.page = 'refinement'; } } } });
     return true;
   }
@@ -126,16 +136,26 @@ struct Index {
 
   /** Build and initialize the core facade; only then inject it as readyCore. */
   private async openCore(): Promise<void> {
-    if (!this.context || !this.service) { return; }
+    if (!this.mounted || !this.context || !this.service || this.coreOpening || this.coreReady) { return; }
+    const generation = ++this.coreGeneration;
+    const files = this.service;
+    this.coreOpening = true;
+    this.coreStatus = '正在初始化计算服务…';
     try {
-      const core = await AppServices.core(this.context, this.service);
-      await core.initialize(this.service.getCoreConfig());
-      this.knownJobId = await core.restoreJobId();
+      const core = await AppServices.core(this.context, files);
+      await core.initialize(files.getCoreConfig());
+      const jobId = await core.restoreJobId();
+      if (!this.mounted || generation !== this.coreGeneration) { return; }
+      this.knownJobId = jobId;
       this.core = core;
-      this.status = `${this.status} 计算核心已就绪。`;
+      this.coreReady = true;
+      this.coreStatus = '计算服务已就绪。';
     } catch (error) {
-      // The panel keeps its "服务尚未接入" state; input preparation still works.
-      this.status = `${this.status} 计算核心未就绪：${describeFileError(error)}`;
+      if (!this.mounted || generation !== this.coreGeneration) { return; }
+      const failure = callError(error);
+      this.coreStatus = `${failure.code}：${failure.message}`;
+    } finally {
+      if (this.mounted && generation === this.coreGeneration) { this.coreOpening = false; }
     }
   }
 
@@ -475,7 +495,8 @@ struct Index {
       Text(slot.label).fontSize(13).width('100%')
       Flex({ wrap: FlexWrap.Wrap, alignItems: ItemAlign.Center }) {
         Select(this.selectOptions(slot)).selected(this.selectedIndex(slot)).value(this.selectedName(slot.id))
-          .font({ size: 13 }).height(30).width(290).borderRadius(2).margin({ right: 8, bottom: 6 })
+          .font({ size: 13 }).height(30).width(290).constraintSize({ maxWidth: '100%' })
+          .borderRadius(2).margin({ right: 8, bottom: 6 })
           .id(`select-${slot.id}`).enabled(this.ready && !this.busy && !this.taskActive)
           .onSelect((index: number) => { this.chooseExisting(slot, index); })
         Button('Import...').desktopButton().id(`import-${slot.id}`).enabled(this.ready && !this.busy && !this.taskActive)
@@ -589,8 +610,8 @@ struct Index {
           this.parameters(this.page.split(':')[1])
         } else if (this.page === 'about') {
           this.pageTitle('GSAS-II — HarmonyOS port')
-          this.unavailable('原版界面依据 GSAS-II 2.0.0，源码版本 2b4aba1bc44de63a3da9d4495944c3b99e389399。当前为五阶段精修界面开发版，真实核心服务尚未接入。')
-          this.unavailable('Ctrl+R：打开精修任务页；F1：帮助与版本；Tab / Shift+Tab：切换控件。计算服务接入后，在任务页明确填写相名、Max cycles 与 .gpx 输出名称；取消需要等待当前阶段结束。')
+          this.unavailable('原版界面依据 GSAS-II 2.0.0，源码版本 2b4aba1bc44de63a3da9d4495944c3b99e389399。当前为五阶段精修开发版；计算是否可用以任务页的初始化状态为准。')
+          this.unavailable('Ctrl+R：打开精修任务页；F1：帮助与版本；Tab / Shift+Tab：切换控件。在任务页明确填写相名、Max cycles 与 .gpx 输出名称；其他参数页仅保存本地草稿，不自动提交计算。取消需要等待当前阶段结束。')
           this.unavailable('This product includes software produced by UChicago Argonne, LLC under Contract No. DE-AC02-06CH11357 with the Department of Energy.')
         } else {
           this.pageTitle(this.page.includes(':') ? this.page.split(':')[1] : this.page)
@@ -625,14 +646,18 @@ struct Index {
           // Branch swap remounts the panel exactly when initialization flips
           // (panel contract: "mount a new panel when initialization finishes");
           // keeping either branch mounted preserves subscription while browsing.
-          if (this.core === undefined) {
+          if (!this.coreReady) {
             RefinementPanel({ filesReady: this.ready && !this.busy,
+              phaseName: $phaseName, cycles: $cycles, projectName: $projectName,
+              coreStatus: this.coreStatus, coreOpening: this.coreOpening,
+              retryCore: (): void => { this.openCore(); },
               prepareInputs: async (): Promise<RefinementInputs> => this.prepareTaskInputs(),
               exportArtifact: async (fileId: string): Promise<boolean> => this.exportTaskArtifact(fileId),
               onTaskChange: (_jobId: string, active: boolean): void => { this.taskActive = active; } })
               .visibility(this.page === 'refinement' ? Visibility.Visible : Visibility.None)
           } else {
             RefinementPanel({ readyCore: this.core, knownJobId: this.knownJobId,
+              phaseName: $phaseName, cycles: $cycles, projectName: $projectName,
               filesReady: this.ready && !this.busy,
               prepareInputs: async (): Promise<RefinementInputs> => this.prepareTaskInputs(),
               exportArtifact: async (fileId: string): Promise<boolean> => this.exportTaskArtifact(fileId),
@@ -651,7 +676,7 @@ struct Index {
       Row({ space: 8 }) {
         Text(this.status).fontSize(12).fontColor('#303030').layoutWeight(1).maxLines(3)
         Divider().vertical(true).height(28)
-        Text(this.taskActive ? 'Task active' : this.busy ? 'Working...' : this.core ? 'Core: ready' : 'Core: unavailable').fontSize(12).fontColor('#555555').width(110)
+        Text(this.taskActive ? 'Task active' : this.busy ? 'Working...' : this.coreOpening ? 'Core: starting' : this.coreReady ? 'Core: ready' : 'Core: unavailable').fontSize(12).fontColor('#555555').width(110)
       }.width('100%').height(54).padding({ left: 8, right: 8 }).backgroundColor('#EEEEEE')
     }.width('100%').height('100%').backgroundColor('#F0F0F0')
       .onAreaChange((_old: Area, area: Area) => {

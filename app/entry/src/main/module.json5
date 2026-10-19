@@ -12,6 +12,8 @@
     "abilities": [
       {
         "name": "EntryAbility",
+        "minWindowWidth": 640,
+        "minWindowHeight": 480,
         "srcEntry": "./ets/entryability/EntryAbility.ets",
         "icon": "$media:app_icon",
         "label": "$string:app_name",
