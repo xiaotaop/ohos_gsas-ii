@@ -97,8 +97,9 @@ python3 scripts/Write-RuntimeManifest.py --payload /work/runtime-payload \
 把上游的零字节包标记规范化为一个换行（仍为合法 Python/`py.typed` 标记）。
 
 `GSASIIscriptable` 的静态导入闭包为 21 个模块级条目、缺失 0；函数内缺失
-12 项全部指向未构建的原生扩展（`pyspg`、`pypowder`、`pytexture`、`fmask`、
-`histogram2d`），见 §5。
+12 项，涉及 `pyspg`、`pypowder`、`pytexture`、`fmask`、`histogram2d` 五个
+模块；发布门禁按 8 个模块收件（另含 `pack_f`、`unpack_cbf`、
+`kvec_general`），见 §5。
 
 ### 3.2 OHOS aarch64 交叉编译（真实 CPython 3.12.9 头/库）
 
@@ -121,6 +122,24 @@ cmake.exe -G Ninja -S D:/gsas-cross/cpp -B D:/gsas-cross/build \
 符号作为动态未定义符号留给 `NEEDED` 的 `libpython3.12.so` 在加载时解析，
 这正是共享库嵌入解释器的预期形态。该证据只覆盖交叉编译/链接，不含设备
 dlopen 与 `Py_Initialize` 运行。
+
+### 3.3 strip 与自签名（宿主）
+
+HarmonyOS 拒绝未签名的用户 ELF，而 DevEco SDK 自带 `llvm-strip`、
+`llvm-objcopy` 与 `binary-sign-tool.jar`，因此签名不必等到上机。新增
+[`scripts/ohos/Sign-NativeModules.ps1`](../scripts/ohos/Sign-NativeModules.ps1)
+在宿主完成与设备侧 `sign-native-modules.sh` 等价的处理：
+
+```powershell
+powershell -NoProfile -File scripts/ohos/Sign-NativeModules.ps1 -Path D:\gsas-cross\build
+# 7e88b93dbfb243ac084e4ba39a663f3f02b20d8e1301d1f5ad61b78bc51d91d6  D:\gsas-cross\build\libgsas_core.so
+```
+
+脚本先 `llvm-strip --strip-debug`（348 976 → 243 584 字节），再
+`llvm-objcopy --remove-section=.codesign`，最后以 `-selfSign 1` 签名；
+产物新增 `.codesign` 段，`readelf -h/-d` 仍为 ELF64/AArch64 ET_DYN，
+`NEEDED` 不变。自签名只适用于开发包，正式证书链仍由成员 C 的发布构建
+完成；签名工具在段对齐变化时会打印一条 WARN，不影响产物。
 
 ## 4. 验证命令
 
@@ -155,9 +174,11 @@ Special handling is required."——分布于成员 C 既有文件与 B 的新�
      交叉编译与链接（证据见 §3.2）。
   仍**未关闭**：设备上 `libgsas_core.so` → `libpython3.12.so` 的 dlopen 链与
   `Py_Initialize` 运行、rawfile 解包与沙箱权限，均未在真机验证；载荷也未装入
-  HAP 做端到端运行。
-- 原生扩展 `pyspg`/`pypowder`/`pytexture`/`fmask`/`histogram2d` 未构建：
-  `pyspg` 需要 flang 20.1.0，当前 DevEco SDK 与已核对的社区分发均未提供。
+  HAP 做端到端运行。产物已完成 strip 与自签名（见 §3.3），但自签名不等于
+  正式发布签名。
+- 原生扩展 `pyspg`/`pypowder`/`pytexture`/`fmask`/`histogram2d`/`pack_f`/
+  `unpack_cbf`/`kvec_general` 未构建：`pyspg` 需要 flang 20.1.0，当前 DevEco
+  SDK 与已核对的社区分发均未提供。
   这**不是**"对称性/部分路径不可用"级别的裁剪：GSAS-II 2.0.0 的
   `GSASIIobj.SetNewPhase` 用 `GSASIIspc.SpcGroup('P 1')` 初始化 `P1SGData`，
   而 `SpcGroup` 直接调用 `pyspg.sgforpy`；缺少 `pyspg` 时该调用抛

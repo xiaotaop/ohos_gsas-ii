@@ -1,0 +1,363 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "version": 1,
+  "metadata": {
+    "component": {
+      "type": "application",
+      "bom-ref": "pkg:ohos/com.gsasii.desktop@0.1.0",
+      "name": "GSAS-II Desktop",
+      "version": "0.1.0"
+    },
+    "properties": [
+      {
+        "name": "draft",
+        "value": "true"
+      },
+      {
+        "name": "note",
+        "value": "Generated from scripts/payload/components.json. No file hashes; distributionReview values are pending. Regenerate from the signed HAP and complete the licence review before release."
+      }
+    ]
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/cpython@3.12.9",
+      "name": "cpython",
+      "version": "3.12.9",
+      "licenses": [
+        {
+          "license": {
+            "id": "PSF-2.0"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://artifacts-cn-beijing.volces.com/repository/ophcd.pkg/pkg/kernel-1.13.0/python/3.12.9/python-3.12.9-ohos-aarch64.tar.gz"
+        },
+        {
+          "type": "vcs",
+          "url": "https://www.python.org/ftp/python/3.12.9/Python-3.12.9.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "distributionReview",
+          "value": "pending"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/numpy@2.2.6",
+      "name": "numpy",
+      "version": "2.2.6",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://pypi.cnb.cool/OpenHarmonyPCDeveloper/pypi/-/packages/simple/numpy/../../packages/46/d1/ec3f782abdf0d8a87398feb6f732731945db028a9e59023f3c2f021bd910/numpy-2.2.6-cp312-cp312-ohos_aarch64.whl"
+        },
+        {
+          "type": "vcs",
+          "url": "https://pypi.org/project/numpy/2.2.6/"
+        }
+      ],
+      "properties": [
+        {
+          "name": "distributionReview",
+          "value": "pending"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/scipy@1.16.3",
+      "name": "scipy",
+      "version": "1.16.3",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://pypi.cnb.cool/OpenHarmonyPCDeveloper/pypi/-/packages/simple/scipy/../../packages/b5/eb/cb74cfabd35deed6c787d654513660eaefb062f275977043868d5cdb960b/scipy-1.16.3-cp312-cp312-ohos_aarch64.whl"
+        },
+        {
+          "type": "vcs",
+          "url": "https://pypi.org/project/scipy/1.16.3/"
+        }
+      ],
+      "properties": [
+        {
+          "name": "distributionReview",
+          "value": "pending"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/pycifrw@5.0.1",
+      "name": "pycifrw",
+      "version": "5.0.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "PSF-2.0"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://files.pythonhosted.org/packages/source/P/PyCifRW/pycifrw-5.0.1.tar.gz"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/jamesrhester/pycifrw/blob/development/README.md"
+        }
+      ],
+      "properties": [
+        {
+          "name": "distributionReview",
+          "value": "pending"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/prettytable@3.18.0",
+      "name": "prettytable",
+      "version": "3.18.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://files.pythonhosted.org/packages/fe/be/2e6798ace5cc036f5d05d36b7b2fd85346f1a708c87060890b070d0ec607/prettytable-3.18.0-py3-none-any.whl"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/jazzband/prettytable"
+        }
+      ],
+      "properties": [
+        {
+          "name": "distributionReview",
+          "value": "pending"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/wcwidth@0.9.2",
+      "name": "wcwidth",
+      "version": "0.9.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://files.pythonhosted.org/packages/9c/b4/0bfa065af506540d9d558e3e5548cff00bc1f9b24e6e2a8512498e8628de/wcwidth-0.9.2-py3-none-any.whl"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/jquast/wcwidth"
+        }
+      ],
+      "properties": [
+        {
+          "name": "distributionReview",
+          "value": "pending"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/ply@3.11",
+      "name": "ply",
+      "version": "3.11",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://files.pythonhosted.org/packages/e5/69/882ee5c9d017149285cab114ebeab373308ef0f874fcdac9beb90e0ac4da/ply-3.11.tar.gz"
+        },
+        {
+          "type": "vcs",
+          "url": "https://www.dabeaz.com/ply/"
+        }
+      ],
+      "properties": [
+        {
+          "name": "distributionReview",
+          "value": "pending"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/gsas-ii@2.0.0",
+      "name": "gsas-ii",
+      "version": "2.0.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "GSAS-II Open Source License"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://github.com/AdvancedPhotons/GSAS-II/tree/2b4aba1bc44de63a3da9d4495944c3b99e389399"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/AdvancedPhotons/GSAS-II"
+        }
+      ],
+      "properties": [
+        {
+          "name": "distributionReview",
+          "value": "pending"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/bridge@1.1.0",
+      "name": "bridge",
+      "version": "1.1.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "GSAS-II Open Source License"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://github.com/xiaotaop/ohos_gsas-ii/tree/core/b03-terminal-artifacts"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/xiaotaop/ohos_gsas-ii"
+        }
+      ],
+      "properties": [
+        {
+          "name": "distributionReview",
+          "value": "pending"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "pkg:generic/cpython@3.12.9",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:generic/numpy@2.2.6",
+      "dependsOn": [
+        "pkg:generic/cpython@3.12.9"
+      ]
+    },
+    {
+      "ref": "pkg:generic/scipy@1.16.3",
+      "dependsOn": [
+        "pkg:generic/cpython@3.12.9",
+        "pkg:generic/numpy@2.2.6"
+      ]
+    },
+    {
+      "ref": "pkg:generic/pycifrw@5.0.1",
+      "dependsOn": [
+        "pkg:generic/cpython@3.12.9",
+        "pkg:generic/numpy@2.2.6",
+        "pkg:generic/prettytable@3.18.0",
+        "pkg:generic/ply@3.11"
+      ]
+    },
+    {
+      "ref": "pkg:generic/prettytable@3.18.0",
+      "dependsOn": [
+        "pkg:generic/cpython@3.12.9",
+        "pkg:generic/wcwidth@0.9.2"
+      ]
+    },
+    {
+      "ref": "pkg:generic/wcwidth@0.9.2",
+      "dependsOn": [
+        "pkg:generic/cpython@3.12.9"
+      ]
+    },
+    {
+      "ref": "pkg:generic/ply@3.11",
+      "dependsOn": [
+        "pkg:generic/cpython@3.12.9"
+      ]
+    },
+    {
+      "ref": "pkg:generic/gsas-ii@2.0.0",
+      "dependsOn": [
+        "pkg:generic/cpython@3.12.9",
+        "pkg:generic/numpy@2.2.6",
+        "pkg:generic/scipy@1.16.3",
+        "pkg:generic/pycifrw@5.0.1"
+      ]
+    },
+    {
+      "ref": "pkg:generic/bridge@1.1.0",
+      "dependsOn": [
+        "pkg:generic/cpython@3.12.9",
+        "pkg:generic/gsas-ii@2.0.0"
+      ]
+    },
+    {
+      "ref": "pkg:ohos/com.gsasii.desktop@0.1.0",
+      "dependsOn": [
+        "pkg:generic/cpython@3.12.9",
+        "pkg:generic/numpy@2.2.6",
+        "pkg:generic/scipy@1.16.3",
+        "pkg:generic/pycifrw@5.0.1",
+        "pkg:generic/prettytable@3.18.0",
+        "pkg:generic/wcwidth@0.9.2",
+        "pkg:generic/ply@3.11",
+        "pkg:generic/gsas-ii@2.0.0",
+        "pkg:generic/bridge@1.1.0"
+      ]
+    }
+  ]
+}

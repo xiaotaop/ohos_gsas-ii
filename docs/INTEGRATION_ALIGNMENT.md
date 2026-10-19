@@ -180,7 +180,7 @@ M1 临时值仅供比对：`ui-mock/`、`pages/Index`、`com.example.gsas.uimock
 | 成员 | 最小交接内容 |
 |---|---|
 | A | 增加核心失败重试入口；在同一真实集成包复核 B03 失败/取消日志 artifact 的展示与导出（宿主级实现已随增量 PR 完成，待复核）；补齐窗口、键鼠、退出提示、三终态和真实截图证据 |
-| B | 提供可分发的 OHOS CPython/GSAS-II 运行时及来源/许可/构建清单；完成 aarch64 `GSAS_HAS_PYTHON` 构建（嵌入 §8 通道已在宿主 x86_64 完成真实解释器加载冒烟并修复其间发现的 emit capsule 缺陷）；B03 契约/Schema/示例/验证器和门面终态 artifact 及跨进程快照恢复已按决议完成宿主级实现（增量 PR，待复核）。**已补齐**：载荷装配配方与两级门禁（2214 文件/约 178 MB）、aarch64 交叉编译链接、`check_gsas_native.py` 原生扩展门禁。**阻断项**：载荷缺 8 个 GSAS-II 原生扩展（含 `pyspg`），相文件无法导入，五阶段在设备上不可达；仍需设备构建/接入扩展并提供真实计算与竞态证据 |
+| B | 提供可分发的 OHOS CPython/GSAS-II 运行时及来源/许可/构建清单；完成 aarch64 `GSAS_HAS_PYTHON` 构建（嵌入 §8 通道已在宿主 x86_64 完成真实解释器加载冒烟并修复其间发现的 emit capsule 缺陷）；B03 契约/Schema/示例/验证器和门面终态 artifact 及跨进程快照恢复已按决议完成宿主级实现（增量 PR，待复核）。**已补齐**：载荷装配配方与两级门禁（2214 文件/约 178 MB）、aarch64 交叉编译链接、`check_gsas_native.py` 原生扩展门禁、`libgsas_core.so` 的 strip/自签名（`scripts/ohos/Sign-NativeModules.ps1`）、启动时的 GSAS-II 扩展预检（缺模块返回 `CORE_NOT_READY`）、CycloneDX SBOM 草案（`packaging/sbom.draft.cdx.json`）。**阻断项**：载荷缺 8 个 GSAS-II 原生扩展（含 `pyspg`），相文件无法导入，五阶段在设备上不可达；仍需设备构建/接入扩展并提供真实计算与竞态证据 |
 | C | 装配并审计真实载荷；完成正式签名、API20/24 兼容、真机安装/升级、最终 SBOM/许可及上架申请材料；与 B 核对原生依赖来源 |
 | 组长/集成负责人 | 复核 A03/B03 增量，确定 A02 的验收设备/API/显示名，见证数值和生命周期验收，审核发布候选并签署技术放行；不代替 A/B/C 完成各自实现 |
 

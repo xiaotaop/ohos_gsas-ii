@@ -94,6 +94,11 @@ python3 scripts/Prepare-Runtime.py --manifest "$GSAS_PAYLOAD_BASE/runtime-manife
 无归档/字节码/外平台库）全部通过；状态如实为
 `prepared-not-device-validated`。
 
+SBOM 草案：`python3 scripts/payload/make_sbom.py` 从 `components.json` 生成
+[`packaging/sbom.draft.cdx.json`](../../packaging/sbom.draft.cdx.json)
+（CycloneDX 1.5，9 个组件，无文件哈希；`distributionReview` 保持 `pending`，
+最终 SBOM 须由成员 C 从签名 HAP 重新生成）。
+
 静态闭包：`GSASIIscriptable` 可达的模块级导入 21 项，缺失 0；函数内缺失 12 项，
 全部指向尚未构建的原生扩展（`pyspg`、`pypowder`、`pytexture`、`fmask`、
 `histogram2d`）。**`pyspg` 不是可选加速器**：GSAS-II 2.0.0 的

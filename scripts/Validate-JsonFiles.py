@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check that all versioned contract and PoC result JSON files are valid."""
+"""Check that every versioned JSON (contracts, PoC results, packaging) is valid."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SEARCH_ROOTS = (ROOT / "contracts", ROOT / "poc" / "results")
+SEARCH_ROOTS = (ROOT / "contracts", ROOT / "poc" / "results", ROOT / "packaging")
 
 
 def main() -> int:

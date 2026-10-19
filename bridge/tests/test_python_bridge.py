@@ -21,6 +21,7 @@ import tempfile
 import threading
 import unittest
 from pathlib import Path
+from unittest import mock
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -36,7 +37,8 @@ def _load_contract_validator():
 
 contract = _load_contract_validator()
 
-from bridge.engine import CoreRuntime  # noqa: E402
+from bridge.core import FiveStageRefiner  # noqa: E402
+from bridge.engine import CoreRuntime, gsas_native_problem  # noqa: E402
 from bridge.errors import BridgeError  # noqa: E402
 from bridge.fake_core import FakeFiveStageRefiner  # noqa: E402
 from bridge.files import FIXTURE_SHA256, FileCatalog  # noqa: E402
@@ -563,6 +565,58 @@ class BridgeRealGsasTest(unittest.TestCase, SandboxMixin):
         self.assertGreater((out_dir / "PbSO4-refined.gpx").stat().st_size, 1000)
         self.assertTrue((out_dir / "PbSO4-refined.json").is_file())
         self.assertTrue((out_dir / "PbSO4-refined.log").is_file())
+
+
+class NativePreflightTest(unittest.TestCase, SandboxMixin):
+    """CORE_API §8: a payload without the compiled modules fails at initialize."""
+
+    def test_fake_refiner_skips_the_native_probe(self):
+        files = self.build_sandbox()
+        service = LocalCoreService(CoreRuntime(FakeFiveStageRefiner(stage_delay=0)))
+        self.addCleanup(service.shutdown)
+        with mock.patch("bridge.engine.gsas_native_problem", return_value="boom") as probe:
+            info = service.initialize(self.config_for(files))
+        probe.assert_not_called()
+        self.assertTrue(info["ready"])
+
+    def test_missing_native_modules_fail_initialize_with_core_not_ready(self):
+        files = self.build_sandbox()
+        service = LocalCoreService(CoreRuntime(FiveStageRefiner()))
+        self.addCleanup(service.shutdown)
+        with mock.patch("bridge.engine.gsas_native_problem",
+                        return_value="缺少 GSAS-II 原生扩展: pyspg"):
+            with self.assertRaises(BridgeError) as ctx:
+                service.initialize(self.config_for(files))
+        self.assertEqual(ctx.exception.code, "CORE_NOT_READY")
+        self.assertTrue(ctx.exception.retryable)
+        self.assertIn("pyspg", ctx.exception.detail)
+
+
+class GsasNativeProbeTest(unittest.TestCase):
+    def test_all_modules_present(self):
+        with mock.patch("bridge.engine.importlib.import_module", return_value=object()):
+            self.assertIsNone(gsas_native_problem())
+
+    def test_reports_only_missing_modules(self):
+        def fake(name):
+            if name == "GSASII.pyspg":
+                raise ImportError("no pyspg")
+            return object()
+
+        with mock.patch("bridge.engine.importlib.import_module", side_effect=fake):
+            problem = gsas_native_problem()
+        self.assertIn("pyspg", problem)
+        self.assertNotIn("pypowder", problem)
+
+    def test_reports_gsas_package_failure(self):
+        def fake(name):
+            if name == "GSASII":
+                raise ImportError("no GSAS-II")
+            return object()
+
+        with mock.patch("bridge.engine.importlib.import_module", side_effect=fake):
+            problem = gsas_native_problem()
+        self.assertIn("GSAS-II 无法导入", problem)
 
 
 if __name__ == "__main__":

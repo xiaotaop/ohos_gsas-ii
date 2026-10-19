@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased — 非真机收尾：strip/自签名、启动预检与 SBOM 草案（2026-10-19，成员 B，仅宿主验证）
+
+- 新增 `scripts/ohos/Sign-NativeModules.ps1`：在宿主用 DevEco `llvm-strip`/`llvm-objcopy` 与 `binary-sign-tool.jar` 完成 strip 与自签名，等价于设备侧 `sign-native-modules.sh`。已处理 aarch64 `libgsas_core.so`（348 976 → 243 584 字节，新增 `.codesign`，ELF64/AArch64 与 `NEEDED` 不变）；自签名只适用于开发包，正式证书链仍由成员 C 负责。
+- `CoreRuntime.initialize` 增加 GSAS-II 原生扩展预检：真实 refiner 缺模块时返回 `CORE_NOT_READY`（detail 列出缺失模块），不再等到首个任务以 `INTERNAL_ERROR` 失败；假核心跳过预检。新增 5 项测试（预检、跳过、包缺失、部分缺失）。
+- 新增 `scripts/payload/make_sbom.py` 与 `packaging/sbom.draft.cdx.json`：从 `components.json` 生成 CycloneDX 1.5 草案（9 组件、含依赖关系；无文件哈希，`distributionReview` 保持 `pending`）。
+- 文档一致性：`PHASE3_CORE_BRIDGE` §4 改为设备侧待验项；原生扩展统一为 8 个；`RELEASE_ACCEPTANCE` 的覆盖升级状态更正为“设计+宿主测试完成，设备待验”。
+
 ## Unreleased — 载荷原生扩展门禁与影响如实化（2026-10-19，成员 B，仅宿主验证）
 
 - 新增 `scripts/payload/check_gsas_native.py`：发布载荷必须携带 8 个 GSAS-II 编译模块（`pyspg`、`pypowder`、`pytexture`、`fmask`、`histogram2d`、`pack_f`、`unpack_cbf`、`kvec_general`），验证 ELF64/AArch64/ET_DYN，并拒绝 `pydiffax`。缺模块时判为不合格；`--allow-missing` 仅用于开发载荷并打印 DEV-ONLY。新增 7 项合成载荷单元测试。
