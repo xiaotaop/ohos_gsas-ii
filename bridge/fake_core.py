@@ -48,6 +48,7 @@ class FakeSession:
 
 class FakeFiveStageRefiner:
     recipe_id = RECIPE_ID
+    requires_gsasii = False
     upstream_commit = UPSTREAM_COMMIT
     stages = STAGES
     validate_instrument = staticmethod(validate_instrument)

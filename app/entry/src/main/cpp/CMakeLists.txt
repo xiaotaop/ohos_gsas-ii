@@ -23,13 +23,17 @@ target_include_directories(gsas_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(gsas_core PUBLIC libace_napi.z.so)
 
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/python/include/Python.h)
-  target_compile_definitions(gsas_core PRIVATE GSAS_HAS_PYTHON)
-  target_include_directories(gsas_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/python/include)
-  find_library(GSAS_PYTHON_LIBRARY NAMES python3.12
-    PATHS ${CMAKE_CURRENT_SOURCE_DIR}/python/libs/${OHOS_ARCH} NO_DEFAULT_PATH)
-  if(NOT GSAS_PYTHON_LIBRARY)
+  # find_library is unusable here: ohos.toolchain.cmake sets
+  # CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY, which re-roots PATHS into the
+  # sysroot and never finds the payload directory. Link the file directly;
+  # libpython3.12.so carries no SONAME, so the loader records it by file name
+  # and resolves it from libs/arm64-v8a/ on device (RUNTIME_PACKAGING §2).
+  set(GSAS_PYTHON_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/python/libs/${OHOS_ARCH}/libpython3.12.so)
+  if(NOT EXISTS ${GSAS_PYTHON_LIBRARY})
     message(FATAL_ERROR
       "cpp/python/include found but libpython3.12.so is missing under cpp/python/libs/${OHOS_ARCH}")
   endif()
+  target_compile_definitions(gsas_core PRIVATE GSAS_HAS_PYTHON)
+  target_include_directories(gsas_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/python/include)
   target_link_libraries(gsas_core PUBLIC ${GSAS_PYTHON_LIBRARY})
 endif()

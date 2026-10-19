@@ -636,7 +636,13 @@ struct Index {
               filesReady: this.ready && !this.busy,
               prepareInputs: async (): Promise<RefinementInputs> => this.prepareTaskInputs(),
               exportArtifact: async (fileId: string): Promise<boolean> => this.exportTaskArtifact(fileId),
-              onTaskChange: (_jobId: string, active: boolean): void => { this.taskActive = active; } })
+              onTaskChange: (jobId: string, active: boolean): void => {
+                this.taskActive = active;
+                // §4.2 degradation: the session dropped an unknown/released
+                // recent jobId; clear the restore hint instead of ever
+                // presenting it as an interrupted or completed task.
+                if (!active && jobId.length === 0) { this.knownJobId = ''; }
+              } })
               .visibility(this.page === 'refinement' ? Visibility.Visible : Visibility.None)
           }
         }.height('100%').layoutWeight(1)

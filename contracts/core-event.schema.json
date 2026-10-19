@@ -87,7 +87,8 @@
       "required": ["state", "error"],
       "properties": {
         "state": { "const": "failed" },
-        "error": { "$ref": "#/$defs/error" }
+        "error": { "$ref": "#/$defs/error" },
+        "artifacts": { "$ref": "#/$defs/terminalLogArtifacts" }
       }
     },
     "cancelledPayload": {
@@ -96,7 +97,18 @@
       "required": ["state", "reason"],
       "properties": {
         "state": { "const": "cancelled" },
-        "reason": { "type": "string", "minLength": 1, "maxLength": 500 }
+        "reason": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "artifacts": { "$ref": "#/$defs/terminalLogArtifacts" }
+      }
+    },
+    "terminalLogArtifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "allOf": [
+          { "$ref": "#/$defs/artifact" },
+          { "properties": { "kind": { "const": "log" } } }
+        ]
       }
     },
     "result": {

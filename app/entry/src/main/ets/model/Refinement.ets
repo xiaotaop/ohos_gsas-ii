@@ -1,4 +1,6 @@
-// A-side v1.0 UI projection. B must confirm public snapshot/error types before integration.
+// A-side v1.1 UI projection (B-confirmed shared snapshot/error types; the
+// v1.1 addition is the optional registered `artifacts` on failed/cancelled
+// terminal payloads — B03).
 import { CoreConfig, FileServiceError } from '../contracts/Files';
 import { RefinementInputs } from './RefinementInputs';
 
@@ -26,6 +28,9 @@ export interface EventPayload {
   state?: string; stage?: string; stageIndex?: number; stageCount?: number; percent?: number;
   message?: string; level?: string; source?: string; result?: RefinementResult;
   error?: CoreError; reason?: string;
+  // B03: present only on failed/cancelled terminals whose sanitized log was
+  // registered before the terminal event; every entry has kind 'log'.
+  artifacts?: Artifact[];
 }
 export interface CoreEvent {
   schemaVersion: string; eventId: string; jobId: string; sequence: number;
@@ -102,6 +107,10 @@ export class RefinementView {
   history: string[] = [];
   result?: RefinementResult;
   error?: CoreError;
+  // Registered log artifacts carried by a failed/cancelled terminal payload
+  // (B03). Only these entries may be exported; the view never synthesizes a
+  // fileId from names, paths or history.
+  terminalArtifacts?: Artifact[];
 }
 
 // Pure UI transition; old jobs, duplicate events and post-terminal events cannot change the screen.
@@ -122,6 +131,7 @@ function applyPayload(view: RefinementView, sequence: number, type: string, p: E
   next.message = view.message;
   next.result = view.result;
   next.error = view.error;
+  next.terminalArtifacts = view.terminalArtifacts;
   next.history = view.history.slice();
   if (type === 'job.accepted') {
     next.state = 'queued'; next.message = '任务已接受，等待开始';
@@ -139,9 +149,11 @@ function applyPayload(view: RefinementView, sequence: number, type: string, p: E
     next.message = '五阶段精修已完成';
   } else if (type === 'job.failed') {
     next.state = 'failed'; next.error = p.error;
+    next.terminalArtifacts = Array.isArray(p.artifacts) ? p.artifacts.slice() : undefined;
     next.message = p.error ? p.error.message : '任务执行失败';
   } else if (type === 'job.cancelled') {
     next.state = 'cancelled'; next.message = p.reason || '任务已取消';
+    next.terminalArtifacts = Array.isArray(p.artifacts) ? p.artifacts.slice() : undefined;
   }
   next.history.push(next.message);
   return next;
@@ -207,9 +219,17 @@ export class RefinementSession {
       this.view = receiveSnapshot(this.view, snapshot);
       this.cancelRequested = isActive(this.view.state) &&
         (this.cancelRequested || this.view.state === 'cancelling');
-    } catch {
+    } catch (error) {
       if (generation !== this.generation || this.view.jobId !== jobId) { return; }
-      this.notice = '无法读取任务快照，请重新连接或等待后续事件。';
+      // §4.2: an unknown or already-released historic jobId degrades to a
+      // neutral notice; the page must never claim PROCESS_INTERRUPTED or any
+      // other state from this failure.
+      if ((error as CoreError).code === 'JOB_NOT_FOUND') {
+        this.view = new RefinementView();
+        this.notice = '该任务编号没有可用记录（旧进程任务或已清理），请提交新任务。';
+      } else {
+        this.notice = '无法读取任务快照，请重新连接或等待后续事件。';
+      }
     }
     this.changed();
   }

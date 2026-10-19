@@ -22,7 +22,15 @@
         "message": "仪器参数文件无法识别",
         "retryable": false,
         "detail": "GSAS powder reader rejected the selected instrument file"
-      }
+      },
+      "artifacts": [
+        {
+          "fileId": "file_log_20261012_002a",
+          "kind": "log",
+          "displayName": "job-log.txt",
+          "mediaType": "text/plain"
+        }
+      ]
     }
   }
 ]

@@ -23,6 +23,7 @@ JOB_ID = re.compile(r"^job_[A-Za-z0-9_-]{8,64}$")
 FILE_ID = re.compile(r"^file_[A-Za-z0-9_-]{8,64}$")
 EVENT_ID = re.compile(r"^evt_[A-Za-z0-9_-]{8,80}$")
 TERMINAL_TYPES = {"job.completed", "job.failed", "job.cancelled"}
+ARTIFACT_KEYS = {"fileId", "kind", "displayName", "mediaType"}
 
 
 def load(path: Path) -> Any:
@@ -82,6 +83,28 @@ def validate_request(request: dict[str, Any]) -> None:
     require("/" not in project_name and "\\" not in project_name, "request: projectName must be a filename")
 
 
+def validate_terminal_log_artifacts(payload: dict[str, Any], context: str) -> None:
+    """B03: failed/cancelled terminals may only carry registered, exportable
+    logs.  ``artifacts`` is optional — its absence means registration did not
+    complete — but a present array must hold exactly registered log entries.
+    The fileId is the registration-issued token: it is shape-checked here and
+    never derived from a path, a filename or the message history."""
+    artifacts = payload.get("artifacts")
+    if artifacts is None:
+        return
+    require(isinstance(artifacts, list) and len(artifacts) >= 1, f"{context}: terminal artifacts must be a non-empty array")
+    seen: set[str] = set()
+    for index, artifact in enumerate(artifacts):
+        item = f"{context}: artifact {index}"
+        require(isinstance(artifact, dict) and set(artifact) == ARTIFACT_KEYS, f"{item}: unexpected or missing artifact fields")
+        require(bool(FILE_ID.fullmatch(artifact["fileId"])), f"{item}: invalid artifact fileId")
+        require(artifact["fileId"] not in seen, f"{item}: duplicate artifact fileId")
+        seen.add(artifact["fileId"])
+        require(artifact["kind"] == "log", f"{item}: failed/cancelled terminals only return registered logs")
+        require(isinstance(artifact["displayName"], str) and 1 <= len(artifact["displayName"]) <= 120, f"{item}: invalid displayName")
+        require(isinstance(artifact["mediaType"], str) and 1 <= len(artifact["mediaType"]) <= 100, f"{item}: invalid mediaType")
+
+
 def validate_event_payload(event: dict[str, Any], context: str) -> None:
     event_type = event["type"]
     payload = event["payload"]
@@ -109,9 +132,11 @@ def validate_event_payload(event: dict[str, Any], context: str) -> None:
         require(re.fullmatch(r"[A-Z][A-Z0-9_]{2,63}", error["code"]) is not None, f"{context}: invalid error code")
         require(type(error["retryable"]) is bool, f"{context}: retryable must be boolean")
         require("Traceback" not in error["message"], f"{context}: traceback leaked into user message")
+        validate_terminal_log_artifacts(payload, context)
     elif event_type == "job.cancelled":
         require(payload["state"] == "cancelled", f"{context}: invalid cancelled state")
         require(bool(payload["reason"]), f"{context}: missing cancellation reason")
+        validate_terminal_log_artifacts(payload, context)
     else:
         raise ValueError(f"{context}: unknown event type {event_type!r}")
 
@@ -157,11 +182,12 @@ def optional_jsonschema_validation(
 ) -> str:
     try:
         import jsonschema
-    except ImportError:
+        draft_validator = jsonschema.Draft202012Validator
+    except (ImportError, AttributeError):
         return "jsonschema not installed; standard-library semantic validation used"
 
-    jsonschema.Draft202012Validator.check_schema(request_schema)
-    jsonschema.Draft202012Validator.check_schema(event_schema)
+    draft_validator.check_schema(request_schema)
+    draft_validator.check_schema(event_schema)
     jsonschema.validate(request, request_schema)
     for events in event_sets:
         for event in events:

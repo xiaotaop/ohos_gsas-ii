@@ -62,6 +62,9 @@ jobs:
       - name: Test runtime manifest generation
         run: python -m unittest discover -s tests -p 'test_runtime_manifest_tool.py' -v
 
+      - name: Test GSAS-II native extension payload gate
+        run: python -m unittest discover -s tests -p 'test_payload_native_check.py' -v
+
       - name: Test native exclusive file creation
         run: |
           c++ -std=c++17 -Wall -Wextra -Werror tests/file-exporter-native.test.cpp -o /tmp/gsas-exclusive-test

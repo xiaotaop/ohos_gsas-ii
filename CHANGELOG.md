@@ -1,5 +1,37 @@
 # Changelog
 
+## Unreleased — 非真机收尾：strip/自签名、启动预检与 SBOM 草案（2026-10-19，成员 B，仅宿主验证）
+
+- 新增 `scripts/ohos/Sign-NativeModules.ps1`：在宿主用 DevEco `llvm-strip`/`llvm-objcopy` 与 `binary-sign-tool.jar` 完成 strip 与自签名，等价于设备侧 `sign-native-modules.sh`。已处理 aarch64 `libgsas_core.so`（348 976 → 243 584 字节，新增 `.codesign`，ELF64/AArch64 与 `NEEDED` 不变）；自签名只适用于开发包，正式证书链仍由成员 C 负责。
+- `CoreRuntime.initialize` 增加 GSAS-II 原生扩展预检：真实 refiner 缺模块时返回 `CORE_NOT_READY`（detail 列出缺失模块），不再等到首个任务以 `INTERNAL_ERROR` 失败；假核心跳过预检。新增 5 项测试（预检、跳过、包缺失、部分缺失）。
+- 新增 `scripts/payload/make_sbom.py` 与 `packaging/sbom.draft.cdx.json`：从 `components.json` 生成 CycloneDX 1.5 草案（9 组件、含依赖关系；无文件哈希，`distributionReview` 保持 `pending`）。
+- 文档一致性：`PHASE3_CORE_BRIDGE` §4 改为设备侧待验项；原生扩展统一为 8 个；`RELEASE_ACCEPTANCE` 的覆盖升级状态更正为“设计+宿主测试完成，设备待验”。
+
+## Unreleased — 载荷原生扩展门禁与影响如实化（2026-10-19，成员 B，仅宿主验证）
+
+- 新增 `scripts/payload/check_gsas_native.py`：发布载荷必须携带 8 个 GSAS-II 编译模块（`pyspg`、`pypowder`、`pytexture`、`fmask`、`histogram2d`、`pack_f`、`unpack_cbf`、`kvec_general`），验证 ELF64/AArch64/ET_DYN，并拒绝 `pydiffax`。缺模块时判为不合格；`--allow-missing` 仅用于开发载荷并打印 DEV-ONLY。新增 7 项合成载荷单元测试。
+- 更正原生扩展的影响描述：缺少 `pyspg` 时 `GSASIIobj.SetNewPhase` 无法初始化 `P1SGData`，任何相文件（含 PbSO4 CIF）都无法导入，五阶段精修在设备上不可达；原"对称性/部分路径不可用"低估了影响。同步更新 `PHASE3_NAPI_CORE`、`RUNTIME_PACKAGING`、`DEPENDENCY_AUDIT`、`RELEASE_ACCEPTANCE`、`INTEGRATION_ALIGNMENT` 与 `scripts/payload/README.md`。
+- 本机恢复 Windows 基线复跑环境后，`Run-BridgeSelfTest.ps1 -Python <gsas-poc> -DllDirectory D:\mingw64\bin` 23 项通过（2 项按环境跳过），真实 PbSO4 五阶段数值再次通过；设备侧证据仍为空。
+
+## Unreleased — 运行时载荷装配与 aarch64 交叉编译（2026-10-19，成员 B，仅宿主验证）
+
+- 新增 `scripts/payload/`：可复现装配配方与 9 组件清单（`components.json`），锁定 CPython 3.12.9 ohos-aarch64、NumPy 2.2.6、SciPy 1.16.3、PyCifRW 5.0.1、prettytable 3.18.0、wcwidth 0.9.2、ply 3.11、GSAS-II 2.0.0@`2b4aba1b`、bridge 1.1.0，并记录每个下载的 SHA-256。
+- 载荷经 `Write-RuntimeManifest.py` 与 `Prepare-Runtime.py` 两级门禁：2214 个文件、约 178 MB，逐文件哈希与内容检查（AArch64 ELF、无归档/字节码/外平台库）通过，状态 `prepared-not-device-validated`。
+- 发布裁剪配方：pydiffax 导入块等价替换、25 个 wx/G2shapes GUI 模块删除与 12 处函数内导入中性化，AST 复扫保证无残留；去除 `help/`、`install/`、静态库 `.a`、测试数据与 `.npz` ZIP 容器。
+- 修复 `CMakeLists.txt` 在 OHOS 工具链下的库查找：`ohos.toolchain.cmake` 的 `CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY` 使 `find_library` 失效；改为校验并直接链接载荷中的 `libpython3.12.so`。
+- 使用 DevEco OHOS 工具链与真实 CPython 3.12.9 头/库完成 `-DGSAS_HAS_PYTHON` aarch64 交叉编译与链接；产物为 ELF64 AArch64 ET_DYN，`NEEDED` 含 `libpython3.12.so`。
+- 仍未关闭：设备 dlopen/`Py_Initialize`、HAP 内五阶段数值验收、`pyspg` 等原生扩展（缺 flang 20.1.0）、Sobol QMC（`.npz` 被发布门禁裁剪）。本次未构建 HAP、未上真机。
+
+## Unreleased — B03 终态日志 artifact 与跨进程快照（2026-10-19，成员 B，仅宿主验证）
+
+- `job.failed`/`job.cancelled` 终态载荷新增**可选** `artifacts` 数组（CORE_API v1.1 兼容新增）：仅携带登记返回的 `log` artifact，fileId 必须是登记令牌；Schema、示例、语义验证器、ArkTS 共享模型与门面、UI、测试七处同步。
+- 门面按决议顺序"先持久化并登记脱敏日志、再发终态"；登记未完成时事件不携带 `artifacts`，页面提示"日志登记未完成"，不从路径、文件名或历史消息推导。
+- 终态快照持久化到 `outputs/<jobId>/core/terminal-snapshot.json`，进程重启后 `getJobSnapshot` 在原生台账缺失时按 jobId 恢复并再校验形状；`PROCESS_INTERRUPTED` 合成快照补齐 `state` 字段；未知/已清理 ID 保持 `JOB_NOT_FOUND`，A 端仅对失效近期 ID 降级。
+- 快照与已登记产物一致性纳入断言：交付事件、内存视图与磁盘快照的终态载荷同形（宿主桥测试与 Python 捕获脚本）。
+- 修复嵌入层缺陷：`python_host.cpp` 的 `EmitCallback` 注册为 METH_O 却按元组解析参数，真实 CPython 经 §8 调用 `emit_event` 必然抛 TypeError（桩构建与纯 Python 测试均无法暴露）。
+- 新增宿主嵌入冒烟 `tests/python-host-embed-smoke.cpp`（不进 CI，需本机 libpython 开发包）：真实嵌入解释器加载真实 bridge 包并跑任务到唯一 `CORE_NOT_READY` 终态，事件跨越 C capsule 边界；已在 x86_64 验证，非 OHOS aarch64 证据。
+- 新增运行时依赖：无。真实 CPython/GSAS-II 载荷、OHOS aarch64 上启用 `GSAS_HAS_PYTHON` 的编译/加载与真机证据仍未关闭；本次未构建 HAP。
+
 ## Unreleased — Phase 3
 
 - 合并 ArkUI M1 mock 与 Python Bridge，并将两者的可脱机自测纳入 GitHub Actions。

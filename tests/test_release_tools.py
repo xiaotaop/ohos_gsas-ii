@@ -103,7 +103,7 @@ class ReleaseToolsTest(unittest.TestCase):
         self.assertTrue(report['contentChecksPassed'])
         self.assertFalse(report['releaseCandidateApproved'])
         self.assertEqual(report['runtimeId'], 'test-v1')
-        self.assertEqual(sum('component' in x for x in report['files']), len(self.manifest['files']) + 2)
+        self.assertEqual(sum('component' in x for x in report['files']), len(self.manifest['files']) + 3)
 
     def test_placeholder_and_missing_core_components_blocked(self):
         with self.assertRaises(rt.ReleaseError):
