@@ -309,7 +309,7 @@
     "byteIdenticalRepeatBuildPassed": true
   },
   "blockers": [
-    "Release Profile is not accepted as a trusted sideload source on HAD-W32. Prepare a supported device-release/testing distribution route; re-sign and re-verify that exact HAP.",
+    "New internaltesting Profile includes HAD-W32 and matches the release certificate. New HAP passes SDK verification; in-place install fails with 9568332 (sign info inconsistent) against the earlier debug-key app. Uninstall would clear application state and requires explicit user consent; only external input/output files are verified backed up.",
     "Prebuilt runtime embedded third-party source/version/license scope is not fully evidenced. Do not blanket-inherit parent component licenses or approve pending records.",
     "Two bundled GNU helper dependencies remain unmatched. Removal requires a new manifest/HAP and repeat device science; they were not silently removed from the tested candidate."
   ],
@@ -319,5 +319,32 @@
     "raw device identifiers",
     "developer account session",
     "raw system picker contents"
-  ]
+  ],
+  "latestDeviceReleaseCandidate": {
+    "hapSha256": "88ea4528b69f40458b0a17acbf0bb70720d9f29af3691b78438059299d2ace9e",
+    "hapSize": 158785370,
+    "sourceCommit": "609df2cc79cc24cfdecd791871aa2345cf58023c",
+    "profileSha256": "96d5da5bfd5bf787345b5e1b9a4f52ee8efa27b290b2b8fd100cf8589da503da",
+    "profileType": "release",
+    "appDistributionType": "internaltesting",
+    "releaseCertificateMatches": true,
+    "physicalDeviceIncluded": true,
+    "sdkVerifyAppPassed": true,
+    "nativeSignaturesVerified": 224,
+    "runtimeContentAuditPassed": true,
+    "fileCount": 2246,
+    "runtimeFiles": 2225,
+    "trackedAppFilesCompared": 50,
+    "privateSigningConfigExcludedFromComparison": true,
+    "installPassed": false,
+    "installationErrorCode": 9568332,
+    "installationError": "install sign info inconsistent",
+    "oldTestAppPreserved": true,
+    "externalInputOutputBackupFilesVerified": 8,
+    "applicationDatabaseHistorySettingsFullyBackedUp": false,
+    "uninstallAuthorization": "pending",
+    "releaseApproved": false,
+    "samePackagedContentAsEarlierReleaseHap": true,
+    "cycloneDx15SchemaPassed": true
+  }
 }
