@@ -14,9 +14,9 @@ PoC 与 Python Bridge 真实任务（见 [B 侧真机补充验证](B_DEVICE_VALI
 | 排除 | `pydiffax`（DIFFaX 下游分发依据未确认）；`G2shapes.py` 不编译 |
 | 源位置 | 设备上的固定提交源码树；对应文件 `GSAS-II/sources/*.for`、`*module.c`、`k_vec_cython/kvec_general.pyx` |
 
-扩展来自设备上既有的、与该提交对齐的环境（导出归档 SHA-256
+扩展来自设备上既有的、与该提交对齐的环境（当时导出的原始 `gsas-native-device.tar` SHA-256
 `f03d81c6bc1935cfe3c802e4f6aff2b7b658b875e47963b0a6cfe79d7f3de2c8`）。**仓库不包含这些
-二进制**；下文配方用于在设备上重建并复核。
+二进制**；下文步骤仅供在设备上诊断性重建和复核，尚不是排除 DIFFaX 的最终发布配方。
 
 ## 2. 构建环境（设备侧）
 
@@ -41,22 +41,28 @@ cross file 中的绝对路径属于该设备环境；换设备、用户或 SDK �
 
 ## 4. 构建与导出步骤（设备上执行）
 
-```sh
+```bash
 # 1) 固定源码提交并进入源码树
 cd <GSAS-II checkout> && git checkout 2b4aba1bc44de63a3da9d4495944c3b99e389399
 
-# 2) 用 cross file 配置（排除 pydiffax 的构建选项按上游 meson 配置裁剪）
+# 2) 用 cross file 配置诊断构建。固定提交的 sources/meson.build 没有关闭
+#    pydiffax 的选项，以下命令也会编译它；不得分发完整构建目录。
 meson setup build-ohos --cross-file <设备上的 gsas-ohos-cross.ini> --buildtype=release
 ninja -C build-ohos
 
-# 3) 签名（设备会拒绝未签名 ELF）
-scripts/ohos/sign-native-modules.sh build-ohos
+# 3) 签名（设备会拒绝未签名 ELF）。脚本属于本移植仓库，不在 GSAS-II 上游树中。
+<ohos_gsas-ii checkout>/scripts/ohos/sign-native-modules.sh build-ohos
 
-# 4) 导出 8 个模块并记录归档哈希
+# 4) 仅导出 8 个允许的模块；不要导出 pydiffax 或完整构建目录。
 tar -czf gsas-extensions-had-w32.tar.gz \
   build-ohos/GSASII/{pyspg,pypowder,pytexture,fmask,histogram2d,pack_f,unpack_cbf,kvec_general}*.so
 sha256sum gsas-extensions-had-w32.tar.gz
 ```
+
+此处新生成的 `.tar.gz` 与既有 `gsas-native-device.tar` 不是同一归档，哈希不应相等。
+归档前须逐项核对模块名，确认没有 `pydiffax`；正式发布构建还须由 B 提供并验证
+**在 Meson 源配置中排除 `DIFFaXsubs_lib` 和 `pydiffax` 目标**的固定补丁或等效构建步骤。
+当前诊断命令不能代替该交付。
 
 ## 5. 入载荷与门禁
 
@@ -78,7 +84,9 @@ HAD-W32 本地组装的 2230 文件载荷在不带 `--allow-missing` 时通过�
 - 无 `pydiffax`；不含调试段（由 `llvm-strip --strip-debug` 保证）；
 - 设备 HiShell 中逐个 `import GSASII.<name>` 成功，`GSASII.GSASIIscriptable` 可导入；
 - `check_gsas_native.py` 通过；
-- 归档哈希与 [B 侧真机补充验证](B_DEVICE_VALIDATION_2026-10-19.md) 记录一致。
+- 对既有 `gsas-native-device.tar`，归档哈希与
+  [B 侧真机补充验证](B_DEVICE_VALIDATION_2026-10-19.md) 记录一致；重建归档应单独记录哈希，
+  不应预期与既有归档相同。
 
 当前只记录了**归档**哈希，没有逐模块 SHA-256；如组长留存了逐模块值，应在冻结清单中补录。
 
@@ -86,7 +94,7 @@ HAD-W32 本地组装的 2230 文件载荷在不带 `--allow-missing` 时通过�
 
 - 8 个模块本身属于 GSAS-II（GSAS-II Open Source License），许可原文随载荷
   `licenses/gsas-ii/` 提供。
-- 模块静态链接 LLVM **FortranRuntime 20.1.0**（`compiler-rt`/Flang 运行时），其许可为
+- 模块静态链接 LLVM **FortranRuntime 20.1.0**（Flang 运行时），其许可为
   **Apache-2.0 WITH LLVM-exception**，源码 <https://github.com/llvm/llvm-project>。
   最终 SBOM 与许可清单必须包含该组件及许可原文（由 C 汇总）；
   [`packaging/sbom.draft.cdx.json`](../packaging/sbom.draft.cdx.json) 已在 metadata 中标注。
@@ -96,7 +104,7 @@ HAD-W32 本地组装的 2230 文件载荷在不带 `--allow-missing` 时通过�
 
 - 本配方只在 HAD-W32 的 HiShell 用户环境验证；应用沙箱内的加载与运行需 C 提供可安装的
   签名 HAP 后由 B 执行。
-- 设备工具链不可在仓库内复现（flang 20.1.0 为设备原生包）；“可重建”指按本文步骤在同版本
-  设备上重建，而非在 CI 中产出二进制。
+- 设备工具链不可在仓库内复现（flang 20.1.0 为设备原生包）；本文仅列出同版本设备上的
+  诊断性重建步骤，尚未证明最终发布载荷可重建。排除 `pydiffax` 的发布构建配方尚待 B 固化。
 - 最终 strip/重签、清单冻结、`distributionReview` 与发布审计归 C；B 提供来源、构建记录与
   清单输入。
