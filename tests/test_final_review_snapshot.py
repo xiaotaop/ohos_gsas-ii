@@ -16,7 +16,7 @@ class FrozenReviewTest(unittest.TestCase):
                 self.verify_snapshot(root)
 
     def verify_snapshot(self, root):
-        summary = json.loads((root / 'review-summary.json').read_text())
+        summary = json.loads((root / 'review-summary.json').read_bytes())
         seen = set()
         for row in summary['snapshotFiles']:
             path = PurePosixPath(row['path'])
@@ -37,13 +37,13 @@ class FrozenReviewTest(unittest.TestCase):
         for ref, targets in edges.items():
             self.assertIn(ref, refs)
             self.assertLessEqual(targets, refs)
-        decision = json.loads((root / 'review-decisions.json').read_text())
+        decision = json.loads((root / 'review-decisions.json').read_bytes())
         self.assertEqual(decision['hapSha256'], summary['hapSha256'])
         for row in decision['components']:
             if row['action'] == 'reviewed':
                 for license in row['licenseFiles']:
                     self.assertEqual(files[license['path']]['hashes'][0]['content'], license['sha256'])
-        native = json.loads((root / 'evidence/native-dependencies.json').read_text())
+        native = json.loads((root / 'evidence/native-dependencies.json').read_bytes())
         self.assertEqual(len(native['edges']), summary['nativeNeededEdges'])
         for edge in native['edges']:
             target = ('file:' + edge['packagedTarget'] if edge['status'] == 'packaged-filename'
