@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "kind": "physical-device-controlled-CPython-HAP-acceptance",
+  "hapSha256": "1190b1d5be7fa4520ed519f316db8f4035bb555aaaf8864295bd415aa23ce4e5",
+  "hapSize": 135975415,
+  "sourceCommit": "a797b860bfeef6900364179399ea9d4f88a9e308",
+  "runtimeId": "c-controlled-license-prototype-20261020",
+  "deviceModel": "HAD-W32",
+  "apiVersion": 23,
+  "buildMode": "release",
+  "profileType": "release",
+  "appDistributionType": "internaltesting",
+  "nativeELFs": 219,
+  "runtimeFiles": 2245,
+  "hapFileCount": 2266,
+  "licenseCollectionsPackaged": 19,
+  "installationPassed": true,
+  "oldAppUninstalled": false,
+  "sameSignerReplacement": {
+    "sameApplicationUid": true,
+    "firstInstallTimePreserved": true,
+    "versionCodeBefore": 1,
+    "versionCodeAfter": 1,
+    "scope": "same-versionCode runtime replacement; not incremented-versionCode upgrade acceptance"
+  },
+  "fiveExistingInputsPreservedAndIntegrityVerified": true,
+  "coreReadyPassed": true,
+  "realFiveStagePassed": true,
+  "jobId": "job_61b2337d-29ec-43cc-ae40-9256cdc805b8",
+  "elapsedSeconds": 8.664,
+  "independentWindowsBaselineChecksPassed": 12,
+  "sameNumericalResultsAsEarlierDebugProfileRun": true,
+  "applicationValidationPerformed": false,
+  "gpxJsonLogSystemPickerExportPassed": true,
+  "completedJobProcessRestartRecoveryPassed": true,
+  "restoredFileCount": 14,
+  "exports": [
+    {
+      "name": "Core.gpx",
+      "size": 709892,
+      "sha256": "0551e847154e117efd094e5679705175f63756ab6a2529a15caf1bf4f91b21fe"
+    },
+    {
+      "name": "Core.json",
+      "size": 1652,
+      "sha256": "23249f5bf7f75a08312fab06e1fdf859f5b1dc3261c753ae4f3f74b5813262f7"
+    },
+    {
+      "name": "Core.log",
+      "size": 5299,
+      "sha256": "9ed23fcf9fbe2471f3a5f56e85dca27705946b364cbe84e4876f62c25096c014"
+    }
+  ],
+  "distributionLicenseReviewApproved": false,
+  "step2Complete": false,
+  "releaseApproved": false,
+  "limitations": [
+    "API23 only, not API20/API24 approval.",
+    "Same versionCode replacement, not incremented-versionCode upgrade approval.",
+    "No active-job interruption, concurrency or cancellation approval.",
+    "Remaining prebuilt scope and final distribution review stay pending."
+  ]
+}

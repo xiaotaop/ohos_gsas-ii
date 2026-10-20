@@ -1,6 +1,6 @@
-# 实验性 CPython 核心重建（尚未通过设备验收）
+# CPython 核心重建（API23 样例验收通过，分发审查待完成）
 
-本配方只生成 OHOS AArch64 `libpython3.12.so`，不重建所有标准库扩展，不签名、不安装，也不批准分发。目的是移除旧核心中静态 libintl 实现，并在派生载荷中排除未使用的 readline、`_gdbm` 和 `libgdbm.so.6`。此前已验收的 25c9ef74… HAP 不受影响。
+本配方只生成 OHOS AArch64 `libpython3.12.so`，不重建所有标准库扩展，不签名、不安装，也不批准分发。目的是移除旧核心中静态 libintl 实现，并在派生载荷中排除未使用的 readline、`_gdbm` 和 `libgdbm.so.6`。此前已验收的 25c9ef74… HAP 保留；19 份版权材料的 1190b1d5… HAP 已完成新核心的 API23 样例复验。
 
 ## 固定输入
 
@@ -23,6 +23,7 @@ python3.13 scripts/ohos/controlled-cpython/Build-ControlledCore.py \
 
 手动执行相同构建参数已成功产出 AArch64 核心；核心 NEEDED 仅 libc.so，不定义旧 libintl 函数。保留的 218 个消费者所需 Python 动态符号均得到满足，关键 ABI 宏与旧核心一致。SDK 原生库签名、HAP 签名和内容审查通过。固定输入/补丁准备路径已用本脚本复验；尚未声称本脚本完整重跑构建或位级可复现。
 
-凭据见 `packaging/reviews/c-controlled-core-prototype-20261020.json`。无线调试断开，TCP 端口超时，候选尚未安装。符号覆盖不能替代 Core 初始化、五阶段数值、系统导出与进程恢复验收。通过这些检查之前不得将其标成正式替代运行时；若后续安装失败，保留同签名已验收包进行回退，不自动卸载。
+编译凭据见 `packaging/reviews/c-controlled-core-prototype-20261020.json`。初始 ce8fc6c5… HAP 因无线断开未安装；随后补齐版权材料的 1190b1d5… HAP 已通过 HAD-W32/API23 同签名覆盖安装、Core 初始化、五阶段 8.664 秒、12 项独立数值比较、系统导出和成功任务重启恢复（14 文件）。设备凭据见 `packaging/reviews/c-controlled-device-acceptance-20261020.json`。此结果不代表公开分发、API20/API24 或其余生命周期验收放行。
 
+源码准备脚本与实际编译输入的 4556 个文件逐字节相同。87 项源码伴随包的摘要及范围见 `packaging/reviews/c-controlled-source-companion-20261020.json`；编译脚本完整重跑和位级构建复现仍未声称。
 发布伴随源码还应包含实际采用的上游归档、固定补丁、此配方及 C 的增量补丁。保留标准库扩展仍来自社区归档，应单独说明，不把核心重建凭据套用到它们。

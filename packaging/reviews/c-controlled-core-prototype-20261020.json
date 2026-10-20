@@ -1168,7 +1168,7 @@
   "releaseApproved": false,
   "hapSha256": "ce8fc6c573fc33e1cba39022117ad643a13bcad443cc99757adbceaf4961c2d5",
   "installationPassed": false,
-  "installationAttempt": "HDC target disconnected; separate TCP probe timed out. No device mutation.",
+  "installationAttempt": "Initial ce8fc6c5 candidate was not installed when wireless disconnected; later 1190b1d5 notice-complete candidate passed same-signer physical acceptance.",
   "noticeCompleteCandidate": {
     "hapSha256": "1190b1d5be7fa4520ed519f316db8f4035bb555aaaf8864295bd415aa23ce4e5",
     "hapSize": 135975415,
@@ -1177,9 +1177,10 @@
     "signatureVerified": true,
     "nativeELFs": 219,
     "licenseCollectionsPackaged": 19,
-    "deviceValidated": false,
+    "deviceValidated": true,
     "cycloneDx15SchemaPassed": true,
-    "unmatchedNames": []
+    "unmatchedNames": [],
+    "physicalAcceptance": "c-controlled-device-acceptance-20261020.json"
   },
   "definedGNUFunctionMarkerScan": {
     "hapSha256": "1190b1d5be7fa4520ed519f316db8f4035bb555aaaf8864295bd415aa23ce4e5",

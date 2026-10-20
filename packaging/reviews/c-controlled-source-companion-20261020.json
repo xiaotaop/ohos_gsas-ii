@@ -1,0 +1,11 @@
+{
+  "kind": "controlled-CPython-core-source-companion",
+  "archiveFilename": "gsas-controlled-cpython-source-20261020.tar.gz",
+  "archiveSha256": "6f654514dd7642f283668e3297d39674a97c09ec02b36291eb9140024d0da3a0",
+  "archiveBytes": 27040149,
+  "memberCount": 87,
+  "sourceFilesPreparedCompared": 4556,
+  "sourceFilesPreparedDiffering": 0,
+  "scope": "Actual core official archive, 81 applied patches, C configure delta and recipe. Does not claim corresponding source of retained community stdlib or SciPy/NumPy binaries.",
+  "releaseApproved": false
+}
