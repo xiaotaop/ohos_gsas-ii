@@ -1,6 +1,6 @@
 # ohos_gsas-ii
 
-GSAS-II 面向 HarmonyOS PC 的移植仓库。无 GUI 核心 PoC、正式 ArkUI 页面、文件服务、C++ N-API、B03 终态产物契约和 A 端消费界面均已合入主线。**当前的指定设备 internaltesting 签名 HAP 已在 HAD-W32/API23 安装，并在应用内完成 PbSO4 五阶段、独立数值比较、三类导出及成功任务重启恢复。**这不是公开上架包；第三方预编译依赖的最终来源/许可审查、剩余真机边界场景和发布审批尚未完成。当前状态以[发布验收矩阵](docs/RELEASE_ACCEPTANCE.md)和[C 的签名 HAP 交付记录](docs/C_SIGNED_HAP_DELIVERY.md)为准。
+GSAS-II 面向 HarmonyOS PC 的移植仓库。无 GUI 核心 PoC、正式 ArkUI 页面、文件服务、C++ N-API、B03 终态产物契约和 A 端消费界面均已合入主线。**当前的指定设备 internaltesting 签名 HAP（`1190b1d5…`）已在 HAD-W32/API23 完成同签名覆盖、PbSO4 五阶段、独立数值比较、三类导出及成功任务重启恢复。**C 对此包的工程交付、最终 SBOM 和许可材料审查已完成，社区预编译来源精度限制已披露；这不是公开上架放行。剩余真机边界场景、组长技术验收和公开分发审批尚未完成。当前状态以[发布验收矩阵](docs/RELEASE_ACCEPTANCE.md)和[C 的最终工程审查](docs/C_FINAL_SBOM_REVIEW.md)为准。
 
 代码仓库：[GitHub](https://github.com/xiaotaop/ohos_gsas-ii)、[GitCode](https://gitcode.com/2401_86708491/ohos_gsas-ii)。社区申请状态见 [发布交接](docs/PUBLISHING.md)。
 
