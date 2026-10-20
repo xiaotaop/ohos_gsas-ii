@@ -1,10 +1,10 @@
 # ohos_gsas-ii
 
-GSAS-II 面向 HarmonyOS PC 的移植仓库。无 GUI 核心 PoC、正式 ArkUI 页面、文件服务、C++ N-API 与 B03 终态产物已合入主线。**指定设备内测包 0.1.1 / versionCode 2（`70588bde…`）已在 HAD-W32/API23 完成 C 的阶段三验收：递增版本升级保留旧数据、成功/失败/取消日志、三类导出、活动中断与成功任务/完整索引冷启动恢复。**同包最终 SBOM、许可材料和源码伴随已冻结，见 [C 阶段三交接](docs/C_PHASE3_ACCEPTANCE.md)。A 已在源码中修复文件库缓存刷新并精简界面，但这些修改晚于该 HAP，仍待新签名包复验；Core 专项、显式断网/API 兼容矩阵与组长技术放行也未完成。这不是公开上架批准，当前状态以[验收矩阵](docs/RELEASE_ACCEPTANCE.md)为准。
+GSAS-II 面向 HarmonyOS PC 的移植仓库。无 GUI 核心 PoC、正式 ArkUI 页面、文件服务、C++ N-API 与 B03 终态产物已合入主线。当前完整签名内测候选为 0.1.1 / versionCode 2、HAP `791dc53d…`：HAD-W32/API23 上的真实五阶段、显式断网、UI 终态观察及[结果页 12 项数值复核](docs/PR17_NUMERIC_UI_ACCEPTANCE_2026-10-20.md)已有记录。A 在旧签名包的已测场景按[字节差异和证据边界](docs/PR17_A14_EVIDENCE_BINDING_2026-10-20.md)保留为未变组件佐证；Core 边界按组长限定口径接收。组长选择补测 API20/API24，但当前没有对应运行环境；整包技术放行及公开上架均未完成，以[验收矩阵](docs/RELEASE_ACCEPTANCE.md)为准。
 
-PR #14 后的新完整签名候选 `59c86f18…` 已构建并可[直接下载交付 ZIP](docs/C_A14_SIGNED_HAP.md)，源码为 `57c661db…`；它与上述已验收旧包版本号相同，新包真机结果待 A 返回。
+PR #14 签名包 `59c86f18…`（源码 `57c661db…`）的[A 同包真机记录](docs/A_A14_DEVICE_ACCEPTANCE.md)已归档；它是历史候选，不是当前最终 HAP。
 
-PR #17 的精确源码 `ce624cec…` 已重建完整运行时签名候选 `791dc53d…`，可[下载 HAP 与完整材料](docs/C_PR17_SIGNED_HAP.md)。原签名/Profile 已核验一致，等待组长/B 对本包完成终态唯一性和显式断网真机记录。
+PR #17 的精确源码 `ce624cec…` 已重建完整运行时签名候选 `791dc53d…`，可[下载 HAP 与完整材料](docs/C_PR17_SIGNED_HAP.md)；原签名/Profile 已核验一致，[同包终态观察与显式断网](docs/PR17_DEVICE_RETEST_2026-10-20.md)已记录。仍待[API20/API24 运行补测](docs/API20_API24_RETEST_2026-10-20.md)。
 
 代码仓库：[GitHub](https://github.com/xiaotaop/ohos_gsas-ii)、[GitCode](https://gitcode.com/2401_86708491/ohos_gsas-ii)。社区申请状态见 [发布交接](docs/PUBLISHING.md)。
 
@@ -18,7 +18,7 @@ Windows x86-64 基线与 HarmonyOS PC aarch64 真机均已完成同一套五阶�
 
 ArkUI、文件服务、C++ N-API 和 Python/GSAS-II 核心之间的 v1.0 基线及 B03 v1.1 可选终态日志 `artifacts` 增量见[核心接口契约](docs/CORE_API.md)。JSON Schema 与可用于界面 mock 的成功/失败示例位于 `contracts/`，可运行 `python scripts/Validate-CoreContracts.py` 校验。
 
-M1 ArkUI 源码映射与接入说明见 [M1 ArkUI 演示](docs/M1_ARKUI.md)，工程位于 `ui-mock/`，按锁定上游 wxPython 源码翻译菜单、数据树、Controls 与 Refine 交互子集。该 mock 演示使用模拟数据，不进入正式 HAP；正式 `app/` 已独立实现相应页面，并完成上述指定设备成功路径验证。同一 0.1.1 签名 HAP 的失败/取消产物及进程生命周期已有 C 实测；A 的正式截图与键鼠窗口/后台退出场景仍待确认。
+M1 ArkUI 源码映射与接入说明见 [M1 ArkUI 演示](docs/M1_ARKUI.md)，工程位于 `ui-mock/`，按锁定上游 wxPython 源码翻译菜单、数据树、Controls 与 Refine 交互子集。该 mock 演示使用模拟数据，不进入正式 HAP；正式 `app/` 已独立实现相应页面并通过指定设备成功路径。旧 `70588bde…` 包的失败/取消产物与进程生命周期、旧 `59c86f18…` 包的 A 窗口/键盘/退出场景分别有同包记录，不混作最新 `791dc53d…` 包的直接测试。
 
 A/B/C 的工程入口、公共类型、文件服务、初始化、日志产物及组长审核结论，见 [接入对齐清单](docs/INTEGRATION_ALIGNMENT.md)。代码级审核通过不等同于真实运行时、真机或发布验收通过。
 
@@ -28,7 +28,7 @@ A/B/C 的工程入口、公共类型、文件服务、初始化、日志产物�
 
 正式 `app/` 已接入五份精修输入的选择、关联持久化和真实文件完整性校验；重选保留旧文件，取消保留原关联。应用包含六组菜单、可拖动分栏、真实输入数据树、参数草稿编辑器，以及五阶段任务/取消/结果/产物导出页面。PR #4、#6、#5 依次交付 CoreService/N-API、运行时安装器、B03 已登记日志 fileId 与跨进程快照，以及 A 端展示/导出入口；PR #9 补齐 C 的签名 HAP 与真机成功路径证据。完整原版 GUI 不在当前 MVP 范围，发布验收尚未完成。
 
-A 端收尾补齐核心初始化状态/重试、表单保留、失效任务 ID 恢复及 B03 可选日志产物消费入口；与 B 门面的组合宿主测试 50 项通过。成功/失败/取消日志及进程生命周期已在同一 0.1.1 HAP 验证；Core-only 取消竞态和 A 产品交互仍待专项确认，详见 [A 端交付](docs/UI_DELIVERY.md)。
+A 端收尾补齐核心初始化状态/重试、表单保留、失效任务 ID 恢复及 B03 可选日志产物消费入口；与 B 门面的组合宿主测试已有覆盖。旧 `70588bde…` 包的成功/失败/取消日志与进程生命周期、旧 `59c86f18…` 包的 A 产品交互分别留有同包证据。PR #17 Core 三项边界按[组长限定口径](docs/LEADER_CORE_BOUNDARY_ACCEPTANCE_2026-10-20.md)接收，不声称最新包已取得内部故障注入或 native 时序证据；详见 [A 端交付](docs/UI_DELIVERY.md)及[验收矩阵](docs/RELEASE_ACCEPTANCE.md)。
 
 正式开发版的 [UI 操作说明](docs/UI_USER_GUIDE.md) 和 [成员 A 页面／图标／截图交付](docs/UI_DELIVERY.md) 已独立整理，列明非计算交互的实测范围与 B/C 依赖；素材不冒充真实计算或发布验收证据。
 
