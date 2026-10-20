@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "57c661db55020e5c200947da203ea449c536c1fe",
+  "checks": [
+    {
+      "name": "repository-tests",
+      "passed": true
+    },
+    {
+      "name": "bridge-tests",
+      "passed": true
+    },
+    {
+      "name": "json",
+      "passed": true
+    },
+    {
+      "name": "contracts",
+      "passed": true
+    },
+    {
+      "name": "fixtures",
+      "passed": true
+    }
+  ]
+}

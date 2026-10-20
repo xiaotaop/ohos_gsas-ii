@@ -25,3 +25,6 @@ packaging/reviews/c-phase3-20261020/*.json -text -whitespace
 # Version 0.1.1 review snapshots retain exact hash-bound bytes too.
 packaging/reviews/70588bde-final/*.json -text -whitespace
 packaging/reviews/70588bde-final/evidence/* -text -whitespace
+
+# Complete internaltesting handoff archive stored outside ordinary Git objects.
+deliveries/a-pr14-57c661db-59c86f18.zip filter=lfs diff=lfs merge=lfs -text
