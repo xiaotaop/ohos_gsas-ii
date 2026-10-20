@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "kind": "physical-device-license-scope-HAP-acceptance",
+  "hapSha256": "25c9ef7456af6fe34feed6be5bb746b82b7a92a298f9b4ab5baac64676208514",
+  "hapSize": 135854818,
+  "sourceCommit": "a797b860bfeef6900364179399ea9d4f88a9e308",
+  "runtimeId": "c-native-8-license-scope-20261020",
+  "deviceModel": "HAD-W32",
+  "apiVersion": 23,
+  "buildMode": "release",
+  "profileType": "release",
+  "appDistributionType": "internaltesting",
+  "nativeELFs": 222,
+  "runtimeFiles": 2242,
+  "hapFileCount": 2263,
+  "licenseTextsPackaged": 16,
+  "installationPassed": true,
+  "oldAppUninstalled": false,
+  "sameSignerReplacement": {
+    "sameApplicationUid": true,
+    "firstInstallTimePreserved": true,
+    "versionCodeBefore": 1,
+    "versionCodeAfter": 1,
+    "scope": "same-signer replacement/runtime revision, not incremented-versionCode upgrade acceptance"
+  },
+  "coreReadyPassed": true,
+  "fiveExistingInputsPreservedAndIntegrityVerified": true,
+  "realFiveStagePassed": true,
+  "jobId": "job_1869ef0e-a2c6-4c99-84d1-e2a2704bea11",
+  "elapsedSeconds": 8.641,
+  "independentWindowsBaselineChecksPassed": 12,
+  "sameNumericalResultsAsEarlierDebugProfileRun": true,
+  "applicationValidationPerformed": false,
+  "gpxJsonLogSystemPickerExportPassed": true,
+  "completedJobProcessRestartRecoveryPassed": true,
+  "restoredFileCount": 11,
+  "exports": [
+    {
+      "name": "Scope.gpx",
+      "size": 709893,
+      "sha256": "2ea2612a98cab45618df275db2fa417fbc4db347215f0a04a115fa1b3a81acb8"
+    },
+    {
+      "name": "Scope.json",
+      "size": 1655,
+      "sha256": "39ea278742aed1872622e8c10cb2a7d6730f87f912061813ed83cd0bef31b448"
+    },
+    {
+      "name": "Scope.log",
+      "size": 5320,
+      "sha256": "cdd4ddb09a1a19dd0e67035325dc0dda9014510970f7fdc8f9927c56ecba5ee2"
+    }
+  ],
+  "distributionLicenseReviewApproved": false,
+  "step2Complete": false,
+  "releaseApproved": false,
+  "limitations": [
+    "Only API23 tested; not API20/API24 compatibility approval.",
+    "Same versionCode 1 replacement, not incremented-versionCode upgrade acceptance.",
+    "Static GNU dependency corresponding-source/relink/distribution closure remains pending.",
+    "No active-job interruption/concurrency/cancellation claim."
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "source": "https://github.com/OpenMathLib/OpenBLAS/archive/refs/tags/v0.3.29.tar.gz",
+  "archiveSha256": "38240eee1b29e2bde47ebb5d61160207dc68668a54cac62c076bb5032013b1eb",
+  "scope": "Upstream notice superset; no assertion all test/RELApack code is shipped",
+  "files": [
+    {
+      "path": "OpenBLAS-0.3.29/GotoBLAS_00License.txt",
+      "size": 1608,
+      "sha256": "38d9eb2e3d49d73fa12b18729a112fa949f7887c3ff12be23a02c0c97d9fb5b8"
+    },
+    {
+      "path": "OpenBLAS-0.3.29/LICENSE",
+      "size": 1548,
+      "sha256": "190b5a9c8d9723fe958ad33916bd7346d96fab3c5ea90832bb02d854f620fcff"
+    },
+    {
+      "path": "OpenBLAS-0.3.29/ctest/LICENSE",
+      "size": 963,
+      "sha256": "c1ceeff23f242ddac805ba9d332f58b559454ec00447e65540c0e818f7de69da"
+    },
+    {
+      "path": "OpenBLAS-0.3.29/lapack-netlib/LAPACKE/LICENSE",
+      "size": 1545,
+      "sha256": "871f415ebd2fd06c7ab8cc3c0016aa2d26b918622345116e2d0c740b688d4843"
+    },
+    {
+      "path": "OpenBLAS-0.3.29/lapack-netlib/LICENSE",
+      "size": 2266,
+      "sha256": "978539245c405775bf347b1256c36df4daf8b69a64b099e94b1d53742201621e"
+    },
+    {
+      "path": "OpenBLAS-0.3.29/reference/LICENSE",
+      "size": 963,
+      "sha256": "c1ceeff23f242ddac805ba9d332f58b559454ec00447e65540c0e818f7de69da"
+    },
+    {
+      "path": "OpenBLAS-0.3.29/relapack/LICENSE",
+      "size": 1079,
+      "sha256": "abd17b9664b38cfab093e7cca625ac08d3a686fc63142ea58c27bae15969dd3a"
+    },
+    {
+      "path": "OpenBLAS-0.3.29/relapack/src/f2c.c",
+      "size": 2066,
+      "sha256": "83139ef4d2a0d880f875aebd3cdfe87f4a42461bd827a68e0f8ab119a6ac72ed"
+    },
+    {
+      "path": "OpenBLAS-0.3.29/relapack/src/f2c.h",
+      "size": 4953,
+      "sha256": "15152c5d98a562f603726a4e69bc465565a3a46f4a6eb11e54262a2211046d00"
+    },
+    {
+      "path": "OpenBLAS-0.3.29/test/LICENSE",
+      "size": 963,
+      "sha256": "c1ceeff23f242ddac805ba9d332f58b559454ec00447e65540c0e818f7de69da"
+    }
+  ],
+  "noticesSha256": "d96355e1fd695e6ab8aeb5eddff3d5e536fbb91b9415b40adafa14d46adf9b34"
+}

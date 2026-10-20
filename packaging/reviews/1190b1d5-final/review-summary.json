@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "kind": "C-final-SBOM-engineering-license-review",
+  "date": "2026-10-20",
+  "hapSha256": "1190b1d5be7fa4520ed519f316db8f4035bb555aaaf8864295bd415aa23ce4e5",
+  "hapSize": 135975415,
+  "runtimeId": "c-controlled-license-prototype-20261020",
+  "scope": "Specific release/internaltesting HAP and complete accompanying materials; no public-store or team-release authorization",
+  "status": "complete-with-recorded-provenance-limitations",
+  "sbomFile": "hap-sbom.cdx.json",
+  "sbomSha256": "73bc089265a01dc182fb657cfc82fb8836f3119747cb122df4f675cfd3e1d775",
+  "hapFiles": 2266,
+  "nativeELFs": 219,
+  "packagedLogicalComponents": 27,
+  "excludedPlatformComponents": 4,
+  "nativeNeededEdges": 485,
+  "unmatchedNeededNames": [],
+  "licenseCollectionsInHap": 19,
+  "explicitComponentDecisions": 32,
+  "mergedDuplicateOrNoticeEntries": 5,
+  "blockingFindings": [],
+  "acceptedProvenanceObservations": [
+    "SciPy generated BLAS 0.3.33 declaration differs from actual OpenBLAS 0.3.29 marker",
+    "Exact SciPy LLVM static archive version is unverified and omitted from SBOM version",
+    "Retained community extension patchsets not independently recovered; no universal permissive-license requirement for complete compiler logs is asserted"
+  ],
+  "licensesCorrected": [
+    "PyCIFRW is the exact ANSTO agreement, not simply PSF-2.0",
+    "No gettext/GDBM/readline/GNU Fortran binary component inferred from a retained license text",
+    "Mixed scientific bundled notices are documentation, not additional binary components",
+    "Platform libraries are excluded/not shipped; no guessed platform versions or licenses"
+  ],
+  "sameHapPhysicalAcceptance": {
+    "device": "HAD-W32",
+    "api": 23,
+    "fiveStageSeconds": 8.664,
+    "independentNumericalChecksPassed": 12,
+    "systemExports": [
+      "GPX",
+      "JSON",
+      "log"
+    ],
+    "completedJobProcessRestartRecoveredFiles": 14
+  },
+  "sourceCompanions": [
+    {
+      "filename": "gsas-port-source-companion.tar.gz",
+      "sha256": "57854733cd5200b20b22102083dc57a57b8f6e37787fc969ab66a4c21bf8e03e",
+      "size": 18621912,
+      "portCommit": "e0cb2294d6666866cdfe9522b458c9f28d949e70",
+      "verifiedActualAppFiles": 50
+    },
+    {
+      "filename": "gsas-controlled-cpython-source-20261020.tar.gz",
+      "sha256": "6f654514dd7642f283668e3297d39674a97c09ec02b36291eb9140024d0da3a0",
+      "size": 27040149,
+      "verifiedSourcePreparationFiles": 4556
+    }
+  ],
+  "externalNoticesFile": "evidence/THIRD-PARTY-NOTICES.txt",
+  "externalNoticesSha256": "d96355e1fd695e6ab8aeb5eddff3d5e536fbb91b9415b40adafa14d46adf9b34",
+  "step2EngineeringDeliveryComplete": true,
+  "publicDistributionApproved": false,
+  "releaseApproved": false,
+  "snapshotFiles": [
+    {
+      "path": "evidence/THIRD-PARTY-NOTICES.txt",
+      "sha256": "d96355e1fd695e6ab8aeb5eddff3d5e536fbb91b9415b40adafa14d46adf9b34",
+      "size": 1559273
+    },
+    {
+      "path": "evidence/bundled-source-receipts.json",
+      "sha256": "cc108a266a27eeabd57fad5d7bb863b1407218b062a66508fe04ab1e88b1f4f8",
+      "size": 11939
+    },
+    {
+      "path": "evidence/controlled-core.json",
+      "sha256": "6ff32262d52d32be693878b134e449c049a08110254858003853142d0ffa157d",
+      "size": 35351
+    },
+    {
+      "path": "evidence/core-source-companion.json",
+      "sha256": "4fad82bfd10064e88b891568a2a473e3ab03fa156ca950bb416112b9d986ca1b",
+      "size": 552
+    },
+    {
+      "path": "evidence/gnu-marker-scan.json",
+      "sha256": "c7c3605980602fb1fdb334295e9085aa633bb4ce8835867fec07837b92afe290",
+      "size": 216
+    },
+    {
+      "path": "evidence/license-source-receipts.json",
+      "sha256": "abf4918accd6f75ff00c98eb84b478b3bfa11ad90aa8bdb0ec64366c564eedd7",
+      "size": 9872
+    },
+    {
+      "path": "evidence/native-dependencies.json",
+      "sha256": "87a963451de7a59cc411495342ae62910a1d1c8fca02895aa06778852bb10b02",
+      "size": 194290
+    },
+    {
+      "path": "evidence/native-modules.json",
+      "sha256": "cf9eb9c43de716117d8999b330a353fd081ae99c08626f162c765135702aa4a7",
+      "size": 4867
+    },
+    {
+      "path": "evidence/openblas-notices.json",
+      "sha256": "899370821257568a278b986423eccf8450b735c66b52573957e565053a50d88f",
+      "size": 2039
+    },
+    {
+      "path": "evidence/physical-acceptance.json",
+      "sha256": "f97e767b5b59637423f66c0f0309f6079bc10579d955f7cf3208d373d2bd626e",
+      "size": 2205
+    },
+    {
+      "path": "evidence/scientific-elf.json",
+      "sha256": "233d7b66acf8e80ad13bc085eda9a372f3657c3b9264ff9572ea72203d2b545f",
+      "size": 166376
+    },
+    {
+      "path": "evidence/source-bundle-verification.json",
+      "sha256": "cb6dff6e0db5424936e8e5ab7e510fe3d5ab6ced100c138463b8282a941ad7a5",
+      "size": 546
+    },
+    {
+      "path": "hap-sbom.cdx.json",
+      "sha256": "73bc089265a01dc182fb657cfc82fb8836f3119747cb122df4f675cfd3e1d775",
+      "size": 1604739
+    },
+    {
+      "path": "review-decisions.json",
+      "sha256": "72960f8bb7090ce2f7879d452b057b43efb773ac6360d59b22c1b0e403dd7f7c",
+      "size": 25499
+    },
+    {
+      "path": "third-party-observations.json",
+      "sha256": "f916d25f9126077dba790dca4b65d66ca38101c9cb1c4e3dde9604216b88f9ab",
+      "size": 46728
+    }
+  ]
+}

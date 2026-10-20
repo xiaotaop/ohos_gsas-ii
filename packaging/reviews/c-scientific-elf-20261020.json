@@ -1,0 +1,624 @@
+{
+  "schemaVersion": 1,
+  "kind": "actual-HAP-original-SciPy-ELF-observations",
+  "hapSha256": "25c9ef7456af6fe34feed6be5bb746b82b7a92a298f9b4ab5baac64676208514",
+  "scipyWheelSha256": "a7e2095d76bfb55460b4f66ba5a7eb7861ca644c5c6326252b7cdb02a6d61dcd",
+  "llvmFortranConsumers": [
+    "libs/arm64-v8a/_dop.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_lsoda.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_odepack.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_test_odeint_banded.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_vode.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_dfitpack.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_fitpack.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_test_fortran.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/__odrpack.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_arpack.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_cpropack.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_dpropack.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_spropack.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_zpropack.cpython-312-aarch64-linux-ohos.so"
+  ],
+  "scope": "original symbol/compiler observations bound to actual HAP allocated sections; no exact static archive hash or complete source/build proof; compact snapshot retains runtime/BLAS observations; complete 115-library report retained locally",
+  "releaseApproved": false,
+  "records": [
+    {
+      "sourceMember": "scipy/integrate/_dop.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "4bd7401ebf5936dbce1a2ff32525e93168c68896dc220affa939869c0dea29f2",
+      "actualHapTarget": "libs/arm64-v8a/_dop.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "5d09cc186ba6918c17df5f9382415fe132f53d25f6307a3560fcbd8a26f63d0a",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 663033,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 42,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 7,
+        ".cpp": 34
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": [],
+      "definedLLVMFortranFunctionCount": 107,
+      "definedLLVMFortranFunctionExamples": [
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary",
+        "_FortranACopyInAssign"
+      ]
+    },
+    {
+      "sourceMember": "scipy/integrate/_lsoda.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "1d843eb731da477d7f7bef87c96f85cf516a09a486c8de08a5b661c77e8cf477",
+      "actualHapTarget": "libs/arm64-v8a/_lsoda.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "329ed452ea200b75ac9397c2498ad0a810113c55ac536c9b0cd975167acba199",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 725359,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 44,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 8,
+        ".cpp": 35
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": [],
+      "definedLLVMFortranFunctionCount": 117,
+      "definedLLVMFortranFunctionExamples": [
+        "_FortranAAbort",
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary"
+      ]
+    },
+    {
+      "sourceMember": "scipy/integrate/_odepack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "c59e2c456a719ad572b8900410034395b378f4b187a5ddc113d1ad391e2d79e9",
+      "actualHapTarget": "libs/arm64-v8a/_odepack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "a99b9bfac5baf35c29b6c6893d30890b114eeb0f56c206f6f0e82087da26f988",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 724478,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 43,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 7,
+        ".cpp": 35
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": [],
+      "definedLLVMFortranFunctionCount": 117,
+      "definedLLVMFortranFunctionExamples": [
+        "_FortranAAbort",
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary"
+      ]
+    },
+    {
+      "sourceMember": "scipy/integrate/_test_odeint_banded.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "d0feadbda8c6acb65cdc24c200d1bee25c9a0db1971bff11d5b43f449fdc8cf1",
+      "actualHapTarget": "libs/arm64-v8a/_test_odeint_banded.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "670d492ff3b89c227c1e887cd58b65aeb990dc186a4bf888ae99fa468f49816d",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 725119,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 44,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 8,
+        ".cpp": 35
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": [],
+      "definedLLVMFortranFunctionCount": 117,
+      "definedLLVMFortranFunctionExamples": [
+        "_FortranAAbort",
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary"
+      ]
+    },
+    {
+      "sourceMember": "scipy/integrate/_vode.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "f70847b5624dac3326df4f172be0d69ec989930f1b8094073505a9912917e7d3",
+      "actualHapTarget": "libs/arm64-v8a/_vode.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "e6cae0fccdec9a8b0f2678f6bce2c8646a1bb79997ef0e2272b02f1c85679475",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 790959,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 45,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 9,
+        ".cpp": 35
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": [],
+      "definedLLVMFortranFunctionCount": 117,
+      "definedLLVMFortranFunctionExamples": [
+        "_FortranAAbort",
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary"
+      ]
+    },
+    {
+      "sourceMember": "scipy/interpolate/_dfitpack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "7a41a8651d2494fa4a35c2eb9754e9c961c12f4d630cff4edb3096b642b10cb5",
+      "actualHapTarget": "libs/arm64-v8a/_dfitpack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "35c4731051b97ef0d179c0533a0881d15ce12f04848dba1791f056708725fc4f",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 859468,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 42,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 7,
+        ".cpp": 34
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": [],
+      "definedLLVMFortranFunctionCount": 107,
+      "definedLLVMFortranFunctionExamples": [
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary",
+        "_FortranACopyInAssign"
+      ]
+    },
+    {
+      "sourceMember": "scipy/interpolate/_fitpack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "2c9a4d4d325587f9701180112032a1816add1a51de98e6a0ad26bae941dc87de",
+      "actualHapTarget": "libs/arm64-v8a/_fitpack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "affeb7ad01325f2c9864375f10c51124d093fb5197c80da4a47a751072d393a0",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 660613,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 41,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 6,
+        ".cpp": 34
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": [],
+      "definedLLVMFortranFunctionCount": 107,
+      "definedLLVMFortranFunctionExamples": [
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary",
+        "_FortranACopyInAssign"
+      ]
+    },
+    {
+      "sourceMember": "scipy/io/_test_fortran.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "39e34eb7d70fdb566dff556b4192e1af8215aed84b0103c5bedbdce90c3d39a6",
+      "actualHapTarget": "libs/arm64-v8a/_test_fortran.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "5d74e4a41f98a1df87dae37aafc1c3896ca606ed88e6038e33bb00c217838629",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 793576,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 43,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 7,
+        ".cpp": 35
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": [],
+      "definedLLVMFortranFunctionCount": 138,
+      "definedLLVMFortranFunctionExamples": [
+        "_FortranAAdjustl",
+        "_FortranAAdjustr",
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic"
+      ]
+    },
+    {
+      "sourceMember": "scipy/odr/__odrpack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "d8dd9da084820717861a2f849f3a1f2eeeaef7dd3a7b7be79e723b922faec7d3",
+      "actualHapTarget": "libs/arm64-v8a/__odrpack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "4d62309f2b074f942574898524d157768f36de34c603e81a9c71198ee199d591",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 790113,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 42,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 7,
+        ".cpp": 34
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": [],
+      "definedLLVMFortranFunctionCount": 107,
+      "definedLLVMFortranFunctionExamples": [
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary",
+        "_FortranACopyInAssign"
+      ]
+    },
+    {
+      "sourceMember": "scipy/sparse/linalg/_eigen/arpack/_arpack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "538dbae4aced46d4ce2a2d603576de89d267a523fc3c2c82faf8a5aa6a23781e",
+      "actualHapTarget": "libs/arm64-v8a/_arpack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "7d99b80e11359f8663197a535e744787dca4f943229d8500b74a8e104a3d09ec",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 1053649,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 44,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 9,
+        ".cpp": 34
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": [],
+      "definedLLVMFortranFunctionCount": 107,
+      "definedLLVMFortranFunctionExamples": [
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary",
+        "_FortranACopyInAssign"
+      ]
+    },
+    {
+      "sourceMember": "scipy/sparse/linalg/_propack/_cpropack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "7b0dcb6abb49a431730126b2933412c0e77d12fd76e2682457a717810cbecbe0",
+      "actualHapTarget": "libs/arm64-v8a/_cpropack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "2abec9c057991430a4c16d10adff0b2c4602096fc3adb8e191931b57e77bbba5",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 791151,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 44,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 8,
+        ".cpp": 35
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": [],
+      "definedLLVMFortranFunctionCount": 117,
+      "definedLLVMFortranFunctionExamples": [
+        "_FortranAAbort",
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary"
+      ]
+    },
+    {
+      "sourceMember": "scipy/sparse/linalg/_propack/_dpropack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "d956feb104066c150979f5a446dc54a458287d3340f8a032dbff1506aa9225fe",
+      "actualHapTarget": "libs/arm64-v8a/_dpropack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "cb5645403b4c046a3cbed38b0fe2193411b39d1016d4c2264c13469cb26916b4",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 725497,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 43,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 7,
+        ".cpp": 35
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": [],
+      "definedLLVMFortranFunctionCount": 117,
+      "definedLLVMFortranFunctionExamples": [
+        "_FortranAAbort",
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary"
+      ]
+    },
+    {
+      "sourceMember": "scipy/sparse/linalg/_propack/_spropack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "5aaa0bd1aac1c3786a622a940fd56b3fbafffe50a8a57011eb582b9a920968b3",
+      "actualHapTarget": "libs/arm64-v8a/_spropack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "446853a371272060484158cd355dad40461e4a095133a0f81d406d09c024e3d2",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 725498,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 43,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 7,
+        ".cpp": 35
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": [],
+      "definedLLVMFortranFunctionCount": 117,
+      "definedLLVMFortranFunctionExamples": [
+        "_FortranAAbort",
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary"
+      ]
+    },
+    {
+      "sourceMember": "scipy/sparse/linalg/_propack/_zpropack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "bb5b74e24719f6122d17c76dd2be9e580e95ad474f3d3ce488e295be6cdafb93",
+      "actualHapTarget": "libs/arm64-v8a/_zpropack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "3e7ec2fa8613f8aabf18120d0bf44161b7069fbab9067c7e180603558ff7d903",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 791150,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 44,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 8,
+        ".cpp": 35
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": [],
+      "definedLLVMFortranFunctionCount": 117,
+      "definedLLVMFortranFunctionExamples": [
+        "_FortranAAbort",
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary"
+      ]
+    },
+    {
+      "sourceMember": "scipy.libs/libscipy_openblas-80d8b5fa.so",
+      "sourceSha256": "094de356dd4def6076eb2f48ed17ae09364743f21ecf0be457e4828f9c89bf60",
+      "actualHapTarget": "libs/arm64-v8a/libscipy_openblas-80d8b5fa.so",
+      "actualHapSha256": "bd804fb7741e4a474770c8db844e17984890b87193dd6d94be42c4007449ace6",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4927,
+      "sourceSuffixCounts": {
+        ".c": 4927
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": [
+        "dgeev.c",
+        "dgesdd.c",
+        "zgeev.c",
+        "zpotrf.c"
+      ],
+      "definedLLVMFortranFunctionCount": 0,
+      "definedLLVMFortranFunctionExamples": []
+    }
+  ],
+  "allBoundLibraryCount": 115
+}

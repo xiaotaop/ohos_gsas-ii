@@ -1,0 +1,11 @@
+{
+  "gsasPortArchiveSha256": "57854733cd5200b20b22102083dc57a57b8f6e37787fc969ab66a4c21bf8e03e",
+  "gsasPortArchiveBytes": 18621912,
+  "gsasPortCommit": "e0cb2294d6666866cdfe9522b458c9f28d949e70",
+  "upstreamCommit": "2b4aba1bc44de63a3da9d4495944c3b99e389399",
+  "sourceFiles": 771,
+  "actualAppSourceFilesCompared": 50,
+  "coreSourceArchiveSha256": "6f654514dd7642f283668e3297d39674a97c09ec02b36291eb9140024d0da3a0",
+  "coreSourceMembersVerified": 86,
+  "scope": "source archive contents/hash verification; no universal prebuilt recipe claim"
+}

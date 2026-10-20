@@ -19,6 +19,35 @@ spec.loader.exec_module(sbom)
 
 
 class HapSbomTest(unittest.TestCase):
+    def test_third_party_report_requires_exact_hap_native_and_license_hashes(self):
+        inv = rt.audit_hap(self.hap, self.manifest)
+        inv['files'] += [{'path': 'libs/arm64-v8a/readline.so', 'sha256': 'a' * 64,
+                          'size': 64, 'component': 'cpython'},
+                         {'path': 'resources/rawfile/licenses/runtime/cpython/READLINE.txt',
+                          'sha256': 'b' * 64, 'size': 100, 'component': 'cpython'}]
+        row = {'id': 'readline', 'declaredVersion': '8.3', 'declaredLinkMode': 'static',
+               'bindings': [], 'consumers': [{'path': 'libs/arm64-v8a/readline.so', 'sha256': 'a' * 64}],
+               'licenseDeclaration': {'spdx': 'GPL-3.0-or-later'},
+               'licenseText': {'sha256': 'b' * 64, 'actualHapTargets': ['resources/rawfile/licenses/runtime/cpython/READLINE.txt']}}
+        report = {'kind': 'actual-HAP-third-party-review', 'hapSha256': inv['hapSha256'],
+                  'releaseApproved': False, 'components': [row]}
+        bom = sbom.build_bom(inv)
+        sbom.add_third_party_review(bom, inv, report)
+        added = next(c for c in bom['components'] if c['bom-ref'] == 'third-party:readline')
+        self.assertIn({'name': 'gsas:distributionReview', 'value': 'pending'}, added['properties'])
+        self.assertNotIn('licenses', added)  # Declaration is retained as a pending property.
+        report['hapSha256'] = 'c' * 64
+        with self.assertRaisesRegex(ValueError, 'bound'):
+            sbom.add_third_party_review(sbom.build_bom(inv), inv, report)
+        report['hapSha256'] = inv['hapSha256']
+        row['bindings'] = [{'actualPath': 'libs/arm64-v8a/readline.so', 'actualSha256': 'c' * 64}]
+        with self.assertRaisesRegex(ValueError, 'native binding'):
+            sbom.add_third_party_review(sbom.build_bom(inv), inv, report)
+        row['bindings'] = []
+        row['licenseText']['sha256'] = 'c' * 64
+        with self.assertRaisesRegex(ValueError, 'license differs'):
+            sbom.add_third_party_review(sbom.build_bom(inv), inv, report)
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)

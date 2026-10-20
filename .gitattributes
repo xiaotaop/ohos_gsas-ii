@@ -11,5 +11,10 @@ app/entry/src/main/resources/rawfile/licenses/* -text -whitespace
 # License copies have byte hashes in SOURCES.json; never rewrite line endings.
 packaging/licenses/third-party/*.txt -text -whitespace
 
+# These final-review snapshots are hash-bound to exact LF bytes, including on Windows.
+packaging/reviews/1190b1d5-final/*.json -text -whitespace
+packaging/reviews/1190b1d5-final/evidence/* -text -whitespace
+
 # Unified diffs require a single-space prefix on empty context lines.
 scripts/ohos/local-cross/gsas-ohos.patch -whitespace
+scripts/ohos/controlled-cpython/cross-configure.patch -whitespace

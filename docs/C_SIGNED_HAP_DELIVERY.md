@@ -1,6 +1,10 @@
 # C：签名 HAP 交付与剩余阻塞
 
+最新结论（2026-10-20）：1190b1d5… 包的成员 C 工程交付、最终 SBOM 与许可材料审查已完成，见 [最终审查](C_FINAL_SBOM_REVIEW.md)。下文 pending 为此前过程记录；组长/商店公开发布未放行。
+
 本记录随 PR #9 合入主线，补充 PR #8 的集成结果。**第 2 项（最终第三方分发审查）仍未完成；指定设备 internaltesting 包不可作为公开商店安装包或许可证放行结论。**
+
+2026-10-20：B 的 PR #10 材料已接收并按实际字节复核，11 份许可已装入新候选包；新候选未替代本记录的真机验收包。剩余缺项及两个包的范围见 [C_THIRD_PARTY_REVIEW](C_THIRD_PARTY_REVIEW.md)。
 
 ## 最新指定设备签名结果：安装与真实计算通过
 
@@ -49,7 +53,7 @@
 | CPython 附带 libffi/GDBM | HAP 中确有独立 ELF；GDBM 字符串报告 1.24 | 提供精确构建源码/修改、版本和各自许可；不能套用 PSF 许可 |
 | NumPy 附带 OpenBLAS64/GNU Fortran | `libscipy_openblas64_.so` 仅消费 `libgfortran.so.5`，后者仅被它消费；未发现其他 ELF 的 DT_NEEDED 指向该组库 | B 确认是否需要；若排除，还需检查动态加载路径，生成新清单并重新构建/验收，不可把本报告视作删除授权依据 |
 | SciPy 实际 BLAS | `libscipy_openblas-80d8b5fa.so` 被 23 个科学扩展消费，字符串报告 OpenBLAS 0.3.29 | 保留并补齐该构建的源码、许可和静态链接范围，不可连同旧帮助库删除 |
-| CPython 静态第三方范围 | `_ssl` 中观察到 OpenSSL 1.1.1w；readline 模块为 EditLine wrapper。SQLite、bzip2、XZ、ncurses、Expat、libmpdec 等对应模块亦在包中 | B 提供各模块的配置、依赖源码/补丁、版本和许可原文；二进制字符串或 Python 主许可证不能替代这些凭据 |
+| CPython 静态第三方范围 | `_ssl` 中观察到 OpenSSL 1.1.1w；readline 包装器含 EditLine wrapper 标签；后续 ELF 对象核对识别 GNU readline 8.3（见最新 C 记录）。SQLite、bzip2、XZ、ncurses、Expat、libmpdec 等对应模块亦在包中 | B 提供各模块的配置、依赖源码/补丁、版本和许可原文；二进制字符串或 Python 主许可证不能替代这些凭据 |
 | GSAS/移植代码及其修改 | 原许可、NOTICE、排除范围和补丁在源码伴随包中 | 随二进制交付该包，并复核修改作者/差异；不能只提供源码 URL |
 
 当前未匹配依赖名仍为 `libc.musl-aarch64.so.1` 与 `libgcc_s.so.1`，来自上述 GNU 帮助库。为保持真机证据与 HAP 哈希一致，本次没有悄悄删除库或改变已验收载荷。静态库候选列表记录的是待核范围，不声称仅凭模块名已确定完整静态物料。
@@ -70,3 +74,9 @@ python3 scripts/Build-SourceCompanion.py \
 源码伴随包、HAP、完整 SBOM/inventory 和原始验收记录保存在本机忽略的 `app/build` 交付目录，不上传私钥、签名配置或借用设备的其他文件。仓库只提交可复现工具和脱敏核验摘要；未创建公开 Release 或提交应用上架。
 
 后续关闭顺序：补齐 B 的第三方依赖源码/版本/许可凭据；如需精简载荷，冻结改动后重新生成清单、许可、SBOM 和源码伴随包，再签名实际 HAP 并复验安装与科学结果。最终哈希变更时，本记录的旧验收结果仅保留为历史证据。
+
+2026-10-20 后续：C 已完成 13 份许可装配、两库精简签名候选和实际 HAP SBOM，见 [最新复核记录](C_THIRD_PARTY_REVIEW.md)。本文件的 88ea4528… 数值/真机证据仍仅对应原包，不能作为 fcd8d215… 新候选的验收。
+
+2026-10-20 最新补充：16 份许可、两库精简的 `25c9ef74…` 已在同一 HAD-W32/API23 通过同签名覆盖、五阶段 8.641 秒、12 项数值比较、系统导出及成功任务恢复（11 文件）。详见 [最新 C 复核](C_THIRD_PARTY_REVIEW.md) 和对应哈希验收凭据。另一个 CPython 核心重建实验仅通过离线检查，尚未安装。
+
+最新核心候选 `1190b1d5…`（19 份版权集合、219 ELF）已在 HAD-W32/API23 完成同签名覆盖、五阶段 8.664 秒、12 项数值比较、三类系统导出及成功任务重启恢复（14 文件），见 [设备凭据](../packaging/reviews/c-controlled-device-acceptance-20261020.json)。该核心的实际源码伴随包已归档；最终分发范围审查仍未批准。

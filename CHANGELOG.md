@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — C 最终 SBOM 与工程许可审查（2026-10-20）
+
+- 冻结已验收 1190b1d5… 指定设备包的 CycloneDX 1.5 SBOM：2266 文件、219 ELF、27 个随包组件、4 个排除的平台依赖与 485 条真实原生关系；修正重复归属伪关系、gettext 误归类和 PyCIFRW 许可名称。
+- 逐项审查决策绑定原始观察、实际许可/源码/设备哈希；补齐可读版权伴随材料和两份源码归档，整套本地交付经成员哈希与压缩归档内容核验。无需 B 提供不存在的自有构建日志。
+- 新增失败关闭的最终 SBOM 工具与 CI 信任边界/冻结快照测试。成员 C 对该 internaltesting 包的工程交付已完成；不改写 HAP 历史 pending，不授予商店或组长发布放行。详见 [最终审查](docs/C_FINAL_SBOM_REVIEW.md)。
+
 ## Unreleased — 运行时依赖与许可清单（2026-10-20，成员 B）
 
 - 新增 [`docs/DEPENDENCY_LICENSES.md`](docs/DEPENDENCY_LICENSES.md)：按真实载荷字节列出预编译 CPython/NumPy/SciPy 的下载来源、SHA-256、源码地址与 `_sysconfigdata` 记录的构建参数；内嵌第三方库（libffi 3.4.4、GDBM 1.24、OpenSSL 1.1.1w、SQLite 3.49.1、bzip2 1.0.8、XZ 5.8.2、ncurses 6.6、Expat 2.6.4、libmpdec 2.5.1、OpenBLAS 0.3.29）的版本、静态/动态链接方式、消费者与许可证。
