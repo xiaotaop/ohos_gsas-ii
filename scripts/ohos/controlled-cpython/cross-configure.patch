@@ -1,0 +1,28 @@
+--- a/configure
++++ b/configure
+@@ -6940,7 +6940,7 @@
+ 
+ if $CPP $CPPFLAGS conftest.c >conftest.out 2>/dev/null; then
+   PLATFORM_TRIPLET=`grep -v '^#' conftest.out | grep -v '^ *$' | tr -d ' 	'`
+-  case "$build_os" in
++  case "$host_os" in
+   linux-musl*)
+     PLATFORM_TRIPLET=`echo "$PLATFORM_TRIPLET" | sed 's/linux-gnu/linux-musl/'`
+     ;;
+--- a/configure.ac
++++ b/configure.ac
+@@ -1133,10 +1133,13 @@
+ 
+ if $CPP $CPPFLAGS conftest.c >conftest.out 2>/dev/null; then
+   PLATFORM_TRIPLET=`grep -v '^#' conftest.out | grep -v '^ *$' | tr -d ' 	'`
+-  case "$build_os" in
++  case "$host_os" in
+   linux-musl*)
+     PLATFORM_TRIPLET=`echo "$PLATFORM_TRIPLET" | sed 's/linux-gnu/linux-musl/'`
+     ;;
++  linux-ohos*)
++    PLATFORM_TRIPLET=`echo "$PLATFORM_TRIPLET" | sed 's/linux-gnu/linux-ohos/'`
++    ;;
+   esac
+   AC_MSG_RESULT([$PLATFORM_TRIPLET])
+ else

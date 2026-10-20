@@ -1,0 +1,16 @@
+[
+  {
+    "name": "numpy",
+    "version": "2.2.6",
+    "filename": "numpy-2.2.6.tar.gz",
+    "url": "https://files.pythonhosted.org/packages/76/21/7d2a95e4bba9dc13d043ee156a356c0a8f0c6309dff6b21b4d71a073b8a8/numpy-2.2.6.tar.gz",
+    "sha256": "e29554e2bef54a90aa5cc07da6ce955accb83f21ab5de01a62c8478897b264fd"
+  },
+  {
+    "name": "scipy",
+    "version": "1.16.3",
+    "filename": "scipy-1.16.3.tar.gz",
+    "url": "https://files.pythonhosted.org/packages/0a/ca/d8ace4f98322d01abcd52d381134344bf7b431eba7ed8b42bdea5a3c2ac9/scipy-1.16.3.tar.gz",
+    "sha256": "01e87659402762f43bd2fee13370553a17ada367d42e7487800bf2916535aecb"
+  }
+]

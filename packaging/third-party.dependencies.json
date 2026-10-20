@@ -440,6 +440,131 @@
         "patches": "exact prebuilt source and static-link distribution obligations pending"
       },
       "status": "review-pending"
+    },
+    {
+      "id": "llvm-fortran-scipy",
+      "version": "compiler 22.1.8; exact runtime archive unverified",
+      "kind": "embedded-library",
+      "linkMode": "static defined LLVM Fortran runtime implementation",
+      "files": [],
+      "consumers": [
+        "_dop.cpython-312-aarch64-linux-ohos.so",
+        "_lsoda.cpython-312-aarch64-linux-ohos.so",
+        "_odepack.cpython-312-aarch64-linux-ohos.so",
+        "_test_odeint_banded.cpython-312-aarch64-linux-ohos.so",
+        "_vode.cpython-312-aarch64-linux-ohos.so",
+        "_dfitpack.cpython-312-aarch64-linux-ohos.so",
+        "_fitpack.cpython-312-aarch64-linux-ohos.so",
+        "_test_fortran.cpython-312-aarch64-linux-ohos.so",
+        "__odrpack.cpython-312-aarch64-linux-ohos.so",
+        "_arpack.cpython-312-aarch64-linux-ohos.so",
+        "_cpropack.cpython-312-aarch64-linux-ohos.so",
+        "_dpropack.cpython-312-aarch64-linux-ohos.so",
+        "_spropack.cpython-312-aarch64-linux-ohos.so",
+        "_zpropack.cpython-312-aarch64-linux-ohos.so"
+      ],
+      "license": {
+        "spdx": "Apache-2.0 WITH LLVM-exception",
+        "text": "packaging/licenses/third-party/LLVM-FortranRuntime-22.1.8-LICENSE.txt"
+      },
+      "source": {
+        "url": "https://github.com/llvm/llvm-project/tree/llvmorg-22.1.8/flang-rt",
+        "patches": "not independently bound to exact community build"
+      },
+      "status": "review-pending"
+    },
+    {
+      "id": "lapack-netlib",
+      "version": "OpenBLAS 0.3.29 bundled declaration",
+      "kind": "embedded-library",
+      "linkMode": "C-translated LAPACK source observations",
+      "files": [],
+      "consumers": [
+        "libscipy_openblas-80d8b5fa.so"
+      ],
+      "license": {
+        "spdx": "BSD-3-Clause",
+        "text": "packaging/licenses/third-party/netlib-lapack-OpenBLAS-0.3.29-LICENSE.txt"
+      },
+      "source": {
+        "url": "https://github.com/OpenMathLib/OpenBLAS/tree/v0.3.29/lapack-netlib",
+        "patches": "not independently bound to exact community build"
+      },
+      "status": "review-pending"
+    },
+    {
+      "id": "lapacke",
+      "version": "OpenBLAS 0.3.29 bundled declaration",
+      "kind": "embedded-library",
+      "linkMode": "LAPACKE C entry points defined in OpenBLAS",
+      "files": [],
+      "consumers": [
+        "libscipy_openblas-80d8b5fa.so"
+      ],
+      "license": {
+        "spdx": "BSD-3-Clause",
+        "text": "packaging/licenses/third-party/lapacke-OpenBLAS-0.3.29-LICENSE.txt"
+      },
+      "source": {
+        "url": "https://github.com/OpenMathLib/OpenBLAS/tree/v0.3.29/lapack-netlib/LAPACKE",
+        "patches": "not independently bound to exact community build"
+      },
+      "status": "review-pending"
+    },
+    {
+      "id": "numpy-bundled-notices",
+      "version": "2.2.6",
+      "kind": "notice-scope",
+      "linkMode": "upstream notice collection; not a complete actual binary inclusion assertion",
+      "files": [],
+      "consumers": [
+        "_multiarray_umath.cpython-312-aarch64-linux-ohos.so"
+      ],
+      "license": {
+        "spdx": "Mixed upstream licenses; see complete notice collection",
+        "text": "packaging/licenses/third-party/numpy-2.2.6-BUNDLED-NOTICES.txt"
+      },
+      "source": {
+        "url": "packaging/licenses/third-party/SOURCES.json",
+        "patches": "no exact prebuilt recipe asserted"
+      },
+      "status": "review-pending"
+    },
+    {
+      "id": "scipy-bundled-notices",
+      "version": "1.16.3",
+      "kind": "notice-scope",
+      "linkMode": "upstream notice collection; not a complete actual binary inclusion assertion",
+      "files": [],
+      "consumers": [],
+      "license": {
+        "spdx": "Mixed upstream licenses; see complete notice collection",
+        "text": "packaging/licenses/third-party/scipy-1.16.3-BUNDLED-NOTICES.txt"
+      },
+      "source": {
+        "url": "packaging/licenses/third-party/SOURCES.json",
+        "patches": "no exact prebuilt recipe asserted"
+      },
+      "status": "review-pending"
+    },
+    {
+      "id": "llvm-compiler-rt-controlled",
+      "version": "15.0.4",
+      "kind": "notice-scope",
+      "linkMode": "controlled core build archive input only; not original community core",
+      "files": [],
+      "consumers": [
+        "libpython3.12.so"
+      ],
+      "license": {
+        "spdx": "Apache-2.0 WITH LLVM-exception",
+        "text": "packaging/licenses/third-party/LLVM-compiler-rt-15.0.4-LICENSE.txt"
+      },
+      "source": {
+        "url": "packaging/licenses/third-party/SOURCES.json",
+        "patches": "no exact prebuilt recipe asserted"
+      },
+      "status": "review-pending"
     }
   ],
   "removalProposal": {

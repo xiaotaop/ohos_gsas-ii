@@ -263,11 +263,37 @@ def prebuilt_bindings(declarations, lock, directory, hap):
     return result
 
 
-def generate(hap, manifest, declarations, directory, sdk, output, prebuilt_dir=None):
+def bind_scientific_receipt(receipt, inventory):
+    if (receipt.get('kind') != 'actual-HAP-original-SciPy-ELF-observations'
+            or receipt.get('hapSha256') != inventory['hapSha256']):
+        raise ValueError('scientific receipt is not bound to this HAP')
+    actual = {f['path']: f['sha256'] for f in inventory['files']}
+    seen = set()
+    llvm = set()
+    for row in receipt['records']:
+        target = row['actualHapTarget']
+        if target in seen:
+            raise ValueError('duplicate scientific consumer')
+        seen.add(target)
+        if row.get('definedLLVMFortranFunctions'):
+            llvm.add(target)
+        if (actual.get(row['actualHapTarget']) != row['actualHapSha256']
+                or row.get('allocatedSectionsMatchAfterExactPythonNeededNormalization') is not True):
+            raise ValueError('scientific receipt differs from actual HAP bytes')
+    if (not seen or len(receipt['llvmFortranConsumers']) != len(llvm)
+            or set(receipt['llvmFortranConsumers']) != llvm):
+        raise ValueError('scientific consumer summary differs from bound observations')
+    return {'librariesBound': len(receipt['records']), 'llvmFortranConsumers': sorted(llvm),
+            'receiptCanonicalJsonSha256': rt.digest(json.dumps(receipt, sort_keys=True).encode()),
+            'scope': receipt['scope']}
+
+
+def generate(hap, manifest, declarations, directory, sdk, output, prebuilt_dir=None, scientific_receipt=None):
     if output.exists():
         raise ValueError('output must be a new directory')
     receipts = license_receipts(directory)
     inventory = rt.audit_hap(hap, manifest, 'development')
+    scientific = bind_scientific_receipt(scientific_receipt, inventory) if scientific_receipt else None
     actual = inventory['files']
     tool = sdk / 'native/llvm/bin/llvm-readelf'
     if not tool.is_file():
@@ -333,15 +359,16 @@ def generate(hap, manifest, declarations, directory, sdk, output, prebuilt_dir=N
                 'version': 'unverified', 'distributionReview': 'pending'})
             findings.append({'id': 'gettext-corresponding-source-relinking-pending', 'status': 'open',
                 'evidence': 'actual libpython defines libintl functions; upstream license text alone does not establish exact prebuilt source/patches or static relinking obligations'})
-        readline = bind_filename('readline.cpython-312-aarch64-linux-ohos.so', actual)
-        def readelf(*args):
-            return subprocess.run([str(tool), *args, str(paths[readline['path']])],
-                                  capture_output=True, text=True, check=True, timeout=30).stdout
-        implementation = readline_implementation(blobs[readline['path']], readelf('--dyn-syms'), readelf('-r'))
-        extra.append({'id': 'readline-implementation', 'consumer': readline['path'],
-                      'consumerSha256': readline['sha256'], **implementation, 'distributionReview': 'pending'})
-        findings.append({'id': 'readline-corresponding-source-pending', 'status': 'open',
-                         'evidence': 'wrapper literals alone are insufficient; exact source/patch/build binding and distribution obligations remain'})
+        if any(PurePosixPath(f['path']).name == 'readline.cpython-312-aarch64-linux-ohos.so' for f in libraries):
+            readline = bind_filename('readline.cpython-312-aarch64-linux-ohos.so', actual)
+            def readelf(*args):
+                return subprocess.run([str(tool), *args, str(paths[readline['path']])],
+                                      capture_output=True, text=True, check=True, timeout=30).stdout
+            implementation = readline_implementation(blobs[readline['path']], readelf('--dyn-syms'), readelf('-r'))
+            extra.append({'id': 'readline-implementation', 'consumer': readline['path'],
+                          'consumerSha256': readline['sha256'], **implementation, 'distributionReview': 'pending'})
+            findings.append({'id': 'readline-corresponding-source-pending', 'status': 'open',
+                             'evidence': 'wrapper literals alone are insufficient; exact source/patch/build binding and distribution obligations remain'})
         build_claims = []
         for package in ('numpy', 'scipy'):
             target = f'resources/rawfile/runtime/lib/python3.12/site-packages/{package}/__config__.py'
@@ -381,12 +408,16 @@ def generate(hap, manifest, declarations, directory, sdk, output, prebuilt_dir=N
                    'scope': 'static evidence for this HAP only; device revalidation and final approval are not established by this tool'}
         findings.append({'id': 'prebuilt-source-build-patch-evidence-incomplete', 'status': 'open',
                          'evidence': 'community source leads and generated configurations are partial evidence; exact native prebuilt-to-source/patch/build binding remains unresolved'})
-        findings.append({'id': 'scipy-static-fortran-runtime-unresolved', 'status': 'open',
-                         'evidence': 'NEEDED libc only does not identify a statically linked runtime or its version/license'})
+        if scientific:
+            findings.append({'id': 'scipy-static-runtime-build-binding-pending', 'status': 'open',
+                'evidence': 'original defined LLVM runtime symbols and compiler comments identify consumers; exact community static archive/build binding remains unverified'})
+        else:
+            findings.append({'id': 'scipy-static-fortran-runtime-unresolved', 'status': 'open',
+                             'evidence': 'NEEDED libc only does not identify a statically linked runtime or its version/license'})
     original_bindings = prebuilt_bindings(declarations, json.loads((Path(__file__).parent / 'ohos/local-cross/sources.lock.json').read_text()), prebuilt_dir, hap) if prebuilt_dir else []
     report = {'prebuiltOriginalBindings': original_bindings, 'schemaVersion': 1, 'kind': 'actual-HAP-third-party-review',
               'hapSha256': inventory['hapSha256'], 'declarationsCanonicalJsonSha256': rt.digest(json.dumps(declarations, sort_keys=True).encode()),
-              'licenseReceiptsVerified': len(receipts), 'nativeELFs': len(libraries),
+              'licenseReceiptsVerified': len(receipts), 'nativeELFs': len(libraries), 'scientificObservations': scientific,
               'components': components, 'versionObservations': versions, 'generatedConfigurationClaims': build_claims,
               'additionalEmbeddedCandidates': extra, 'removalEvidence': removal,
               'unmatchedNames': graph['unmatchedNames'], 'findings': findings,
@@ -406,11 +437,13 @@ def main():
     p.add_argument('--license-dir', type=Path, default=repo / 'packaging/licenses/third-party')
     p.add_argument('--sdk-root', type=Path, default=Path('/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony'))
     p.add_argument('--prebuilt-dir', type=Path, help='Optional directory of locked original CPython/NumPy/SciPy archives')
+    p.add_argument('--scientific-receipt', type=Path, help='Audit-ScientificRuntime observations for this exact HAP')
     p.add_argument('--output', type=Path, required=True)
     a = p.parse_args()
     try:
         report = generate(a.hap, json.loads(a.manifest.read_text()), json.loads(a.declarations.read_text()),
-                          a.license_dir, a.sdk_root, a.output, a.prebuilt_dir)
+                          a.license_dir, a.sdk_root, a.output, a.prebuilt_dir,
+                          json.loads(a.scientific_receipt.read_text()) if a.scientific_receipt else None)
         print(json.dumps({'reportGenerated': True, 'licenseReceiptsVerified': report['licenseReceiptsVerified'],
                           'findings': sorted({f['id'] for f in report['findings']}), 'releaseApproved': False}))
     except (ValueError, OSError, KeyError, subprocess.SubprocessError, zipfile.BadZipFile) as error:

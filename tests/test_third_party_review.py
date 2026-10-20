@@ -35,6 +35,29 @@ def elf(text=b'code', debug=b'debug', signature=b'signature'):
 
 
 class ThirdPartyReviewTest(unittest.TestCase):
+    def test_scientific_receipt_requires_same_hap_and_consumer_hashes(self):
+        inv = {'hapSha256': 'a' * 64, 'files': [{'path': 'libs/a.so', 'sha256': 'b' * 64}]}
+        receipt = {'kind': 'actual-HAP-original-SciPy-ELF-observations', 'hapSha256': inv['hapSha256'],
+                   'llvmFortranConsumers': ['libs/a.so'], 'scope': 'observations only',
+                   'records': [{'actualHapTarget': 'libs/a.so', 'actualHapSha256': 'b' * 64,
+                                'allocatedSectionsMatchAfterExactPythonNeededNormalization': True,
+                                'definedLLVMFortranFunctions': ['_FortranAAssign']}]}
+        self.assertEqual(review.bind_scientific_receipt(receipt, inv)['librariesBound'], 1)
+        receipt['llvmFortranConsumers'] = []
+        with self.assertRaisesRegex(ValueError, 'summary differs'):
+            review.bind_scientific_receipt(receipt, inv)
+        receipt['llvmFortranConsumers'] = ['libs/a.so']
+        receipt['records'].append(dict(receipt['records'][0]))
+        with self.assertRaisesRegex(ValueError, 'duplicate'):
+            review.bind_scientific_receipt(receipt, inv)
+        receipt['records'].pop()
+        receipt['records'][0]['actualHapSha256'] = 'c' * 64
+        with self.assertRaisesRegex(ValueError, 'differs'):
+            review.bind_scientific_receipt(receipt, inv)
+        receipt['hapSha256'] = 'c' * 64
+        with self.assertRaisesRegex(ValueError, 'not bound'):
+            review.bind_scientific_receipt(receipt, inv)
+
     def test_wrapper_label_does_not_override_defined_gnu_version_objects(self):
         data = bytearray(512)
         data[:6] = b'\x7fELF\x02\x01'

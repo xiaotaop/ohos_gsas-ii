@@ -64,7 +64,7 @@ C 已找到声明相同归档哈希的 CPython 社区配方与补丁系列，见
 
 ## 3. 旧帮助库处理结论
 
-C 已在独立候选包完成两库移除、重新签名与静态复核：222 ELF、无 unmatched NEEDED；新包尚待真机复验。旧已验收包保留，详见 [最新 C 记录](C_THIRD_PARTY_REVIEW.md)。下文是基础载荷的分析与实验依据。
+C 已在独立候选包完成两库移除、重新签名与静态复核：222 ELF、无 unmatched NEEDED；16 份许可的 25c9ef74… 包已完成 API23 真机复验；后续 CPython 核心实验尚待设备验证。旧已验收包保留，详见 [最新 C 记录](C_THIRD_PARTY_REVIEW.md)。下文是基础载荷的分析与实验依据。
 
 **基础载荷静态分析结论：`libscipy_openblas64_.so` 与 `libgfortran.so.5` 是移除候选，
 尚未在删除后的签名 HAP 上验证，不得视为安全移除授权；SciPy 正在使用的

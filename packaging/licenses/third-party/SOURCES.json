@@ -136,5 +136,83 @@
         "bytes": 26419,
         "distributionReview": "pending",
         "scope": "upstream license text; exact prebuilt source/patch/relinking obligations remain"
-    }
+    },
+  {
+    "file": "netlib-lapack-OpenBLAS-0.3.29-LICENSE.txt",
+    "component": "Netlib LAPACK",
+    "version": "OpenBLAS-0.3.29 bundled source",
+    "license": "BSD-3-Clause",
+    "sourceUrl": "https://codeload.github.com/OpenMathLib/OpenBLAS/tar.gz/refs/tags/v0.3.29",
+    "sourceArchiveSha256": "38240eee1b29e2bde47ebb5d61160207dc68668a54cac62c076bb5032013b1eb",
+    "sourceMember": "OpenBLAS-0.3.29/lapack-netlib/LICENSE",
+    "retrieved": "2026-10-20",
+    "sha256": "978539245c405775bf347b1256c36df4daf8b69a64b099e94b1d53742201621e",
+    "bytes": 2266,
+    "distributionReview": "pending",
+    "scope": "upstream bundled license; exact prebuilt patch binding remains unverified"
+  },
+  {
+    "file": "lapacke-OpenBLAS-0.3.29-LICENSE.txt",
+    "component": "LAPACKE",
+    "version": "OpenBLAS-0.3.29 bundled source",
+    "license": "BSD-3-Clause",
+    "sourceUrl": "https://codeload.github.com/OpenMathLib/OpenBLAS/tar.gz/refs/tags/v0.3.29",
+    "sourceArchiveSha256": "38240eee1b29e2bde47ebb5d61160207dc68668a54cac62c076bb5032013b1eb",
+    "sourceMember": "OpenBLAS-0.3.29/lapack-netlib/LAPACKE/LICENSE",
+    "retrieved": "2026-10-20",
+    "sha256": "871f415ebd2fd06c7ab8cc3c0016aa2d26b918622345116e2d0c740b688d4843",
+    "bytes": 1545,
+    "distributionReview": "pending",
+    "scope": "upstream bundled license; exact prebuilt patch binding remains unverified"
+  },
+  {
+    "file": "LLVM-FortranRuntime-22.1.8-LICENSE.txt",
+    "component": "LLVM FortranRuntime (SciPy)",
+    "version": "22.1.8 compiler marker; exact runtime archive version unverified",
+    "license": "Apache-2.0 WITH LLVM-exception",
+    "sourceUrl": "https://raw.githubusercontent.com/llvm/llvm-project/llvmorg-22.1.8/flang-rt/LICENSE.TXT",
+    "retrieved": "2026-10-20",
+    "sha256": "94b301bb652ae351f5941655bf533f1a136300ad1396be7452c8a04ff2c91374",
+    "bytes": 13151,
+    "distributionReview": "pending",
+    "scope": "14 original SciPy consumers define LLVM runtime functions and contain flang 22.1.8 comment; not a static-archive hash assertion"
+  },
+  {
+    "file": "numpy-2.2.6-BUNDLED-NOTICES.txt",
+    "component": "numpy upstream bundled notices",
+    "version": "2.2.6",
+    "license": "See upstream notices; mixed licenses, no parent-license inheritance",
+    "sourceUrl": "https://files.pythonhosted.org/packages/76/21/7d2a95e4bba9dc13d043ee156a356c0a8f0c6309dff6b21b4d71a073b8a8/numpy-2.2.6.tar.gz",
+    "retrieved": "2026-10-20",
+    "sha256": "8468cd5d33c8bd3a9791ede4d40adbb6dab95f90c6c14b8cf66887c290fe84e5",
+    "bytes": 158566,
+    "distributionReview": "pending",
+    "scope": "Full upstream notices and inline-license sources; conservative superset, not an exact prebuilt compiler recipe",
+    "archiveSha256": "e29554e2bef54a90aa5cc07da6ce955accb83f21ab5de01a62c8478897b264fd"
+  },
+  {
+    "file": "scipy-1.16.3-BUNDLED-NOTICES.txt",
+    "component": "scipy upstream bundled notices",
+    "version": "1.16.3",
+    "license": "See upstream notices; mixed licenses, no parent-license inheritance",
+    "sourceUrl": "https://files.pythonhosted.org/packages/0a/ca/d8ace4f98322d01abcd52d381134344bf7b431eba7ed8b42bdea5a3c2ac9/scipy-1.16.3.tar.gz",
+    "retrieved": "2026-10-20",
+    "sha256": "346b9282f4e318a66a08c08315688a740c4d44d406af5ea684fe4b7d2e32ca14",
+    "bytes": 814848,
+    "distributionReview": "pending",
+    "scope": "Full upstream notices and inline-license sources; conservative superset, not an exact prebuilt compiler recipe",
+    "archiveSha256": "01e87659402762f43bd2fee13370553a17ada367d42e7487800bf2916535aecb"
+  },
+  {
+    "file": "LLVM-compiler-rt-15.0.4-LICENSE.txt",
+    "component": "LLVM compiler-rt (controlled CPython core)",
+    "version": "15.0.4 SDK archive path; controlled build input",
+    "license": "Apache-2.0 WITH LLVM-exception",
+    "sourceUrl": "https://raw.githubusercontent.com/llvm/llvm-project/llvmorg-15.0.4/compiler-rt/LICENSE.TXT",
+    "retrieved": "2026-10-20",
+    "sha256": "1a8f1058753f1ba890de984e48f0242a3a5c29a6a8f2ed9fd813f36985387e8d",
+    "bytes": 16708,
+    "distributionReview": "pending",
+    "scope": "Only applicable to controlled CPython candidate; not a claim about the accepted community core"
+  }
 ]

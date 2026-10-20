@@ -74,6 +74,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_third_party_review.py' -v
           python -m unittest discover -s tests -p 'test_stage_third_party_licenses.py' -v
           python -m unittest discover -s tests -p 'test_prune_runtime_orphans.py' -v
+          python -m unittest discover -s tests -p 'test_scientific_runtime_audit.py' -v
 
       - name: Test native exclusive file creation
         run: |
