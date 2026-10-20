@@ -614,3 +614,55 @@ for (const state of ['failed', 'cancelled']) {
     }));
   }
 }
+
+// RELEASE_ACCEPTANCE row 2: an initialization failure must leave the facade
+// retryable, so the page's retry entry can call initialize() again.
+test('a failed initialize leaves the facade retryable', () => makeFixture(async ({ core, native, files }) => {
+  const failure = new Error('运行时未就绪。');
+  failure.code = 'CORE_NOT_READY';
+  failure.retryable = true;
+  native.fail.initializeCore = failure;
+  await assert.rejects(core.initialize(files.getCoreConfig()), error => error.code === 'CORE_NOT_READY');
+  native.fail.initializeCore = undefined;
+  const info = await core.initialize(files.getCoreConfig());
+  assert.equal(info.ready, true);
+  assert.equal(native.calls.init, 2);
+  assert.equal(typeof native.callback, 'function');
+}));
+
+// RELEASE_ACCEPTANCE row 6: a Core-only BUSY (second job) is rejected before
+// the file service is touched and does not leave either gate closed.
+test('a Core-side BUSY rejection maps to BUSY and keeps the file service untouched', () => makeFixture(async ({ core, native, files }) => {
+  await core.initialize(files.getCoreConfig());
+  const busy = new Error('已有任务在运行。');
+  busy.code = 'BUSY';
+  busy.retryable = true;
+  native.fail.acquireJob = busy;
+  await assert.rejects(core.startRefinement(request()), error => error.code === 'BUSY');
+  assert.deepEqual(native.calls.start, []);
+  assert.deepEqual(files.sequence, []);
+  native.fail.acquireJob = undefined;
+  const accepted = await core.startRefinement(request());
+  assert.equal(accepted.jobId, JOB);
+  assert.deepEqual(native.calls.acquire, [JOB, JOB]);
+}));
+
+// RELEASE_ACCEPTANCE row 6: a cancel ACK that races a natural completion must
+// deliver exactly one terminal and keep the snapshot consistent with it.
+test('cancellation racing completion yields exactly one terminal', () => makeFixture(async ({ core, native, files }) => {
+  await core.initialize(files.getCoreConfig());
+  const terminals = [];
+  core.onEvent(eventObject => {
+    if (['job.completed', 'job.failed', 'job.cancelled'].includes(eventObject.type)) terminals.push(eventObject.type);
+  });
+  await core.startRefinement(request());
+  native.ack = JSON.stringify({ requested: true });
+  const ack = await core.cancelJob(JOB);
+  assert.equal(ack.requested, true);
+  native.emit(event('job.completed', JOB, 3, { result: { artifacts: [] } }));
+  native.emit(event('job.cancelled', JOB, 4, { reason: '用户请求取消' }));
+  await core.flushEvents();
+  assert.deepEqual(terminals, ['job.completed']);
+  const snapshot = await core.getJobSnapshot(JOB);
+  assert.equal(snapshot.state, 'succeeded');
+}));
