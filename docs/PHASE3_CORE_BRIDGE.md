@@ -1,5 +1,7 @@
 # 第三阶段：Python Bridge 与本地核心自测（成员 B）
 
+状态提示（2026-10-20）：本文为 Bridge 阶段性交付记录；后续应用内真实五阶段已在指定设备签名 HAP 验证，见[C 交付](C_SIGNED_HAP_DELIVERY.md)。旧“尚未真机运行”的文字仅指当时产物。
+
 接口基线：`docs/CORE_API.md` v1.0（提交 `5e486c6`）。本文档描述 `bridge/`
 包——嵌入式 Python Bridge 与宿主侧本地 CoreService 仿真层。原始开发分支为
 `core/python-bridge`，现已由组长完成审核并合入 `main`。

@@ -1,5 +1,7 @@
 # 测试样例与数值基准
 
+现状更新（2026-10-20）：下列 fixture 哈希与基线保持不变。后续指定设备签名 HAP 的导出结果已独立比较 10 个 Rwp 和 2 个择优取向系数并通过；这是应用外的比较，应用自身 `validation.performed=false` 未被改写。见[C 签名 HAP 交付](C_SIGNED_HAP_DELIVERY.md)。
+
 五个样例逐字节复制自锁定提交的 `tests/testinp/`，本仓库路径为 `tests/fixtures/`。测试主题为 PbSO4 粉末衍射数据读取、相导入与 Rietveld 精修。上游用例：[`tests/test_scriptref.py`](https://github.com/AdvancedPhotonSource/GSAS-II/blob/2b4aba1bc44de63a3da9d4495944c3b99e389399/tests/test_scriptref.py)。
 
 | 文件 | 字节 | SHA-256 |

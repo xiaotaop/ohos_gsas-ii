@@ -1,9 +1,6 @@
 # GSAS-II 原生扩展：来源、构建与冻结（成员 B）
 
-状态：2026-10-19 在 **HAD-W32** 上取得 8 个 OHOS aarch64 扩展并完成 HiShell 导入、五阶段
-PoC 与 Python Bridge 真实任务（见 [B 侧真机补充验证](B_DEVICE_VALIDATION_2026-10-19.md)）。
-**最终可重建、可分发的载荷与清单尚未冻结**；正式 strip/重签、最终 SBOM/许可与发布审计
-由成员 C 闭环。本文记录构建配方、校验方式和许可义务，供 C 与组长复核。
+状态更新（2026-10-20）：B 在 HAD-W32 的 Flang 20.1.0/HiShell 配方保留为独立历史证据；**不再把 B 当时的设备导出模块当成最终 HAP 的构建来源**。C 已以锁定上游源码、Flang 20.1.8 和[可复建补丁](../scripts/ohos/local-cross/README.md)生成 8 模块，并为指定设备签名 HAP 提供哈希凭据与 GSAS 源码伴随包；该 HAP 的五阶段已通过。第三方预编译运行时的最终 SBOM/许可与公开分发审计仍由 C 关闭，见[C 交付](C_SIGNED_HAP_DELIVERY.md)。
 
 C 的宿主交叉编译增量使用 Flang 20.1.8，并已在 API26 模拟器的正式应用进程内完成五阶段精修。
 可复建补丁与容器路径见 [local-cross 配方](../scripts/ohos/local-cross/README.md)，同一 HAP 的数值、导出与恢复记录见 [C 验收记录](C_NATIVE_ACCEPTANCE.md)。下列 B 设备配方继续保留 20.1.0 的独立记录，两个构建的归档与清单应分别核验。

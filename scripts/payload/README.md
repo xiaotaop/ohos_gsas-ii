@@ -3,8 +3,11 @@
 本目录是 [RUNTIME_PACKAGING](../../docs/RUNTIME_PACKAGING.md) §2 所要求的
 "已展开 OHOS aarch64 目录" 的基础装配配方。脚本只做复制、解包与裁剪，
 从不在载荷上运行解释器或构建工具；初次 2214 文件装配的二进制来自下表所列、
-可按 SHA-256 复核的下载。后续 8 个 GSAS-II 扩展取自设备既有环境，来源与
-可重建分发步骤仍需 B 补齐，不能把这份基础配方视为最终完整载荷配方。
+可按 SHA-256 复核的下载。本文保留 B 的基础载荷配方及历史增量；最终候选 HAP 的
+8 个 GSAS-II 扩展由 C 按[锁定源码与 Flang 20.1.8 配方](../ohos/local-cross/README.md)
+重建并在 HAD-W32/API23 应用内验证，见[签名 HAP 记录](../../docs/C_SIGNED_HAP_DELIVERY.md)。
+基础下载来源与 8 模块构建来源**均已交付**；仍待 C 审核预编译运行时中其他第三方
+动态/静态依赖的对应源码、版本和许可，必要时由 B 协助追溯发行者物料。
 
 ## 1. 组件版本与来源
 
@@ -109,11 +112,11 @@ SBOM 草案：`python3 scripts/payload/make_sbom.py` 从 `components.json` 生�
 导入，五阶段精修会失败。初次装配未包含任何 GSAS-II `.so`，因此
 `check_gsas_native.py` 判其不合格；后续 2230 文件本地组装物已通过此门禁，但 HAP 内执行仍待验。
 
-## 5. 未闭环项
+## 5. 未闭环项（初次 B 载荷快照；当前状态见上方链接）
 
 - **应用沙箱加载**：HiShell 中已导入 8 个扩展并完成五阶段，但
   `libgsas_core.so` → `libpython3.12.so` 的加载链、`Py_Initialize`、rawfile
-  解包和沙箱权限仍未在已安装 HAP 内验证。
+  解包和沙箱权限当时仍未在已安装 HAP 内验证；C 的指定设备签名包现已完成成功路径。
 - **最终原生载荷与分发审计**：8 个编译模块（`pyspg`、`pypowder`、
   `pytexture`、`fmask`、`histogram2d`、`pack_f`、`unpack_cbf`、`kvec_general`）
   已用于本地组装物，门禁通过；仍需将其来源、构建/复用方式、最终字节清单和

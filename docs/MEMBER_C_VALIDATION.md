@@ -1,5 +1,7 @@
 # 成员 C 阶段 1/2 验证记录
 
+状态提示（2026-10-20）：以下是 C01/C02 的历史开发验收；完整运行时签名 HAP 的后续指定设备证据见[C_SIGNED_HAP_DELIVERY](C_SIGNED_HAP_DELIVERY.md)，当前放行条件见[RELEASE_ACCEPTANCE](RELEASE_ACCEPTANCE.md)。
+
 验证范围：成员 C 的 C01 正式工程、C02 文件服务；分支 `release/stages-1-2`，基线 main 为 `12db7e78cf689ef032438139d6819d76fd1a7c99`。验证日期：2026-10-15（America/Chicago）。本次未接入计算核心。
 
 ## 2026-10-17 交接复核（北京时间）

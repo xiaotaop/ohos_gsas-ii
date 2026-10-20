@@ -1,5 +1,7 @@
 # GitCode 社区建仓申请草稿
 
+状态更新（2026-10-20）：本草稿仍未提交。指定设备 internaltesting 签名 HAP 已在 HAD-W32/API23 完成五阶段与成功路径验证，但第三方许可、同包边界测试和公开分发技术放行未完成；提交前由 C 按最终版本重写申请日期、维护者和支持范围。下方保留原始申请格式，**不能把旧“当前无包”描述原样提交**。
+
 提交位置：[OpenHarmonyPCDeveloper/community 的 NewRepository 建仓申请](https://gitcode.com/OpenHarmonyPCDeveloper/community/blob/master/NewRepository.md)。本文件是草稿，**未代表用户提交**。申请人/维护者 ID 按本次 GitCode 建仓表单显示的当前账户填写，请实际负责人提交前核对；社区仓库的创建由社区审批决定。
 
 【标题】 【新建仓申请-ohos_gsas-ii】
@@ -22,7 +24,7 @@
 
 【项目名称】GSAS-II HarmonyOS PC 适配
 
-【项目描述】拟将 GSAS-II 的衍射结构分析能力移植到 HarmonyOS PC。项目第一阶段已固定上游提交、审查依赖与许可证，并准备 PbSO4 测试基准；第二阶段先验证无 GUI 的脚本化计算核心、原生扩展与数值结果，再决定桌面界面实现和可分发功能范围。当前无可发布安装包。欢迎社区参与目标平台编译、依赖移植、测试和许可证核查。
+【项目描述】GSAS-II HarmonyOS PC 适配已完成锁定上游版本、ArkUI MVP、运行时/原生扩展移植及指定设备签名测试包的 PbSO4 五阶段验证。当前仅有 internaltesting 指定设备测试包，尚无经最终第三方许可审查和公开分发审批的上架安装包。欢迎社区参与设备兼容性、边界测试和许可证核查；正式功能范围以提交时的技术放行结论为准。
 
 【维护者列表】`2401_86708491`
 

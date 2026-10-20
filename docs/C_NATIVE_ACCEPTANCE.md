@@ -1,5 +1,7 @@
 # C：8 扩展、运行时与实际 HAP 验收
 
+状态提示（2026-10-20）：本文是 API26 开发 HAP 的独立验收，不能直接代表指定设备签名 HAP；后者已在 HAD-W32/API23 完成五阶段、三类导出与成功任务恢复，见[C_SIGNED_HAP_DELIVERY](C_SIGNED_HAP_DELIVERY.md)。两份 HAP 的取消/中断等结果不能互相冒充，公开分发审查仍未完成。
+
 2026-10-19，基于 `main@5a4cc39f58c9ed7ad0b102c632f85b0e3c2fa472` 的 C 工作树。
 **开发集成已可运行；releaseApproved=false。** 使用 API26 ARM64 的 MateBook Pro 1 模拟器，不能代替 API20/API24 目标真机与正式签名验收。
 

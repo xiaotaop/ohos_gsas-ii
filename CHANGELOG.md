@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased — 远端文档与验收状态统一（2026-10-20）
+
+- 将 README、验收矩阵、接入、依赖、UI、运行时与发布文档统一到 PR #9 合并后的证据：指定设备 internaltesting 签名 HAP 已在 HAD-W32/API23 完成应用内五阶段、独立数值、三类导出及成功任务恢复。
+- 区分 B 已交付的基础运行时下载来源/哈希、C 已交付的 8 个 GSAS 模块可复建配方，与仍待审的预编译运行时内嵌第三方库源码/许可；保留旧记录为历史快照。
+- 明确失败/取消与生命周期同包补验、API20/API24 范围决策、最终 SBOM/公开分发和社区建仓/上架申请仍未完成；不改变 `releaseApproved=false`。
+
+## Unreleased — 指定设备签名 HAP 与源码伴随包（PR #9，2026-10-19）
+
+- C 的 `release/internaltesting` HAP 在 HAD-W32/API23 干净安装，五份输入、PbSO4 五阶段、GPX/JSON/日志导出、独立数值比较及成功任务重启恢复通过；安装签名阻塞解除。证据与 HAP 哈希见[交付记录](docs/C_SIGNED_HAP_DELIVERY.md)。
+- GSAS/移植源码伴随包、8 个原生扩展构建凭据及实际 HAP SBOM 草案已交付；第三方预编译运行时的精确源码/版本/许可、公开分发与上架放行仍待完成。
+
 ## Unreleased — C 本地原生运行时与应用内验收（2026-10-19）
 
 - 新增可重建的 OHOS ARM64 8 扩展交叉编译补丁与 LLVM20.1.8 配方，排除 DIFFaX，修复 fmask 的 NumPy API 初始化。

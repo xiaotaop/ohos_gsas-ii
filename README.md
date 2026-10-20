@@ -1,6 +1,6 @@
 # ohos_gsas-ii
 
-GSAS-II 面向 HarmonyOS PC 的移植准备仓库。**第二阶段：无 GUI 核心计算 PoC 已通过鸿蒙 PC 真机验证**；第三阶段的正式 ArkUI 页面、文件服务、C++ N-API、B03 终态产物契约及 A 端消费界面均已合入主线。HAD-W32 上的扩展导入与五阶段计算通过，本地组装载荷也通过原生模块门禁，但签名 HAP 未能安装，应用沙箱内真实运行与发布验收尚未完成；当前没有可上架的 GUI 安装包。
+GSAS-II 面向 HarmonyOS PC 的移植仓库。无 GUI 核心 PoC、正式 ArkUI 页面、文件服务、C++ N-API、B03 终态产物契约和 A 端消费界面均已合入主线。**当前的指定设备 internaltesting 签名 HAP 已在 HAD-W32/API23 安装，并在应用内完成 PbSO4 五阶段、独立数值比较、三类导出及成功任务重启恢复。**这不是公开上架包；第三方预编译依赖的最终来源/许可审查、剩余真机边界场景和发布审批尚未完成。当前状态以[发布验收矩阵](docs/RELEASE_ACCEPTANCE.md)和[C 的签名 HAP 交付记录](docs/C_SIGNED_HAP_DELIVERY.md)为准。
 
 代码仓库：[GitHub](https://github.com/xiaotaop/ohos_gsas-ii)、[GitCode](https://gitcode.com/2401_86708491/ohos_gsas-ii)。社区申请状态见 [发布交接](docs/PUBLISHING.md)。
 
@@ -14,21 +14,21 @@ Windows x86-64 基线与 HarmonyOS PC aarch64 真机均已完成同一套五阶�
 
 ArkUI、文件服务、C++ N-API 和 Python/GSAS-II 核心之间的 v1.0 基线及 B03 v1.1 可选终态日志 `artifacts` 增量见[核心接口契约](docs/CORE_API.md)。JSON Schema 与可用于界面 mock 的成功/失败示例位于 `contracts/`，可运行 `python scripts/Validate-CoreContracts.py` 校验。
 
-M1 ArkUI 源码映射与接入说明见 [M1 ArkUI 演示](docs/M1_ARKUI.md)，工程位于 `ui-mock/`，按锁定上游 wxPython 源码翻译菜单、数据树、Controls 与 Refine 交互子集。成功、失败、取消、窗口适配及基本键鼠操作已通过 HarmonyOS PC 模拟器验收，附运行截图。该 mock 演示使用模拟数据，不进入正式 HAP；正式 `app/` 已独立实现相应页面，真机 GUI 和应用内计算仍待验收。
+M1 ArkUI 源码映射与接入说明见 [M1 ArkUI 演示](docs/M1_ARKUI.md)，工程位于 `ui-mock/`，按锁定上游 wxPython 源码翻译菜单、数据树、Controls 与 Refine 交互子集。该 mock 演示使用模拟数据，不进入正式 HAP；正式 `app/` 已独立实现相应页面，并完成上述指定设备成功路径验证。失败/取消产物及更广的生命周期、键鼠窗口场景仍待同一签名 HAP 补验。
 
 A/B/C 的工程入口、公共类型、文件服务、初始化、日志产物及组长审核结论，见 [接入对齐清单](docs/INTEGRATION_ALIGNMENT.md)。代码级审核通过不等同于真实运行时、真机或发布验收通过。
 
-成员 C 的正式 PC 工程与持久化文件服务位于 `app/`，支持系统选择器导入、fileId 查询/删除、真实文件导出及原生产物登记。构建和 A/B 接入方式见 [成员 C 交接](docs/MEMBER_C_HANDOFF.md)，组件清单见 [应用依赖初稿](docs/APP_DEPENDENCY_INVENTORY.md)。应用已接入计算 CoreService/N-API 编排；没有真实 Python 头文件、原生库和 `rawfile/runtime/manifest.json` 时仍编译为 `CORE_NOT_READY` 桩，不表示已经形成可上架版本。中文工作目录可运行 `python3 scripts/Build-App.py --check`，脚本在英文临时目录调用 DevEco CLI。
+成员 C 的正式 PC 工程与持久化文件服务位于 `app/`，支持系统选择器导入、fileId 查询/删除、真实文件导出及原生产物登记。构建和 A/B 接入方式见 [成员 C 交接](docs/MEMBER_C_HANDOFF.md)，组件清单见 [应用依赖初稿](docs/APP_DEPENDENCY_INVENTORY.md)。应用已接入计算 CoreService/N-API 编排；不装配真实运行时的开发构建仍会落入 `CORE_NOT_READY` 桩，不能与已验证的完整载荷签名 HAP 混淆。中文工作目录可运行 `python3 scripts/Build-App.py --check`，脚本在英文临时目录调用 DevEco CLI。
 
 成员 C 的 C01/C02 接收人、复现步骤和剩余确认见 [交接入口](docs/MEMBER_C_HANDOFF.md#0-交接入口与接收顺序2026-10-17)；C 的交付及 A/B 的首轮应用接入均已合入主线。组长已完成 A03～A07、B01～B06 的代码级复核，未关闭项及真实计算、真机验收要求以接入对齐清单为准。
 
-正式 `app/` 已接入五份精修输入的选择、关联持久化和真实文件完整性校验；重选保留旧文件，取消保留原关联。应用包含六组菜单、可拖动分栏、真实输入数据树、参数草稿编辑器，以及五阶段任务/取消/结果/产物导出页面。PR #4、#6、#5 依次交付 CoreService/N-API、运行时安装器、B03 已登记日志 fileId 与跨进程快照，以及 A 端展示/导出入口；宿主、契约及原生测试通过。当前尚无已在目标设备安装并验证的完整运行时 HAP；开发交接、审核边界和剩余依赖见 [接入对齐清单](docs/INTEGRATION_ALIGNMENT.md)。完整原版 GUI、真实应用内计算与发布验收尚未完成。
+正式 `app/` 已接入五份精修输入的选择、关联持久化和真实文件完整性校验；重选保留旧文件，取消保留原关联。应用包含六组菜单、可拖动分栏、真实输入数据树、参数草稿编辑器，以及五阶段任务/取消/结果/产物导出页面。PR #4、#6、#5 依次交付 CoreService/N-API、运行时安装器、B03 已登记日志 fileId 与跨进程快照，以及 A 端展示/导出入口；PR #9 补齐 C 的签名 HAP 与真机成功路径证据。完整原版 GUI 不在当前 MVP 范围，发布验收尚未完成。
 
-A 端收尾补齐核心初始化状态/重试、表单保留、失效任务 ID 恢复及 B03 可选日志产物消费入口；与 B 门面的组合宿主测试 50 项通过。B03 协议侧返回已经实现；仍须在同一可安装 HAP 上验证真实日志登记/导出和生命周期，详见 [A 端交付](docs/UI_DELIVERY.md)。
+A 端收尾补齐核心初始化状态/重试、表单保留、失效任务 ID 恢复及 B03 可选日志产物消费入口；与 B 门面的组合宿主测试 50 项通过。成功任务日志登记/导出和成功任务重启恢复已在指定设备 HAP 中验证；失败/取消日志、取消竞态及活动任务生命周期仍须在同一签名 HAP 上补验，详见 [A 端交付](docs/UI_DELIVERY.md)。
 
 正式开发版的 [UI 操作说明](docs/UI_USER_GUIDE.md) 和 [成员 A 页面／图标／截图交付](docs/UI_DELIVERY.md) 已独立整理，列明非计算交互的实测范围与 B/C 依赖；素材不冒充真实计算或发布验收证据。
 
-后续打包准备提供 [运行时装配与构建留档](docs/RUNTIME_PACKAGING.md)：Build-App 自动保留源码/工具链记录、HAP 和内容清单；Prepare-Runtime 按 B 的清单校验载荷；Audit-Hap 核对实际包内容。本地完整载荷和未签名 HAP 已完成开发内容审计，但设备安装被签名验证阻断；详见 [B 侧真机补充验证](docs/B_DEVICE_VALIDATION_2026-10-19.md) 和 [验收与材料清单](docs/RELEASE_ACCEPTANCE.md)。正式签名、最终 SBOM/许可与发布审计由 C 负责。
+[运行时装配与构建留档](docs/RUNTIME_PACKAGING.md)提供 Build-App、Prepare-Runtime 和 Audit-Hap 的复核入口。B 的基础运行时版本/下载/哈希见 [载荷配方](scripts/payload/README.md)；8 个 GSAS 原生扩展的最终可复建配方和源码伴随包见 [C 签名 HAP 交付](docs/C_SIGNED_HAP_DELIVERY.md)。安装签名阻塞已解除，但此 Profile 仅用于指定设备 internaltesting；最终 SBOM/许可和发布审计由 C 负责，B 协助核实预编译依赖的嵌入第三方源码范围。
 
 ## 持续集成
 

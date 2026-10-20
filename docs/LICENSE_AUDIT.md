@@ -1,5 +1,7 @@
 # 许可证与上架风险审查
 
+当前进度（2026-10-20）：候选 HAP 已排除 `pydiffax`/`G2shapes.py`，GSAS 及移植源码伴随包（718 文件）和 8 个原生扩展的可复建凭据已交付；见[C 签名 HAP 记录](C_SIGNED_HAP_DELIVERY.md)。这关闭了“缺原生扩展构建来源”的误判，但**没有**关闭第三方预编译运行时内嵌的 libffi、GDBM、GNU Fortran、OpenBLAS 及静态库的准确源码/版本/许可审查。最终 `distributionReview` 仍 pending，不能据此签署发布许可放行。
+
 本审查基于锁定提交的根目录 `LICENSE`，仅作工程合规清单，不构成法律意见。GitHub 对主许可证的自动识别为 Other/NOASSERTION；不应将其简写为 MIT、Apache-2.0 或 GPL。
 
 ## GSAS-II 主许可证

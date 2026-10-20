@@ -1,5 +1,7 @@
 # GitHub Actions 持续集成说明
 
+2026-10-20 核对：[PR #9 合并提交的 Repository verification](https://github.com/xiaotaop/ohos_gsas-ii/actions/runs/39358497372) 已通过。CI 仅覆盖下述可自动化检查；指定设备 internaltesting 签名 HAP 的成功路径来自独立真机记录，最终许可、剩余同包边界和上架放行仍按[验收矩阵](RELEASE_ACCEPTANCE.md)执行。
+
 ## 1. 目标
 
 本仓库使用 GitHub Actions 对无需 HarmonyOS PC 真机和专用 SDK 的内容进行持续验证。工作流文件位于：

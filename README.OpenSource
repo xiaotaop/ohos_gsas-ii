@@ -6,7 +6,7 @@
 该版本源码包：https://github.com/AdvancedPhotonSource/GSAS-II/archive/2b4aba1bc44de63a3da9d4495944c3b99e389399.tar.gz
 上游许可：GSAS-II OPEN SOURCE LICENSE；原文见本仓库 LICENSE。上游另含 DIFFaX、Shapes 等不同授权组件，见 docs/LICENSE_AUDIT.md。
 本仓库当前引入内容：上游 tests/testinp 中的五个测试样例、按锁定上游界面译写的 ArkUI mock 子集、Python Bridge 与独立实现的应用文件服务。五份样例还作为 app 的 rawfile 验收资源逐字节打包；开发 HAP 的文件创建辅助模块会由 SDK 装配 libc++_shared.so，源码仓库不提交该二进制；其许可证保留于 app/entry/src/main/resources/rawfile/licenses，组件范围见 docs/APP_DEPENDENCY_INVENTORY.md。
-功能：已完成无 GUI 核心真机 PoC；提供 ArkUI mock 和真实文件服务开发工程，正式应用内精修与发布仍待完成。
+功能：已完成无 GUI 核心真机 PoC、正式 ArkUI MVP 和指定设备 internaltesting 签名 HAP 的应用内 PbSO4 五阶段、独立数值、GPX/JSON/日志导出与成功任务恢复。第三方预编译依赖的最终许可审查、剩余同包测试、公开分发与上架仍待完成；见 docs/RELEASE_ACCEPTANCE.md。
 引入原因：为 HarmonyOS PC 科研用户提供衍射数据分析能力，并验证脚本化核心的可移植性。
 维护 Owner：2401_86708491（当前 GitCode 登录账户；社区建仓时可调整）。
 贡献者：2401_86708491（当前 GitCode 登录账户；社区建仓时可调整）。
