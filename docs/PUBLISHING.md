@@ -1,6 +1,6 @@
 # 发布交接与远端状态
 
-后续状态（2026-10-20）：最新签名内测候选为 `791dc53d…`，C 的同包工程/SBOM/许可材料和组长的显式断网五阶段、UI 临界测试及[设备结果页 12 项数值复核](PR17_NUMERIC_UI_ACCEPTANCE_2026-10-20.md)已归档；[Core 三项边界按限定口径接收](LEADER_CORE_BOUNDARY_ACCEPTANCE_2026-10-20.md)，无需再以诊断包作为本轮阻断。组长保留 A 旧包已测场景为未变组件佐证，选择[补测 API20/API24](API20_API24_RETEST_2026-10-20.md)；当前仅有 API23 实机，兼容性矩阵、整包技术放行及公开分发/上架仍待。以下旧 `70588bde…` 和 PR #13/14 叙述是当时快照，见[验收矩阵](RELEASE_ACCEPTANCE.md)。
+后续状态（2026-10-20）：最近完整签名内测 HAP `791dc53d…` 的工程/SBOM/许可和 API23 显式断网五阶段、UI 临界、[结果页 12 项数值复核](PR17_NUMERIC_UI_ACCEPTANCE_2026-10-20.md)已归档；[Core 三项边界按限定口径接收](LEADER_CORE_BOUNDARY_ACCEPTANCE_2026-10-20.md)，A 旧包已测场景保留为未变组件佐证。组长随后[决定只声明 API23 已验证](API23_SUPPORT_SCOPE_2026-10-20.md)，源码最低兼容版本已改为 API23。旧签名包仍写 API20，须重新构建/签名及 API23 同包关键复验；整包技术放行、公开分发/上架仍待。以下旧 `70588bde…` 和 PR #13/14 叙述是当时快照，见[验收矩阵](RELEASE_ACCEPTANCE.md)。
 
 ## 当前协作仓库
 
@@ -32,5 +32,5 @@ git ls-remote origin "refs/heads/$(git branch --show-current)"
 
 2026-10-12 创建的个人公开 GitCode 暂存仓库为 <https://gitcode.com/2401_86708491/ohos_gsas-ii>。它不是 `OpenHarmonyPCDeveloper` 社区组织仓库；保留地址用于追溯，不假定两端会自动同步。本次没有修改旧仓库设置或关闭旧 PR。
 
-核心移植和 C 的 0.1.1 内测包工程审查已完成；当前先关闭[验收矩阵](RELEASE_ACCEPTANCE.md)的 A/B 专项、兼容性和新 UI 同包测试。技术放行后，若团队选择 OpenHarmonyPCDeveloper 社区组织路线，由 C 复核[社区申请草稿](GITCODE_APPLICATION.md)并申请建仓；若以自有开发者账号上架，则如实使用实际源码仓库与发布主体，社区建仓不是 AGC 的硬性前置。两条路线均须完成公开分发包和上架审核；迁移到 GitHub 不代表任何申请已经提交。
+核心移植和旧 0.1.1 内测包工程审查已完成；当前先按[API23 收窄决断](API23_SUPPORT_SCOPE_2026-10-20.md)重建完整签名包、在 API23 同包关键复验，再由组长按[验收矩阵](RELEASE_ACCEPTANCE.md)决定技术放行。放行后，若团队选择 OpenHarmonyPCDeveloper 社区组织路线，由 C 复核[社区申请草稿](GITCODE_APPLICATION.md)并申请建仓；若以自有开发者账号上架，则如实使用实际源码仓库与发布主体，社区建仓不是 AGC 的硬性前置。两条路线均须完成公开分发包和上架审核；迁移到 GitHub 不代表任何申请已经提交。
 

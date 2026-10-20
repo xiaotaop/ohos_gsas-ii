@@ -1,10 +1,10 @@
 # ohos_gsas-ii
 
-GSAS-II 面向 HarmonyOS PC 的移植仓库。无 GUI 核心 PoC、正式 ArkUI 页面、文件服务、C++ N-API 与 B03 终态产物已合入主线。当前完整签名内测候选为 0.1.1 / versionCode 2、HAP `791dc53d…`：HAD-W32/API23 上的真实五阶段、显式断网、UI 终态观察及[结果页 12 项数值复核](docs/PR17_NUMERIC_UI_ACCEPTANCE_2026-10-20.md)已有记录。A 在旧签名包的已测场景按[字节差异和证据边界](docs/PR17_A14_EVIDENCE_BINDING_2026-10-20.md)保留为未变组件佐证；Core 边界按组长限定口径接收。组长选择补测 API20/API24，但当前没有对应运行环境；整包技术放行及公开上架均未完成，以[验收矩阵](docs/RELEASE_ACCEPTANCE.md)为准。
+GSAS-II 面向 HarmonyOS PC 的移植仓库。无 GUI 核心 PoC、正式 ArkUI 页面、文件服务、C++ N-API 与 B03 终态产物已合入主线。最近完整签名内测 HAP `791dc53d…`（0.1.1 / versionCode 2）已在 HAD-W32/API23 完成真实五阶段、显式断网、UI 终态观察及[结果页 12 项数值复核](docs/PR17_NUMERIC_UI_ACCEPTANCE_2026-10-20.md)。A 旧包已测场景按[字节差异和证据边界](docs/PR17_A14_EVIDENCE_BINDING_2026-10-20.md)保留为未变组件佐证；Core 边界按组长限定口径接收。组长现[收窄至 API23 已验证声明](docs/API23_SUPPORT_SCOPE_2026-10-20.md)，源码最低兼容版本已调整；旧 HAP 内仍是 API20，需重新构建/签名并在 API23 关键复验。整包技术放行及公开上架尚未完成，以[验收矩阵](docs/RELEASE_ACCEPTANCE.md)为准。
 
 PR #14 签名包 `59c86f18…`（源码 `57c661db…`）的[A 同包真机记录](docs/A_A14_DEVICE_ACCEPTANCE.md)已归档；它是历史候选，不是当前最终 HAP。
 
-PR #17 的精确源码 `ce624cec…` 已重建完整运行时签名候选 `791dc53d…`，可[下载 HAP 与完整材料](docs/C_PR17_SIGNED_HAP.md)；原签名/Profile 已核验一致，[同包终态观察与显式断网](docs/PR17_DEVICE_RETEST_2026-10-20.md)已记录。仍待[API20/API24 运行补测](docs/API20_API24_RETEST_2026-10-20.md)。
+PR #17 的精确源码 `ce624cec…` 曾构建完整运行时签名包 `791dc53d…`，可[下载该历史 HAP 与完整材料](docs/C_PR17_SIGNED_HAP.md)；原签名/Profile、[同包终态观察与显式断网](docs/PR17_DEVICE_RETEST_2026-10-20.md)均有记录。它不含后续 API23 最低兼容配置变更，不能作为最终发布包。
 
 代码仓库：[GitHub](https://github.com/xiaotaop/ohos_gsas-ii)、[GitCode](https://gitcode.com/2401_86708491/ohos_gsas-ii)。社区申请状态见 [发布交接](docs/PUBLISHING.md)。
 
