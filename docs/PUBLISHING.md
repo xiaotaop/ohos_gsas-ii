@@ -2,9 +2,9 @@
 
 ## 当前协作仓库
 
-2026-10-20 核对：主仓库为 <https://github.com/xiaotaop/ohos_gsas-ii>，默认分支 `main`；PR #9（指定设备签名 HAP 与源码伴随包）已合入，合并提交 `7f17cb25842fedef889c4a9c64a8ea3b963b47d4`，[对应 GitHub CI](https://github.com/xiaotaop/ohos_gsas-ii/actions/runs/39358497372) 通过。后续开发仍建议成员分支、CI、组长审核后合并。本次文档统一更新不改变发布门禁。
+2026-10-20 核对：主仓库为 <https://github.com/xiaotaop/ohos_gsas-ii>，默认分支 `main`。PR #13 提交 0.1.1 指定设备内测 HAP 的同包验收与最终工程审查；PR #14 的 A 页面修复在其后合入，但**不在该 HAP 中**。后续开发仍建议成员分支、CI、组长审核后合并；源码合并不改变发布门禁。
 
-当前拥有的是指定设备 `release/internaltesting` 签名 HAP 的安装和成功路径证据，**不是公开应用商店分发签名或上架批准**。C 负责最终 SBOM/许可、公开分发包、社区建仓与上架申请；A 补正式同包 UI 边界及截图；B 协助核实预编译第三方依赖；组长决定 API 覆盖和技术放行。具体门禁见[发布验收矩阵](RELEASE_ACCEPTANCE.md)。GitCode 个人仓库不是自动镜像，当前主线状态应以 GitHub 为准。
+当前拥有指定设备 `release/internaltesting` 签名 HAP `70588bde…` 的 C 阶段三真机与 SBOM/许可材料工程证据，**不是公开应用商店分发签名或上架批准**。C 负责集成 A 后续页面修复、重新签名和同包复验，并在团队技术放行后办理公开分发；A 补新 UI 的正式截图与边界验收；B 补 Core 专项；组长决定 API 覆盖和技术放行。建仓是否需要取决于团队选择社区组织还是自有开发者账号路线，见[发布验收矩阵](RELEASE_ACCEPTANCE.md)。GitCode 个人仓库不是自动镜像，当前主线状态应以 GitHub 为准。
 
 以下为 2026-10-14 迁移时的历史记录：
 
@@ -30,5 +30,5 @@ git ls-remote origin "refs/heads/$(git branch --show-current)"
 
 2026-10-12 创建的个人公开 GitCode 暂存仓库为 <https://gitcode.com/2401_86708491/ohos_gsas-ii>。它不是 `OpenHarmonyPCDeveloper` 社区组织仓库；保留地址用于追溯，不假定两端会自动同步。本次没有修改旧仓库设置或关闭旧 PR。
 
-核心移植和指定设备成功路径已完成；当前先关闭[验收矩阵](RELEASE_ACCEPTANCE.md)的第三方分发审查及剩余同包测试。技术放行后由 C 复核[社区申请草稿](GITCODE_APPLICATION.md)、重名仓库与许可证，再按社区流程申请组织仓库并提交上架。迁移到 GitHub 不代表已提交或通过社区建仓、应用上架申请。
+核心移植和 C 的 0.1.1 内测包工程审查已完成；当前先关闭[验收矩阵](RELEASE_ACCEPTANCE.md)的 A/B 专项、兼容性和新 UI 同包测试。技术放行后，若团队选择 OpenHarmonyPCDeveloper 社区组织路线，由 C 复核[社区申请草稿](GITCODE_APPLICATION.md)并申请建仓；若以自有开发者账号上架，则如实使用实际源码仓库与发布主体，社区建仓不是 AGC 的硬性前置。两条路线均须完成公开分发包和上架审核；迁移到 GitHub 不代表任何申请已经提交。
 
