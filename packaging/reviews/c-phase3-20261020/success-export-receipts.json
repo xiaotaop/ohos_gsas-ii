@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Upgrade.json",
+    "size": 1661,
+    "sha256": "02da8dfa2d2f8cff20683a3c0ff8ffd67f91ee188d7089eb43e0f763bb81d323"
+  },
+  {
+    "name": "Upgrade.gpx",
+    "size": 709895,
+    "sha256": "5a77996c54a8125da70c133ca896ee8e911c7c724a989c90c13e8636fd91ab8d"
+  },
+  {
+    "name": "Upgrade.log",
+    "size": 5362,
+    "sha256": "2a765373370c2e51b5ced108b3fda95f40e431a5ea0254531ebbac5dbd53be40"
+  }
+]

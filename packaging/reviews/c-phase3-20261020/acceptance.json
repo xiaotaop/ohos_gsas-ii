@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "kind": "C-phase3-physical-device-acceptance-progress",
+  "date": "2026-10-20",
+  "hapSha256": "70588bde3202dd49512c6628661dba76b761c274aabf8ba05dba5170c06a7fef",
+  "sourceCommit": "fefce257123f6e2f660f6171d480e677dfd02fc4",
+  "bundleName": "com.gsasii.desktop",
+  "versionCode": 2,
+  "versionName": "0.1.1",
+  "deviceModel": "HAD-W32",
+  "apiVersion": 23,
+  "profileType": "release/internaltesting",
+  "completed": [
+    "Same-signer versionCode 1 to 2 upgrade; application UID and first install time preserved",
+    "All 14 complete file records, five input associations, prior succeeded job and local note preserved",
+    "Core ready, real five-stage 8.735 seconds",
+    "12 independent numerical comparisons passed; app validation.performed remains false",
+    "GPX/JSON/log actual system picker exports",
+    "Fresh running job cancellation; registered user log exported",
+    "Fresh running job force-stop then cold start: same job failed PROCESS_INTERRUPTED; no resume"
+  ],
+  "pending": [
+    "Invalid scientific input failure and registered failure log export",
+    "System import/save picker cancellation and file service platform checks",
+    "Successful result and full catalog cold-start recovery in this v2 HAP",
+    "Final v2 SBOM, complete delivery archive, evidence review and PR"
+  ],
+  "cPhase3Complete": false,
+  "releaseApproved": false,
+  "scopeLimits": [
+    "No claim of A sign-off, B core-only BUSY/cancel race, explicit offline test or API20/API24 coverage"
+  ],
+  "temporaryScreenTimeoutRestored": true,
+  "testResults": {
+    "repositoryPythonTests": {
+      "run": 91,
+      "passed": 91
+    },
+    "bridgePythonTests": {
+      "run": 28,
+      "passed": 26,
+      "skipped": 2
+    },
+    "jsonContractsFixturesPassed": true
+  }
+}

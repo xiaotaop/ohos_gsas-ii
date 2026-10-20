@@ -1,0 +1,7 @@
+{
+  "select-xray-data": "PBSO4.XRA \u00b7 CA2DA02F",
+  "select-xray-instrument": "INST_XRY.PRM \u00b7 E5941305",
+  "select-neutron-data": "PBSO4.CWN \u00b7 59462BA6",
+  "select-neutron-instrument": "inst_d1a.prm \u00b7 A1031174",
+  "select-phase": "PbSO4-Wyckoff.cif \u00b7 22CBA0B6"
+}
