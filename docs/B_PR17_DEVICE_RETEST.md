@@ -1,16 +1,32 @@
 # PR #17 同包真机复验步骤（成员 B 提供给组长）
 
-适用对象：用源码提交 `ce624cec654e3492697e22792a047ff69e88d4fc` 与完整运行时、
-在原发布证书 + HAD-W32 internaltesting Profile 下重建并签名的 HAP。
+适用对象：C 已交付的 PR #17 签名包（源码提交
+`ce624cec654e3492697e22792a047ff69e88d4fc`，原发布证书 + HAD-W32
+inttesting Profile，未改源码或版本）：
 
-本文只描述**怎么在新签名 HAP 上触发与核对**，不重复 C 的构建/签名工作。所有步骤
+| 标识 | 值 |
+|---|---|
+| HAP | `GSAS-II-0.1.1-ce624cec-signed.hap` |
+| HAP SHA-256 | `791dc53da7f76c56e0f9ce45b40b83d9cb45b9b42990379f59de64989d712788` |
+| HAP 大小 | 135,971,349 字节 |
+| 应用/版本 | `com.gsasii.desktop` / 0.1.1 / versionCode 2 |
+| 源码提交 | `ce624cec654e3492697e22792a047ff69e88d4fc` |
+| 交付记录 | `origin/codex/c-pr17-signed-hap`：`docs/C_PR17_SIGNED_HAP.md`、`packaging/reviews/c-pr17-ce624cec/` |
+
+**必须用上面的 HAP SHA-256 识别本包**：版本号与旧包相同，旧 `59c86f18…` /
+`70588bde…` 不含 PR #17 修复。
+
+下载：包通过 Git LFS 保存。在 GitHub 文件页点 **Download raw file**（不要把文本指针
+当安装包），或克隆后执行 `git lfs pull`。
+
+本文只描述**怎么在该签名 HAP 上触发与核对**，不重复 C 的构建/签名工作。所有步骤
 以“不卸载、不清除应用数据”为前提。
 
 ## 0. 开始前记录
 
 | 项 | 记录方式 |
 |---|---|
-| HAP | 文件名、SHA-256、大小、versionCode/versionName |
+| HAP | 已安装包的 SHA-256 必须等于 `791dc53d…12788`；记录安装时间、版本 0.1.1/2 |
 | 源码提交 | `ce624cec654e3492697e22792a047ff69e88d4fc` |
 | 设备 | HAD-W32、系统/API、时间 |
 | 数据基线 | 文件库条目数、笔记、历史任务列表；若沙箱可读，记录 `files/imports`、`files/jobs`、`files/outputs` 下除被测 job 外的文件哈希清单 |
