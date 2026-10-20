@@ -47,8 +47,7 @@ struct ParameterEditor {
   }
   build() {
     Column({ space: 10 }) {
-      Text(`${this.panel} — Edit local draft`).fontSize(18).fontWeight(FontWeight.Bold).width('100%')
-      Text('仅保存本地草稿；不修改输入文件，不提交精修。空白表示未设置。').fontSize(13).fontColor('#555555').width('100%')
+      Text(this.panel).fontSize(18).fontWeight(FontWeight.Bold).width('100%')
       Scroll() {
         Column({ space: 10 }) {
           ForEach(visibleParameters(this.panel, this.form), (item: ParameterField) => {
@@ -56,7 +55,7 @@ struct ParameterEditor {
               Text(item.label).fontSize(13).width('100%')
               Row({ space: 8 }) {
                 if (item.multiline) {
-                  TextArea({ text: item.value, placeholder: '记录实验说明、操作备注或待办事项…' })
+                  TextArea({ text: item.value })
                     .fontSize(14).height(240).layoutWeight(1).maxLength(parameterTextLimit(item))
                     .enabled(!this.saving).id(`parameter-${item.key}`).accessibilityText(item.label)
                     .onChange((value: string) => { this.change(item.key, value); })
@@ -87,11 +86,11 @@ struct ParameterEditor {
         Button('Clear form').parameterButton().enabled(!this.saving).margin({ right: 12, bottom: 8 })
           .onClick(() => {
             this.form = parameterFields(this.panel); this.resetRevision++;
-            this.error = '表单已清空，保存后生效；Cancel 可保留原草稿。';
+            this.error = '';
           })
         Button('Cancel').parameterButton().enabled(!this.saving).onClick(() => { this.controller.close(); })
           .margin({ right: 12, bottom: 8 })
-        Button(this.saving ? 'Saving...' : 'Save local draft').parameterButton().enabled(!this.saving)
+        Button(this.saving ? 'Saving...' : 'Save').parameterButton().enabled(!this.saving)
           .id('parameter-save').onClick(() => { this.commit(); })
           .margin({ bottom: 8 })
       }.width('100%')
@@ -135,8 +134,7 @@ export struct ParameterPanel {
       if (this.generation !== generation || this.scope !== scope || this.panel !== panel) { return; }
       this.settings = settings; this.storageKey = key; this.fields = fields; this.loaded = true;
       this.displayRevision++;
-      this.message = json ? '已恢复本地草稿。尚未用于精修。' :
-        (panel === 'Notebook' || panel === 'Comments' ? '尚无本地记录。' : '尚无本地草稿；参数值未从输入文件解析。');
+      this.message = '';
     } catch {
       if (this.generation === generation) { this.message = '草稿无法读取；原记录保留。请重试，不自动覆盖。'; }
     }
@@ -153,7 +151,7 @@ export struct ParameterPanel {
         const json = serializeParameters(panel, scope, fields);
         await settings.put(key, json); await settings.flush();
         if (this.generation !== generation) { return; }
-        this.fields = restoreParameters(panel, scope, json); this.message = '本地草稿已保存；未修改文件或启动精修。';
+        this.fields = restoreParameters(panel, scope, json); this.message = '已保存。';
         this.displayRevision++;
       } }), autoCancel: false, customStyle: true, alignment: DialogAlignment.Center
     });
@@ -171,22 +169,19 @@ export struct ParameterPanel {
     Column({ space: 10 }) {
       Text(this.panel === 'Limits' ? 'Data range to be used in fits' : this.panel === 'Controls' ? 'Refinement Controls' : this.panel)
         .fontSize(16).fontWeight(FontWeight.Bold).width('100%')
-      Text(this.message).fontSize(13).fontColor('#555555').width('100%')
-      Text(this.panel === 'Notebook' ? '应用本地笔记 · 更换输入不影响记录；未写入 GPX 工程' :
-        this.panel === 'Comments' ? '此粉末文件的本地备注 · 不代表文件原有注释，不改写输入文件' :
-        '本地参数草稿 · 未连接科学解析与精修服务').fontSize(13).fontColor('#805400').width('100%')
+      if (this.message) { Text(this.message).fontSize(13).fontColor('#555555').width('100%') }
       Row({ space: 8 }) {
-        Button('Edit local draft...').parameterButton().enabled(this.loaded).id('edit-parameter-draft').onClick(() => { this.edit(); })
+        Button('Edit...').parameterButton().enabled(this.loaded).id('edit-parameter-draft').onClick(() => { this.edit(); })
         Button('Help').parameterButton().onClick(() => {
           this.explain(`${this.panel} — draft scope`, this.panel === 'Notebook' ?
             'Notebook 是当前应用的本地笔记，更换输入后仍保留。它不是 GPX 工程笔记；卸载前请自行留存需要的文字。取消编辑不保存。' :
             this.panel === 'Comments' ? '备注绑定已导入粉末文件的 fileId。切换到其他文件会显示其他备注，换回原文件可恢复；同名的新导入副本视为另一文件。原文件中的注释尚未解析。取消编辑不保存。' :
-            '这些字段参考原版布局与选项。草稿按当前输入文件关联隔离并保存在本机，取消编辑不保存。当前不会读写 GPX、改写输入或提交计算。');
+            '草稿按输入文件分别保存。空白表示未设置；Cancel 放弃本次编辑。草稿不写入 GPX，也不参与精修。');
         })
       }.width('100%')
       if (!this.loaded) { Button('Retry').parameterButton().onClick(() => { this.load(); }) }
       if (this.panel === 'Limits') {
-        Text('Original Tmin / Tmax: —（等待数据解析；当前单位与原始范围未知）').fontSize(13).width('100%')
+        Text('Original Tmin / Tmax: —').fontSize(13).width('100%')
       }
       ForEach(this.groups(), (group: string) => {
         Divider().margin({ top: 8 })
@@ -208,23 +203,15 @@ export struct ParameterPanel {
         Divider().margin({ top: 10 })
         Text('Sequential Settings').fontSize(14).fontWeight(FontWeight.Bold).width('100%')
         Text('Select datasets to switch to sequential refinement').fontSize(13).width('100%')
-        Button('Select datasets').parameterButton().onClick(() => {
-          this.explain('No Histograms', 'No histograms in use found for a sequential fit.\n输入文件虽已关联，尚未解析并关联到相；当前不能选择可用于顺序精修的数据集。');
-        })
+        Button('Select datasets').parameterButton().enabled(false)
       }
       if (this.panel === 'Limits') {
         Text('Excluded regions:').fontSize(14).fontWeight(FontWeight.Bold).width('100%')
         Text('From                         To                         Delete?').fontSize(13).width('100%')
-        Button('Add excluded region...').parameterButton().onClick(() => {
-          this.explain('Excluded regions unavailable', '尚无解析后的原始数据范围和单位，不能校验排除区间；接入解析后开放原版范围编辑。');
-        })
+        Button('Add excluded region...').parameterButton().enabled(false)
       }
       if (this.panel === 'Background') {
         Text('Debye scattering / Background peaks / Fixed background').fontSize(13).width('100%')
-        Text('这些高级背景项尚未接入数据结构，不能编辑或拟合。').fontSize(13).fontColor('#555555').width('100%')
-      }
-      if (this.panel === 'Instrument Parameters' || this.panel === 'Sample Parameters') {
-        Text(this.panel === 'Instrument Parameters' ? '模板由用户明确选择，不从 X 射线/中子用途推断 CW/TOF。当前覆盖单波长 CW 与 TOF 的常用字段。' : '当前样品页是 CW 几何草稿；TOF/能量色散及自由参数待解析接口支持。').fontSize(13).fontColor('#555555').width('100%')
       }
     }.alignItems(HorizontalAlign.Start).width('100%')
   }

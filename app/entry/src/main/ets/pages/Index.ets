@@ -110,6 +110,29 @@ struct Index {
     finally { this.busy = false; }
   }
 
+  private async refreshFiles(): Promise<void> {
+    const service = this.service;
+    if (!service) { return; }
+    try {
+      const files = await service.listFiles();
+      if (this.mounted && this.service === service) {
+        this.files = files;
+        this.status = `文件库：${files.length} 个文件`;
+      }
+    } catch (error) {
+      if (this.mounted && this.service === service) { this.status = describeFileError(error); }
+    }
+  }
+
+  private taskChanged(jobId: string, active: boolean): void {
+    const wasActive = this.taskActive;
+    this.taskActive = active;
+    if (!active && jobId.length === 0) { this.knownJobId = ''; }
+    // Includes restored terminal snapshots; progress and CancelAck keep the
+    // task active. Outputs have been registered before the terminal event.
+    if (wasActive && !active) { this.refreshFiles(); }
+  }
+
   private async openFiles(): Promise<void> {
     if (this.busy || this.taskActive) { return; }
     this.busy = true;
@@ -300,7 +323,7 @@ struct Index {
   private importPowder(): void {
     this.getUIContext().showActionSheet({
       title: 'Import Powder Data',
-      message: '选择本次输入用途（当前精修契约支持 X 射线和中子各一组）。',
+      message: '',
       sheets: [
         { title: 'X-ray powder data', action: () => { this.page = 'xray'; this.importForSlot(INPUT_SLOTS[0]); } },
         { title: 'Neutron powder data', action: () => { this.page = 'neutron'; this.importForSlot(INPUT_SLOTS[2]); } }
@@ -519,11 +542,9 @@ struct Index {
   @Builder
   inputPage() {
     this.pageTitle('Loaded Data')
-    this.unavailable('当前树节点表示已关联的输入文件；文件内容尚未解析为 GSAS-II 工程对象。')
     ForEach(INPUT_SLOTS, (slot: InputSlotInfo) => { this.inputRow(slot) }, (slot: InputSlotInfo) => slot.id)
     Button(this.prepared ? 'Recheck input files' : 'Check input files').desktopButton().id('verify-inputs')
       .enabled(this.ready && !this.busy && !this.taskActive).onClick(() => { this.verifyInputs(); })
-    this.unavailable('检查文件存在性与完整性，不执行科学格式检查或精修。')
   }
 
   @Builder
@@ -531,7 +552,7 @@ struct Index {
     this.pageTitle(this.powderName(data.id))
     this.inputRow(data)
     this.inputRow(instrument)
-    this.unavailable('已保存输入关联。强度曲线、数据范围和参数值需在文件解析接入后显示。')
+    this.unavailable('曲线预览暂不可用。')
   }
 
   private visibleFiles(): AppFile[] {
@@ -543,17 +564,18 @@ struct Index {
 
   @Builder
   filesPage() {
-    this.pageTitle('Imported files — HarmonyOS')
-    this.unavailable('应用内文件库。导入副本不会自动改变数据树关联；原始输入可从这里导出。')
+    this.pageTitle('Imported files')
     Flex({ wrap: FlexWrap.Wrap }) {
       Button('Powder data...').desktopButton().enabled(this.ready && !this.busy && !this.taskActive)
         .onClick(() => { this.importFile(FileRole.POWDER_DATA); }).margin({ right: 8, bottom: 8 })
       Button('Instrument...').desktopButton().enabled(this.ready && !this.busy && !this.taskActive)
         .onClick(() => { this.importFile(FileRole.INSTRUMENT); }).margin({ right: 8, bottom: 8 })
       Button('Phase...').desktopButton().enabled(this.ready && !this.busy && !this.taskActive)
-        .onClick(() => { this.importFile(FileRole.PHASE); }).margin({ bottom: 8 })
+        .onClick(() => { this.importFile(FileRole.PHASE); }).margin({ right: 8, bottom: 8 })
+      Button('Refresh').desktopButton().enabled(this.ready && !this.busy && !this.taskActive)
+        .onClick(() => { this.refreshFiles(); }).margin({ bottom: 8 })
     }
-    TextInput({ text: this.fileQuery, placeholder: '搜索文件名、fileId 或 SHA-256' }).fontSize(13).height(32)
+    TextInput({ text: this.fileQuery, placeholder: '搜索文件' }).fontSize(13).height(32)
       .maxLength(256).id('file-library-search').accessibilityText('搜索文件库')
       .onChange((value: string) => { this.fileQuery = value; })
     Flex({ wrap: FlexWrap.Wrap, alignItems: ItemAlign.Center }) {
@@ -565,14 +587,12 @@ struct Index {
         .onClick(() => { this.fileQuery = ''; this.fileRole = ''; })
     }.width('100%')
     Text(`显示 ${this.visibleFiles().length} / ${this.files.length} 个文件`).fontSize(12).width('100%').margin({ bottom: 12 })
-    if (this.files.length === 0) { this.unavailable('文件库为空。导入的应用内副本会在重启后保留。') }
+    if (this.files.length === 0) { this.unavailable('文件库为空。') }
     else if (this.visibleFiles().length === 0) { this.unavailable('没有匹配的文件，请调整搜索词或清除筛选。') }
     ForEach(this.visibleFiles(), (file: AppFile) => {
       Column({ space: 5 }) {
         Text(file.displayName).fontSize(14).fontWeight(FontWeight.Bold).width('100%')
         Text(`${file.role} · ${file.size} bytes`).fontSize(12).width('100%')
-        Text(`fileId ${file.fileId}`).fontSize(11).width('100%').copyOption(CopyOptions.LocalDevice)
-        Text(`SHA-256 ${file.sha256}`).fontSize(11).width('100%').copyOption(CopyOptions.LocalDevice)
         Row({ space: 8 }) {
           Button('Export copy...').desktopButton().enabled(!this.busy && !this.taskActive).onClick(() => { this.exportFile(file.fileId); })
           Button('Delete copy...').desktopButton().enabled(!this.busy && !this.taskActive).onClick(() => { this.confirmDelete(file); })
@@ -580,9 +600,6 @@ struct Index {
         Divider().margin({ top: 8 })
       }.width('100%').margin({ bottom: 12 })
     }, (file: AppFile) => file.fileId)
-    Button('Run file service checks').desktopButton().id('file-checks').enabled(this.ready && !this.busy && !this.taskActive)
-      .onClick(() => { this.checkFiles(); })
-    if (this.checks.length > 0) { Text(this.checks).fontSize(12).width('100%') }
   }
 
   @Builder
@@ -601,7 +618,7 @@ struct Index {
         else if (this.page === 'Phases' || this.page === 'phase') {
           this.pageTitle('Phases')
           this.inputRow(INPUT_SLOTS[4])
-          this.unavailable('当前关联 CIF 文件。晶胞、原子和约束编辑页尚未移植；文件名不代表解析后的相名。')
+          this.unavailable('晶胞与原子编辑暂不可用。')
         } else if (this.page === 'xray') { this.powderPage(INPUT_SLOTS[0], INPUT_SLOTS[1]) }
         else if (this.page === 'neutron') { this.powderPage(INPUT_SLOTS[2], INPUT_SLOTS[3]) }
         else if (this.page === 'xray:Instrument Parameters' || this.page === 'neutron:Instrument Parameters') {
@@ -611,12 +628,16 @@ struct Index {
           this.parameters(this.page.split(':')[1])
         } else if (this.page === 'about') {
           this.pageTitle('GSAS-II — HarmonyOS port')
-          this.unavailable('原版界面依据 GSAS-II 2.0.0，源码版本 2b4aba1bc44de63a3da9d4495944c3b99e389399。当前为五阶段精修开发版；计算是否可用以任务页的初始化状态为准。')
-          this.unavailable('Ctrl+R：打开精修任务页；F1：帮助与版本；Tab / Shift+Tab：切换控件。在任务页明确填写相名、Max cycles 与 .gpx 输出名称；其他参数页仅保存本地草稿，不自动提交计算。取消需要等待当前阶段结束。')
+          this.unavailable('GSAS-II 2.0.0 · 五阶段粉末精修 · 当前支持 PbSO4 样例')
+          this.unavailable('Ctrl+R：精修；F1：帮助；Tab / Shift+Tab：切换控件。取消需等待当前阶段结束。')
+          this.unavailable('参数页保存本地草稿；精修采用任务页中填写的参数。')
+          Button('Check file library').desktopButton().id('file-checks').enabled(this.ready && !this.busy && !this.taskActive)
+            .onClick(() => { this.checkFiles(); })
+          if (this.checks.length > 0) { Text(this.checks).fontSize(12).width('100%') }
           this.unavailable('This product includes software produced by UChicago Argonne, LLC under Contract No. DE-AC02-06CH11357 with the Department of Energy.')
         } else {
           this.pageTitle(this.page.includes(':') ? this.page.split(':')[1] : this.page)
-          this.unavailable('此原版数据页面尚未移植。菜单和数据树保留原版入口，当前不显示示例参数或模拟结果。')
+          this.unavailable('此功能暂不可用。')
         }
         if (!this.ready) {
           Button('重新打开文件库').desktopButton().enabled(!this.busy && !this.taskActive).onClick(() => { this.openFiles(); })
@@ -662,13 +683,7 @@ struct Index {
               filesReady: this.ready && !this.busy,
               prepareInputs: async (): Promise<RefinementInputs> => this.prepareTaskInputs(),
               exportArtifact: async (fileId: string): Promise<boolean> => this.exportTaskArtifact(fileId),
-              onTaskChange: (jobId: string, active: boolean): void => {
-                this.taskActive = active;
-                // §4.2 degradation: the session dropped an unknown/released
-                // recent jobId; clear the restore hint instead of ever
-                // presenting it as an interrupted or completed task.
-                if (!active && jobId.length === 0) { this.knownJobId = ''; }
-              } })
+              onTaskChange: (jobId: string, active: boolean): void => { this.taskChanged(jobId, active); } })
               .visibility(this.page === 'refinement' ? Visibility.Visible : Visibility.None)
           }
         }.height('100%').layoutWeight(1)
@@ -677,7 +692,7 @@ struct Index {
       Row({ space: 8 }) {
         Text(this.status).fontSize(12).fontColor('#303030').layoutWeight(1).maxLines(3)
         Divider().vertical(true).height(28)
-        Text(this.taskActive ? 'Task active' : this.busy ? 'Working...' : this.coreOpening ? 'Core: starting' : this.coreReady ? 'Core: ready' : 'Core: unavailable').fontSize(12).fontColor('#555555').width(110)
+        Text(this.taskActive ? '精修中' : this.busy ? '处理中…' : this.coreOpening ? '初始化中…' : this.coreReady ? '就绪' : '计算不可用').fontSize(12).fontColor('#555555').width(110)
       }.width('100%').height(54).padding({ left: 8, right: 8 }).backgroundColor('#EEEEEE')
     }.width('100%').height('100%').backgroundColor('#F0F0F0')
       .onAreaChange((_old: Area, area: Area) => {

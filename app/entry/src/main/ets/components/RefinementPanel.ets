@@ -120,16 +120,17 @@ export struct RefinementPanel {
           Button(this.coreOpening ? 'Initializing...' : 'Retry initialization').refinementButton()
             .id('retry-core').enabled(this.filesReady && !this.coreOpening).onClick(() => { this.retryCore(); })
         }
-        Text('X 射线 + 中子 + CIF · 当前仅支持已验证的 PbSO4 样例组合').fontSize(13).width('100%')
-        Text('填写本次任务参数；其他参数页的本地草稿不会自动提交。').fontSize(13).fontColor('#555555').width('100%')
-        TextInput({ text: this.phaseName, placeholder: '相名（明确填写，最多 80 字符）' }).maxLength(80)
-          .id('refinement-phase-name').enabled(!this.submitting && !isActive(this.view.state))
+        Text('相名').fontSize(13).width('100%')
+        TextInput({ text: this.phaseName, placeholder: '相名' }).maxLength(80)
+          .id('refinement-phase-name').accessibilityText('相名').enabled(!this.submitting && !isActive(this.view.state))
           .onChange((value: string) => { this.phaseName = value; })
-        TextInput({ text: this.cycles, placeholder: 'Max cycles（0～50，无预设值）' }).maxLength(2)
-          .id('refinement-cycles').enabled(!this.submitting && !isActive(this.view.state))
+        Text('Max cycles').fontSize(13).width('100%')
+        TextInput({ text: this.cycles, placeholder: '0～50' }).maxLength(2)
+          .id('refinement-cycles').accessibilityText('Max cycles').enabled(!this.submitting && !isActive(this.view.state))
           .onChange((value: string) => { this.cycles = value; })
-        TextInput({ text: this.projectName, placeholder: '输出文件名，例如 PbSO4-refined.gpx' }).maxLength(104)
-          .id('refinement-output').enabled(!this.submitting && !isActive(this.view.state))
+        Text('输出文件').fontSize(13).width('100%')
+        TextInput({ text: this.projectName, placeholder: '*.gpx' }).maxLength(104)
+          .id('refinement-output').accessibilityText('输出文件').enabled(!this.submitting && !isActive(this.view.state))
           .onChange((value: string) => { this.projectName = value; })
         Flex({ wrap: FlexWrap.Wrap }) {
           Button(this.submitting ? 'Checking inputs...' : 'Refine').refinementButton().id('start-refinement')
@@ -145,7 +146,6 @@ export struct RefinementPanel {
         if (this.notice) { Text(this.notice).fontSize(13).fontColor('#805400').width('100%') }
         if (this.view.jobId) {
           Divider()
-          Text(`${this.view.jobId} · ${this.view.state}`).fontSize(12).width('100%')
           Progress({ value: this.view.percent, total: 100, type: ProgressType.Linear }).width('100%')
           Text(`${this.view.percent.toFixed(0)}% · ${this.view.message}`).fontSize(14).width('100%')
         }
@@ -169,12 +169,11 @@ export struct RefinementPanel {
               }.width('100%')
             }, (artifact: Artifact) => artifact.fileId)
           } else {
-            Text('本次终态未提供已登记的日志，没有可导出的日志文件。').fontSize(12).fontColor('#805400').width('100%')
+            Text('无可导出的日志。').fontSize(12).fontColor('#805400').width('100%')
           }
         }
         if (this.view.result) {
           Text(`结果 · ${this.view.result.elapsedSeconds.toFixed(2)} 秒`).fontSize(16).fontWeight(FontWeight.Bold).width('100%')
-          Text(`上游版本 ${this.view.result.upstreamCommit}`).fontSize(12).width('100%')
           ForEach(this.view.result.stages, (stage: StageResult) => { this.resultStage(stage) })
           if (this.view.result.preferredOrientation) {
             Text('择优取向').fontSize(14).fontWeight(FontWeight.Bold).width('100%')
@@ -187,7 +186,7 @@ export struct RefinementPanel {
             .fontSize(13).width('100%')
           ForEach(this.view.result.artifacts, (artifact: Artifact) => {
             Row({ space: 8 }) {
-              Text(`${artifact.displayName} · ${artifact.kind}`).fontSize(13).layoutWeight(1)
+              Text(artifact.displayName).fontSize(13).layoutWeight(1)
               Button('Export...').refinementButton().enabled(this.filesReady && !this.exporting)
                 .onClick(() => { this.saveArtifact(artifact); })
             }.width('100%')
@@ -196,7 +195,6 @@ export struct RefinementPanel {
         if (this.view.history.length > 0) {
           Text('任务消息').fontSize(14).fontWeight(FontWeight.Bold).width('100%')
           Text(this.view.history.join('\n')).fontSize(12).width('100%')
-          Text('任务消息不是日志文件；只有已登记的产物才能导出。').fontSize(12).fontColor('#555555').width('100%')
         }
       }.width('100%').padding(16).alignItems(HorizontalAlign.Start)
     }.align(Alignment.TopStart).width('100%').height('100%').backgroundColor('#F0F0F0')
