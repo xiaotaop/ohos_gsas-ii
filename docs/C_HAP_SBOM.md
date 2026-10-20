@@ -15,3 +15,5 @@ python3.13 scripts/Build-HapSbom.py --hap FINAL.hap --manifest RUNTIME_MANIFEST.
 当前 unmatched：libc.musl-aarch64.so.1、libgcc_s.so.1，来自捆绑 GNU Fortran/OpenBLAS64 帮助库，仍需核定是否实际分发/加载。133 个 NumPy/SciPy 消费者的 CPython DT_NEEDED 已在独立副本统一到实际解释器 libpython3.12.so，再 strip/签名；该名称已不在未匹配项中。RPATH/RUNPATH 原样列出供重新布局后核对，不更改它们或绕过加载器。此工具永远输出 releaseApproved=false；草稿生成、格式验证和内容审计不能解除许可、签名或真实计算门禁。
 
 格式依据：https://cyclonedx.org/docs/1.5/json/ 。本轮草稿已使用 CycloneDX 官方 1.5 JSON Schema 和其本地引用验证。
+
+最新实际发布签名 HAP 为 2246 个文件、224 个 ELF；签名、真机分发来源与第三方静态范围的独立复核见 [C_SIGNED_HAP_DELIVERY](C_SIGNED_HAP_DELIVERY.md)。原草稿不构成最终许可证批准。
