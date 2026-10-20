@@ -13,7 +13,8 @@ SPEC.loader.exec_module(review)
 
 OWNERS = {'libffi': 'cpython', 'GDBM': 'cpython', 'OpenSSL': 'cpython', 'SQLite': 'cpython',
           'bzip2': 'cpython', 'XZ/liblzma': 'cpython', 'ncurses': 'cpython', 'Expat': 'cpython',
-          'libmpdec': 'cpython', 'OpenBLAS': 'scipy', 'GCC Runtime (libgfortran)': 'numpy'}
+          'libmpdec': 'cpython', 'OpenBLAS': 'scipy', 'GCC Runtime (libgfortran)': 'numpy',
+          'GNU Readline': 'cpython', 'GNU gettext libintl': 'cpython'}
 
 
 def stage(source, output, directory):

@@ -35,6 +35,39 @@ def elf(text=b'code', debug=b'debug', signature=b'signature'):
 
 
 class ThirdPartyReviewTest(unittest.TestCase):
+    def test_wrapper_label_does_not_override_defined_gnu_version_objects(self):
+        data = bytearray(512)
+        data[:6] = b'\x7fELF\x02\x01'
+        struct.pack_into('<HH', data, 16, 3, 183)
+        struct.pack_into('<Q', data, 32, 64)
+        struct.pack_into('<HH', data, 54, 56, 1)
+        struct.pack_into('<IIQQQQQQ', data, 64, 1, 6, 0, 0, 0, len(data), len(data), 8)
+        struct.pack_into('<IIQ', data, 0x180, 0x803, 1, 0x1c0)
+        data[0x1c0:0x1c4] = b'8.3\0'
+        data[0x1d0:0x1e0] = b'EditLine wrapper'
+        symbols = ('1: 0180 4 OBJECT GLOBAL DEFAULT 20 rl_readline_version\n'
+                   '2: 0184 4 OBJECT GLOBAL DEFAULT 20 rl_gnu_readline_p\n'
+                   '3: 0188 8 OBJECT GLOBAL DEFAULT 20 rl_library_version\n'
+                   '4: 0100 64 FUNC GLOBAL DEFAULT 9 _rl_dispatch_subseq\n')
+        relocation = '0000000000000188 0000000000000403 R_AARCH64_RELATIVE 1c0\n'
+        result = review.readline_implementation(bytes(data), symbols, relocation)
+        self.assertEqual(result['implementation'], 'GNU readline')
+        self.assertEqual(result['rl_library_version'], '8.3')
+        self.assertTrue(result['wrapperEditLineLiteral'])
+        unknown = symbols.replace('DEFAULT 20', 'DEFAULT UND').replace('DEFAULT 9', 'DEFAULT UND')
+        self.assertEqual(review.readline_implementation(bytes(data), unknown, relocation)['implementation'], 'unresolved')
+        struct.pack_into('<Q', data, 64 + 32, 10000)
+        with self.assertRaisesRegex(ValueError, 'outside ELF'):
+            review.readline_implementation(bytes(data), symbols, relocation.replace('1c0', '900'))
+
+    def test_generated_configuration_is_parsed_without_executing_calls(self):
+        data = b"CONFIG = _cleanup({'Compilers': {'fortran': {'name': 'llvm-flang', 'version': '22.1.8', 'commands': __import__('os').system('false')}}, 'Build Dependencies': {'blas': {'version': '0.3.33', 'found': bool('True')}}})"
+        result = review.configuration_claims(data)
+        self.assertEqual(result['Compilers']['fortran'], {'name': 'llvm-flang', 'version': '22.1.8'})
+        self.assertEqual(result['Build Dependencies']['blas'], {'version': '0.3.33'})
+        with self.assertRaisesRegex(ValueError, 'one generated'):
+            review.configuration_claims(b'CONFIG = {}; CONFIG = {}')
+
     def test_license_receipts_preserve_bytes_and_reject_tampering(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -99,6 +132,12 @@ class ThirdPartyReviewTest(unittest.TestCase):
             self.assertTrue(result[0]['matchesBHash'])
             self.assertTrue(result[0]['allocatedSectionsSameExceptCodesign'])
             self.assertEqual(result[0]['sourceAliasTarget'], 'root/lib/libpython3.12.so.1.0')
+            with zipfile.ZipFile(hap, 'w'):
+                pass
+            absent = review.prebuilt_bindings(declarations, lock, root, hap)
+            self.assertFalse(absent[0]['presentInHap'])
+            self.assertTrue(absent[0]['matchesBHash'])
+            self.assertNotIn('actualHapSha256', absent[0])
             archive_path.write_bytes(b'not the locked archive')
             with self.assertRaisesRegex(ValueError, 'locked hash'):
                 review.prebuilt_bindings(declarations, lock, root, hap)

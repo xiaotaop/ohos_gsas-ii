@@ -38,7 +38,8 @@
         "sourceCode": "https://www.python.org/ftp/python/3.12.9/Python-3.12.9.tgz",
         "sourceSha256": "45313e4c5f0e8acdec9580161d565cf5fea578e3eabf25df7cc6355bf4afa1ee",
         "buildConfig": "sysconfig: --enable-shared --build/--host=aarch64-unknown-linux-ohos --with-openssl=<deps>; CC=clang; CFLAGS=-fPIC -O2 -fuse-ld=bfd; deps: openssl, sqlite3, readline, ncurses, gdbm, gettext 0.26, xz 5.8.2, libffi 3.4.4, bzip2 1.0.8",
-        "patches": "未在载荷中记录；需向社区构建方索取"
+        "patches": "未在载荷中记录；需向社区构建方索取",
+        "communityTrace": "packaging/reviews/community-source-trace-20261020.json; matching archive hash in distro; patch series found, exact source binding remains under review"
       },
       "status": "keep"
     },
@@ -75,7 +76,7 @@
       "id": "scipy",
       "version": "1.16.3",
       "kind": "prebuilt-package",
-      "linkMode": "23 modules DT_NEEDED libscipy_openblas-80d8b5fa.so; OpenBLAS 0.3.29 statically includes its Fortran runtime (NEEDED libc only)",
+      "linkMode": "23 modules DT_NEEDED libscipy_openblas-80d8b5fa.so; static Fortran implementation/version not established by NEEDED libc only",
       "files": [
         {
           "path": "runtime/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-80d8b5fa.so",
@@ -91,7 +92,8 @@
         "download": "https://pypi.cnb.cool/OpenHarmonyPCDeveloper/pypi/-/packages/simple/scipy/../../packages/b5/eb/cb74cfabd35deed6c787d654513660eaefb062f275977043868d5cdb960b/scipy-1.16.3-cp312-cp312-ohos_aarch64.whl",
         "downloadSha256": "a7e2095d76bfb55460b4f66ba5a7eb7861ca644c5c6326252b7cdb02a6d61dcd",
         "sourceCode": "https://github.com/scipy/scipy/releases/tag/v1.16.3",
-        "patches": "社区 wheel 构建补丁/配置未随包发布；需向发行方索取"
+        "patches": "社区 wheel 构建补丁/配置未随包发布；需向发行方索取",
+        "generatedConfigObservation": "packaged scipy/__config__.py declares llvm-flang 22.1.8 and OpenBLAS 0.3.33, but packaged BLAS literal is 0.3.29; mismatch unresolved"
       },
       "status": "keep"
     },
@@ -407,30 +409,35 @@
       ],
       "evidence": "C actual signed HAP defines six libintl_* FUNC symbols in a non-UND section. Absence of DT_NEEDED does not establish absence of statically linked code.",
       "license": {
-        "spdx": "NOASSERTION",
-        "text": "not supplied; review pending"
+        "spdx": "LGPL-2.1-or-later",
+        "text": "packaging/licenses/third-party/gettext-libintl-0.26-COPYING.LIB.txt"
       },
       "source": {
-        "patches": "not supplied; exact source/build/version/license evidence required"
+        "patches": "hnp prebuilt source/build/patch binding and static relinking evidence pending",
+        "url": "https://ftp.gnu.org/gnu/gettext/gettext-0.26.tar.xz",
+        "sha256": "d1fb86e260cfe7da6031f94d2e44c0da55903dbae0a2fa0fae78c91ae1b56f00",
+        "publisherVersion": "0.26; distro-linked CPython build guide"
       },
       "status": "review-pending"
     },
     {
-      "id": "libedit",
-      "version": "unverified",
+      "id": "readline",
+      "version": "8.3 (defined ELF version objects)",
       "kind": "embedded-library",
-      "linkMode": "embedded implementation candidate",
+      "linkMode": "static GNU readline implementation",
       "files": [],
       "consumers": [
         "readline.cpython-312-aarch64-linux-ohos.so"
       ],
-      "evidence": "C actual HAP readline extension contains EditLine wrapper; exact build/version/source not yet established.",
+      "evidence": "Defined rl_library_version relocation resolves to 8.3; rl_readline_version=0x803, rl_gnu_readline_p=1, and defined _rl_dispatch_subseq. CPython EditLine wrapper literal is not implementation proof.",
       "license": {
-        "spdx": "NOASSERTION",
-        "text": "not supplied; review pending"
+        "spdx": "GPL-3.0-or-later",
+        "text": "packaging/licenses/third-party/readline-8.3-COPYING.txt"
       },
       "source": {
-        "patches": "not supplied; exact source/build/version/license evidence required"
+        "url": "https://ftp.gnu.org/gnu/readline/readline-8.3.tar.gz",
+        "sha256": "fe5383204467828cd495ee8d1d3c037a7eba1389c22bc6a041f627976f9061cc",
+        "patches": "exact prebuilt source and static-link distribution obligations pending"
       },
       "status": "review-pending"
     }

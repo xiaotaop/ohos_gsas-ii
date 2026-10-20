@@ -51,7 +51,7 @@
 | CPython 附带 libffi/GDBM | HAP 中确有独立 ELF；GDBM 字符串报告 1.24 | 提供精确构建源码/修改、版本和各自许可；不能套用 PSF 许可 |
 | NumPy 附带 OpenBLAS64/GNU Fortran | `libscipy_openblas64_.so` 仅消费 `libgfortran.so.5`，后者仅被它消费；未发现其他 ELF 的 DT_NEEDED 指向该组库 | B 确认是否需要；若排除，还需检查动态加载路径，生成新清单并重新构建/验收，不可把本报告视作删除授权依据 |
 | SciPy 实际 BLAS | `libscipy_openblas-80d8b5fa.so` 被 23 个科学扩展消费，字符串报告 OpenBLAS 0.3.29 | 保留并补齐该构建的源码、许可和静态链接范围，不可连同旧帮助库删除 |
-| CPython 静态第三方范围 | `_ssl` 中观察到 OpenSSL 1.1.1w；readline 模块为 EditLine wrapper。SQLite、bzip2、XZ、ncurses、Expat、libmpdec 等对应模块亦在包中 | B 提供各模块的配置、依赖源码/补丁、版本和许可原文；二进制字符串或 Python 主许可证不能替代这些凭据 |
+| CPython 静态第三方范围 | `_ssl` 中观察到 OpenSSL 1.1.1w；readline 包装器含 EditLine wrapper 标签；后续 ELF 对象核对识别 GNU readline 8.3（见最新 C 记录）。SQLite、bzip2、XZ、ncurses、Expat、libmpdec 等对应模块亦在包中 | B 提供各模块的配置、依赖源码/补丁、版本和许可原文；二进制字符串或 Python 主许可证不能替代这些凭据 |
 | GSAS/移植代码及其修改 | 原许可、NOTICE、排除范围和补丁在源码伴随包中 | 随二进制交付该包，并复核修改作者/差异；不能只提供源码 URL |
 
 当前未匹配依赖名仍为 `libc.musl-aarch64.so.1` 与 `libgcc_s.so.1`，来自上述 GNU 帮助库。为保持真机证据与 HAP 哈希一致，本次没有悄悄删除库或改变已验收载荷。静态库候选列表记录的是待核范围，不声称仅凭模块名已确定完整静态物料。
@@ -72,3 +72,5 @@ python3 scripts/Build-SourceCompanion.py \
 源码伴随包、HAP、完整 SBOM/inventory 和原始验收记录保存在本机忽略的 `app/build` 交付目录，不上传私钥、签名配置或借用设备的其他文件。仓库只提交可复现工具和脱敏核验摘要；未创建公开 Release 或提交应用上架。
 
 后续关闭顺序：补齐 B 的第三方依赖源码/版本/许可凭据；如需精简载荷，冻结改动后重新生成清单、许可、SBOM 和源码伴随包，再签名实际 HAP 并复验安装与科学结果。最终哈希变更时，本记录的旧验收结果仅保留为历史证据。
+
+2026-10-20 后续：C 已完成 13 份许可装配、两库精简签名候选和实际 HAP SBOM，见 [最新复核记录](C_THIRD_PARTY_REVIEW.md)。本文件的 88ea4528… 数值/真机证据仍仅对应原包，不能作为 fcd8d215… 新候选的验收。

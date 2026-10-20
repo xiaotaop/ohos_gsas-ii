@@ -7,6 +7,7 @@ container's license for bundled third-party libraries.
 """
 from __future__ import annotations
 import argparse
+import ast
 import concurrent.futures
 import hashlib
 import importlib.util
@@ -62,6 +63,97 @@ def defined_intl_symbols(text):
                 and cells[7].startswith('libintl_')):
             found.add(cells[7])
     return sorted(found)
+
+
+def readline_implementation(data, symbols, relocations):
+    """Read defined version objects through file-backed PT_LOAD/RELA data.
+
+    The CPython wrapper contains both implementation labels even when only
+    GNU readline is linked. A string search alone must not identify libedit.
+    No library is loaded or executed here.
+    """
+    if len(data) < 64 or data[:6] != b'\x7fELF\x02\x01' or struct.unpack_from('<HH', data, 16) != (3, 183):
+        raise ValueError('expected AArch64 ELF64 shared library')
+    start = struct.unpack_from('<Q', data, 32)[0]
+    size, count = struct.unpack_from('<HH', data, 54)
+    if size != 56 or not count or start + count * size > len(data):
+        raise ValueError('invalid ELF program table')
+    segments = [struct.unpack_from('<IIQQQQQQ', data, start + i * size) for i in range(count)]
+    def read(address, length):
+        matches = [s for s in segments if s[0] == 1 and s[3] <= address and address + length <= s[3] + s[5]]
+        if len(matches) != 1:
+            raise ValueError('version object not in one file-backed LOAD segment')
+        offset = matches[0][2] + address - matches[0][3]
+        if offset + length > len(data):
+            raise ValueError('version object outside ELF')
+        return data[offset:offset + length]
+    objects, functions = {}, set()
+    for line in symbols.splitlines():
+        cells = line.split()
+        if len(cells) < 8 or cells[6] in ('UND', 'UNDEF'):
+            continue
+        if cells[3] == 'OBJECT' and cells[7] in ('rl_library_version', 'rl_readline_version', 'rl_gnu_readline_p'):
+            if cells[7] in objects:
+                raise ValueError('ambiguous readline version symbol')
+            objects[cells[7]] = (int(cells[1], 16), int(cells[2]))
+        elif cells[3] == 'FUNC':
+            functions.add(cells[7])
+    result = {'wrapperEditLineLiteral': b'EditLine wrapper' in data,
+              'implementation': 'unresolved', 'scope': 'defined ELF objects; not exact source/patch provenance'}
+    for name in ('rl_readline_version', 'rl_gnu_readline_p'):
+        if name in objects:
+            address, length = objects[name]
+            if length != 4:
+                raise ValueError('unexpected readline integer size')
+            result[name] = struct.unpack('<I', read(address, 4))[0]
+    if 'rl_library_version' in objects:
+        address, length = objects['rl_library_version']
+        if length != 8:
+            raise ValueError('unexpected readline pointer size')
+        relative = [int(c[3], 16) for line in relocations.splitlines()
+                    if len(c := line.split()) == 4 and c[2] == 'R_AARCH64_RELATIVE' and int(c[0], 16) == address]
+        if len(relative) == 1:
+            raw = bytearray()
+            for i in range(96):
+                byte = read(relative[0] + i, 1)
+                if byte == b'\0':
+                    result['rl_library_version'] = raw.decode('ascii')
+                    break
+                raw.extend(byte)
+        elif relative:
+            raise ValueError('ambiguous readline pointer relocation')
+    if (result.get('rl_gnu_readline_p') == 1 and result.get('rl_readline_version')
+            and '_rl_dispatch_subseq' in functions):
+        result['implementation'] = 'GNU readline'
+        result['definedImplementationFunction'] = '_rl_dispatch_subseq'
+    return result
+
+
+def configuration_claims(data):
+    """Extract only literal compiler/dependency names and versions; never exec."""
+    tree = ast.parse(data.decode('utf-8'))
+    values = [node.value for node in tree.body if isinstance(node, ast.Assign)
+              and any(isinstance(t, ast.Name) and t.id == 'CONFIG' for t in node.targets)]
+    if len(values) != 1:
+        raise ValueError('expected one generated CONFIG assignment')
+    root = values[0]
+    if isinstance(root, ast.Call) and isinstance(root.func, ast.Name) and root.func.id == '_cleanup' and len(root.args) == 1:
+        root = root.args[0]
+    def literal_fields(node):
+        if not isinstance(node, ast.Dict):
+            return {}
+        return {k.value: v for k, v in zip(node.keys, node.values)
+                if isinstance(k, ast.Constant) and isinstance(k.value, str)}
+    result = {}
+    for section, node in literal_fields(root).items():
+        if section not in ('Compilers', 'Build Dependencies'):
+            continue
+        result[section] = {}
+        for name, value in literal_fields(node).items():
+            result[section][name] = {key: val.value for key, val in literal_fields(value).items()
+                                     if key in ('name', 'version') and isinstance(val, ast.Constant)
+                                     and isinstance(val.value, str)}
+    return result
 
 
 def allocated_sections(data):
@@ -150,11 +242,17 @@ def prebuilt_bindings(declarations, lock, directory, hap):
                 if rt.digest(data) != declaration['sha256'] or len(data) != declaration['bytes']:
                     raise ValueError('B declared hash differs from locked original archive: ' + name)
                 target = 'libs/arm64-v8a/' + name
+                if target not in packaged.namelist():
+                    result.append({'name': name, 'archive': item['name'], 'archiveSha256': item['sha256'],
+                        'sourceMember': member, 'sourceAliasTarget': alias, 'sourceSha256': rt.digest(data),
+                        'matchesBHash': True, 'presentInHap': False,
+                        'scope': 'verified original archive member; absent from this audited HAP'})
+                    continue
                 actual = packaged.read(target)
                 original_sections, actual_sections = allocated_sections(data), allocated_sections(actual)
                 result.append({'name': name, 'archive': item['name'], 'archiveSha256': item['sha256'],
                     'sourceMember': member, 'sourceAliasTarget': alias,
-                    'sourceSha256': rt.digest(data), 'matchesBHash': True,
+                    'sourceSha256': rt.digest(data), 'matchesBHash': True, 'presentInHap': True,
                     'actualHapTarget': target, 'actualHapSha256': rt.digest(actual),
                     'allocatedSectionsSameExceptCodesign': original_sections == actual_sections,
                     'differingSections': sorted(k for k in set(original_sections) | set(actual_sections)
@@ -197,8 +295,13 @@ def generate(hap, manifest, declarations, directory, sdk, output, prebuilt_dir=N
             row = {'id': comp['id'], 'declaredVersion': comp['version'],
                    'declaredLinkMode': comp['linkMode'], 'declaredStatus': comp['status'],
                    'distributionReview': 'pending', 'sourceDeclaration': comp.get('source', {}),
+                   'licenseDeclaration': comp.get('license', {}),
                    'bindings': [], 'consumers': []}
             for file in comp.get('files', []):
+                if not any(f['path'].startswith('libs/') and PurePosixPath(f['path']).name == PurePosixPath(file['path']).name for f in actual):
+                    row['bindings'].append({'declaredPath': file['path'], 'declaredSha256': file['sha256'],
+                                            'declaredSize': file['bytes'], 'presentInHap': False})
+                    continue
                 target = bind_filename(file['path'], actual)
                 row['bindings'].append({'declaredPath': file['path'], 'declaredSha256': file['sha256'],
                     'declaredSize': file['bytes'], 'actualPath': target['path'],
@@ -214,7 +317,7 @@ def generate(hap, manifest, declarations, directory, sdk, output, prebuilt_dir=N
                 receipt = receipts[text_name]
                 targets = [f['path'] for f in actual if f['sha256'] == receipt['sha256'] and f['size'] == receipt['bytes']]
                 row['licenseText'] = {'file': text_name, 'sha256': receipt['sha256'],
-                    'matchesBReceipt': True, 'actualHapTargets': targets,
+                    'matchesSourceReceipt': True, 'actualHapTargets': targets,
                     'scope': 'repository text matches SOURCES.json; not proof of prebuilt-library source/patches'}
                 if not targets:
                     findings.append({'id': 'license-not-in-hap', 'component': comp['id'],
@@ -228,16 +331,32 @@ def generate(hap, manifest, declarations, directory, sdk, output, prebuilt_dir=N
             extra.append({'id': 'gettext-libintl', 'consumer': libpython['path'],
                 'consumerSha256': libpython['sha256'], 'definedFunctionSymbols': intl,
                 'version': 'unverified', 'distributionReview': 'pending'})
-            findings.append({'id': 'gettext-source-license-incomplete', 'status': 'open',
-                'evidence': 'actual libpython defines libintl functions, not undefined imports; no DT_NEEDED cannot exclude static code'})
+            findings.append({'id': 'gettext-corresponding-source-relinking-pending', 'status': 'open',
+                'evidence': 'actual libpython defines libintl functions; upstream license text alone does not establish exact prebuilt source/patches or static relinking obligations'})
         readline = bind_filename('readline.cpython-312-aarch64-linux-ohos.so', actual)
-        if b'EditLine wrapper' in blobs[readline['path']]:
-            extra.append({'id': 'libedit', 'consumer': readline['path'],
-                          'consumerSha256': readline['sha256'], 'marker': 'EditLine wrapper',
-                          'version': 'unverified', 'distributionReview': 'pending'})
-            if not any(c['id'] == 'libedit' and c.get('license', {}).get('spdx') != 'NOASSERTION' for c in declarations['components']):
-                findings.append({'id': 'libedit-source-license-incomplete', 'status': 'open',
-                                 'evidence': 'actual readline extension identifies EditLine; exact version/source/license not supplied'})
+        def readelf(*args):
+            return subprocess.run([str(tool), *args, str(paths[readline['path']])],
+                                  capture_output=True, text=True, check=True, timeout=30).stdout
+        implementation = readline_implementation(blobs[readline['path']], readelf('--dyn-syms'), readelf('-r'))
+        extra.append({'id': 'readline-implementation', 'consumer': readline['path'],
+                      'consumerSha256': readline['sha256'], **implementation, 'distributionReview': 'pending'})
+        findings.append({'id': 'readline-corresponding-source-pending', 'status': 'open',
+                         'evidence': 'wrapper literals alone are insufficient; exact source/patch/build binding and distribution obligations remain'})
+        build_claims = []
+        for package in ('numpy', 'scipy'):
+            target = f'resources/rawfile/runtime/lib/python3.12/site-packages/{package}/__config__.py'
+            data = archive.read(target)
+            build_claims.append({'package': package, 'path': target, 'sha256': rt.digest(data),
+                                 'claims': configuration_claims(data),
+                                 'scope': 'literal generated configuration; not independently verified build provenance'})
+        blas = bind_filename('libscipy_openblas-80d8b5fa.so', actual)
+        markers = sorted({v.decode() for v in re.findall(rb'OpenBLAS [0-9]+\.[0-9]+\.[0-9]+', blobs[blas['path']])})
+        scipy_claim = next(row for row in build_claims if row['package'] == 'scipy')
+        declared_blas = scipy_claim['claims'].get('Build Dependencies', {}).get('blas', {}).get('version')
+        if declared_blas and markers and 'OpenBLAS ' + declared_blas not in markers:
+            findings.append({'id': 'scipy-config-binary-openblas-version-mismatch', 'status': 'open',
+                             'configVersion': declared_blas, 'binaryMarkers': markers,
+                             'evidence': 'packaged generated configuration differs from packaged OpenBLAS literal marker; not an ABI failure verdict'})
         for name, marker in [('openssl', b'OpenSSL 1.1.1w  11 Sep 2023'), ('sqlite', b'3.49.1\x00'),
                              ('bzip2', b'1.0.8, 13-Jul-2019'), ('xz', b'5.8.2\x00'),
                              ('ncurses', b'ncurses 6.6.20251230'), ('expat', b'expat_2.6.4'),
@@ -255,18 +374,20 @@ def generate(hap, manifest, declarations, directory, sdk, output, prebuilt_dir=N
                 for name in candidates:
                     if name.encode() in data:
                         references.append({'path': f['path'], 'name': name, 'sha256': f['sha256']})
-        removal = {'candidateNames': sorted(candidates), 'externalNeededConsumers': outside,
+        removal = {'candidateNames': sorted(candidates),
+                   'presentNames': sorted(PurePosixPath(f['path']).name for f in libraries if PurePosixPath(f['path']).name in candidates),
+                   'externalNeededConsumers': outside,
                    'exactPythonJsonReferences': references, 'removalApproved': False,
-                   'scope': 'static experiment evidence only; no deletion, re-signing or device revalidation performed'}
+                   'scope': 'static evidence for this HAP only; device revalidation and final approval are not established by this tool'}
         findings.append({'id': 'prebuilt-source-build-patch-evidence-incomplete', 'status': 'open',
-                         'evidence': 'B explicitly records unprovided community prebuilt build recipes/patches'})
+                         'evidence': 'community source leads and generated configurations are partial evidence; exact native prebuilt-to-source/patch/build binding remains unresolved'})
         findings.append({'id': 'scipy-static-fortran-runtime-unresolved', 'status': 'open',
                          'evidence': 'NEEDED libc only does not identify a statically linked runtime or its version/license'})
     original_bindings = prebuilt_bindings(declarations, json.loads((Path(__file__).parent / 'ohos/local-cross/sources.lock.json').read_text()), prebuilt_dir, hap) if prebuilt_dir else []
     report = {'prebuiltOriginalBindings': original_bindings, 'schemaVersion': 1, 'kind': 'actual-HAP-third-party-review',
               'hapSha256': inventory['hapSha256'], 'declarationsCanonicalJsonSha256': rt.digest(json.dumps(declarations, sort_keys=True).encode()),
               'licenseReceiptsVerified': len(receipts), 'nativeELFs': len(libraries),
-              'components': components, 'versionObservations': versions,
+              'components': components, 'versionObservations': versions, 'generatedConfigurationClaims': build_claims,
               'additionalEmbeddedCandidates': extra, 'removalEvidence': removal,
               'unmatchedNames': graph['unmatchedNames'], 'findings': findings,
               'releaseApproved': False, 'step2Complete': False}

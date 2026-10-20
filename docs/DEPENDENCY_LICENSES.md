@@ -21,10 +21,12 @@
 |---|---|---|---|---|
 | CPython | 3.12.9 ohos-aarch64 | [volces tarball](https://artifacts-cn-beijing.volces.com/repository/ophcd.pkg/pkg/kernel-1.13.0/python/3.12.9/python-3.12.9-ohos-aarch64.tar.gz) `767b7ef4…163576` | [Python-3.12.9.tgz](https://www.python.org/ftp/python/3.12.9/Python-3.12.9.tgz) `45313e4c…4afa1ee` | 载荷内 `_sysconfigdata__ohos_aarch64-linux-ohos.py` 记录了完整配置：`--enable-shared --build/--host=aarch64-unknown-linux-ohos --with-openssl=<deps>`，`CC=clang`、`CFLAGS=-fPIC -O2 -fuse-ld=bfd`，依赖 openssl、sqlite3、readline、ncurses、gdbm、gettext 0.26、xz 5.8.2、libffi 3.4.4、bzip2 1.0.8。补丁：**未随包记录**，需向社区构建方索取 |
 | NumPy | 2.2.6 ohos_aarch64 wheel | [cnb wheel](https://pypi.cnb.cool/OpenHarmonyPCDeveloper/pypi/-/packages/46/d1/ec3f782abdf0d8a87398feb6f732731945db028a9e59023f3c2f021bd910/numpy-2.2.6-cp312-cp312-ohos_aarch64.whl) `8468135b…091fcb0` | [numpy v2.2.6](https://github.com/numpy/numpy/releases/tag/v2.2.6) | wheel 内 NumPy 扩展只 NEED `libpython3.12` 与 `libc`，BLAS 内核内置（`lapack_lite`/`noblas`）；`numpy.libs` 里的 OpenBLAS64 无消费者（见 §3）。构建配置与补丁未随 wheel 发布 |
-| SciPy | 1.16.3 ohos_aarch64 wheel | [cnb wheel](https://pypi.cnb.cool/OpenHarmonyPCDeveloper/pypi/-/packages/b5/eb/cb74cfabd35deed6c787d654513660eaefb062f275977043868d5cdb960b/scipy-1.16.3-cp312-cp312-ohos_aarch64.whl) `a7e2095d…a6d61dcd` | [scipy v1.16.3](https://github.com/scipy/scipy/tree/v1.16.3) | 23 个扩展 NEED `libscipy_openblas-80d8b5fa.so`（OpenBLAS 0.3.29，静态内含 Fortran 运行时）；构建配置与补丁未随 wheel 发布 |
+| SciPy | 1.16.3 ohos_aarch64 wheel | [cnb wheel](https://pypi.cnb.cool/OpenHarmonyPCDeveloper/pypi/-/packages/b5/eb/cb74cfabd35deed6c787d654513660eaefb062f275977043868d5cdb960b/scipy-1.16.3-cp312-cp312-ohos_aarch64.whl) `a7e2095d…a6d61dcd` | [scipy v1.16.3](https://github.com/scipy/scipy/tree/v1.16.3) | 23 个扩展 NEED `libscipy_openblas-80d8b5fa.so`（随包标记 OpenBLAS 0.3.29，静态 Fortran 范围待核）；包内配置声明 BLAS 0.3.33/llvm-flang 22.1.8，与库标记有差异；原始配方/补丁待取得 |
 | PyCifRW / prettytable / wcwidth / ply | 5.0.1 / 3.18.0 / 0.9.2 / 3.11 | 见 [载荷配方](../scripts/payload/README.md) §1 | PyPI / 上游 | 纯 Python，无原生依赖 |
 
-“补丁未随包记录”是当前如实状态：社区 wheel 的构建配方未公开在包内，
+C 已找到声明相同归档哈希的 CPython 社区配方与补丁系列，见 [来源追查](../packaging/reviews/community-source-trace-20261020.json)；82 个补丁中 81 个可直接应用，原生构建提交仍未绑定。
+
+“补丁未随包记录”是原始包的如实状态：社区 wheel 的构建配方未公开在包内，
 不能声称与上游 sdist 完全相同。C 的最终许可审查应据此要求发行方补交
 构建配方或自行从源码重建。
 
@@ -55,14 +57,16 @@
   `zlib` 动态链接，未随应用分发，许可证为 Zlib。
 - `libc++_shared.so` 由应用打包（`libs/arm64-v8a/`），许可证
   Apache-2.0 WITH LLVM-exception，归 C 的 HAP 许可清单。
-- **C 实际 HAP 复核更正**：不能由没有 `DT_NEEDED libintl` 推断未分发。`libpython3.12.so` 实际定义了 6 个 `libintl_*` 函数；gettext/libintl 的准确版本、对应源码/补丁及许可文本仍待补充。readline 扩展还包含 `EditLine wrapper` 标识，libedit 的版本/源码/许可同样待核，见 [C 复核记录](C_THIRD_PARTY_REVIEW.md)。
+- **C 实际 HAP 复核更正**：不能由没有 `DT_NEEDED libintl` 推断未分发。`libpython3.12.so` 实际定义了 6 个 `libintl_*` 函数；gettext/libintl 的准确构建对应关系及静态链接义务仍待核，C 已补入上游 LGPL 文本。readline 的已定义版本对象指向 GNU readline 8.3（GPL-3.0-or-later）；`EditLine wrapper` 是包装器文字，不能据此认定 libedit，见 [C 复核记录](C_THIRD_PARTY_REVIEW.md)。
 - **OpenSSL 1.1.1w 已停止维护**（1.1.1 系列 2023-09 结束支持）。当前
   `_ssl`/`_hashlib` 静态包含它；是否影响分发由 C 与组长在安全/兼容性复核后
   决定，并应在发布说明中如实披露。
 
 ## 3. 旧帮助库处理结论
 
-**静态分析结论：`libscipy_openblas64_.so` 与 `libgfortran.so.5` 是移除候选，
+C 已在独立候选包完成两库移除、重新签名与静态复核：222 ELF、无 unmatched NEEDED；新包尚待真机复验。旧已验收包保留，详见 [最新 C 记录](C_THIRD_PARTY_REVIEW.md)。下文是基础载荷的分析与实验依据。
+
+**基础载荷静态分析结论：`libscipy_openblas64_.so` 与 `libgfortran.so.5` 是移除候选，
 尚未在删除后的签名 HAP 上验证，不得视为安全移除授权；SciPy 正在使用的
 `libscipy_openblas-80d8b5fa.so` 必须保留。**
 

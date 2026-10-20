@@ -1,53 +1,58 @@
-# C：B 依赖交接材料与实际 HAP 复核
+# C：第三方依赖与实际 HAP 复核
 
-2026-10-20，接收已合并 PR #10 的依赖清单与 11 份许可证文本（原交付提交 `4ddaa8c`，主线 `a797b86`）。**材料接收不等于许可批准，第 2 项仍未完成。**
+2026-10-20，已接收 PR #10 的 11 份许可及依赖声明，并补做社区来源追查、GNU readline 实现识别、两库精简实验和实际包 SBOM。**第 2 项仍未完成，分发审查保留 pending。**
 
-## 已核实的材料
+## 已核实与更正
 
-- 11 份许可证文本逐文件大小、SHA-256 与 SOURCES.json 一致，保留原始换行字节。
-- 锁定的 CPython/NumPy/SciPy 原始预编译归档哈希均正确。B 清单中的 6 个库文件哈希与归档内容匹配；CPython 的 libpython3.12.so 软链接在归档内部解析到其正规目标，不向文件系统解压链接。
-- 将原始库与实际 HAP 对比：6 个库除 .codesign 外的 SHF_ALLOC 节名称、类型、标志、长度和内容一致。非装载的调试数据或签名变化不会被误判为科学代码改变；同时保留前后完整哈希。该结论不证明源代码补丁一致、重定位语义、签名有效或许可证已批准。
-- 在实际包中观察到 OpenSSL、SQLite、bzip2、XZ、ncurses、Expat、libmpdec 的声明版本字面标记。这是二进制观察，不代替精确源码和构建物料。
+- B 的 11 份许可大小/SHA-256 与 SOURCES.json 一致。锁定的 CPython/NumPy/SciPy 原始归档正确；6 个声明库的原始哈希均匹配。首轮 HAP 的 6 库装载节（除 .codesign）与原始库一致，见保留的 [首轮报告](../packaging/reviews/c-third-party-20261020.json)。
+- libpython 确实定义 6 个 libintl 函数。不能按没有 DT_NEEDED libintl 排除静态实现。
+- **撤回首轮仅凭 EditLine wrapper 推断 libedit 的依据。** CPython 包装器含两套实现标签。实际 ELF 的 `rl_library_version` 相对重定位指向 `8.3`，`rl_readline_version=0x803`、`rl_gnu_readline_p=1`，并定义 `_rl_dispatch_subseq`。当前证据识别为 **GNU readline 8.3**，不把 libedit 计作已证实分发组件。审查工具只读 ELF，不执行库。
+- 已从 GNU 官方归档补入 readline 8.3 COPYING 与 gettext 0.26 的 intl/COPYING.LIB 原文；共 13 份文本保留原始字节及源归档哈希。GNU readline 上游声明 GPL-3.0-or-later，libintl 0.26 上游声明 LGPL-2.1-or-later；精确预编译源码/补丁与静态链接分发义务仍待核，**许可文本入包不是分发批准**。
+- SciPy 实际 `__config__.py` 声明 clang 15.0.4、llvm-flang 22.1.8、OpenBLAS 0.3.33；随包 BLAS 的字面标记为 0.3.29。已记录配置/二进制版本差异，不能自行解释为 ABI 错误或静态 Fortran 版本。8 个 GSAS 扩展的 LLVM 20.1.8 构建凭据与此是两个范围。
 
-## 对清单的更正与未决项
+## 社区源码追查
 
-1. **gettext/libintl 确有实现代码随包。** 实际 libpython3.12.so 的动态符号表定义了 libintl_dcgettext、libintl_dgettext、libintl_gettext、libintl_textdomain、libintl_bindtextdomain、libintl_bind_textdomain_codeset；它们是非 UND 的 FUNC，不能按“没有 DT_NEEDED libintl”排除。已修正文档/NOTICE，并在机器清单增加待审项；准确版本、源码/补丁、许可仍缺。
-2. **libedit 尚缺准确物料。** 实际 readline 扩展含 EditLine wrapper 标识。机器清单新增待审项，不能当成 GNU readline 或直接继承 Python 主许可。
-3. **社区预编译包补丁/配置未取得。** B 已明确如实记录此缺口。上游发布版 URL 或版本字符串不能证明预编译包与该源码完全相同。
-4. **SciPy OpenBLAS 的静态 Fortran 范围未被证明。** NEEDED 只有 libc 不足以确定它静态包含了哪种 Fortran 运行时、版本及许可；需构建配方或其他直接构建物料。此项不同于已有哈希匹配凭据的 8 个 GSAS 扩展 LLVM FortranRuntime 20.1.8。
+[来源追查记录](../packaging/reviews/community-source-trace-20261020.json) 固定了公开仓库提交与文件哈希：
 
-本次不修改 distributionReview 为 approved。具体待补的是上述剩余项，已接收的 11 份文本及 6 个原始库的哈希不要求 B 重做。
+- [distro 配方](https://gitcode.com/OpenHarmonyPCDeveloper/distro/blob/f9fca0d7dee23113b09b7f8ca10784ccbf81b593/packages/python.json) 声明的 CPython 归档 SHA-256 与本机锁定输入 `767b7ef4…163576` 完全相同。
+- [CPython 补丁仓库](https://gitcode.com/OpenHarmonyPCDeveloper/cpython/tree/135d712079ae8881b73aa94c4c01c7469ab11e8d) 提供构建指南和 `3.12.9@k1.13` 系列。指南称 80 个补丁，当前系列实际列出 82 个；在官方原始源码上按发行方 git apply 参数试用，81 个成功，0125 的 venv 补丁失败。与归档内可对应的 684 份 Python 文件比较，683 份相同，差异为 Lib/venv/__init__.py。
+- 发行方提及的 build-meta.json 下载返回 HTTP 404，尚不能绑定准确 patches_commit。公开补丁线索和 Python 文件比较不能证明所有原生代码、依赖补丁与当前预编译包完全对应。
+- 科学 wheel 的公开仓库 Git 入口读取返回 HTTP 400；已保留 wheel 自带配置观察，未取得原始配方/日志。
 
-## C 已完成的许可装配
+## 新签名候选包与精简实验
 
-新增 Stage-ThirdPartyLicenses.py，把核验后的 11 份原文及 3 份归属索引复制到新载荷。显式指定 cpython/numpy/scipy 的目录归属只是打包定位，不是许可继承。拒绝覆盖源载荷、已有输出、未定义归属和损坏文本。
+Prune-RuntimeOrphans.py 先检查组外 DT_NEEDED、ELF 文件名常量及 Python/JSON 引用，再复制到新目录，仅删除 `libgfortran.so.5` 与 `libscipy_openblas64_.so`。原载荷、许可文本及旧验收 HAP 保留；NumPy RECORD 的原始声明也保留，不能把它用作精简后完整性清单。实际完整性以重新生成的运行时清单和 HAP 清单为准。
 
-新载荷 `c-native-8-license-review-20261020` 共 2239 文件，Write-RuntimeManifest/Prepare-Runtime 已通过；9 个原组件仍 pending。已使用原发布证书和指定设备 Profile 在私有副本构建 Release 候选包：
-
-| 项目 | 结果 |
+| 项目 | 新候选结果 |
 | --- | --- |
-| 候选 HAP SHA-256 | `429b4d8cf066ec1a1754427110f72f8d54a01031a9c2e90c4b566c0485cdc2e6` |
-| 包大小 | 158918099 字节 |
-| 实际内容 | 2260 文件、224 ELF；2239 个运行时文件与新清单一致 |
-| 应用签名和原生签名 | SDK verify-app/codesign 通过；嵌入 Profile 与原指定设备 Profile 一致 |
-| 许可实际入包 | 11 份原文均按实际 HAP 字节匹配 SOURCES.json，已不是仅存在于源码仓库 |
-| SBOM | 已为这一实际 HAP 重新生成草稿；待审状态保留 |
-| 真机状态 | **未安装、未验收此新候选包**；旧 HAP 88ea4528… 的真机证据不移用 |
+| runtimeId | `c-native-8-pruned-review-20261020` |
+| HAP SHA-256 | `fcd8d21523d323f8472fe11b59818cb392a9b8681971ff823e75877449c7be09` |
+| 大小 | 135838100 字节；比首轮许可候选 429b4d8c… 少 23079999 字节 |
+| 内容 | 2260 文件、222 ELF；2239 个运行时文件与清单一致 |
+| 精简 | 移除库的未压缩体积共 22944768 字节；实际 HAP 两库均不存在 |
+| 原生门禁 | 8 个 GSAS 模块 AArch64 门禁通过；实际 ELF 图 unmatchedNames 为空；在用 SciPy OpenBLAS 保留 |
+| 签名 | 发布证书 + 原指定设备 Profile，SDK verify-app/codesign 全部通过 |
+| 许可与 SBOM | 13 份许可原文实际入包；新包 SBOM 引入逐哈希绑定的待审第三方声明，通过官方 CycloneDX 1.5 schema 与引用校验 |
+| 真机 | **新包尚未安装/验收。** 检查时仅模拟器连接；旧已验收 88ea4528… 的 API23 数值/导出证据不移用 |
 
-实际报告见 [c-third-party-20261020.json](../packaging/reviews/c-third-party-20261020.json)。完整候选包、清单和报告保存本机忽略的 app/build/third-party-review-20261020；旧已验收 HAP 与真机环境保留。
+实际审查见 [新包报告](../packaging/reviews/c-third-party-pruned-20261020.json) 与 [精简凭据](../packaging/reviews/c-orphan-removal-20261020.json)。本机完整 HAP、清单、SBOM、签名结果及已取得的源码归档保存在忽略的 `app/build/licensed-pruned-20261020`。首轮 429b4d8c… 候选及其报告保留为历史记录。
 
-两个旧 GNU 帮助库仍在候选包中。实际图中未发现组外 DT_NEEDED 消费者，Python/JSON 中也未见两库全名引用；这支持后续在副本上的移除实验，**本轮未删除、未重签删除后的包，也未声称已安全移除**。SciPy 在用的 OpenBLAS 必须保留。
+## 还需要确认的内容
+
+C 继续负责社区来源核对、实际字节/许可装配、静态依赖范围、候选包和真机验收。需要 B 提供其独有的事实，见 [精简对接单](C_B_HANDOFF.md)：是否自行改动过运行时、若改动对应哪些源码/补丁/构建记录，以及已知的社区构建来源。已收到的 11 份文本、归档哈希和逐库清单不要求重做。
+
+剩余阻塞：预编译原生代码到精确源码/补丁/依赖构建的对应、GNU readline/gettext 的静态链接分发义务、SciPy 配置/BLAS 版本差异及 Fortran 静态范围；精简后新包的真机导入与五阶段验证。所有 distributionReview 仍 pending，第 2 项及上架未放行。
 
 ## 复现
 
 ```sh
-python3.13 scripts/Audit-ThirdParty.py \
-  --hap ACTUAL.hap --manifest RUNTIME_MANIFEST.json \
-  --prebuilt-dir LOCKED_ARCHIVE_DIRECTORY --output NEW_REVIEW_DIRECTORY
-
-python3 scripts/Stage-ThirdPartyLicenses.py \
-  --payload ACCEPTED_PAYLOAD --output NEW_PAYLOAD
-# 再用现有 Write-RuntimeManifest / Prepare-Runtime / Build-App 流程生成新包。
+python3 scripts/Stage-ThirdPartyLicenses.py --payload ORIGINAL_PAYLOAD --output LICENSED_PAYLOAD
+python3 scripts/Prune-RuntimeOrphans.py --payload LICENSED_PAYLOAD --output NEW_PAYLOAD --receipt NEW_RECEIPT.json
+# 使用现有 Write-RuntimeManifest / Prepare-Runtime / Build-App 生成新包后：
+python3.13 scripts/Audit-ThirdParty.py --hap ACTUAL.hap --manifest MANIFEST.json \
+  --prebuilt-dir LOCKED_ARCHIVES --output NEW_REVIEW
+python3.13 scripts/Build-HapSbom.py --hap ACTUAL.hap --manifest MANIFEST.json \
+  --native-build-receipt native-modules.json --third-party-review NEW_REVIEW/third-party-review.json --output NEW_SBOM
 ```
 
-审查工具不执行 ELF，不改变签名或文件；不存在原始归档时可以省略 prebuilt-dir，但不能声称完成归档到实际包的对应复核。源代码与许可缺项补齐后再冻结最终载荷、重签并进行实际最终包的真机验证。
+工具仅生成候选与待审证据。源码/许可问题关闭后还需冻结实际最终包，并按新哈希完成设备复验。

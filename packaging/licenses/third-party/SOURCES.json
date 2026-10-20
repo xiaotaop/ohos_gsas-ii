@@ -108,5 +108,33 @@
         "retrieved":  "2026-10-20",
         "sha256":  "c2ff6bea4ff8eb81e93a10878e3a03db5015051b32272b363a6f23d3b86b11a2",
         "bytes":  70612
+    },
+    {
+        "file": "readline-8.3-COPYING.txt",
+        "component": "GNU Readline",
+        "version": "8.3",
+        "license": "GPL-3.0-or-later",
+        "sourceUrl": "https://ftp.gnu.org/gnu/readline/readline-8.3.tar.gz",
+        "sourceArchiveSha256": "fe5383204467828cd495ee8d1d3c037a7eba1389c22bc6a041f627976f9061cc",
+        "sourceMember": "readline-8.3/COPYING",
+        "retrieved": "2026-10-20",
+        "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+        "bytes": 35147,
+        "distributionReview": "pending",
+        "scope": "upstream license text; exact prebuilt source/patch/relinking obligations remain"
+    },
+    {
+        "file": "gettext-libintl-0.26-COPYING.LIB.txt",
+        "component": "GNU gettext libintl",
+        "version": "0.26 (publisher declaration; binary binding pending)",
+        "license": "LGPL-2.1-or-later",
+        "sourceUrl": "https://ftp.gnu.org/gnu/gettext/gettext-0.26.tar.xz",
+        "sourceArchiveSha256": "d1fb86e260cfe7da6031f94d2e44c0da55903dbae0a2fa0fae78c91ae1b56f00",
+        "sourceMember": "gettext-0.26/gettext-runtime/intl/COPYING.LIB",
+        "retrieved": "2026-10-20",
+        "sha256": "20e50fe7aae3e56378ebf0417d9de904f55a0e61e4df315333e632a4d3555d95",
+        "bytes": 26419,
+        "distributionReview": "pending",
+        "scope": "upstream license text; exact prebuilt source/patch/relinking obligations remain"
     }
 ]

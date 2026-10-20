@@ -158,7 +158,62 @@ def add_native_provenance(bom, inventory, receipt):
     bom['dependencies'].append({'ref': ref, 'dependsOn': []})
 
 
-def generate(hap, manifest, sdk, output, native_receipt=None):
+def add_third_party_review(bom, inventory, review):
+    """Project pending declarations into a BOM only after binding actual hashes."""
+    if (review.get('kind') != 'actual-HAP-third-party-review'
+            or review.get('hapSha256') != inventory['hapSha256']
+            or review.get('releaseApproved') is not False):
+        raise ValueError('third-party review is not bound to this pending HAP')
+    actual = {f['path']: f for f in inventory['files']}
+    refs = {c['bom-ref'] for c in bom['components']}
+    edges = {e['ref']: e for e in bom['dependencies']}
+    omitted = []
+    for row in review['components']:
+        targets = {}
+        def bind(target, digest):
+            if target not in actual or actual[target]['sha256'] != digest:
+                raise ValueError('third-party native binding differs from actual HAP: ' + target)
+            targets[target] = digest
+        for binding in row['bindings']:
+            if binding.get('presentInHap') is False:
+                continue
+            bind(binding['actualPath'], binding['actualSha256'])
+        for consumer in row['consumers']:
+            bind(consumer['path'], consumer['sha256'])
+        if not targets:
+            omitted.append(row['id'])
+            continue
+        ref = 'third-party:' + row['id']
+        if ref in refs:
+            raise ValueError('duplicate third-party component reference')
+        refs.add(ref)
+        entry = {'type': 'library', 'bom-ref': ref, 'name': row['id'],
+                 'version': row['declaredVersion'],
+                 'properties': props(distributionReview='pending',
+                    linkage=row['declaredLinkMode'],
+                    declaredLicense=row.get('licenseDeclaration', {}).get('spdx', 'NOASSERTION'),
+                    licenseEvidence='source declaration only; exact build/distribution obligations remain pending')}
+        text = row.get('licenseText', {})
+        license_refs = []
+        for target in text.get('actualHapTargets', []):
+            if target not in actual or actual[target]['sha256'] != text['sha256']:
+                raise ValueError('third-party license differs from actual HAP: ' + target)
+            entry['properties'] += props(licenseFile=target)
+            license_refs.append('file:' + target)
+        bom['components'].append(entry)
+        bom['dependencies'].append({'ref': ref, 'dependsOn': sorted(license_refs)})
+        for target in targets:
+            file_ref = 'file:' + target
+            if file_ref not in edges:
+                edges[file_ref] = {'ref': file_ref, 'dependsOn': []}
+                bom['dependencies'].append(edges[file_ref])
+            edges[file_ref]['dependsOn'].append(ref)
+    bom['metadata']['properties'] += props(thirdPartyReview='pending',
+        thirdPartyReviewSha256=rt.digest(json.dumps(review, sort_keys=True).encode()),
+        thirdPartyDeclarationsWithoutActualBindings=','.join(sorted(omitted)))
+
+
+def generate(hap, manifest, sdk, output, native_receipt=None, third_party_review=None):
     if output.exists():
         raise ValueError('output must be a new directory')
     # Re-audit actual bytes, never trust a cached inventory.
@@ -166,6 +221,8 @@ def generate(hap, manifest, sdk, output, native_receipt=None):
     bom = build_bom(inventory)
     if native_receipt is not None:
         add_native_provenance(bom, inventory, native_receipt)
+    if third_party_review is not None:
+        add_third_party_review(bom, inventory, third_party_review)
     tool = sdk / 'native/llvm/bin/llvm-readelf'
     if not tool.is_file():
         raise ValueError('SDK llvm-readelf missing')
@@ -202,12 +259,14 @@ def main():
     parser.add_argument('--manifest', required=True, type=Path)
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--native-build-receipt', type=Path, help='Exact native-modules.json for static LLVM obligations')
+    parser.add_argument('--third-party-review', type=Path, help='Pending Audit-ThirdParty report for this exact HAP')
     parser.add_argument('--sdk-root', type=Path,
                         default=Path('/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony'))
     args = parser.parse_args()
     try:
         print(json.dumps(generate(args.hap, json.loads(args.manifest.read_text()), args.sdk_root, args.output,
-                                  json.loads(args.native_build_receipt.read_text()) if args.native_build_receipt else None)))
+                                  json.loads(args.native_build_receipt.read_text()) if args.native_build_receipt else None,
+                                  json.loads(args.third_party_review.read_text()) if args.third_party_review else None)))
     except (ValueError, OSError, KeyError, subprocess.SubprocessError) as error:
         parser.exit(1, f'SBOM generation failed: {error}\n')
 

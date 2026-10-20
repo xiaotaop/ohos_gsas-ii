@@ -1,0 +1,22 @@
+{
+  "kind": "orphan-removal-experiment",
+  "removed": [
+    {
+      "path": "libs/libgfortran.so.5",
+      "size": 1287744,
+      "sha256": "1ce069ed5ed916bda01f3d98e302f4e4848d6b5fcfddd39b9ae10d2a20dbaf5e"
+    },
+    {
+      "path": "libs/libscipy_openblas64_.so",
+      "size": 21657024,
+      "sha256": "57e3445e9724c1e8638f1d613c54338e50136c6f7716e0b86614dcf006aa5d2e"
+    }
+  ],
+  "uncompressedBytesRemoved": 22944768,
+  "externalNeededConsumers": [],
+  "externalFilenameReferences": [],
+  "sourceTreeUnchanged": true,
+  "deviceValidated": false,
+  "releaseApproved": false,
+  "scope": "derived payload only; regenerate manifests, re-sign/audit actual HAP and validate on device"
+}
