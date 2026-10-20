@@ -1,0 +1,15 @@
+{
+  "referenceHapSha256": "791dc53da7f76c56e0f9ce45b40b83d9cb45b9b42990379f59de64989d712788",
+  "newHapSha256": "d65a64a90cba7d029d43b7549c626903ccf1080a6f5b4aa8a70f77148909b25b",
+  "changedHapFiles": [
+    "module.json",
+    "pack.info"
+  ],
+  "oldMinAPIVersion": 60000020,
+  "minAPIVersion": 60100023,
+  "targetAPIVersion": 60101024,
+  "sourceAppDiff": [
+    "app/build-profile.json5"
+  ],
+  "privateSigningOverlayOnly": true
+}

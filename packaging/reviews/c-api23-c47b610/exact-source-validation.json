@@ -1,0 +1,39 @@
+{
+  "sourceCommit": "c47b6105fdb31ac0536c6d058f5ffb54cb51c5b6",
+  "checks": [
+    {
+      "name": "repository-tests",
+      "passed": true,
+      "testsRun": 92,
+      "skipped": 0
+    },
+    {
+      "name": "bridge-tests",
+      "passed": true,
+      "testsRun": 28,
+      "skipped": 2
+    },
+    {
+      "name": "core-host",
+      "passed": true,
+      "tests": 30,
+      "pass": 30,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "json",
+      "passed": true
+    },
+    {
+      "name": "contracts",
+      "passed": true
+    },
+    {
+      "name": "fixtures",
+      "passed": true
+    }
+  ],
+  "deviceTestsPerformed": false,
+  "staticNoNetworkCheckIsNotOfflineDeviceEvidence": true
+}

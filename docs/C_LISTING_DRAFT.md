@@ -6,8 +6,8 @@
 
 | 材料 | 当前可核对内容 | 仍需确认 |
 |---|---|---|
-| 标识和版本 | bundleName `com.gsasii.desktop`；最近完整签名内测包 `0.1.1` / versionCode `2`，但其最低兼容版本仍为 API20 | 新 API23 最低兼容包的发布版本、签名与递增 versionCode 策略，以及正式显示名 |
-| 功能描述 | 在已验证的 HarmonyOS PC API23 环境导入 X 射线/中子粉末数据、仪器参数和 CIF；对 PbSO4 样例完成五阶段精修，查看 Rwp/择优取向并导出 GPX、JSON、用户日志 | 新 API23 最低兼容签名包尚待构建和同包复验；不能声称 API20/API24、任意样品或全部 GSAS-II 功能已验证 |
+| 标识和版本 | bundleName `com.gsasii.desktop`；新完整签名内测包 `d65a64a9…`：`0.1.1` / versionCode `2`，最低 API23 | 新 API23 内测包为 0.1.1 / versionCode 2、原签名身份；公开分发版本、递增 versionCode 策略及正式显示名仍待确认 |
+| 功能描述 | 在已验证的 HarmonyOS PC API23 环境导入 X 射线/中子粉末数据、仪器参数和 CIF；对 PbSO4 样例完成五阶段精修，查看 Rwp/择优取向并导出 GPX、JSON、用户日志 | 新 API23 最低兼容签名包 `d65a64a9…` 已构建（[交付](C_API23_SIGNED_HAP.md)），同包复验仍待；不能声称 API20/API24、任意样品或全部 GSAS-II 功能已验证 |
 | 图标 | `app/AppScope/resources/base/media/app_icon.svg`，A 提供的正式图标源 | 按实际提交入口要求导出尺寸与格式；当前 SVG 不等于所有商店素材已齐 |
 | 功能截图 | C 同一开发 HAP 的真实结果、取消、中断恢复截图已留档，见 C_NATIVE_ACCEPTANCE | 正式签名候选包及目标真机的截图，由 A/组长审核后使用 |
 | 维护者与反馈 | 代码问题可在本仓库 Issues 记录；GitCode 申请已有独立草稿 | 团队指定实际维护者、公开联系入口和有提交权限的账号持有人；不擅自使用个人联系方式 |

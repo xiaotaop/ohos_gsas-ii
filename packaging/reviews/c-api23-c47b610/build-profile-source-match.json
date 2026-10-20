@@ -1,0 +1,11 @@
+{
+  "sourceCommit": "c47b6105fdb31ac0536c6d058f5ffb54cb51c5b6",
+  "sourcePath": "app/build-profile.json5",
+  "matchesRequestedSourceAfterRemovingOnlyLocalSigningConfigs": true,
+  "removedKeys": [
+    "app.signingConfigs",
+    "app.products[].signingConfig"
+  ],
+  "compatibleSdkVersion": "6.1.0(23)",
+  "targetSdkVersion": "6.1.1(24)"
+}

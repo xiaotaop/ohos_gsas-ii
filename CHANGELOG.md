@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — C API23 最低兼容签名候选（2026-10-21）
+
+- 以精确 `c47b610…` 和完整运行时，使用原发布证书/原指定设备 Profile 重建签名 HAP `d65a64a9…`；最低 API23、目标 API24，版本仍 0.1.1 / 2。
+- 新包仅 module.json / pack.info 的 API 声明变化，其余文件字节不变；源码伴随、签名、2266 文件/219 ELF 的实际 SBOM 与许可审查记录按新哈希绑定，HAP 和完整 ZIP 通过 Git LFS 交付。
+- 构建与材料工作完成；新包 API23 保留数据同版本覆盖及关键真机复验交由组长执行，不套用旧包证据，不代表技术放行或公开上架。见 [新交付](docs/C_API23_SIGNED_HAP.md)。
+
 ## Unreleased — PR #17 同包真机复验步骤（2026-10-20，成员 B）
 
 - 新增 [`docs/B_PR17_DEVICE_RETEST.md`](docs/B_PR17_DEVICE_RETEST.md)：针对 C 已交付的 PR #17 签名包（`GSAS-II-0.1.1-ce624cec-signed.hap`，SHA-256 `791dc53d…12788`，135,971,349 字节，versionCode 2，源码 `ce624ce`），给出取消/完成竞争的稳定操作步骤、每个 jobId 唯一终态与快照的核对方法、数据保留基线，以及初始化失败重试与 Core-only BUSY 的入口条件（沙箱写权限、分屏多窗口或非发布测试包）。

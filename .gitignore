@@ -39,3 +39,5 @@ app/entry/libs/
 
 # Explicit signed device-test delivery stored with Git LFS.
 !deliveries/GSAS-II-0.1.1-ce624cec-signed.hap
+
+!deliveries/GSAS-II-0.1.1-c47b610-api23-signed.hap

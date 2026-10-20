@@ -1,0 +1,16 @@
+{
+  "hapSha256": "d65a64a90cba7d029d43b7549c626903ccf1080a6f5b4aa8a70f77148909b25b",
+  "verifyAppPassed": true,
+  "aggregateNativeCodesignVerificationPassed": true,
+  "all219NativeElfBytesEqualDeviceAcceptedReference": true,
+  "referenceHapSha256": "70588bde3202dd49512c6628661dba76b761c274aabf8ba05dba5170c06a7fef",
+  "sameReleaseCertificateChain": true,
+  "sameDesignatedInternaltestingProfile": true,
+  "certificateChainSha256": "e52a5eff6173539fc60f6136635c0d866374670f828bc6d737ac9875fbadfd30",
+  "profileSha256": "96d5da5bfd5bf787345b5e1b9a4f52ee8efa27b290b2b8fd100cf8589da503da",
+  "profileType": "release",
+  "appDistributionType": "internaltesting",
+  "bundleName": "com.gsasii.desktop",
+  "signatureLogSha256": "93390a4d5fdff1efceaf620694a678d28166566053f134e0028bb93c3e13182c",
+  "rawPrivateKeyPasswordOrStandaloneProfilePublished": false
+}

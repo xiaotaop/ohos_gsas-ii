@@ -1,0 +1,15 @@
+{
+  "sourceCommit": "c47b6105fdb31ac0536c6d058f5ffb54cb51c5b6",
+  "versionName": "0.1.1",
+  "versionCode": 2,
+  "hapSha256": "d65a64a90cba7d029d43b7549c626903ccf1080a6f5b4aa8a70f77148909b25b",
+  "hapSize": 135971385,
+  "zipSha256": "144eb5a5e8d298f662373059330368d4f1dbb277be663f8b162610e87c1a8929",
+  "zipSize": 91548243,
+  "allArchiveMembersVerified": true,
+  "deviceAcceptancePending": true,
+  "hapPath": "deliveries/GSAS-II-0.1.1-c47b610-api23-signed.hap",
+  "zipPath": "deliveries/c-api23-c47b610-d65a64a9.zip",
+  "distribution": "Git LFS; download actual raw contents, not pointer",
+  "publicDistributionApproved": false
+}
