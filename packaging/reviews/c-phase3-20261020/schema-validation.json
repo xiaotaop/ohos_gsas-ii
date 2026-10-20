@@ -1,0 +1,7 @@
+{
+  "format": "CycloneDX 1.5",
+  "valid": true,
+  "sbomSha256": "399d172cf9ae3b93605a09e4815d3dcb332d8df908f0cde6e5981b23f951d7e1",
+  "schemaSha256": "067f7824b08653839ea050ae9e09ca48375eadc2652b0e2a299476e7db90335b",
+  "externalSchemaFetchRequired": false
+}

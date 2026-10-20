@@ -1,0 +1,121 @@
+{
+  "scope": "Independent comparison of real system-picker-exported release-signed HAP result; does not modify app validation.performed",
+  "hapSha256": "70588bde3202dd49512c6628661dba76b761c274aabf8ba05dba5170c06a7fef",
+  "resultSha256": "e5f37c770e58905151788536017b4ce1390f80df99496bf711f807cc2ecd0d13",
+  "baseline": "poc/results/windows-x86_64-no-starscan.json",
+  "baselineSha256": "451b2ae8d01c086fbd1c04064b5b83464b0fa8549ac658ec53abea9ee48cbb25",
+  "elapsedSeconds": 8.857,
+  "passed": true,
+  "checks": [
+    {
+      "stage": "before_fitting",
+      "field": "xray",
+      "actual": 96.68109929991266,
+      "windowsReference": 96.68109956184195,
+      "rtol": 0.0001,
+      "atol": 1e-07,
+      "passed": true
+    },
+    {
+      "stage": "before_fitting",
+      "field": "neutron",
+      "actual": 99.74899353641875,
+      "windowsReference": 99.74899353638497,
+      "rtol": 0.0001,
+      "atol": 1e-07,
+      "passed": true
+    },
+    {
+      "stage": "scale_and_background",
+      "field": "xray",
+      "actual": 45.811996840393284,
+      "windowsReference": 45.81214159784883,
+      "rtol": 0.0001,
+      "atol": 1e-07,
+      "passed": true
+    },
+    {
+      "stage": "scale_and_background",
+      "field": "neutron",
+      "actual": 17.86462947555275,
+      "windowsReference": 17.864613296064597,
+      "rtol": 0.0001,
+      "atol": 1e-07,
+      "passed": true
+    },
+    {
+      "stage": "cells",
+      "field": "xray",
+      "actual": 32.476216360375346,
+      "windowsReference": 32.47641111963635,
+      "rtol": 0.0001,
+      "atol": 1e-07,
+      "passed": true
+    },
+    {
+      "stage": "cells",
+      "field": "neutron",
+      "actual": 15.024251645424473,
+      "windowsReference": 15.024290785484668,
+      "rtol": 0.0001,
+      "atol": 1e-07,
+      "passed": true
+    },
+    {
+      "stage": "microstrain_displacement_atoms",
+      "field": "xray",
+      "actual": 13.405893726281558,
+      "windowsReference": 13.405809191614509,
+      "rtol": 0.0001,
+      "atol": 1e-07,
+      "passed": true
+    },
+    {
+      "stage": "microstrain_displacement_atoms",
+      "field": "neutron",
+      "actual": 6.361295249295007,
+      "windowsReference": 6.3613044514972055,
+      "rtol": 0.0001,
+      "atol": 1e-07,
+      "passed": true
+    },
+    {
+      "stage": "preferred_orientation",
+      "field": "xray",
+      "actual": 13.164765200812706,
+      "windowsReference": 13.164629040289125,
+      "rtol": 0.0001,
+      "atol": 1e-07,
+      "passed": true
+    },
+    {
+      "stage": "preferred_orientation",
+      "field": "neutron",
+      "actual": 6.382313119503196,
+      "windowsReference": 6.3823293493295115,
+      "rtol": 0.0001,
+      "atol": 1e-07,
+      "passed": true
+    },
+    {
+      "stage": "preferred_orientation",
+      "field": "C(2,0)",
+      "actual": 0.12738142465744678,
+      "windowsReference": 0.12738348216481607,
+      "rtol": 0.001,
+      "atol": 1e-07,
+      "passed": true
+    },
+    {
+      "stage": "preferred_orientation",
+      "field": "C(2,2)",
+      "actual": 0.09406617903303072,
+      "windowsReference": 0.09406348068782173,
+      "rtol": 0.001,
+      "atol": 1e-07,
+      "passed": true
+    }
+  ],
+  "sameNumericalResultsAsEarlierDebugProfileRun": true,
+  "applicationValidationPerformed": false
+}

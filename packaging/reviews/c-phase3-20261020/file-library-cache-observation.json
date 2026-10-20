@@ -1,0 +1,11 @@
+{
+  "owner": "A",
+  "severity": "UI cache refresh, no observed output data loss",
+  "trigger": "After new successful recipe, open Imported files without re-import or process restart",
+  "observedVisibleLibraryCount": 19,
+  "registeredOutputsAvailableInResultPanel": 3,
+  "countAfterCatalogReload": 22,
+  "causeObservedInSource": "Imported files menu only sets page; Index.files is refreshed on initialize/import/delete, not terminal or files navigation",
+  "status": "open; A follow-up required",
+  "noClaimOfFixed": true
+}

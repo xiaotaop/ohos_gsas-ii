@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "kind": "C-phase3-physical-device-acceptance-progress",
+  "kind": "C-phase3-physical-device-acceptance",
   "date": "2026-10-20",
   "hapSha256": "70588bde3202dd49512c6628661dba76b761c274aabf8ba05dba5170c06a7fef",
   "sourceCommit": "fefce257123f6e2f660f6171d480e677dfd02fc4",
@@ -17,18 +17,20 @@
     "12 independent numerical comparisons passed; app validation.performed remains false",
     "GPX/JSON/log actual system picker exports",
     "Fresh running job cancellation; registered user log exported",
-    "Fresh running job force-stop then cold start: same job failed PROCESS_INTERRUPTED; no resume"
+    "Fresh running job force-stop then cold start: same job failed PROCESS_INTERRUPTED; no resume",
+    "System import and save chooser cancellations preserve complete catalog; existing own exported file hash unchanged",
+    "Invalid CIF failed INVALID_PHASE_FILE; registered sanitized failure log exported with matching jobId",
+    "Isolated file service platform checks: 18 passed, 0 failed, 1 unsupported symlink creation skipped; user catalog unchanged",
+    "Original empty notebook and five original input bindings restored; only own invalid fixture cleaned",
+    "Recovery successful job, three system exports, 12 numerical comparisons and full 22-record catalog preserved after cold start",
+    "New same-HAP final SBOM/notice/source review completed and CycloneDX 1.5 schema valid"
   ],
-  "pending": [
-    "Invalid scientific input failure and registered failure log export",
-    "System import/save picker cancellation and file service platform checks",
-    "Successful result and full catalog cold-start recovery in this v2 HAP",
-    "Final v2 SBOM, complete delivery archive, evidence review and PR"
-  ],
-  "cPhase3Complete": false,
+  "pending": [],
+  "cPhase3Complete": true,
   "releaseApproved": false,
   "scopeLimits": [
-    "No claim of A sign-off, B core-only BUSY/cancel race, explicit offline test or API20/API24 coverage"
+    "No claim of A sign-off, B core-only BUSY/cancel race, explicit offline test or API20/API24 coverage",
+    "Known A UI cache refresh issue recorded separately; no fix claimed"
   ],
   "temporaryScreenTimeoutRestored": true,
   "testResults": {
@@ -42,5 +44,11 @@
       "skipped": 2
     },
     "jsonContractsFixturesPassed": true
+  },
+  "finalSbomSha256": "399d172cf9ae3b93605a09e4815d3dcb332d8df908f0cde6e5981b23f951d7e1",
+  "platformChecks": {
+    "passed": 18,
+    "failed": 0,
+    "skipped": 1
   }
 }

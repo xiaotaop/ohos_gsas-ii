@@ -1,0 +1,8 @@
+{
+  "job": "job_dcdd4e42-1989-48bf-8cb8-9c5e3d703e11 · failed",
+  "fixture": "Invalid.cif",
+  "uiTracebackAbsent": true,
+  "errorText": [
+    "INVALID_PHASE_FILE：相文件不是可识别的 CIF 格式"
+  ]
+}

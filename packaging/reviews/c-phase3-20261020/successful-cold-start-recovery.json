@@ -1,0 +1,10 @@
+{
+  "jobId": "job_a4da423a-1745-4025-aa40-6699d2fc8fac",
+  "sameJobAndSucceeded": true,
+  "completeCatalogPreserved": true,
+  "fileCount": 22,
+  "original14RecordsStillUnchanged": true,
+  "fiveInputBindingsPreserved": true,
+  "resultAndRegisteredArtifactsPresent": true,
+  "comparisonScope": "Second cold start using fully refreshed 22-record UI catalog; first stale Index.files observation separately retained, not concealed"
+}

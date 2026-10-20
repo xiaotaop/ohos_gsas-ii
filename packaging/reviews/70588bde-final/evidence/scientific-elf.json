@@ -1,0 +1,4486 @@
+{
+  "schemaVersion": 1,
+  "kind": "actual-HAP-original-SciPy-ELF-observations",
+  "hapSha256": "70588bde3202dd49512c6628661dba76b761c274aabf8ba05dba5170c06a7fef",
+  "scipyWheelSha256": "a7e2095d76bfb55460b4f66ba5a7eb7861ca644c5c6326252b7cdb02a6d61dcd",
+  "records": [
+    {
+      "sourceMember": "scipy/_cyutility.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "d8558195aa9b39a83ffaf503d8771c9a30d0fcade165094fd56c60c1bc7fa1d5",
+      "actualHapTarget": "libs/arm64-v8a/_cyutility.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "6dd7f0e214467b480908daf5a6a3bdd526ebe273bcafc0e7145130dd62760917",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 140426,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/_lib/_ccallback_c.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "914e0f052e78e207ae1eed839139f6d146bfc4413799d7659fcf4c2175be29d5",
+      "actualHapTarget": "libs/arm64-v8a/_ccallback_c.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "ef97d4e597317af9fc7a570aa666a8d55e0711c837b0a1d7da6a3db9dad96840",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 139950,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/_lib/_fpumode.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "455c82091a33c25d1616f1839fe62dd9b20ff5f90d77bcca0e34b69999a21dcb",
+      "actualHapTarget": "libs/arm64-v8a/_fpumode.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "081624611c9bfd1aca7c35774ff038ba244bcf2e2cd3bf9c3e77858a811b1d83",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 68225,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/_lib/_test_ccallback.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "d6de7f31397209cb4e3df05801d2c8383fa0ea079ee31c083896e156d9e7e9f1",
+      "actualHapTarget": "libs/arm64-v8a/_test_ccallback.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "a795b3e8c4d0cb1e09e84c468a8a014e60c743453f54bd1118192929d2e133da",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 69467,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/_lib/_test_deprecation_call.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "e1e51c6b08dd0b89a38075e618ef8e7e5f75715bda22fbc8105c6ab0b6315aad",
+      "actualHapTarget": "libs/arm64-v8a/_test_deprecation_call.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "74b535bab8bde2e9ec24b532791494cb93b71116a7886fd78623a652087035de",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 71365,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/_lib/_test_deprecation_def.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "1bea070864d97757ebc21ffb8d5487aadb0c32f1488c6c6c9213d8dcef648f02",
+      "actualHapTarget": "libs/arm64-v8a/_test_deprecation_def.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "8f33d27de762b8f1c375c3592bf41aec79bb33f74d5d01a41bbc9fa391892337",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 70867,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/_lib/_uarray/_uarray.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "d256a2c82db1d693e3f0873697aa5493bbd985d6fb1aff69f3707d135380b257",
+      "actualHapTarget": "libs/arm64-v8a/_uarray.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "94b87200bbee22d7e8686c88aca2172988ebc53ed301fd4aa12d5aaf22d4933b",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 138472,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 5,
+      "sourceSuffixCounts": {
+        ".c": 3,
+        ".cxx": 2
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/_lib/messagestream.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "b49e37f92335467f22b166ba3d4ae751bd795887419775b3dfe119a65d530f0a",
+      "actualHapTarget": "libs/arm64-v8a/messagestream.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "7b2b56f669961ac2bf05491e7d855883b4ebed2e7009fdcba8497c98335b740a",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 73685,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/cluster/_hierarchy.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "a7b55b17b25cdd56d1a7b12341dbed1c906387f15243182484d6fc385d29244f",
+      "actualHapTarget": "libs/arm64-v8a/_hierarchy.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "cc6479c124cc7e7a40ad6ea31fe542a20cfac4210a1366998b5b5bba0dbb9b0c",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 270914,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/cluster/_optimal_leaf_ordering.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "d6245a7cb0d71fd9809e7a487f2050c9274df0325b90cdb86f3325074340e1c5",
+      "actualHapTarget": "libs/arm64-v8a/_optimal_leaf_ordering.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "e558f6cc62864595946dbc4c35d8cb8ca2af5e59d415239fb5b487ccbb809ea7",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 140385,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/cluster/_vq.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "3483d8d2b8c0517e6fbe2d9cee47fd266a4f161dc7e689d173469c47e3d89608",
+      "actualHapTarget": "libs/arm64-v8a/_vq.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "afd9b374f274f7a39166c58fb745215e8b916bd5f3ea5ddead89b4197adb357d",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 138603,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/fft/_pocketfft/pypocketfft.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "0e75f47862a8012a71e828a22e45a86c1343b02bd32617488605be76b081d415",
+      "actualHapTarget": "libs/arm64-v8a/pypocketfft.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "17a8edaca3c632d0c1bc8e6af8626a52095b836a9ccb279e7abc88e9057af865",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 997291,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 13,
+      "sourceSuffixCounts": {
+        ".c": 12,
+        ".cxx": 1
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/fftpack/convolve.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "35b0ac166295cc57922bcc53061a295972a725375702d12660b2fd66feb59ece",
+      "actualHapTarget": "libs/arm64-v8a/convolve.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "393d8f10c65f73a52b3d6b847a4777908f95179dc9f8187ccc7540f16a70c47d",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 139054,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/integrate/_dop.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "4bd7401ebf5936dbce1a2ff32525e93168c68896dc220affa939869c0dea29f2",
+      "actualHapTarget": "libs/arm64-v8a/_dop.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "5d09cc186ba6918c17df5f9382415fe132f53d25f6307a3560fcbd8a26f63d0a",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 663033,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary",
+        "_FortranACopyInAssign",
+        "_FortranACopyOutAssign",
+        "_FortranAPointerAllocate",
+        "_FortranAPointerAllocateSource",
+        "_FortranAPointerApplyMold",
+        "_FortranAPointerAssociate",
+        "_FortranAPointerAssociateLowerBounds",
+        "_FortranAPointerAssociateRemapping",
+        "_FortranAPointerAssociateScalar",
+        "_FortranAPointerDeallocate",
+        "_FortranAPointerDeallocatePolymorphic",
+        "_FortranAPointerIsAssociated",
+        "_FortranAPointerIsAssociatedWith",
+        "_FortranAPointerNullifyCharacter",
+        "_FortranAPointerNullifyDerived",
+        "_FortranAPointerNullifyIntrinsic",
+        "_FortranAPointerSetBounds",
+        "_FortranAPointerSetDerivedLength",
+        "_FortranAioBeginBackspace",
+        "_FortranAioBeginClose",
+        "_FortranAioBeginEndfile",
+        "_FortranAioBeginExternalFormattedInput",
+        "_FortranAioBeginExternalFormattedOutput",
+        "_FortranAioBeginExternalListInput",
+        "_FortranAioBeginExternalListOutput",
+        "_FortranAioBeginFlush",
+        "_FortranAioBeginInquireFile",
+        "_FortranAioBeginInquireIoLength",
+        "_FortranAioBeginInquireUnit",
+        "_FortranAioBeginInternalArrayFormattedInput",
+        "_FortranAioBeginInternalArrayFormattedOutput",
+        "_FortranAioBeginInternalArrayListInput",
+        "_FortranAioBeginInternalArrayListOutput",
+        "_FortranAioBeginInternalFormattedInput",
+        "_FortranAioBeginInternalFormattedOutput",
+        "_FortranAioBeginInternalListInput",
+        "_FortranAioBeginInternalListOutput",
+        "_FortranAioBeginOpenNewUnit",
+        "_FortranAioBeginOpenUnit",
+        "_FortranAioBeginRewind",
+        "_FortranAioBeginUnformattedInput",
+        "_FortranAioBeginUnformattedOutput",
+        "_FortranAioBeginWait",
+        "_FortranAioBeginWaitAll",
+        "_FortranAioCheckUnitNumberInRange128",
+        "_FortranAioCheckUnitNumberInRange64",
+        "_FortranAioEnableHandlers",
+        "_FortranAioEndIoStatement",
+        "_FortranAioGetAsynchronousId",
+        "_FortranAioGetIoLength",
+        "_FortranAioGetIoMsg",
+        "_FortranAioGetNewUnit",
+        "_FortranAioGetSize",
+        "_FortranAioInputAscii",
+        "_FortranAioInputCharacter",
+        "_FortranAioInputComplex32",
+        "_FortranAioInputComplex64",
+        "_FortranAioInputDerivedType",
+        "_FortranAioInputDescriptor",
+        "_FortranAioInputInteger",
+        "_FortranAioInputLogical",
+        "_FortranAioInputNamelist",
+        "_FortranAioInputReal32",
+        "_FortranAioInputReal64",
+        "_FortranAioInquireCharacter",
+        "_FortranAioInquireInteger64",
+        "_FortranAioInquireLogical",
+        "_FortranAioInquirePendingId",
+        "_FortranAioOutputAscii",
+        "_FortranAioOutputCharacter",
+        "_FortranAioOutputComplex32",
+        "_FortranAioOutputComplex64",
+        "_FortranAioOutputDerivedType",
+        "_FortranAioOutputDescriptor",
+        "_FortranAioOutputInteger128",
+        "_FortranAioOutputInteger16",
+        "_FortranAioOutputInteger32",
+        "_FortranAioOutputInteger64",
+        "_FortranAioOutputInteger8",
+        "_FortranAioOutputLogical",
+        "_FortranAioOutputNamelist",
+        "_FortranAioOutputReal32",
+        "_FortranAioOutputReal64",
+        "_FortranAioSetAccess",
+        "_FortranAioSetAction",
+        "_FortranAioSetAdvance",
+        "_FortranAioSetAsynchronous",
+        "_FortranAioSetBlank",
+        "_FortranAioSetCarriagecontrol",
+        "_FortranAioSetConvert",
+        "_FortranAioSetDecimal",
+        "_FortranAioSetDelim",
+        "_FortranAioSetEncoding",
+        "_FortranAioSetFile",
+        "_FortranAioSetForm",
+        "_FortranAioSetPad",
+        "_FortranAioSetPos",
+        "_FortranAioSetPosition",
+        "_FortranAioSetRec",
+        "_FortranAioSetRecl",
+        "_FortranAioSetRound",
+        "_FortranAioSetSign",
+        "_FortranAioSetStatus"
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 42,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 7,
+        ".cpp": 34
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/integrate/_lsoda.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "1d843eb731da477d7f7bef87c96f85cf516a09a486c8de08a5b661c77e8cf477",
+      "actualHapTarget": "libs/arm64-v8a/_lsoda.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "329ed452ea200b75ac9397c2498ad0a810113c55ac536c9b0cd975167acba199",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 725359,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [
+        "_FortranAAbort",
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary",
+        "_FortranACopyInAssign",
+        "_FortranACopyOutAssign",
+        "_FortranAExit",
+        "_FortranAFailImageStatement",
+        "_FortranAPauseStatement",
+        "_FortranAPauseStatementInt",
+        "_FortranAPauseStatementText",
+        "_FortranAPointerAllocate",
+        "_FortranAPointerAllocateSource",
+        "_FortranAPointerApplyMold",
+        "_FortranAPointerAssociate",
+        "_FortranAPointerAssociateLowerBounds",
+        "_FortranAPointerAssociateRemapping",
+        "_FortranAPointerAssociateScalar",
+        "_FortranAPointerDeallocate",
+        "_FortranAPointerDeallocatePolymorphic",
+        "_FortranAPointerIsAssociated",
+        "_FortranAPointerIsAssociatedWith",
+        "_FortranAPointerNullifyCharacter",
+        "_FortranAPointerNullifyDerived",
+        "_FortranAPointerNullifyIntrinsic",
+        "_FortranAPointerSetBounds",
+        "_FortranAPointerSetDerivedLength",
+        "_FortranAProgramEndStatement",
+        "_FortranAReportFatalUserError",
+        "_FortranAStopStatement",
+        "_FortranAStopStatementText",
+        "_FortranAioBeginBackspace",
+        "_FortranAioBeginClose",
+        "_FortranAioBeginEndfile",
+        "_FortranAioBeginExternalFormattedInput",
+        "_FortranAioBeginExternalFormattedOutput",
+        "_FortranAioBeginExternalListInput",
+        "_FortranAioBeginExternalListOutput",
+        "_FortranAioBeginFlush",
+        "_FortranAioBeginInquireFile",
+        "_FortranAioBeginInquireIoLength",
+        "_FortranAioBeginInquireUnit",
+        "_FortranAioBeginInternalArrayFormattedInput",
+        "_FortranAioBeginInternalArrayFormattedOutput",
+        "_FortranAioBeginInternalArrayListInput",
+        "_FortranAioBeginInternalArrayListOutput",
+        "_FortranAioBeginInternalFormattedInput",
+        "_FortranAioBeginInternalFormattedOutput",
+        "_FortranAioBeginInternalListInput",
+        "_FortranAioBeginInternalListOutput",
+        "_FortranAioBeginOpenNewUnit",
+        "_FortranAioBeginOpenUnit",
+        "_FortranAioBeginRewind",
+        "_FortranAioBeginUnformattedInput",
+        "_FortranAioBeginUnformattedOutput",
+        "_FortranAioBeginWait",
+        "_FortranAioBeginWaitAll",
+        "_FortranAioCheckUnitNumberInRange128",
+        "_FortranAioCheckUnitNumberInRange64",
+        "_FortranAioEnableHandlers",
+        "_FortranAioEndIoStatement",
+        "_FortranAioGetAsynchronousId",
+        "_FortranAioGetIoLength",
+        "_FortranAioGetIoMsg",
+        "_FortranAioGetNewUnit",
+        "_FortranAioGetSize",
+        "_FortranAioInputAscii",
+        "_FortranAioInputCharacter",
+        "_FortranAioInputComplex32",
+        "_FortranAioInputComplex64",
+        "_FortranAioInputDerivedType",
+        "_FortranAioInputDescriptor",
+        "_FortranAioInputInteger",
+        "_FortranAioInputLogical",
+        "_FortranAioInputNamelist",
+        "_FortranAioInputReal32",
+        "_FortranAioInputReal64",
+        "_FortranAioInquireCharacter",
+        "_FortranAioInquireInteger64",
+        "_FortranAioInquireLogical",
+        "_FortranAioInquirePendingId",
+        "_FortranAioOutputAscii",
+        "_FortranAioOutputCharacter",
+        "_FortranAioOutputComplex32",
+        "_FortranAioOutputComplex64",
+        "_FortranAioOutputDerivedType",
+        "_FortranAioOutputDescriptor",
+        "_FortranAioOutputInteger128",
+        "_FortranAioOutputInteger16",
+        "_FortranAioOutputInteger32",
+        "_FortranAioOutputInteger64",
+        "_FortranAioOutputInteger8",
+        "_FortranAioOutputLogical",
+        "_FortranAioOutputNamelist",
+        "_FortranAioOutputReal32",
+        "_FortranAioOutputReal64",
+        "_FortranAioSetAccess",
+        "_FortranAioSetAction",
+        "_FortranAioSetAdvance",
+        "_FortranAioSetAsynchronous",
+        "_FortranAioSetBlank",
+        "_FortranAioSetCarriagecontrol",
+        "_FortranAioSetConvert",
+        "_FortranAioSetDecimal",
+        "_FortranAioSetDelim",
+        "_FortranAioSetEncoding",
+        "_FortranAioSetFile",
+        "_FortranAioSetForm",
+        "_FortranAioSetPad",
+        "_FortranAioSetPos",
+        "_FortranAioSetPosition",
+        "_FortranAioSetRec",
+        "_FortranAioSetRecl",
+        "_FortranAioSetRound",
+        "_FortranAioSetSign",
+        "_FortranAioSetStatus"
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 44,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 8,
+        ".cpp": 35
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/integrate/_odepack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "c59e2c456a719ad572b8900410034395b378f4b187a5ddc113d1ad391e2d79e9",
+      "actualHapTarget": "libs/arm64-v8a/_odepack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "a99b9bfac5baf35c29b6c6893d30890b114eeb0f56c206f6f0e82087da26f988",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 724478,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [
+        "_FortranAAbort",
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary",
+        "_FortranACopyInAssign",
+        "_FortranACopyOutAssign",
+        "_FortranAExit",
+        "_FortranAFailImageStatement",
+        "_FortranAPauseStatement",
+        "_FortranAPauseStatementInt",
+        "_FortranAPauseStatementText",
+        "_FortranAPointerAllocate",
+        "_FortranAPointerAllocateSource",
+        "_FortranAPointerApplyMold",
+        "_FortranAPointerAssociate",
+        "_FortranAPointerAssociateLowerBounds",
+        "_FortranAPointerAssociateRemapping",
+        "_FortranAPointerAssociateScalar",
+        "_FortranAPointerDeallocate",
+        "_FortranAPointerDeallocatePolymorphic",
+        "_FortranAPointerIsAssociated",
+        "_FortranAPointerIsAssociatedWith",
+        "_FortranAPointerNullifyCharacter",
+        "_FortranAPointerNullifyDerived",
+        "_FortranAPointerNullifyIntrinsic",
+        "_FortranAPointerSetBounds",
+        "_FortranAPointerSetDerivedLength",
+        "_FortranAProgramEndStatement",
+        "_FortranAReportFatalUserError",
+        "_FortranAStopStatement",
+        "_FortranAStopStatementText",
+        "_FortranAioBeginBackspace",
+        "_FortranAioBeginClose",
+        "_FortranAioBeginEndfile",
+        "_FortranAioBeginExternalFormattedInput",
+        "_FortranAioBeginExternalFormattedOutput",
+        "_FortranAioBeginExternalListInput",
+        "_FortranAioBeginExternalListOutput",
+        "_FortranAioBeginFlush",
+        "_FortranAioBeginInquireFile",
+        "_FortranAioBeginInquireIoLength",
+        "_FortranAioBeginInquireUnit",
+        "_FortranAioBeginInternalArrayFormattedInput",
+        "_FortranAioBeginInternalArrayFormattedOutput",
+        "_FortranAioBeginInternalArrayListInput",
+        "_FortranAioBeginInternalArrayListOutput",
+        "_FortranAioBeginInternalFormattedInput",
+        "_FortranAioBeginInternalFormattedOutput",
+        "_FortranAioBeginInternalListInput",
+        "_FortranAioBeginInternalListOutput",
+        "_FortranAioBeginOpenNewUnit",
+        "_FortranAioBeginOpenUnit",
+        "_FortranAioBeginRewind",
+        "_FortranAioBeginUnformattedInput",
+        "_FortranAioBeginUnformattedOutput",
+        "_FortranAioBeginWait",
+        "_FortranAioBeginWaitAll",
+        "_FortranAioCheckUnitNumberInRange128",
+        "_FortranAioCheckUnitNumberInRange64",
+        "_FortranAioEnableHandlers",
+        "_FortranAioEndIoStatement",
+        "_FortranAioGetAsynchronousId",
+        "_FortranAioGetIoLength",
+        "_FortranAioGetIoMsg",
+        "_FortranAioGetNewUnit",
+        "_FortranAioGetSize",
+        "_FortranAioInputAscii",
+        "_FortranAioInputCharacter",
+        "_FortranAioInputComplex32",
+        "_FortranAioInputComplex64",
+        "_FortranAioInputDerivedType",
+        "_FortranAioInputDescriptor",
+        "_FortranAioInputInteger",
+        "_FortranAioInputLogical",
+        "_FortranAioInputNamelist",
+        "_FortranAioInputReal32",
+        "_FortranAioInputReal64",
+        "_FortranAioInquireCharacter",
+        "_FortranAioInquireInteger64",
+        "_FortranAioInquireLogical",
+        "_FortranAioInquirePendingId",
+        "_FortranAioOutputAscii",
+        "_FortranAioOutputCharacter",
+        "_FortranAioOutputComplex32",
+        "_FortranAioOutputComplex64",
+        "_FortranAioOutputDerivedType",
+        "_FortranAioOutputDescriptor",
+        "_FortranAioOutputInteger128",
+        "_FortranAioOutputInteger16",
+        "_FortranAioOutputInteger32",
+        "_FortranAioOutputInteger64",
+        "_FortranAioOutputInteger8",
+        "_FortranAioOutputLogical",
+        "_FortranAioOutputNamelist",
+        "_FortranAioOutputReal32",
+        "_FortranAioOutputReal64",
+        "_FortranAioSetAccess",
+        "_FortranAioSetAction",
+        "_FortranAioSetAdvance",
+        "_FortranAioSetAsynchronous",
+        "_FortranAioSetBlank",
+        "_FortranAioSetCarriagecontrol",
+        "_FortranAioSetConvert",
+        "_FortranAioSetDecimal",
+        "_FortranAioSetDelim",
+        "_FortranAioSetEncoding",
+        "_FortranAioSetFile",
+        "_FortranAioSetForm",
+        "_FortranAioSetPad",
+        "_FortranAioSetPos",
+        "_FortranAioSetPosition",
+        "_FortranAioSetRec",
+        "_FortranAioSetRecl",
+        "_FortranAioSetRound",
+        "_FortranAioSetSign",
+        "_FortranAioSetStatus"
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 43,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 7,
+        ".cpp": 35
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/integrate/_quadpack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "24598fa6c3d38b7549bbd971f078b022ca4420b92aa744ca7f219706fab844cc",
+      "actualHapTarget": "libs/arm64-v8a/_quadpack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "9086a6dc73041285f4647c1f9c33d4644b59dc34b07dcb44f7b59adf4f906246",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 135573,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/integrate/_test_multivariate.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "8c94b44edce50b8c7ba06f5f4d22b2324a70744dfdcabff8cba2c1b8861c2ce3",
+      "actualHapTarget": "libs/arm64-v8a/_test_multivariate.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "a8153126cac00d9c6b6ec8421f1c42087bdee5849ac0664d9451d44e80eed5f9",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 68432,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/integrate/_test_odeint_banded.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "d0feadbda8c6acb65cdc24c200d1bee25c9a0db1971bff11d5b43f449fdc8cf1",
+      "actualHapTarget": "libs/arm64-v8a/_test_odeint_banded.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "670d492ff3b89c227c1e887cd58b65aeb990dc186a4bf888ae99fa468f49816d",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 725119,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [
+        "_FortranAAbort",
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary",
+        "_FortranACopyInAssign",
+        "_FortranACopyOutAssign",
+        "_FortranAExit",
+        "_FortranAFailImageStatement",
+        "_FortranAPauseStatement",
+        "_FortranAPauseStatementInt",
+        "_FortranAPauseStatementText",
+        "_FortranAPointerAllocate",
+        "_FortranAPointerAllocateSource",
+        "_FortranAPointerApplyMold",
+        "_FortranAPointerAssociate",
+        "_FortranAPointerAssociateLowerBounds",
+        "_FortranAPointerAssociateRemapping",
+        "_FortranAPointerAssociateScalar",
+        "_FortranAPointerDeallocate",
+        "_FortranAPointerDeallocatePolymorphic",
+        "_FortranAPointerIsAssociated",
+        "_FortranAPointerIsAssociatedWith",
+        "_FortranAPointerNullifyCharacter",
+        "_FortranAPointerNullifyDerived",
+        "_FortranAPointerNullifyIntrinsic",
+        "_FortranAPointerSetBounds",
+        "_FortranAPointerSetDerivedLength",
+        "_FortranAProgramEndStatement",
+        "_FortranAReportFatalUserError",
+        "_FortranAStopStatement",
+        "_FortranAStopStatementText",
+        "_FortranAioBeginBackspace",
+        "_FortranAioBeginClose",
+        "_FortranAioBeginEndfile",
+        "_FortranAioBeginExternalFormattedInput",
+        "_FortranAioBeginExternalFormattedOutput",
+        "_FortranAioBeginExternalListInput",
+        "_FortranAioBeginExternalListOutput",
+        "_FortranAioBeginFlush",
+        "_FortranAioBeginInquireFile",
+        "_FortranAioBeginInquireIoLength",
+        "_FortranAioBeginInquireUnit",
+        "_FortranAioBeginInternalArrayFormattedInput",
+        "_FortranAioBeginInternalArrayFormattedOutput",
+        "_FortranAioBeginInternalArrayListInput",
+        "_FortranAioBeginInternalArrayListOutput",
+        "_FortranAioBeginInternalFormattedInput",
+        "_FortranAioBeginInternalFormattedOutput",
+        "_FortranAioBeginInternalListInput",
+        "_FortranAioBeginInternalListOutput",
+        "_FortranAioBeginOpenNewUnit",
+        "_FortranAioBeginOpenUnit",
+        "_FortranAioBeginRewind",
+        "_FortranAioBeginUnformattedInput",
+        "_FortranAioBeginUnformattedOutput",
+        "_FortranAioBeginWait",
+        "_FortranAioBeginWaitAll",
+        "_FortranAioCheckUnitNumberInRange128",
+        "_FortranAioCheckUnitNumberInRange64",
+        "_FortranAioEnableHandlers",
+        "_FortranAioEndIoStatement",
+        "_FortranAioGetAsynchronousId",
+        "_FortranAioGetIoLength",
+        "_FortranAioGetIoMsg",
+        "_FortranAioGetNewUnit",
+        "_FortranAioGetSize",
+        "_FortranAioInputAscii",
+        "_FortranAioInputCharacter",
+        "_FortranAioInputComplex32",
+        "_FortranAioInputComplex64",
+        "_FortranAioInputDerivedType",
+        "_FortranAioInputDescriptor",
+        "_FortranAioInputInteger",
+        "_FortranAioInputLogical",
+        "_FortranAioInputNamelist",
+        "_FortranAioInputReal32",
+        "_FortranAioInputReal64",
+        "_FortranAioInquireCharacter",
+        "_FortranAioInquireInteger64",
+        "_FortranAioInquireLogical",
+        "_FortranAioInquirePendingId",
+        "_FortranAioOutputAscii",
+        "_FortranAioOutputCharacter",
+        "_FortranAioOutputComplex32",
+        "_FortranAioOutputComplex64",
+        "_FortranAioOutputDerivedType",
+        "_FortranAioOutputDescriptor",
+        "_FortranAioOutputInteger128",
+        "_FortranAioOutputInteger16",
+        "_FortranAioOutputInteger32",
+        "_FortranAioOutputInteger64",
+        "_FortranAioOutputInteger8",
+        "_FortranAioOutputLogical",
+        "_FortranAioOutputNamelist",
+        "_FortranAioOutputReal32",
+        "_FortranAioOutputReal64",
+        "_FortranAioSetAccess",
+        "_FortranAioSetAction",
+        "_FortranAioSetAdvance",
+        "_FortranAioSetAsynchronous",
+        "_FortranAioSetBlank",
+        "_FortranAioSetCarriagecontrol",
+        "_FortranAioSetConvert",
+        "_FortranAioSetDecimal",
+        "_FortranAioSetDelim",
+        "_FortranAioSetEncoding",
+        "_FortranAioSetFile",
+        "_FortranAioSetForm",
+        "_FortranAioSetPad",
+        "_FortranAioSetPos",
+        "_FortranAioSetPosition",
+        "_FortranAioSetRec",
+        "_FortranAioSetRecl",
+        "_FortranAioSetRound",
+        "_FortranAioSetSign",
+        "_FortranAioSetStatus"
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 44,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 8,
+        ".cpp": 35
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/integrate/_vode.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "f70847b5624dac3326df4f172be0d69ec989930f1b8094073505a9912917e7d3",
+      "actualHapTarget": "libs/arm64-v8a/_vode.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "e6cae0fccdec9a8b0f2678f6bce2c8646a1bb79997ef0e2272b02f1c85679475",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 790959,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [
+        "_FortranAAbort",
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary",
+        "_FortranACopyInAssign",
+        "_FortranACopyOutAssign",
+        "_FortranAExit",
+        "_FortranAFailImageStatement",
+        "_FortranAPauseStatement",
+        "_FortranAPauseStatementInt",
+        "_FortranAPauseStatementText",
+        "_FortranAPointerAllocate",
+        "_FortranAPointerAllocateSource",
+        "_FortranAPointerApplyMold",
+        "_FortranAPointerAssociate",
+        "_FortranAPointerAssociateLowerBounds",
+        "_FortranAPointerAssociateRemapping",
+        "_FortranAPointerAssociateScalar",
+        "_FortranAPointerDeallocate",
+        "_FortranAPointerDeallocatePolymorphic",
+        "_FortranAPointerIsAssociated",
+        "_FortranAPointerIsAssociatedWith",
+        "_FortranAPointerNullifyCharacter",
+        "_FortranAPointerNullifyDerived",
+        "_FortranAPointerNullifyIntrinsic",
+        "_FortranAPointerSetBounds",
+        "_FortranAPointerSetDerivedLength",
+        "_FortranAProgramEndStatement",
+        "_FortranAReportFatalUserError",
+        "_FortranAStopStatement",
+        "_FortranAStopStatementText",
+        "_FortranAioBeginBackspace",
+        "_FortranAioBeginClose",
+        "_FortranAioBeginEndfile",
+        "_FortranAioBeginExternalFormattedInput",
+        "_FortranAioBeginExternalFormattedOutput",
+        "_FortranAioBeginExternalListInput",
+        "_FortranAioBeginExternalListOutput",
+        "_FortranAioBeginFlush",
+        "_FortranAioBeginInquireFile",
+        "_FortranAioBeginInquireIoLength",
+        "_FortranAioBeginInquireUnit",
+        "_FortranAioBeginInternalArrayFormattedInput",
+        "_FortranAioBeginInternalArrayFormattedOutput",
+        "_FortranAioBeginInternalArrayListInput",
+        "_FortranAioBeginInternalArrayListOutput",
+        "_FortranAioBeginInternalFormattedInput",
+        "_FortranAioBeginInternalFormattedOutput",
+        "_FortranAioBeginInternalListInput",
+        "_FortranAioBeginInternalListOutput",
+        "_FortranAioBeginOpenNewUnit",
+        "_FortranAioBeginOpenUnit",
+        "_FortranAioBeginRewind",
+        "_FortranAioBeginUnformattedInput",
+        "_FortranAioBeginUnformattedOutput",
+        "_FortranAioBeginWait",
+        "_FortranAioBeginWaitAll",
+        "_FortranAioCheckUnitNumberInRange128",
+        "_FortranAioCheckUnitNumberInRange64",
+        "_FortranAioEnableHandlers",
+        "_FortranAioEndIoStatement",
+        "_FortranAioGetAsynchronousId",
+        "_FortranAioGetIoLength",
+        "_FortranAioGetIoMsg",
+        "_FortranAioGetNewUnit",
+        "_FortranAioGetSize",
+        "_FortranAioInputAscii",
+        "_FortranAioInputCharacter",
+        "_FortranAioInputComplex32",
+        "_FortranAioInputComplex64",
+        "_FortranAioInputDerivedType",
+        "_FortranAioInputDescriptor",
+        "_FortranAioInputInteger",
+        "_FortranAioInputLogical",
+        "_FortranAioInputNamelist",
+        "_FortranAioInputReal32",
+        "_FortranAioInputReal64",
+        "_FortranAioInquireCharacter",
+        "_FortranAioInquireInteger64",
+        "_FortranAioInquireLogical",
+        "_FortranAioInquirePendingId",
+        "_FortranAioOutputAscii",
+        "_FortranAioOutputCharacter",
+        "_FortranAioOutputComplex32",
+        "_FortranAioOutputComplex64",
+        "_FortranAioOutputDerivedType",
+        "_FortranAioOutputDescriptor",
+        "_FortranAioOutputInteger128",
+        "_FortranAioOutputInteger16",
+        "_FortranAioOutputInteger32",
+        "_FortranAioOutputInteger64",
+        "_FortranAioOutputInteger8",
+        "_FortranAioOutputLogical",
+        "_FortranAioOutputNamelist",
+        "_FortranAioOutputReal32",
+        "_FortranAioOutputReal64",
+        "_FortranAioSetAccess",
+        "_FortranAioSetAction",
+        "_FortranAioSetAdvance",
+        "_FortranAioSetAsynchronous",
+        "_FortranAioSetBlank",
+        "_FortranAioSetCarriagecontrol",
+        "_FortranAioSetConvert",
+        "_FortranAioSetDecimal",
+        "_FortranAioSetDelim",
+        "_FortranAioSetEncoding",
+        "_FortranAioSetFile",
+        "_FortranAioSetForm",
+        "_FortranAioSetPad",
+        "_FortranAioSetPos",
+        "_FortranAioSetPosition",
+        "_FortranAioSetRec",
+        "_FortranAioSetRecl",
+        "_FortranAioSetRound",
+        "_FortranAioSetSign",
+        "_FortranAioSetStatus"
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 45,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 9,
+        ".cpp": 35
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/interpolate/_dfitpack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "7a41a8651d2494fa4a35c2eb9754e9c961c12f4d630cff4edb3096b642b10cb5",
+      "actualHapTarget": "libs/arm64-v8a/_dfitpack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "35c4731051b97ef0d179c0533a0881d15ce12f04848dba1791f056708725fc4f",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 859468,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary",
+        "_FortranACopyInAssign",
+        "_FortranACopyOutAssign",
+        "_FortranAPointerAllocate",
+        "_FortranAPointerAllocateSource",
+        "_FortranAPointerApplyMold",
+        "_FortranAPointerAssociate",
+        "_FortranAPointerAssociateLowerBounds",
+        "_FortranAPointerAssociateRemapping",
+        "_FortranAPointerAssociateScalar",
+        "_FortranAPointerDeallocate",
+        "_FortranAPointerDeallocatePolymorphic",
+        "_FortranAPointerIsAssociated",
+        "_FortranAPointerIsAssociatedWith",
+        "_FortranAPointerNullifyCharacter",
+        "_FortranAPointerNullifyDerived",
+        "_FortranAPointerNullifyIntrinsic",
+        "_FortranAPointerSetBounds",
+        "_FortranAPointerSetDerivedLength",
+        "_FortranAioBeginBackspace",
+        "_FortranAioBeginClose",
+        "_FortranAioBeginEndfile",
+        "_FortranAioBeginExternalFormattedInput",
+        "_FortranAioBeginExternalFormattedOutput",
+        "_FortranAioBeginExternalListInput",
+        "_FortranAioBeginExternalListOutput",
+        "_FortranAioBeginFlush",
+        "_FortranAioBeginInquireFile",
+        "_FortranAioBeginInquireIoLength",
+        "_FortranAioBeginInquireUnit",
+        "_FortranAioBeginInternalArrayFormattedInput",
+        "_FortranAioBeginInternalArrayFormattedOutput",
+        "_FortranAioBeginInternalArrayListInput",
+        "_FortranAioBeginInternalArrayListOutput",
+        "_FortranAioBeginInternalFormattedInput",
+        "_FortranAioBeginInternalFormattedOutput",
+        "_FortranAioBeginInternalListInput",
+        "_FortranAioBeginInternalListOutput",
+        "_FortranAioBeginOpenNewUnit",
+        "_FortranAioBeginOpenUnit",
+        "_FortranAioBeginRewind",
+        "_FortranAioBeginUnformattedInput",
+        "_FortranAioBeginUnformattedOutput",
+        "_FortranAioBeginWait",
+        "_FortranAioBeginWaitAll",
+        "_FortranAioCheckUnitNumberInRange128",
+        "_FortranAioCheckUnitNumberInRange64",
+        "_FortranAioEnableHandlers",
+        "_FortranAioEndIoStatement",
+        "_FortranAioGetAsynchronousId",
+        "_FortranAioGetIoLength",
+        "_FortranAioGetIoMsg",
+        "_FortranAioGetNewUnit",
+        "_FortranAioGetSize",
+        "_FortranAioInputAscii",
+        "_FortranAioInputCharacter",
+        "_FortranAioInputComplex32",
+        "_FortranAioInputComplex64",
+        "_FortranAioInputDerivedType",
+        "_FortranAioInputDescriptor",
+        "_FortranAioInputInteger",
+        "_FortranAioInputLogical",
+        "_FortranAioInputNamelist",
+        "_FortranAioInputReal32",
+        "_FortranAioInputReal64",
+        "_FortranAioInquireCharacter",
+        "_FortranAioInquireInteger64",
+        "_FortranAioInquireLogical",
+        "_FortranAioInquirePendingId",
+        "_FortranAioOutputAscii",
+        "_FortranAioOutputCharacter",
+        "_FortranAioOutputComplex32",
+        "_FortranAioOutputComplex64",
+        "_FortranAioOutputDerivedType",
+        "_FortranAioOutputDescriptor",
+        "_FortranAioOutputInteger128",
+        "_FortranAioOutputInteger16",
+        "_FortranAioOutputInteger32",
+        "_FortranAioOutputInteger64",
+        "_FortranAioOutputInteger8",
+        "_FortranAioOutputLogical",
+        "_FortranAioOutputNamelist",
+        "_FortranAioOutputReal32",
+        "_FortranAioOutputReal64",
+        "_FortranAioSetAccess",
+        "_FortranAioSetAction",
+        "_FortranAioSetAdvance",
+        "_FortranAioSetAsynchronous",
+        "_FortranAioSetBlank",
+        "_FortranAioSetCarriagecontrol",
+        "_FortranAioSetConvert",
+        "_FortranAioSetDecimal",
+        "_FortranAioSetDelim",
+        "_FortranAioSetEncoding",
+        "_FortranAioSetFile",
+        "_FortranAioSetForm",
+        "_FortranAioSetPad",
+        "_FortranAioSetPos",
+        "_FortranAioSetPosition",
+        "_FortranAioSetRec",
+        "_FortranAioSetRecl",
+        "_FortranAioSetRound",
+        "_FortranAioSetSign",
+        "_FortranAioSetStatus"
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 42,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 7,
+        ".cpp": 34
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/interpolate/_dierckx.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "fc071ef514b560746ce03e913b2058fee4b9b79e184fb448142c455bd1d3592c",
+      "actualHapTarget": "libs/arm64-v8a/_dierckx.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "dc18c6722969b6c24b0bb199aa6159a9e91e363e4ef931d6ada7bf64322258f8",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 134963,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 5,
+      "sourceSuffixCounts": {
+        ".c": 3,
+        ".cc": 2
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/interpolate/_fitpack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "2c9a4d4d325587f9701180112032a1816add1a51de98e6a0ad26bae941dc87de",
+      "actualHapTarget": "libs/arm64-v8a/_fitpack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "affeb7ad01325f2c9864375f10c51124d093fb5197c80da4a47a751072d393a0",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 660613,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary",
+        "_FortranACopyInAssign",
+        "_FortranACopyOutAssign",
+        "_FortranAPointerAllocate",
+        "_FortranAPointerAllocateSource",
+        "_FortranAPointerApplyMold",
+        "_FortranAPointerAssociate",
+        "_FortranAPointerAssociateLowerBounds",
+        "_FortranAPointerAssociateRemapping",
+        "_FortranAPointerAssociateScalar",
+        "_FortranAPointerDeallocate",
+        "_FortranAPointerDeallocatePolymorphic",
+        "_FortranAPointerIsAssociated",
+        "_FortranAPointerIsAssociatedWith",
+        "_FortranAPointerNullifyCharacter",
+        "_FortranAPointerNullifyDerived",
+        "_FortranAPointerNullifyIntrinsic",
+        "_FortranAPointerSetBounds",
+        "_FortranAPointerSetDerivedLength",
+        "_FortranAioBeginBackspace",
+        "_FortranAioBeginClose",
+        "_FortranAioBeginEndfile",
+        "_FortranAioBeginExternalFormattedInput",
+        "_FortranAioBeginExternalFormattedOutput",
+        "_FortranAioBeginExternalListInput",
+        "_FortranAioBeginExternalListOutput",
+        "_FortranAioBeginFlush",
+        "_FortranAioBeginInquireFile",
+        "_FortranAioBeginInquireIoLength",
+        "_FortranAioBeginInquireUnit",
+        "_FortranAioBeginInternalArrayFormattedInput",
+        "_FortranAioBeginInternalArrayFormattedOutput",
+        "_FortranAioBeginInternalArrayListInput",
+        "_FortranAioBeginInternalArrayListOutput",
+        "_FortranAioBeginInternalFormattedInput",
+        "_FortranAioBeginInternalFormattedOutput",
+        "_FortranAioBeginInternalListInput",
+        "_FortranAioBeginInternalListOutput",
+        "_FortranAioBeginOpenNewUnit",
+        "_FortranAioBeginOpenUnit",
+        "_FortranAioBeginRewind",
+        "_FortranAioBeginUnformattedInput",
+        "_FortranAioBeginUnformattedOutput",
+        "_FortranAioBeginWait",
+        "_FortranAioBeginWaitAll",
+        "_FortranAioCheckUnitNumberInRange128",
+        "_FortranAioCheckUnitNumberInRange64",
+        "_FortranAioEnableHandlers",
+        "_FortranAioEndIoStatement",
+        "_FortranAioGetAsynchronousId",
+        "_FortranAioGetIoLength",
+        "_FortranAioGetIoMsg",
+        "_FortranAioGetNewUnit",
+        "_FortranAioGetSize",
+        "_FortranAioInputAscii",
+        "_FortranAioInputCharacter",
+        "_FortranAioInputComplex32",
+        "_FortranAioInputComplex64",
+        "_FortranAioInputDerivedType",
+        "_FortranAioInputDescriptor",
+        "_FortranAioInputInteger",
+        "_FortranAioInputLogical",
+        "_FortranAioInputNamelist",
+        "_FortranAioInputReal32",
+        "_FortranAioInputReal64",
+        "_FortranAioInquireCharacter",
+        "_FortranAioInquireInteger64",
+        "_FortranAioInquireLogical",
+        "_FortranAioInquirePendingId",
+        "_FortranAioOutputAscii",
+        "_FortranAioOutputCharacter",
+        "_FortranAioOutputComplex32",
+        "_FortranAioOutputComplex64",
+        "_FortranAioOutputDerivedType",
+        "_FortranAioOutputDescriptor",
+        "_FortranAioOutputInteger128",
+        "_FortranAioOutputInteger16",
+        "_FortranAioOutputInteger32",
+        "_FortranAioOutputInteger64",
+        "_FortranAioOutputInteger8",
+        "_FortranAioOutputLogical",
+        "_FortranAioOutputNamelist",
+        "_FortranAioOutputReal32",
+        "_FortranAioOutputReal64",
+        "_FortranAioSetAccess",
+        "_FortranAioSetAction",
+        "_FortranAioSetAdvance",
+        "_FortranAioSetAsynchronous",
+        "_FortranAioSetBlank",
+        "_FortranAioSetCarriagecontrol",
+        "_FortranAioSetConvert",
+        "_FortranAioSetDecimal",
+        "_FortranAioSetDelim",
+        "_FortranAioSetEncoding",
+        "_FortranAioSetFile",
+        "_FortranAioSetForm",
+        "_FortranAioSetPad",
+        "_FortranAioSetPos",
+        "_FortranAioSetPosition",
+        "_FortranAioSetRec",
+        "_FortranAioSetRecl",
+        "_FortranAioSetRound",
+        "_FortranAioSetSign",
+        "_FortranAioSetStatus"
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 41,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 6,
+        ".cpp": 34
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/interpolate/_interpnd.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "d758dda4e4cc74e4699ef0b03763f46e19a014c40fcf1f840cc70c3c9c755ec2",
+      "actualHapTarget": "libs/arm64-v8a/_interpnd.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "ed7c38492a46e9cddf4937b9021ae77902a7e6ef744d07642d84e43f72a9764d",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 272086,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/interpolate/_ppoly.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "48bec691f15d45dc7cf42c5241c3cee8cc6715b0ee80f3ca0f88d27ba7eeda4b",
+      "actualHapTarget": "libs/arm64-v8a/_ppoly.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "790f04c16f75d6ecc5f2dac73aba2fde0580dcd994c0f8559c92d34b7ae8da36",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 271083,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/interpolate/_rbfinterp_pythran.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "4b04d3af4c17f4581ecb2bc7364b7c4155b6284175d8c99b6305162341be49a5",
+      "actualHapTarget": "libs/arm64-v8a/_rbfinterp_pythran.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "88543f82842d4dc7f279594de86158858b7f85aa87808dcf7428d8f566de0e6c",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 269699,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 3,
+        ".cpp": 1
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/interpolate/_rgi_cython.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "87391922c7e22d81a99a879f659f8b14c924d0b62933ae333db0f9d23dce9b64",
+      "actualHapTarget": "libs/arm64-v8a/_rgi_cython.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "d0c6fa1d5706fea34ae915a127bb6710e62bfc2a860d0e7664b8b5521249052a",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 139985,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/io/_fast_matrix_market/_fmm_core.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "63005320e441a7ed8b052c3b26aa2a88d6a896a3e8ffff777d659b52fb909023",
+      "actualHapTarget": "libs/arm64-v8a/_fmm_core.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "9b17347aceae8a27846fb94cbf2d11d1e98e4587c7f137f3db3cd539797e66dc",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 1265455,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 12,
+      "sourceSuffixCounts": {
+        ".c": 6,
+        ".cpp": 6
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/io/_test_fortran.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "39e34eb7d70fdb566dff556b4192e1af8215aed84b0103c5bedbdce90c3d39a6",
+      "actualHapTarget": "libs/arm64-v8a/_test_fortran.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "5d74e4a41f98a1df87dae37aafc1c3896ca606ed88e6038e33bb00c217838629",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 793576,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [
+        "_FortranAAdjustl",
+        "_FortranAAdjustr",
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary",
+        "_FortranACharacterAppend1",
+        "_FortranACharacterCompare",
+        "_FortranACharacterCompareScalar",
+        "_FortranACharacterCompareScalar1",
+        "_FortranACharacterCompareScalar2",
+        "_FortranACharacterCompareScalar4",
+        "_FortranACharacterConcatenate",
+        "_FortranACharacterConcatenateScalar1",
+        "_FortranACharacterMax",
+        "_FortranACharacterMin",
+        "_FortranACharacterPad1",
+        "_FortranACopyInAssign",
+        "_FortranACopyOutAssign",
+        "_FortranAIndex",
+        "_FortranAIndex1",
+        "_FortranAIndex2",
+        "_FortranAIndex4",
+        "_FortranALenTrim",
+        "_FortranALenTrim1",
+        "_FortranALenTrim2",
+        "_FortranALenTrim4",
+        "_FortranAPointerAllocate",
+        "_FortranAPointerAllocateSource",
+        "_FortranAPointerApplyMold",
+        "_FortranAPointerAssociate",
+        "_FortranAPointerAssociateLowerBounds",
+        "_FortranAPointerAssociateRemapping",
+        "_FortranAPointerAssociateScalar",
+        "_FortranAPointerDeallocate",
+        "_FortranAPointerDeallocatePolymorphic",
+        "_FortranAPointerIsAssociated",
+        "_FortranAPointerIsAssociatedWith",
+        "_FortranAPointerNullifyCharacter",
+        "_FortranAPointerNullifyDerived",
+        "_FortranAPointerNullifyIntrinsic",
+        "_FortranAPointerSetBounds",
+        "_FortranAPointerSetDerivedLength",
+        "_FortranARepeat",
+        "_FortranAScan",
+        "_FortranAScan1",
+        "_FortranAScan2",
+        "_FortranAScan4",
+        "_FortranATrim",
+        "_FortranAVerify",
+        "_FortranAVerify1",
+        "_FortranAVerify2",
+        "_FortranAVerify4",
+        "_FortranAioBeginBackspace",
+        "_FortranAioBeginClose",
+        "_FortranAioBeginEndfile",
+        "_FortranAioBeginExternalFormattedInput",
+        "_FortranAioBeginExternalFormattedOutput",
+        "_FortranAioBeginExternalListInput",
+        "_FortranAioBeginExternalListOutput",
+        "_FortranAioBeginFlush",
+        "_FortranAioBeginInquireFile",
+        "_FortranAioBeginInquireIoLength",
+        "_FortranAioBeginInquireUnit",
+        "_FortranAioBeginInternalArrayFormattedInput",
+        "_FortranAioBeginInternalArrayFormattedOutput",
+        "_FortranAioBeginInternalArrayListInput",
+        "_FortranAioBeginInternalArrayListOutput",
+        "_FortranAioBeginInternalFormattedInput",
+        "_FortranAioBeginInternalFormattedOutput",
+        "_FortranAioBeginInternalListInput",
+        "_FortranAioBeginInternalListOutput",
+        "_FortranAioBeginOpenNewUnit",
+        "_FortranAioBeginOpenUnit",
+        "_FortranAioBeginRewind",
+        "_FortranAioBeginUnformattedInput",
+        "_FortranAioBeginUnformattedOutput",
+        "_FortranAioBeginWait",
+        "_FortranAioBeginWaitAll",
+        "_FortranAioCheckUnitNumberInRange128",
+        "_FortranAioCheckUnitNumberInRange64",
+        "_FortranAioEnableHandlers",
+        "_FortranAioEndIoStatement",
+        "_FortranAioGetAsynchronousId",
+        "_FortranAioGetIoLength",
+        "_FortranAioGetIoMsg",
+        "_FortranAioGetNewUnit",
+        "_FortranAioGetSize",
+        "_FortranAioInputAscii",
+        "_FortranAioInputCharacter",
+        "_FortranAioInputComplex32",
+        "_FortranAioInputComplex64",
+        "_FortranAioInputDerivedType",
+        "_FortranAioInputDescriptor",
+        "_FortranAioInputInteger",
+        "_FortranAioInputLogical",
+        "_FortranAioInputNamelist",
+        "_FortranAioInputReal32",
+        "_FortranAioInputReal64",
+        "_FortranAioInquireCharacter",
+        "_FortranAioInquireInteger64",
+        "_FortranAioInquireLogical",
+        "_FortranAioInquirePendingId",
+        "_FortranAioOutputAscii",
+        "_FortranAioOutputCharacter",
+        "_FortranAioOutputComplex32",
+        "_FortranAioOutputComplex64",
+        "_FortranAioOutputDerivedType",
+        "_FortranAioOutputDescriptor",
+        "_FortranAioOutputInteger128",
+        "_FortranAioOutputInteger16",
+        "_FortranAioOutputInteger32",
+        "_FortranAioOutputInteger64",
+        "_FortranAioOutputInteger8",
+        "_FortranAioOutputLogical",
+        "_FortranAioOutputNamelist",
+        "_FortranAioOutputReal32",
+        "_FortranAioOutputReal64",
+        "_FortranAioSetAccess",
+        "_FortranAioSetAction",
+        "_FortranAioSetAdvance",
+        "_FortranAioSetAsynchronous",
+        "_FortranAioSetBlank",
+        "_FortranAioSetCarriagecontrol",
+        "_FortranAioSetConvert",
+        "_FortranAioSetDecimal",
+        "_FortranAioSetDelim",
+        "_FortranAioSetEncoding",
+        "_FortranAioSetFile",
+        "_FortranAioSetForm",
+        "_FortranAioSetPad",
+        "_FortranAioSetPos",
+        "_FortranAioSetPosition",
+        "_FortranAioSetRec",
+        "_FortranAioSetRecl",
+        "_FortranAioSetRound",
+        "_FortranAioSetSign",
+        "_FortranAioSetStatus"
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 43,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 7,
+        ".cpp": 35
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/io/matlab/_mio5_utils.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "3826209740c5de81cdb70c64c6ded6429226b009297abe343bd48a40e4afa3df",
+      "actualHapTarget": "libs/arm64-v8a/_mio5_utils.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "4f96cccc2a33246afa87f315a9953b724ab836e48e13b772919355eb3bda7cd7",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 206521,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/io/matlab/_mio_utils.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "6e5c0d216b496da0aa8d0f008f0489736d3e44208e2de60e3c699d018f6f22a0",
+      "actualHapTarget": "libs/arm64-v8a/_mio_utils.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "916fb1b89aa66b06533994627653afc2d197edaf9a8f53279e568b9c66599a49",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 72726,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/io/matlab/_streams.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "5bb59b85dc7ae24e8fbf071f09949adab3972d5488cf13e68d7a31efa12c73f3",
+      "actualHapTarget": "libs/arm64-v8a/_streams.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "6e2ed9224543a0653e225cfa932a3237a545249e814da61fd19215ced151d569",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 139346,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/linalg/_cythonized_array_utils.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "7c942b08771c6c41665f332d0e692e19bf88a42b1cfc004b5ee682f492526eb9",
+      "actualHapTarget": "libs/arm64-v8a/_cythonized_array_utils.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "b728274a06dc8d2ce93cd2855e19aa8fb9a873873616bb1444524e21d92fc507",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 336636,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/linalg/_decomp_interpolative.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "0d92071abe45bdeabd265f323b734f07ad3f266bc22bf3e6fbbe5318828bcb9f",
+      "actualHapTarget": "libs/arm64-v8a/_decomp_interpolative.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "79789f2f0b6b6e91236f883446dc99a30ddaf5a1c03a10dd90d0dc5c4a6d41ff",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 599137,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/linalg/_decomp_lu_cython.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "033b18a60a61133fc00c92f4b7c51e513536ec16eb20c02f1afece27eae5a475",
+      "actualHapTarget": "libs/arm64-v8a/_decomp_lu_cython.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "ad908b7c92f1576a33027aee9ffc15d27cef2215c02b597f46d237a9e7008431",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 138827,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/linalg/_decomp_update.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "856bd4a46aedbee4bb8683539cd1658f4def8835396da199391085728b844843",
+      "actualHapTarget": "libs/arm64-v8a/_decomp_update.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "6440ee36dcee304ced1833dc459f444d9965dae19f1ea817b7720c37f2eb416a",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 270641,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/linalg/_fblas.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "a8ff4cce62ac001c11bfbd44eebba542010fec35b2a432c41f8db21d51568c74",
+      "actualHapTarget": "libs/arm64-v8a/_fblas.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "8754318e8ba7f66bbe1ec3fe07f06423a4261bfcd974ff8452f7592f948562f9",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 594731,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 6,
+      "sourceSuffixCounts": {
+        ".c": 6
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/linalg/_flapack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "1892ab05742dcd9a3fdf196d6bb9b8ac574804a28f64c7219f927146564b9892",
+      "actualHapTarget": "libs/arm64-v8a/_flapack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "15226995a33c8951d014a9c0dd8f4d2f2d388055e194c61f7733d4af18a95229",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 1908621,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 5,
+      "sourceSuffixCounts": {
+        ".c": 5
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/linalg/_linalg_pythran.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "1287a592319861e6abd9cea6075e28147f70a5029ee2ecc395d890f15adc195f",
+      "actualHapTarget": "libs/arm64-v8a/_linalg_pythran.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "9cc66a36584e017e80ca8191eff03617ddaf3fca8883fabeb70ea7ce12f5a1db",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 138506,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 3,
+        ".cpp": 1
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/linalg/_matfuncs_expm.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "7653f3d1b78c0deb8a6d98d22c4cdd2f15124f307efc358bd694c7b971046bb1",
+      "actualHapTarget": "libs/arm64-v8a/_matfuncs_expm.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "9deb6f2f86ef09adaff71e974f53661189b65cdd515f0be3f3f88eecc52116a3",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 134218,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/linalg/_matfuncs_schur_sqrtm.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "7757c5b2da3d3089b7ebf0308738a3e4eead0aa1fdd3a27faa02dfecddb107a3",
+      "actualHapTarget": "libs/arm64-v8a/_matfuncs_schur_sqrtm.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "27e84223e6b29975ce38cb05e1ac79cd58b5c9b519bba00de5c687fc9760fb79",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 134156,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 6,
+      "sourceSuffixCounts": {
+        ".c": 6
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/linalg/_matfuncs_sqrtm_triu.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "7773fb73628463d28c6fef7f2bfe3d6f976f6101a47fe04d41ebbea7f4dacdca",
+      "actualHapTarget": "libs/arm64-v8a/_matfuncs_sqrtm_triu.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "07b294519b1bcbfd45828d28f6f77e619744a9bfe5a01205a56f605f3bd4d43f",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 139641,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/linalg/_solve_toeplitz.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "398e7fedcdedde3356ef88c9d229dc25a46ca3c58ab476f9ea4f98fe44a41206",
+      "actualHapTarget": "libs/arm64-v8a/_solve_toeplitz.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "2b2bb81ddaf361937b17b680d9bbd2e4771c6e371b6f94f90324ac297a8de157",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 139758,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/linalg/cython_blas.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "7fc98218fe477bcb4179a8d5701a1f0e09540160e7d9445f0d7748b2bc33a3f3",
+      "actualHapTarget": "libs/arm64-v8a/cython_blas.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "573ca83e982734f6f38d454579317cce8dbe1d97d10c808abb77db269c447397",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 202173,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 5,
+      "sourceSuffixCounts": {
+        ".c": 5
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/linalg/cython_lapack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "2459f25821ab2596928a3b102f48c830521b8a5767a95d4af94f166b9a13a879",
+      "actualHapTarget": "libs/arm64-v8a/cython_lapack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "937402797d223065135625b8928b620d2129777a1ee8ba2eb403c2b75942d8d8",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 671669,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 5,
+      "sourceSuffixCounts": {
+        ".c": 5
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/ndimage/_ctest.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "534ade6014140569f20da2e5c598fd6a26aba640cec41aa48eedf1fd20595612",
+      "actualHapTarget": "libs/arm64-v8a/_ctest.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "259258dfab5939cefb87d54e0ea50905368c82da8ca48d46a457cac858e03718",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 68703,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/ndimage/_cytest.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "078a46a2a189e5f6560ebe36a4935c193e8ee51ca1ee234559c49c8bd6f8d807",
+      "actualHapTarget": "libs/arm64-v8a/_cytest.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "b30da515dbe1d336e5588e046674ad795ac7960bbe609d7fcf880c108ef4c978",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 73561,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/ndimage/_nd_image.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "a36c356239c7ef4e7d984a2c733ea655e719968bd9ecd84af2abd420578775dd",
+      "actualHapTarget": "libs/arm64-v8a/_nd_image.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "2a77fdda05325643b29eb7133344bcd3ad478e106a0828d8335e89ffc2c8c0d8",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 135789,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 11,
+      "sourceSuffixCounts": {
+        ".c": 11
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/ndimage/_ni_label.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "36bfdf71c1328f3b6e4cac3a283dc91d941e3a11422bc38386ad5682041de82a",
+      "actualHapTarget": "libs/arm64-v8a/_ni_label.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "5367986de65d3c9f524e93d624637ab496e60603eadce5603e15934b34903a5a",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 205941,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/ndimage/_rank_filter_1d.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "0a299da54409df92bc7892b6f661fe0aa0490ed0c9314465483b8d8a7e2ba768",
+      "actualHapTarget": "libs/arm64-v8a/_rank_filter_1d.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "9f19a99cf751f28c2407d736cae2746e1b14090cdac3cee3ffea83883d209300",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 69052,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 3,
+        ".cpp": 1
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/odr/__odrpack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "d8dd9da084820717861a2f849f3a1f2eeeaef7dd3a7b7be79e723b922faec7d3",
+      "actualHapTarget": "libs/arm64-v8a/__odrpack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "4d62309f2b074f942574898524d157768f36de34c603e81a9c71198ee199d591",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 790113,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary",
+        "_FortranACopyInAssign",
+        "_FortranACopyOutAssign",
+        "_FortranAPointerAllocate",
+        "_FortranAPointerAllocateSource",
+        "_FortranAPointerApplyMold",
+        "_FortranAPointerAssociate",
+        "_FortranAPointerAssociateLowerBounds",
+        "_FortranAPointerAssociateRemapping",
+        "_FortranAPointerAssociateScalar",
+        "_FortranAPointerDeallocate",
+        "_FortranAPointerDeallocatePolymorphic",
+        "_FortranAPointerIsAssociated",
+        "_FortranAPointerIsAssociatedWith",
+        "_FortranAPointerNullifyCharacter",
+        "_FortranAPointerNullifyDerived",
+        "_FortranAPointerNullifyIntrinsic",
+        "_FortranAPointerSetBounds",
+        "_FortranAPointerSetDerivedLength",
+        "_FortranAioBeginBackspace",
+        "_FortranAioBeginClose",
+        "_FortranAioBeginEndfile",
+        "_FortranAioBeginExternalFormattedInput",
+        "_FortranAioBeginExternalFormattedOutput",
+        "_FortranAioBeginExternalListInput",
+        "_FortranAioBeginExternalListOutput",
+        "_FortranAioBeginFlush",
+        "_FortranAioBeginInquireFile",
+        "_FortranAioBeginInquireIoLength",
+        "_FortranAioBeginInquireUnit",
+        "_FortranAioBeginInternalArrayFormattedInput",
+        "_FortranAioBeginInternalArrayFormattedOutput",
+        "_FortranAioBeginInternalArrayListInput",
+        "_FortranAioBeginInternalArrayListOutput",
+        "_FortranAioBeginInternalFormattedInput",
+        "_FortranAioBeginInternalFormattedOutput",
+        "_FortranAioBeginInternalListInput",
+        "_FortranAioBeginInternalListOutput",
+        "_FortranAioBeginOpenNewUnit",
+        "_FortranAioBeginOpenUnit",
+        "_FortranAioBeginRewind",
+        "_FortranAioBeginUnformattedInput",
+        "_FortranAioBeginUnformattedOutput",
+        "_FortranAioBeginWait",
+        "_FortranAioBeginWaitAll",
+        "_FortranAioCheckUnitNumberInRange128",
+        "_FortranAioCheckUnitNumberInRange64",
+        "_FortranAioEnableHandlers",
+        "_FortranAioEndIoStatement",
+        "_FortranAioGetAsynchronousId",
+        "_FortranAioGetIoLength",
+        "_FortranAioGetIoMsg",
+        "_FortranAioGetNewUnit",
+        "_FortranAioGetSize",
+        "_FortranAioInputAscii",
+        "_FortranAioInputCharacter",
+        "_FortranAioInputComplex32",
+        "_FortranAioInputComplex64",
+        "_FortranAioInputDerivedType",
+        "_FortranAioInputDescriptor",
+        "_FortranAioInputInteger",
+        "_FortranAioInputLogical",
+        "_FortranAioInputNamelist",
+        "_FortranAioInputReal32",
+        "_FortranAioInputReal64",
+        "_FortranAioInquireCharacter",
+        "_FortranAioInquireInteger64",
+        "_FortranAioInquireLogical",
+        "_FortranAioInquirePendingId",
+        "_FortranAioOutputAscii",
+        "_FortranAioOutputCharacter",
+        "_FortranAioOutputComplex32",
+        "_FortranAioOutputComplex64",
+        "_FortranAioOutputDerivedType",
+        "_FortranAioOutputDescriptor",
+        "_FortranAioOutputInteger128",
+        "_FortranAioOutputInteger16",
+        "_FortranAioOutputInteger32",
+        "_FortranAioOutputInteger64",
+        "_FortranAioOutputInteger8",
+        "_FortranAioOutputLogical",
+        "_FortranAioOutputNamelist",
+        "_FortranAioOutputReal32",
+        "_FortranAioOutputReal64",
+        "_FortranAioSetAccess",
+        "_FortranAioSetAction",
+        "_FortranAioSetAdvance",
+        "_FortranAioSetAsynchronous",
+        "_FortranAioSetBlank",
+        "_FortranAioSetCarriagecontrol",
+        "_FortranAioSetConvert",
+        "_FortranAioSetDecimal",
+        "_FortranAioSetDelim",
+        "_FortranAioSetEncoding",
+        "_FortranAioSetFile",
+        "_FortranAioSetForm",
+        "_FortranAioSetPad",
+        "_FortranAioSetPos",
+        "_FortranAioSetPosition",
+        "_FortranAioSetRec",
+        "_FortranAioSetRecl",
+        "_FortranAioSetRound",
+        "_FortranAioSetSign",
+        "_FortranAioSetStatus"
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 42,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 7,
+        ".cpp": 34
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/optimize/_bglu_dense.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "c53d5b61cc4b3fbcd273a8e50d948decf8487b96b2d53260e5d20dc9b52586f8",
+      "actualHapTarget": "libs/arm64-v8a/_bglu_dense.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "03642f8982924b0269aff65b0dbd34aeb1802385ba9ae49720c9b49a45f8dfa2",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 205690,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/optimize/_direct.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "8fae456e3753fdd188be71bc22d4865ebcaa77dc3d29a05583d6134ccc65dec2",
+      "actualHapTarget": "libs/arm64-v8a/_direct.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "6583e656d6fa1e792d8d30cb3d481aed3b6755f49cc6dd489aed8bce27f7f2aa",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 69324,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 8,
+      "sourceSuffixCounts": {
+        ".c": 8
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/optimize/_group_columns.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "7ba50afdc1f01d991f3e65a14351f7f47ea9c836d3d3a8f8aa3e4e2634c46c8d",
+      "actualHapTarget": "libs/arm64-v8a/_group_columns.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "8b8d7d23adf015e355a6d330795ed7e142facaf6f1f9c51dff86d4d8c75e6fd1",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 72830,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 3,
+        ".cpp": 1
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/optimize/_highspy/_core.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "e2479e26f4fa894efe7a90df5b09b78bf19d372c43f8c31619da0ced579bfb0c",
+      "actualHapTarget": "libs/arm64-v8a/_core.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "48a22b71342a9a6c7b3e5e0f73f747212e54adcd4f6c6cd1b753eb4f32927037",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 4086373,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 169,
+      "sourceSuffixCounts": {
+        ".c": 39,
+        ".cc": 30,
+        ".cpp": 100
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/optimize/_highspy/_highs_options.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "6f49c1ba3e71447133ba9703605fb3c9d9c24803603970d9df953241d9a98379",
+      "actualHapTarget": "libs/arm64-v8a/_highs_options.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "848c8f193510facc26940212e995fc2a9f387b0806dbb51fe9e68713bbcfd3ce",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 341860,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 7,
+      "sourceSuffixCounts": {
+        ".c": 3,
+        ".cpp": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/optimize/_lbfgsb.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "e7ee1226758460f61a4219a080799cce2f10388f68b53b6857a7477dd8dc52ef",
+      "actualHapTarget": "libs/arm64-v8a/_lbfgsb.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "d239224ce2a3c99610189e3326e174329312150ddc991eea191bc7b231b88523",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 133927,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/optimize/_lsap.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "736e7217f6de5ef2bc4fda3262a4049c439f347ade673f80828e7c8a8ba60e49",
+      "actualHapTarget": "libs/arm64-v8a/_lsap.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "816151ef135ac3a0049f1a0abf6f2859454b7b8232a586ad5e50de78eb022cf1",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 69698,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 5,
+      "sourceSuffixCounts": {
+        ".c": 4,
+        ".cpp": 1
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/optimize/_lsq/givens_elimination.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "d242e6a1901c7d91f24b7b00a091aec904b04efd5a10c63487cdace9f1cffe68",
+      "actualHapTarget": "libs/arm64-v8a/givens_elimination.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "22fa36870870a7315fd615e73d57541a89d6ad6118ef09419a0ff3eddc10b571",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 72391,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/optimize/_minpack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "b011357fd7b246f44f37d017c13e8f174fe98031f55efb3984419a81c3fcc28a",
+      "actualHapTarget": "libs/arm64-v8a/_minpack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "8a17b3a3346a153da507b255cc062b6f5dcbff747a753280fe0667f5dec5b741",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 69766,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/optimize/_moduleTNC.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "7834176912a6e0fd6c261643d6db02eb81d3441fab93400dea1b75852a4ba939",
+      "actualHapTarget": "libs/arm64-v8a/_moduleTNC.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "864d719dd5f8ceb767158803fe27150d083b334c24826bff1b2a9a9fb9aeb893",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 139029,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 5,
+      "sourceSuffixCounts": {
+        ".c": 5
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/optimize/_pava_pybind.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "1e16f5625d8f40df8ddb0cb66e321cb0e1e58c03eb37c4d9007818c1e852f47d",
+      "actualHapTarget": "libs/arm64-v8a/_pava_pybind.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "d676073eb27fe9bb86e0584143cc3a938f3f5207943c1b9932984ba660f121c3",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 209235,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 3,
+        ".cpp": 1
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/optimize/_slsqplib.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "6bf436ea8dbd1e3cee69862c20de15169354be56b28af39c30b89635b270f327",
+      "actualHapTarget": "libs/arm64-v8a/_slsqplib.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "1034ce149e592673b5dea8047dc7ac8c7b038f7da312d0120c86a9af04028ed8",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 134177,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 5,
+      "sourceSuffixCounts": {
+        ".c": 5
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/optimize/_trlib/_trlib.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "f390d47ff48051157f1349e505244e61e8e325fbcea773c490a84dd047d93f08",
+      "actualHapTarget": "libs/arm64-v8a/_trlib.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "809372c87ef4bb0ecad94a7cb6a1c2e4fa366f0eb3b2f523620ec3752239f71e",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 267291,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 9,
+      "sourceSuffixCounts": {
+        ".c": 9
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/optimize/_zeros.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "5ca1100ace0587df33ff9da66514c36d5cb0eefed06ec2f9a3e2a5d3401b4a13",
+      "actualHapTarget": "libs/arm64-v8a/libgsas_pyext_65621258a0e669ea764e.so",
+      "actualHapSha256": "bdd593f1eaac03ba891b0cefa33cbe2945fa4b66c25be6a31468fae397301ca6",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 68681,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 8,
+      "sourceSuffixCounts": {
+        ".c": 8
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/optimize/cython_optimize/_zeros.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "2fa0ebe70cc37bcc798cf5e5f92ad569f8f3f1027fcf714c006d2008f7c5bb89",
+      "actualHapTarget": "libs/arm64-v8a/libgsas_pyext_c8df34601007c4fe0192.so",
+      "actualHapSha256": "1976530783bf7edb764eb8f0f5951a9d4a6e647a24b4b73cff1ccaf57fd8821c",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 138777,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/signal/_max_len_seq_inner.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "4fecdb27781fe557197afd5e12a412ca0206f68041db99d8455b8ffb885a924a",
+      "actualHapTarget": "libs/arm64-v8a/_max_len_seq_inner.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "d51f05fc85602cfd16425d1061cad7620affeb80a81c8f0dfc76ecebb9063e9b",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 72834,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 3,
+        ".cpp": 1
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/signal/_peak_finding_utils.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "c5919a72d6b8a123d8b9657473af021f2fb1215deade7617849b43fab03eeab5",
+      "actualHapTarget": "libs/arm64-v8a/_peak_finding_utils.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "c0a43ee77b8a55235765e5e2c1479da95c00d67b34eb89ce2acc952992bffee0",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 139074,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/signal/_sigtools.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "c1cbfa72555e3c4d97cc8a836395d073e47696e0269efadc109fdc1432a35d20",
+      "actualHapTarget": "libs/arm64-v8a/_sigtools.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "fc3f3ea1b8ce237ffe79f805ec0ef51c2c3803bee21fbf12c2b477fe6b23e821",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 135494,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 16,
+      "sourceSuffixCounts": {
+        ".c": 11,
+        ".cc": 5
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/signal/_sosfilt.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "c05030a78c2ec7da9edc8ccdb35c84294e975a569c88c1c0eef5466a408838ac",
+      "actualHapTarget": "libs/arm64-v8a/_sosfilt.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "c3990b6ec2021c5c568288d5051b7e90559aabc778cbfdc27acb095025aa0938",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 139770,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 8,
+      "sourceSuffixCounts": {
+        ".c": 8
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/signal/_spline.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "877a1459208353d6518b927c7061c06b6f6fe699876284848ae762510bc322fe",
+      "actualHapTarget": "libs/arm64-v8a/_spline.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "08d77e47b699769e8b27ac454659366480a39c407b1bc60a4d019f57ecce9024",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 69034,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 3,
+        ".cc": 1
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/signal/_upfirdn_apply.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "bd2a11a60f7e8b0f308ae06cd61364ad77756e19d61054fd53e21a3cb8813159",
+      "actualHapTarget": "libs/arm64-v8a/_upfirdn_apply.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "e8b6fd49368d2fb04c054e003705ca808f77ff29de940f14cebc99357a032171",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 205947,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/sparse/_csparsetools.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "ae5d582270a47d89725483a06ba931fe96c741f74796d321e66491b2140c2631",
+      "actualHapTarget": "libs/arm64-v8a/_csparsetools.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "bd3feda3141560f2a0b75d6d11d8feda98275ef81b3e13705f9e5468040dd7c6",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 402811,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 6,
+      "sourceSuffixCounts": {
+        ".c": 6
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/sparse/_sparsetools.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "42841048a2aaa1918a2a5cf73b28b90825ab95dbbef0d5e321a0be0a8c4a9ac7",
+      "actualHapTarget": "libs/arm64-v8a/_sparsetools.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "3047a34dedff24c99f4fb0cfd9151de8af616b19ccc2a44d6892dc289673631e",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 3413059,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 15,
+      "sourceSuffixCounts": {
+        ".c": 10,
+        ".cxx": 5
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/sparse/csgraph/_flow.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "133ce7623e814c9b59ca2b684a7b899784f89ac64e639d859392b38137f79987",
+      "actualHapTarget": "libs/arm64-v8a/_flow.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "b4f24bbef239f54b7e7c4f6379863ce0483998defeaf67e8d23d634ca37e9de7",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 205106,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/sparse/csgraph/_matching.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "7f33d4bdd58164ba4d3466ff0fba800628440aef65a304436cfa2e79614eb6bf",
+      "actualHapTarget": "libs/arm64-v8a/_matching.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "dacc774fd4297b8e270c395b9fa46ca2d607146d5cf00dbf271e0cb5764c9c85",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 204576,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/sparse/csgraph/_min_spanning_tree.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "675380e6bef76ac3dc0156d8db53c924e8c6eafc29c388f41da0d1c34106d3d0",
+      "actualHapTarget": "libs/arm64-v8a/_min_spanning_tree.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "ff4abd44965e2bad19a854faaa6234a21593ed26e23d49f0850e67ea57dab79b",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 138683,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/sparse/csgraph/_reordering.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "3cc6fdab57a0f2a6571881f9f20de4a055569ed9b7f6218a1fe474b6623c4724",
+      "actualHapTarget": "libs/arm64-v8a/_reordering.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "0f5d6ed75612f882871de8e81c4dd2363695986d34ca877286d09fc555fa55a6",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 139870,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/sparse/csgraph/_shortest_path.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "a172d2a6d087a00b254c88945f08270d716b96de68003be345216df9ea026688",
+      "actualHapTarget": "libs/arm64-v8a/_shortest_path.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "6c39128ab81c1a77f19853866b30bebb1438ba91d0185b102b8160a7c44aed65",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 404571,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 3,
+        ".cpp": 1
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/sparse/csgraph/_tools.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "7c64526c515f3405fe7ef07ea7b5161617cd3a3d3b094e66caab9a89cb01bbef",
+      "actualHapTarget": "libs/arm64-v8a/_tools.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "327582f8c5969cb96682cd5356a43c655fbd202f8c4ac54bfeefec1d9cdaddeb",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 204956,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/sparse/csgraph/_traversal.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "af5a12edb6c677f54b2986e49c09685ff1475613aadbd8bc7156bd11f474f16e",
+      "actualHapTarget": "libs/arm64-v8a/_traversal.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "45381d06ac8b8b6df719941a6ff480a55ee841e8cd31a67b895d90e65faa1c58",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 402394,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/sparse/linalg/_dsolve/_superlu.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "ea8b66d619870191a3d3a309b1226750fd61f7ece98c70e06eb1c6b5611a1989",
+      "actualHapTarget": "libs/arm64-v8a/_superlu.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "b2adff845bc1245ddffa939a506bf39a9a480d0e00e97b7ddd084a0702b04a84",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 331478,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 117,
+      "sourceSuffixCounts": {
+        ".c": 117
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/sparse/linalg/_eigen/arpack/_arpack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "538dbae4aced46d4ce2a2d603576de89d267a523fc3c2c82faf8a5aa6a23781e",
+      "actualHapTarget": "libs/arm64-v8a/_arpack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "7d99b80e11359f8663197a535e744787dca4f943229d8500b74a8e104a3d09ec",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 1053649,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary",
+        "_FortranACopyInAssign",
+        "_FortranACopyOutAssign",
+        "_FortranAPointerAllocate",
+        "_FortranAPointerAllocateSource",
+        "_FortranAPointerApplyMold",
+        "_FortranAPointerAssociate",
+        "_FortranAPointerAssociateLowerBounds",
+        "_FortranAPointerAssociateRemapping",
+        "_FortranAPointerAssociateScalar",
+        "_FortranAPointerDeallocate",
+        "_FortranAPointerDeallocatePolymorphic",
+        "_FortranAPointerIsAssociated",
+        "_FortranAPointerIsAssociatedWith",
+        "_FortranAPointerNullifyCharacter",
+        "_FortranAPointerNullifyDerived",
+        "_FortranAPointerNullifyIntrinsic",
+        "_FortranAPointerSetBounds",
+        "_FortranAPointerSetDerivedLength",
+        "_FortranAioBeginBackspace",
+        "_FortranAioBeginClose",
+        "_FortranAioBeginEndfile",
+        "_FortranAioBeginExternalFormattedInput",
+        "_FortranAioBeginExternalFormattedOutput",
+        "_FortranAioBeginExternalListInput",
+        "_FortranAioBeginExternalListOutput",
+        "_FortranAioBeginFlush",
+        "_FortranAioBeginInquireFile",
+        "_FortranAioBeginInquireIoLength",
+        "_FortranAioBeginInquireUnit",
+        "_FortranAioBeginInternalArrayFormattedInput",
+        "_FortranAioBeginInternalArrayFormattedOutput",
+        "_FortranAioBeginInternalArrayListInput",
+        "_FortranAioBeginInternalArrayListOutput",
+        "_FortranAioBeginInternalFormattedInput",
+        "_FortranAioBeginInternalFormattedOutput",
+        "_FortranAioBeginInternalListInput",
+        "_FortranAioBeginInternalListOutput",
+        "_FortranAioBeginOpenNewUnit",
+        "_FortranAioBeginOpenUnit",
+        "_FortranAioBeginRewind",
+        "_FortranAioBeginUnformattedInput",
+        "_FortranAioBeginUnformattedOutput",
+        "_FortranAioBeginWait",
+        "_FortranAioBeginWaitAll",
+        "_FortranAioCheckUnitNumberInRange128",
+        "_FortranAioCheckUnitNumberInRange64",
+        "_FortranAioEnableHandlers",
+        "_FortranAioEndIoStatement",
+        "_FortranAioGetAsynchronousId",
+        "_FortranAioGetIoLength",
+        "_FortranAioGetIoMsg",
+        "_FortranAioGetNewUnit",
+        "_FortranAioGetSize",
+        "_FortranAioInputAscii",
+        "_FortranAioInputCharacter",
+        "_FortranAioInputComplex32",
+        "_FortranAioInputComplex64",
+        "_FortranAioInputDerivedType",
+        "_FortranAioInputDescriptor",
+        "_FortranAioInputInteger",
+        "_FortranAioInputLogical",
+        "_FortranAioInputNamelist",
+        "_FortranAioInputReal32",
+        "_FortranAioInputReal64",
+        "_FortranAioInquireCharacter",
+        "_FortranAioInquireInteger64",
+        "_FortranAioInquireLogical",
+        "_FortranAioInquirePendingId",
+        "_FortranAioOutputAscii",
+        "_FortranAioOutputCharacter",
+        "_FortranAioOutputComplex32",
+        "_FortranAioOutputComplex64",
+        "_FortranAioOutputDerivedType",
+        "_FortranAioOutputDescriptor",
+        "_FortranAioOutputInteger128",
+        "_FortranAioOutputInteger16",
+        "_FortranAioOutputInteger32",
+        "_FortranAioOutputInteger64",
+        "_FortranAioOutputInteger8",
+        "_FortranAioOutputLogical",
+        "_FortranAioOutputNamelist",
+        "_FortranAioOutputReal32",
+        "_FortranAioOutputReal64",
+        "_FortranAioSetAccess",
+        "_FortranAioSetAction",
+        "_FortranAioSetAdvance",
+        "_FortranAioSetAsynchronous",
+        "_FortranAioSetBlank",
+        "_FortranAioSetCarriagecontrol",
+        "_FortranAioSetConvert",
+        "_FortranAioSetDecimal",
+        "_FortranAioSetDelim",
+        "_FortranAioSetEncoding",
+        "_FortranAioSetFile",
+        "_FortranAioSetForm",
+        "_FortranAioSetPad",
+        "_FortranAioSetPos",
+        "_FortranAioSetPosition",
+        "_FortranAioSetRec",
+        "_FortranAioSetRecl",
+        "_FortranAioSetRound",
+        "_FortranAioSetSign",
+        "_FortranAioSetStatus"
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 44,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 9,
+        ".cpp": 34
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/sparse/linalg/_propack/_cpropack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "7b0dcb6abb49a431730126b2933412c0e77d12fd76e2682457a717810cbecbe0",
+      "actualHapTarget": "libs/arm64-v8a/_cpropack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "2abec9c057991430a4c16d10adff0b2c4602096fc3adb8e191931b57e77bbba5",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 791151,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [
+        "_FortranAAbort",
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary",
+        "_FortranACopyInAssign",
+        "_FortranACopyOutAssign",
+        "_FortranAExit",
+        "_FortranAFailImageStatement",
+        "_FortranAPauseStatement",
+        "_FortranAPauseStatementInt",
+        "_FortranAPauseStatementText",
+        "_FortranAPointerAllocate",
+        "_FortranAPointerAllocateSource",
+        "_FortranAPointerApplyMold",
+        "_FortranAPointerAssociate",
+        "_FortranAPointerAssociateLowerBounds",
+        "_FortranAPointerAssociateRemapping",
+        "_FortranAPointerAssociateScalar",
+        "_FortranAPointerDeallocate",
+        "_FortranAPointerDeallocatePolymorphic",
+        "_FortranAPointerIsAssociated",
+        "_FortranAPointerIsAssociatedWith",
+        "_FortranAPointerNullifyCharacter",
+        "_FortranAPointerNullifyDerived",
+        "_FortranAPointerNullifyIntrinsic",
+        "_FortranAPointerSetBounds",
+        "_FortranAPointerSetDerivedLength",
+        "_FortranAProgramEndStatement",
+        "_FortranAReportFatalUserError",
+        "_FortranAStopStatement",
+        "_FortranAStopStatementText",
+        "_FortranAioBeginBackspace",
+        "_FortranAioBeginClose",
+        "_FortranAioBeginEndfile",
+        "_FortranAioBeginExternalFormattedInput",
+        "_FortranAioBeginExternalFormattedOutput",
+        "_FortranAioBeginExternalListInput",
+        "_FortranAioBeginExternalListOutput",
+        "_FortranAioBeginFlush",
+        "_FortranAioBeginInquireFile",
+        "_FortranAioBeginInquireIoLength",
+        "_FortranAioBeginInquireUnit",
+        "_FortranAioBeginInternalArrayFormattedInput",
+        "_FortranAioBeginInternalArrayFormattedOutput",
+        "_FortranAioBeginInternalArrayListInput",
+        "_FortranAioBeginInternalArrayListOutput",
+        "_FortranAioBeginInternalFormattedInput",
+        "_FortranAioBeginInternalFormattedOutput",
+        "_FortranAioBeginInternalListInput",
+        "_FortranAioBeginInternalListOutput",
+        "_FortranAioBeginOpenNewUnit",
+        "_FortranAioBeginOpenUnit",
+        "_FortranAioBeginRewind",
+        "_FortranAioBeginUnformattedInput",
+        "_FortranAioBeginUnformattedOutput",
+        "_FortranAioBeginWait",
+        "_FortranAioBeginWaitAll",
+        "_FortranAioCheckUnitNumberInRange128",
+        "_FortranAioCheckUnitNumberInRange64",
+        "_FortranAioEnableHandlers",
+        "_FortranAioEndIoStatement",
+        "_FortranAioGetAsynchronousId",
+        "_FortranAioGetIoLength",
+        "_FortranAioGetIoMsg",
+        "_FortranAioGetNewUnit",
+        "_FortranAioGetSize",
+        "_FortranAioInputAscii",
+        "_FortranAioInputCharacter",
+        "_FortranAioInputComplex32",
+        "_FortranAioInputComplex64",
+        "_FortranAioInputDerivedType",
+        "_FortranAioInputDescriptor",
+        "_FortranAioInputInteger",
+        "_FortranAioInputLogical",
+        "_FortranAioInputNamelist",
+        "_FortranAioInputReal32",
+        "_FortranAioInputReal64",
+        "_FortranAioInquireCharacter",
+        "_FortranAioInquireInteger64",
+        "_FortranAioInquireLogical",
+        "_FortranAioInquirePendingId",
+        "_FortranAioOutputAscii",
+        "_FortranAioOutputCharacter",
+        "_FortranAioOutputComplex32",
+        "_FortranAioOutputComplex64",
+        "_FortranAioOutputDerivedType",
+        "_FortranAioOutputDescriptor",
+        "_FortranAioOutputInteger128",
+        "_FortranAioOutputInteger16",
+        "_FortranAioOutputInteger32",
+        "_FortranAioOutputInteger64",
+        "_FortranAioOutputInteger8",
+        "_FortranAioOutputLogical",
+        "_FortranAioOutputNamelist",
+        "_FortranAioOutputReal32",
+        "_FortranAioOutputReal64",
+        "_FortranAioSetAccess",
+        "_FortranAioSetAction",
+        "_FortranAioSetAdvance",
+        "_FortranAioSetAsynchronous",
+        "_FortranAioSetBlank",
+        "_FortranAioSetCarriagecontrol",
+        "_FortranAioSetConvert",
+        "_FortranAioSetDecimal",
+        "_FortranAioSetDelim",
+        "_FortranAioSetEncoding",
+        "_FortranAioSetFile",
+        "_FortranAioSetForm",
+        "_FortranAioSetPad",
+        "_FortranAioSetPos",
+        "_FortranAioSetPosition",
+        "_FortranAioSetRec",
+        "_FortranAioSetRecl",
+        "_FortranAioSetRound",
+        "_FortranAioSetSign",
+        "_FortranAioSetStatus"
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 44,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 8,
+        ".cpp": 35
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/sparse/linalg/_propack/_dpropack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "d956feb104066c150979f5a446dc54a458287d3340f8a032dbff1506aa9225fe",
+      "actualHapTarget": "libs/arm64-v8a/_dpropack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "cb5645403b4c046a3cbed38b0fe2193411b39d1016d4c2264c13469cb26916b4",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 725497,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [
+        "_FortranAAbort",
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary",
+        "_FortranACopyInAssign",
+        "_FortranACopyOutAssign",
+        "_FortranAExit",
+        "_FortranAFailImageStatement",
+        "_FortranAPauseStatement",
+        "_FortranAPauseStatementInt",
+        "_FortranAPauseStatementText",
+        "_FortranAPointerAllocate",
+        "_FortranAPointerAllocateSource",
+        "_FortranAPointerApplyMold",
+        "_FortranAPointerAssociate",
+        "_FortranAPointerAssociateLowerBounds",
+        "_FortranAPointerAssociateRemapping",
+        "_FortranAPointerAssociateScalar",
+        "_FortranAPointerDeallocate",
+        "_FortranAPointerDeallocatePolymorphic",
+        "_FortranAPointerIsAssociated",
+        "_FortranAPointerIsAssociatedWith",
+        "_FortranAPointerNullifyCharacter",
+        "_FortranAPointerNullifyDerived",
+        "_FortranAPointerNullifyIntrinsic",
+        "_FortranAPointerSetBounds",
+        "_FortranAPointerSetDerivedLength",
+        "_FortranAProgramEndStatement",
+        "_FortranAReportFatalUserError",
+        "_FortranAStopStatement",
+        "_FortranAStopStatementText",
+        "_FortranAioBeginBackspace",
+        "_FortranAioBeginClose",
+        "_FortranAioBeginEndfile",
+        "_FortranAioBeginExternalFormattedInput",
+        "_FortranAioBeginExternalFormattedOutput",
+        "_FortranAioBeginExternalListInput",
+        "_FortranAioBeginExternalListOutput",
+        "_FortranAioBeginFlush",
+        "_FortranAioBeginInquireFile",
+        "_FortranAioBeginInquireIoLength",
+        "_FortranAioBeginInquireUnit",
+        "_FortranAioBeginInternalArrayFormattedInput",
+        "_FortranAioBeginInternalArrayFormattedOutput",
+        "_FortranAioBeginInternalArrayListInput",
+        "_FortranAioBeginInternalArrayListOutput",
+        "_FortranAioBeginInternalFormattedInput",
+        "_FortranAioBeginInternalFormattedOutput",
+        "_FortranAioBeginInternalListInput",
+        "_FortranAioBeginInternalListOutput",
+        "_FortranAioBeginOpenNewUnit",
+        "_FortranAioBeginOpenUnit",
+        "_FortranAioBeginRewind",
+        "_FortranAioBeginUnformattedInput",
+        "_FortranAioBeginUnformattedOutput",
+        "_FortranAioBeginWait",
+        "_FortranAioBeginWaitAll",
+        "_FortranAioCheckUnitNumberInRange128",
+        "_FortranAioCheckUnitNumberInRange64",
+        "_FortranAioEnableHandlers",
+        "_FortranAioEndIoStatement",
+        "_FortranAioGetAsynchronousId",
+        "_FortranAioGetIoLength",
+        "_FortranAioGetIoMsg",
+        "_FortranAioGetNewUnit",
+        "_FortranAioGetSize",
+        "_FortranAioInputAscii",
+        "_FortranAioInputCharacter",
+        "_FortranAioInputComplex32",
+        "_FortranAioInputComplex64",
+        "_FortranAioInputDerivedType",
+        "_FortranAioInputDescriptor",
+        "_FortranAioInputInteger",
+        "_FortranAioInputLogical",
+        "_FortranAioInputNamelist",
+        "_FortranAioInputReal32",
+        "_FortranAioInputReal64",
+        "_FortranAioInquireCharacter",
+        "_FortranAioInquireInteger64",
+        "_FortranAioInquireLogical",
+        "_FortranAioInquirePendingId",
+        "_FortranAioOutputAscii",
+        "_FortranAioOutputCharacter",
+        "_FortranAioOutputComplex32",
+        "_FortranAioOutputComplex64",
+        "_FortranAioOutputDerivedType",
+        "_FortranAioOutputDescriptor",
+        "_FortranAioOutputInteger128",
+        "_FortranAioOutputInteger16",
+        "_FortranAioOutputInteger32",
+        "_FortranAioOutputInteger64",
+        "_FortranAioOutputInteger8",
+        "_FortranAioOutputLogical",
+        "_FortranAioOutputNamelist",
+        "_FortranAioOutputReal32",
+        "_FortranAioOutputReal64",
+        "_FortranAioSetAccess",
+        "_FortranAioSetAction",
+        "_FortranAioSetAdvance",
+        "_FortranAioSetAsynchronous",
+        "_FortranAioSetBlank",
+        "_FortranAioSetCarriagecontrol",
+        "_FortranAioSetConvert",
+        "_FortranAioSetDecimal",
+        "_FortranAioSetDelim",
+        "_FortranAioSetEncoding",
+        "_FortranAioSetFile",
+        "_FortranAioSetForm",
+        "_FortranAioSetPad",
+        "_FortranAioSetPos",
+        "_FortranAioSetPosition",
+        "_FortranAioSetRec",
+        "_FortranAioSetRecl",
+        "_FortranAioSetRound",
+        "_FortranAioSetSign",
+        "_FortranAioSetStatus"
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 43,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 7,
+        ".cpp": 35
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/sparse/linalg/_propack/_spropack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "5aaa0bd1aac1c3786a622a940fd56b3fbafffe50a8a57011eb582b9a920968b3",
+      "actualHapTarget": "libs/arm64-v8a/_spropack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "446853a371272060484158cd355dad40461e4a095133a0f81d406d09c024e3d2",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 725498,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [
+        "_FortranAAbort",
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary",
+        "_FortranACopyInAssign",
+        "_FortranACopyOutAssign",
+        "_FortranAExit",
+        "_FortranAFailImageStatement",
+        "_FortranAPauseStatement",
+        "_FortranAPauseStatementInt",
+        "_FortranAPauseStatementText",
+        "_FortranAPointerAllocate",
+        "_FortranAPointerAllocateSource",
+        "_FortranAPointerApplyMold",
+        "_FortranAPointerAssociate",
+        "_FortranAPointerAssociateLowerBounds",
+        "_FortranAPointerAssociateRemapping",
+        "_FortranAPointerAssociateScalar",
+        "_FortranAPointerDeallocate",
+        "_FortranAPointerDeallocatePolymorphic",
+        "_FortranAPointerIsAssociated",
+        "_FortranAPointerIsAssociatedWith",
+        "_FortranAPointerNullifyCharacter",
+        "_FortranAPointerNullifyDerived",
+        "_FortranAPointerNullifyIntrinsic",
+        "_FortranAPointerSetBounds",
+        "_FortranAPointerSetDerivedLength",
+        "_FortranAProgramEndStatement",
+        "_FortranAReportFatalUserError",
+        "_FortranAStopStatement",
+        "_FortranAStopStatementText",
+        "_FortranAioBeginBackspace",
+        "_FortranAioBeginClose",
+        "_FortranAioBeginEndfile",
+        "_FortranAioBeginExternalFormattedInput",
+        "_FortranAioBeginExternalFormattedOutput",
+        "_FortranAioBeginExternalListInput",
+        "_FortranAioBeginExternalListOutput",
+        "_FortranAioBeginFlush",
+        "_FortranAioBeginInquireFile",
+        "_FortranAioBeginInquireIoLength",
+        "_FortranAioBeginInquireUnit",
+        "_FortranAioBeginInternalArrayFormattedInput",
+        "_FortranAioBeginInternalArrayFormattedOutput",
+        "_FortranAioBeginInternalArrayListInput",
+        "_FortranAioBeginInternalArrayListOutput",
+        "_FortranAioBeginInternalFormattedInput",
+        "_FortranAioBeginInternalFormattedOutput",
+        "_FortranAioBeginInternalListInput",
+        "_FortranAioBeginInternalListOutput",
+        "_FortranAioBeginOpenNewUnit",
+        "_FortranAioBeginOpenUnit",
+        "_FortranAioBeginRewind",
+        "_FortranAioBeginUnformattedInput",
+        "_FortranAioBeginUnformattedOutput",
+        "_FortranAioBeginWait",
+        "_FortranAioBeginWaitAll",
+        "_FortranAioCheckUnitNumberInRange128",
+        "_FortranAioCheckUnitNumberInRange64",
+        "_FortranAioEnableHandlers",
+        "_FortranAioEndIoStatement",
+        "_FortranAioGetAsynchronousId",
+        "_FortranAioGetIoLength",
+        "_FortranAioGetIoMsg",
+        "_FortranAioGetNewUnit",
+        "_FortranAioGetSize",
+        "_FortranAioInputAscii",
+        "_FortranAioInputCharacter",
+        "_FortranAioInputComplex32",
+        "_FortranAioInputComplex64",
+        "_FortranAioInputDerivedType",
+        "_FortranAioInputDescriptor",
+        "_FortranAioInputInteger",
+        "_FortranAioInputLogical",
+        "_FortranAioInputNamelist",
+        "_FortranAioInputReal32",
+        "_FortranAioInputReal64",
+        "_FortranAioInquireCharacter",
+        "_FortranAioInquireInteger64",
+        "_FortranAioInquireLogical",
+        "_FortranAioInquirePendingId",
+        "_FortranAioOutputAscii",
+        "_FortranAioOutputCharacter",
+        "_FortranAioOutputComplex32",
+        "_FortranAioOutputComplex64",
+        "_FortranAioOutputDerivedType",
+        "_FortranAioOutputDescriptor",
+        "_FortranAioOutputInteger128",
+        "_FortranAioOutputInteger16",
+        "_FortranAioOutputInteger32",
+        "_FortranAioOutputInteger64",
+        "_FortranAioOutputInteger8",
+        "_FortranAioOutputLogical",
+        "_FortranAioOutputNamelist",
+        "_FortranAioOutputReal32",
+        "_FortranAioOutputReal64",
+        "_FortranAioSetAccess",
+        "_FortranAioSetAction",
+        "_FortranAioSetAdvance",
+        "_FortranAioSetAsynchronous",
+        "_FortranAioSetBlank",
+        "_FortranAioSetCarriagecontrol",
+        "_FortranAioSetConvert",
+        "_FortranAioSetDecimal",
+        "_FortranAioSetDelim",
+        "_FortranAioSetEncoding",
+        "_FortranAioSetFile",
+        "_FortranAioSetForm",
+        "_FortranAioSetPad",
+        "_FortranAioSetPos",
+        "_FortranAioSetPosition",
+        "_FortranAioSetRec",
+        "_FortranAioSetRecl",
+        "_FortranAioSetRound",
+        "_FortranAioSetSign",
+        "_FortranAioSetStatus"
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 43,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 7,
+        ".cpp": 35
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/sparse/linalg/_propack/_zpropack.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "bb5b74e24719f6122d17c76dd2be9e580e95ad474f3d3ce488e295be6cdafb93",
+      "actualHapTarget": "libs/arm64-v8a/_zpropack.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "3e7ec2fa8613f8aabf18120d0bf44161b7069fbab9067c7e180603558ff7d903",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 791150,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [
+        "_FortranAAbort",
+        "_FortranAAssign",
+        "_FortranAAssignExplicitLengthCharacter",
+        "_FortranAAssignPolymorphic",
+        "_FortranAAssignTemporary",
+        "_FortranACopyInAssign",
+        "_FortranACopyOutAssign",
+        "_FortranAExit",
+        "_FortranAFailImageStatement",
+        "_FortranAPauseStatement",
+        "_FortranAPauseStatementInt",
+        "_FortranAPauseStatementText",
+        "_FortranAPointerAllocate",
+        "_FortranAPointerAllocateSource",
+        "_FortranAPointerApplyMold",
+        "_FortranAPointerAssociate",
+        "_FortranAPointerAssociateLowerBounds",
+        "_FortranAPointerAssociateRemapping",
+        "_FortranAPointerAssociateScalar",
+        "_FortranAPointerDeallocate",
+        "_FortranAPointerDeallocatePolymorphic",
+        "_FortranAPointerIsAssociated",
+        "_FortranAPointerIsAssociatedWith",
+        "_FortranAPointerNullifyCharacter",
+        "_FortranAPointerNullifyDerived",
+        "_FortranAPointerNullifyIntrinsic",
+        "_FortranAPointerSetBounds",
+        "_FortranAPointerSetDerivedLength",
+        "_FortranAProgramEndStatement",
+        "_FortranAReportFatalUserError",
+        "_FortranAStopStatement",
+        "_FortranAStopStatementText",
+        "_FortranAioBeginBackspace",
+        "_FortranAioBeginClose",
+        "_FortranAioBeginEndfile",
+        "_FortranAioBeginExternalFormattedInput",
+        "_FortranAioBeginExternalFormattedOutput",
+        "_FortranAioBeginExternalListInput",
+        "_FortranAioBeginExternalListOutput",
+        "_FortranAioBeginFlush",
+        "_FortranAioBeginInquireFile",
+        "_FortranAioBeginInquireIoLength",
+        "_FortranAioBeginInquireUnit",
+        "_FortranAioBeginInternalArrayFormattedInput",
+        "_FortranAioBeginInternalArrayFormattedOutput",
+        "_FortranAioBeginInternalArrayListInput",
+        "_FortranAioBeginInternalArrayListOutput",
+        "_FortranAioBeginInternalFormattedInput",
+        "_FortranAioBeginInternalFormattedOutput",
+        "_FortranAioBeginInternalListInput",
+        "_FortranAioBeginInternalListOutput",
+        "_FortranAioBeginOpenNewUnit",
+        "_FortranAioBeginOpenUnit",
+        "_FortranAioBeginRewind",
+        "_FortranAioBeginUnformattedInput",
+        "_FortranAioBeginUnformattedOutput",
+        "_FortranAioBeginWait",
+        "_FortranAioBeginWaitAll",
+        "_FortranAioCheckUnitNumberInRange128",
+        "_FortranAioCheckUnitNumberInRange64",
+        "_FortranAioEnableHandlers",
+        "_FortranAioEndIoStatement",
+        "_FortranAioGetAsynchronousId",
+        "_FortranAioGetIoLength",
+        "_FortranAioGetIoMsg",
+        "_FortranAioGetNewUnit",
+        "_FortranAioGetSize",
+        "_FortranAioInputAscii",
+        "_FortranAioInputCharacter",
+        "_FortranAioInputComplex32",
+        "_FortranAioInputComplex64",
+        "_FortranAioInputDerivedType",
+        "_FortranAioInputDescriptor",
+        "_FortranAioInputInteger",
+        "_FortranAioInputLogical",
+        "_FortranAioInputNamelist",
+        "_FortranAioInputReal32",
+        "_FortranAioInputReal64",
+        "_FortranAioInquireCharacter",
+        "_FortranAioInquireInteger64",
+        "_FortranAioInquireLogical",
+        "_FortranAioInquirePendingId",
+        "_FortranAioOutputAscii",
+        "_FortranAioOutputCharacter",
+        "_FortranAioOutputComplex32",
+        "_FortranAioOutputComplex64",
+        "_FortranAioOutputDerivedType",
+        "_FortranAioOutputDescriptor",
+        "_FortranAioOutputInteger128",
+        "_FortranAioOutputInteger16",
+        "_FortranAioOutputInteger32",
+        "_FortranAioOutputInteger64",
+        "_FortranAioOutputInteger8",
+        "_FortranAioOutputLogical",
+        "_FortranAioOutputNamelist",
+        "_FortranAioOutputReal32",
+        "_FortranAioOutputReal64",
+        "_FortranAioSetAccess",
+        "_FortranAioSetAction",
+        "_FortranAioSetAdvance",
+        "_FortranAioSetAsynchronous",
+        "_FortranAioSetBlank",
+        "_FortranAioSetCarriagecontrol",
+        "_FortranAioSetConvert",
+        "_FortranAioSetDecimal",
+        "_FortranAioSetDelim",
+        "_FortranAioSetEncoding",
+        "_FortranAioSetFile",
+        "_FortranAioSetForm",
+        "_FortranAioSetPad",
+        "_FortranAioSetPos",
+        "_FortranAioSetPosition",
+        "_FortranAioSetRec",
+        "_FortranAioSetRecl",
+        "_FortranAioSetRound",
+        "_FortranAioSetSign",
+        "_FortranAioSetStatus"
+      ],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [
+        "22.1.8"
+      ],
+      "sourceFileCount": 44,
+      "sourceSuffixCounts": {
+        "": 1,
+        ".c": 8,
+        ".cpp": 35
+      },
+      "runtimeSourceFiles": [
+        "ISO_Fortran_binding.cpp",
+        "assign.cpp",
+        "binary-to-decimal.cpp",
+        "decimal-to-binary.cpp",
+        "descriptor.cpp",
+        "io-api.cpp"
+      ],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/spatial/_ckdtree.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "cfff78b82365d7f99e16f96ad9237a073d77bb2ce65ee3ad646b159cead6ba2c",
+      "actualHapTarget": "libs/arm64-v8a/_ckdtree.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "2c49f0a5a24840672c4fc2c893a473abfc1ad1d421c3add616a28f88577edf7a",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 536559,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 11,
+      "sourceSuffixCounts": {
+        ".c": 3,
+        ".cpp": 1,
+        ".cxx": 7
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/spatial/_distance_pybind.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "3e247d04edb7075ea1a0f20736c82aef61922120af702c377e2d73b57fd21d77",
+      "actualHapTarget": "libs/arm64-v8a/_distance_pybind.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "04555e3a901946df164d83592cfbaa33c42c1a9a4aafafccf8a8940c6431dfc3",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 540330,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 13,
+      "sourceSuffixCounts": {
+        ".c": 12,
+        ".cpp": 1
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/spatial/_distance_wrap.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "7e3df52a0a61df9c0497409ac91370a5ab33e49b7902a157289f44b0e3179695",
+      "actualHapTarget": "libs/arm64-v8a/_distance_wrap.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "e1dff633557c44eed4ceb89edef8a44fa2708325ddbd1ea550c400b6cef9763f",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 69130,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/spatial/_hausdorff.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "6717e8da4170836f809ff7b9abaff2477198c0b8255fc63fae41224f2bc4419c",
+      "actualHapTarget": "libs/arm64-v8a/_hausdorff.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "9bf59f9853121619e7ab7d452d7de10595623abd4a27979086099ae23c909888",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 138909,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/spatial/_qhull.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "19dd89a2a67cb33db626d59235c6a7507a5eab6bcce8817574a783d1ff791714",
+      "actualHapTarget": "libs/arm64-v8a/_qhull.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "0aee6a2f6a5edc8c51250be1b997d82538089886b2626bf6f3a5d271e607b90f",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 732561,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 20,
+      "sourceSuffixCounts": {
+        ".c": 20
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/spatial/_voronoi.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "f298b3f580543547eafc1c59c71ae26a64785fef7d01bab3d8786c8c3433fbab",
+      "actualHapTarget": "libs/arm64-v8a/_voronoi.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "cd70ff542baea29abb310809db3bdc77bfa9ad3b41c8bd94e5c55541c7bad997",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 73270,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/spatial/transform/_rigid_transform.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "e3186cc2d02c5894a0f4ec8259be8678ca27c0d2c9bd1b10fe81cad273977485",
+      "actualHapTarget": "libs/arm64-v8a/_rigid_transform.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "9a7b47ce031e7326eb41325cf61a4a601f2d232c3ddc8b7c6f3efde85afdeeb5",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 338279,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/spatial/transform/_rotation.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "a6b5805a94c3cae4721c951a37a7937e15bad365bf1dd3cfdcb6dedda91cbd43",
+      "actualHapTarget": "libs/arm64-v8a/_rotation.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "36960b81359ef40082d99d91dd13ea69a0b2dfaafa8625fe7f1f7c905b7086af",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 601069,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/special/_comb.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "efc4caef99924670fc38953269f20786394a692bf0464d2209dce915c04947fc",
+      "actualHapTarget": "libs/arm64-v8a/_comb.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "d88ad71a5c6ee1e3f91bad5bbb5d8ae66b860c894f0257effd21ec1f2901ce81",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 72606,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/special/_ellip_harm_2.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "04d2425ca738c3ccd19d1fe7b0a533ba9e5b9d27bfe10afc364178efab73dbfa",
+      "actualHapTarget": "libs/arm64-v8a/_ellip_harm_2.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "55d808d7425a9083d5843d09f92fb7abe7ed0e4170540a0c277d05a33b0fe31f",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 201418,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 5,
+      "sourceSuffixCounts": {
+        ".c": 4,
+        ".cc": 1
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/special/_gufuncs.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "629ee2e72783dcfa1cb940673351509c0622bb1c32a56b4a2a8f58a1cab30470",
+      "actualHapTarget": "libs/arm64-v8a/_gufuncs.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "4e1b4f1b939a79923706f1433eb2510e6d3c0b60425d2bda50a186ca58691ff1",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 464069,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 6,
+      "sourceSuffixCounts": {
+        ".c": 3,
+        ".cc": 1,
+        ".cpp": 2
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/special/_specfun.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "b8d84d453f50bed47077015e59b4dd338dffec3bfa376d109ae12229be29cfd8",
+      "actualHapTarget": "libs/arm64-v8a/_specfun.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "396ef53ffc45a06119df0a20ca3e260dc9008e20129578654915f7cd1ba3d824",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 204601,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 3,
+        ".cpp": 1
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/special/_special_ufuncs.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "74b076849c01d51f47545ec4fc4da5ba6aed6035dde16386190613a854171703",
+      "actualHapTarget": "libs/arm64-v8a/_special_ufuncs.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "4366c3c9739c90a4f0282d2c33007f95239eaa2d398c0d2342d5ac320fe4d509",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 989221,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 6,
+      "sourceSuffixCounts": {
+        ".c": 3,
+        ".cc": 1,
+        ".cpp": 2
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/special/_test_internal.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "5856ca4e4d619ccf9ab0e747f63fe4c4aad432f6bb27306d727f50fb066794f7",
+      "actualHapTarget": "libs/arm64-v8a/_test_internal.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "a60f9ac1bd98f254ab9b819568ba68b22f3f3fe8602450d201ce5db54edc20a3",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 138870,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 5,
+      "sourceSuffixCounts": {
+        ".c": 4,
+        ".cpp": 1
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/special/_ufuncs.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "e347badbf67029c6302a48d0d61b8f8ce612c08e53a05f858f27d1e85b33a149",
+      "actualHapTarget": "libs/arm64-v8a/_ufuncs.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "0e5de7f12a8a44b0f444bcd4e9a6afaf5d3c4d94569aa9fe9dcb011edba6324e",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 1054443,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 22,
+      "sourceSuffixCounts": {
+        ".c": 19,
+        ".cc": 1,
+        ".cpp": 2
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/special/_ufuncs_cxx.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "4f9f8ead7acd2247f27f52a4b28fe641568a5b9bf2b0cb8ba784451edc605a17",
+      "actualHapTarget": "libs/arm64-v8a/_ufuncs_cxx.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "da86e771410adb47a200d0307f07cc9022e5ab7e37e45b195f845fdfaa2fac31",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 1127239,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 19,
+      "sourceSuffixCounts": {
+        ".c": 14,
+        ".cc": 2,
+        ".cpp": 1,
+        ".cxx": 2
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/special/cython_special.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "1a594d74c422f10b37adc2047ef4f1727d235fa7637b5253eaef46ee589468c6",
+      "actualHapTarget": "libs/arm64-v8a/cython_special.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "7c7dabb8355d1eb2edc65abfb3aa27cdb62087a23586fdf353769808aa9349eb",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 2109616,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 22,
+      "sourceSuffixCounts": {
+        ".c": 19,
+        ".cc": 1,
+        ".cpp": 2
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/stats/_ansari_swilk_statistics.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "a77bc421a8b7c97d1f77cd2635563d0dae22696848d827d6d1ff100b4ddcbe38",
+      "actualHapTarget": "libs/arm64-v8a/_ansari_swilk_statistics.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "840dfdbcbadca7ff548e9d1f5e31925d5948c3a6573bcbd071164571824f1358",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 139099,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/stats/_biasedurn.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "a0c08f85c3516eed3da147ab69c9891bc307e0662f2b39052acd84cede5acf71",
+      "actualHapTarget": "libs/arm64-v8a/_biasedurn.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "9b10241d2feaf3a3ce2c5d5cd0c8266df62d181c0a048ba86040d5d848f7824b",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 206323,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 10,
+      "sourceSuffixCounts": {
+        ".c": 4,
+        ".cpp": 6
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/stats/_levy_stable/levyst.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "f1f8f6bd77ebfe80b085fd27834f183b58cc9c969c9ff9b986d95747370a527e",
+      "actualHapTarget": "libs/arm64-v8a/levyst.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "97bbeefac1abd05d77b33a4364707cfa6e21444c6edcaa00693ee955523c6a3f",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 72573,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/stats/_qmc_cy.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "7a60ced9d34bb1fbd0317cf31bf110a141b4935160486b2082ff2268d242de6f",
+      "actualHapTarget": "libs/arm64-v8a/_qmc_cy.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "c94240b60526b850ceec964334af95d0b6c74e493123a0b5f09bb4861979935d",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 140965,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 3,
+        ".cpp": 1
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/stats/_qmvnt_cy.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "479df95d9e319cfcb53a6830cdfdbfef952c9387c1228f8793ed7da3f274dc4c",
+      "actualHapTarget": "libs/arm64-v8a/_qmvnt_cy.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "77dac54f9197a665c3f36c2890df724b1399741191bd11015082051313599d61",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 138960,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 3,
+        ".cpp": 1
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/stats/_rcont/rcont.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "3d5524c0879bd351ed60bd7375993099114a78dde8b85b4d90ded6f7aefec165",
+      "actualHapTarget": "libs/arm64-v8a/rcont.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "b1fa2f335833ea51f3744d546a6e8d447307235de7fce307ce451f6e0906bb45",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 138636,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 7,
+      "sourceSuffixCounts": {
+        ".c": 7
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/stats/_sobol.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "54526d7c535b688630aa8b2612d3b424fc68eceabe1b9d02956f5d6095ddaba0",
+      "actualHapTarget": "libs/arm64-v8a/_sobol.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "4eaccaee164db80ef4b64ae3001064a5f8f04ebce315c742420dd7958847b9b6",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 205665,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 4
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/stats/_stats.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "03769b654bb723b5ab35131821c55b816fa388ca496bd7aa26a540763bd3c3b1",
+      "actualHapTarget": "libs/arm64-v8a/_stats.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "5a71bc96fa13e09df6fa8cddd3aee00d26efb9dd00e582a8264834c649099854",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 403290,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 12,
+      "sourceSuffixCounts": {
+        ".c": 12
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/stats/_stats_pythran.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "a1f351c2d948f2d44c8408e73d6381b9e51c41a9ee7c61a2dac4869cd1bf6260",
+      "actualHapTarget": "libs/arm64-v8a/_stats_pythran.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "3009c02cffb01e5fb403a3074ee5da6bb93257273680d7863e2d2f57b60f3a35",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 138867,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4,
+      "sourceSuffixCounts": {
+        ".c": 3,
+        ".cpp": 1
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy/stats/_unuran/unuran_wrapper.cpython-312-aarch64-linux-ohos.so",
+      "sourceSha256": "c6889aaa8d27bbedd5eae03c00865ddda300c4d425a4701376ec2ce1f16c57c8",
+      "actualHapTarget": "libs/arm64-v8a/unuran_wrapper.cpython-312-aarch64-linux-ohos.so",
+      "actualHapSha256": "03aa38b441dff3ac964ed1356149355cf7ba58d068a195b4c19f3d1f9c5cbcc3",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [
+        {
+          "offset": 995018,
+          "old": "libpython3.12.so.1.0",
+          "new": "libpython3.12.so"
+        }
+      ],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 153,
+      "sourceSuffixCounts": {
+        ".c": 153
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": []
+    },
+    {
+      "sourceMember": "scipy.libs/libscipy_openblas-80d8b5fa.so",
+      "sourceSha256": "094de356dd4def6076eb2f48ed17ae09364743f21ecf0be457e4828f9c89bf60",
+      "actualHapTarget": "libs/arm64-v8a/libscipy_openblas-80d8b5fa.so",
+      "actualHapSha256": "bd804fb7741e4a474770c8db844e17984890b87193dd6d94be42c4007449ace6",
+      "allocatedSectionsMatchAfterExactPythonNeededNormalization": true,
+      "neededEdits": [],
+      "definedLLVMFortranFunctions": [],
+      "definedGNUFortranFunctions": [],
+      "compilerFlangVersions": [],
+      "sourceFileCount": 4927,
+      "sourceSuffixCounts": {
+        ".c": 4927
+      },
+      "runtimeSourceFiles": [],
+      "lapackCSourceExamples": [
+        "dgeev.c",
+        "dgesdd.c",
+        "zgeev.c",
+        "zpotrf.c"
+      ]
+    }
+  ],
+  "llvmFortranConsumers": [
+    "libs/arm64-v8a/_dop.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_lsoda.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_odepack.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_test_odeint_banded.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_vode.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_dfitpack.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_fitpack.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_test_fortran.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/__odrpack.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_arpack.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_cpropack.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_dpropack.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_spropack.cpython-312-aarch64-linux-ohos.so",
+    "libs/arm64-v8a/_zpropack.cpython-312-aarch64-linux-ohos.so"
+  ],
+  "scope": "original symbol/compiler observations bound to actual HAP allocated sections; no exact static archive hash or complete source/build proof",
+  "releaseApproved": false
+}
