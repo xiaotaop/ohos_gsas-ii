@@ -1,9 +1,9 @@
-"""Static evidence that the core never opens a network connection.
+"""Check selected app sources for a small set of network API references.
 
 RELEASE_ACCEPTANCE row 4 asks for an explicitly offline device run. This test
-does not replace that device evidence: it only proves the shipped core sources
-contain no network API reference, so the computation path is offline by
-construction. Any hit is a real finding, not a whitelist candidate.
+does not replace device evidence. It scans bridge, C++ and ETS source files for
+the listed API patterns; it does not inspect the packaged Python runtime,
+dynamic calls, or actual network traffic. A hit needs review, not a whitelist.
 """
 import re
 import unittest
@@ -30,8 +30,8 @@ FORBIDDEN = re.compile(
 )
 
 
-class CoreHasNoNetworkDependencyTest(unittest.TestCase):
-    def test_core_sources_reference_no_network_api(self):
+class ScannedAppSourcesNetworkReferenceTest(unittest.TestCase):
+    def test_scanned_sources_reference_no_listed_network_api(self):
         hits = []
         for root, patterns in SEARCH:
             for pattern in patterns:
@@ -39,7 +39,7 @@ class CoreHasNoNetworkDependencyTest(unittest.TestCase):
                     for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
                         if FORBIDDEN.search(line):
                             hits.append(f"{path.relative_to(ROOT)}:{number}: {line.strip()}")
-        self.assertEqual(hits, [], "network API reference in core sources:\n" + "\n".join(hits))
+        self.assertEqual(hits, [], "listed network API reference in scanned sources:\n" + "\n".join(hits))
 
 
 if __name__ == "__main__":

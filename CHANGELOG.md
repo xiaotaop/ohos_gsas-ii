@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased — PR #17 同包真机复验步骤（2026-10-20，成员 B）
+
+- 新增 [`docs/B_PR17_DEVICE_RETEST.md`](docs/B_PR17_DEVICE_RETEST.md)：针对 C 已交付的 PR #17 签名包（`GSAS-II-0.1.1-ce624cec-signed.hap`，SHA-256 `791dc53d…12788`，135,971,349 字节，versionCode 2，源码 `ce624ce`），给出取消/完成竞争的稳定操作步骤、每个 jobId 唯一终态与快照的核对方法、数据保留基线，以及初始化失败重试与 Core-only BUSY 的入口条件（沙箱写权限、分屏多窗口或非发布测试包）。
+- 如实标注：标准签名包的现有 UI 没有“制造初始化失败”与“第二个启动”入口；这两项若无非发布入口，只能保留宿主证据，不以宿主测试冒充真机。
+
 ## Unreleased — B 专项宿主补验与门面终态唯一性修复（2026-10-20，成员 B）
 
 - 修复 `CoreBridgeService`：已交付终态后忽略该 job 的后续事件；取消与自然完成竞争时页面只收到一个终态（此前会同时转发 `job.completed` 与 `job.cancelled`）。启动时为中断任务同步登记，`shutdown` 后清空会话标记。
