@@ -28,8 +28,7 @@
 - `libgcc_s.so.1`、`libc.musl-aarch64.so.1` 只出现在 libgfortran 的
   NEEDED 中；移除 NumPy 遗留的 OpenBLAS64 与 libgfortran 后，
   这两个未匹配项预计随之消失；该删除尚未在新签名 HAP 上执行和复验。
-- gettext/libintl 只出现在 CPython 构建的 `LIBS=-lintl` 中，载荷内没有任何
-  ELF 的 NEEDED 指向 `libintl`，未随应用分发。
+- **C 实际 HAP 复核更正**：不能由没有 `DT_NEEDED libintl` 推断未分发。`libpython3.12.so` 实际定义了 6 个 `libintl_*` 函数；gettext/libintl 的准确版本、对应源码/补丁及许可文本仍待补充。readline 扩展还包含 `EditLine wrapper` 标识，libedit 的版本/源码/许可同样待核，见 [C 复核记录](../../../docs/C_THIRD_PARTY_REVIEW.md)。
 
 许可证文本取自下列上游发布版本；`gcc-runtime-COPYING.txt` 取自 Debian
 `gcc-11-base` 的版权文件（含 GPL-3 与 GCC Runtime Library Exception 3.1），

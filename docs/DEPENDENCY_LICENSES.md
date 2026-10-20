@@ -55,8 +55,7 @@
   `zlib` 动态链接，未随应用分发，许可证为 Zlib。
 - `libc++_shared.so` 由应用打包（`libs/arm64-v8a/`），许可证
   Apache-2.0 WITH LLVM-exception，归 C 的 HAP 许可清单。
-- gettext/libintl 只出现在 CPython 构建的 `LIBS=-lintl` 中；载荷内没有任何
-   ELF NEED `libintl`，未随应用分发。
+- **C 实际 HAP 复核更正**：不能由没有 `DT_NEEDED libintl` 推断未分发。`libpython3.12.so` 实际定义了 6 个 `libintl_*` 函数；gettext/libintl 的准确版本、对应源码/补丁及许可文本仍待补充。readline 扩展还包含 `EditLine wrapper` 标识，libedit 的版本/源码/许可同样待核，见 [C 复核记录](C_THIRD_PARTY_REVIEW.md)。
 - **OpenSSL 1.1.1w 已停止维护**（1.1.1 系列 2023-09 结束支持）。当前
   `_ssl`/`_hashlib` 静态包含它；是否影响分发由 C 与组长在安全/兼容性复核后
   决定，并应在发布说明中如实披露。

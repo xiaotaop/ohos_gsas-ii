@@ -2,6 +2,8 @@
 
 本记录随 PR #9 合入主线，补充 PR #8 的集成结果。**第 2 项（最终第三方分发审查）仍未完成；指定设备 internaltesting 包不可作为公开商店安装包或许可证放行结论。**
 
+2026-10-20：B 的 PR #10 材料已接收并按实际字节复核，11 份许可已装入新候选包；新候选未替代本记录的真机验收包。剩余缺项及两个包的范围见 [C_THIRD_PARTY_REVIEW](C_THIRD_PARTY_REVIEW.md)。
+
 ## 最新指定设备签名结果：安装与真实计算通过
 
 用户已创建 `gsasii-device-release` Profile，类型 release、分发类型 internaltesting，绑定的发布证书与原 gsasii-release 一致，包含 HAD-W32，权限未新增。新的 Release HAP SHA-256 为 `88ea4528b69f40458b0a17acbf0bb70720d9f29af3691b78438059299d2ace9e`（158785370 字节）。SDK 应用签名及 224 个原生签名通过，2246 个实际文件和 2225 个运行时文件通过哈希审计。50 个受版本控制的应用文件与 `609df2c` 一致（本机私有签名配置单独排除）；与之前普通发布签名包的 ZIP 内容完全一致，仅外部签名/Profile 改变，新 SBOM 通过 CycloneDX 1.5 Schema。

@@ -1,0 +1,779 @@
+{
+  "prebuiltOriginalBindings": [
+    {
+      "name": "libpython3.12.so",
+      "archive": "python-3.12.9-ohos-aarch64.tar.gz",
+      "archiveSha256": "767b7ef43155551aeeb147b15a828d8b996a3ef70fec7edd4eee01800b163576",
+      "sourceMember": "python-3.12.9-ohos-aarch64/lib/libpython3.12.so",
+      "sourceAliasTarget": "python-3.12.9-ohos-aarch64/lib/libpython3.12.so.1.0",
+      "sourceSha256": "1626c4a91dfea4a361e27b29622ba26b3c8da3752eb137d2aaf391ee78c8a96b",
+      "matchesBHash": true,
+      "actualHapTarget": "libs/arm64-v8a/libpython3.12.so",
+      "actualHapSha256": "812153c248d7a72294bad8a58c23de8b055bb8f273f0e9d34b53d112ca7e38bc",
+      "allocatedSectionsSameExceptCodesign": true,
+      "differingSections": [],
+      "scope": "locked prebuilt-to-HAP allocated section comparison; not corresponding source or license approval"
+    },
+    {
+      "name": "libffi.so.8",
+      "archive": "python-3.12.9-ohos-aarch64.tar.gz",
+      "archiveSha256": "767b7ef43155551aeeb147b15a828d8b996a3ef70fec7edd4eee01800b163576",
+      "sourceMember": "python-3.12.9-ohos-aarch64/lib/libffi.so.8",
+      "sourceAliasTarget": null,
+      "sourceSha256": "a327147eb7811ba08b53cf27c50c1f4ff837f720385e029e55ccd3f480e05ff8",
+      "matchesBHash": true,
+      "actualHapTarget": "libs/arm64-v8a/libffi.so.8",
+      "actualHapSha256": "d682f33f9ed3c1b757aa66bd6289e5dd4221c01b95e01ddcb400f4024ce920b0",
+      "allocatedSectionsSameExceptCodesign": true,
+      "differingSections": [],
+      "scope": "locked prebuilt-to-HAP allocated section comparison; not corresponding source or license approval"
+    },
+    {
+      "name": "libgdbm.so.6",
+      "archive": "python-3.12.9-ohos-aarch64.tar.gz",
+      "archiveSha256": "767b7ef43155551aeeb147b15a828d8b996a3ef70fec7edd4eee01800b163576",
+      "sourceMember": "python-3.12.9-ohos-aarch64/lib/libgdbm.so.6",
+      "sourceAliasTarget": null,
+      "sourceSha256": "7879eeb18c04e72287893d32516136d1745bca4469e569041222120b0c423dd2",
+      "matchesBHash": true,
+      "actualHapTarget": "libs/arm64-v8a/libgdbm.so.6",
+      "actualHapSha256": "7469ad46455799c3bda085f76e3dcd233a6a58879ffc58cb61df6adfaf5aa07b",
+      "allocatedSectionsSameExceptCodesign": true,
+      "differingSections": [],
+      "scope": "locked prebuilt-to-HAP allocated section comparison; not corresponding source or license approval"
+    },
+    {
+      "name": "libgfortran.so.5",
+      "archive": "numpy-2.2.6-cp312-cp312-ohos_aarch64.whl",
+      "archiveSha256": "8468135b1d7aabdc0778c7ca4e50f5db1b2148aed97144bf354b80f2a091fcb0",
+      "sourceMember": "numpy.libs/libgfortran.so.5",
+      "sourceAliasTarget": null,
+      "sourceSha256": "2d227ceb579be7ad5f462abf995a7d258b6406b6a03803493d048d86dd6a7f5d",
+      "matchesBHash": true,
+      "actualHapTarget": "libs/arm64-v8a/libgfortran.so.5",
+      "actualHapSha256": "1ce069ed5ed916bda01f3d98e302f4e4848d6b5fcfddd39b9ae10d2a20dbaf5e",
+      "allocatedSectionsSameExceptCodesign": true,
+      "differingSections": [],
+      "scope": "locked prebuilt-to-HAP allocated section comparison; not corresponding source or license approval"
+    },
+    {
+      "name": "libscipy_openblas64_.so",
+      "archive": "numpy-2.2.6-cp312-cp312-ohos_aarch64.whl",
+      "archiveSha256": "8468135b1d7aabdc0778c7ca4e50f5db1b2148aed97144bf354b80f2a091fcb0",
+      "sourceMember": "numpy.libs/libscipy_openblas64_.so",
+      "sourceAliasTarget": null,
+      "sourceSha256": "06883ce6a74cd7cf85b1310f61dc3cd40ced7f3d45a130bc8cee30129bcfceed",
+      "matchesBHash": true,
+      "actualHapTarget": "libs/arm64-v8a/libscipy_openblas64_.so",
+      "actualHapSha256": "57e3445e9724c1e8638f1d613c54338e50136c6f7716e0b86614dcf006aa5d2e",
+      "allocatedSectionsSameExceptCodesign": true,
+      "differingSections": [],
+      "scope": "locked prebuilt-to-HAP allocated section comparison; not corresponding source or license approval"
+    },
+    {
+      "name": "libscipy_openblas-80d8b5fa.so",
+      "archive": "scipy-1.16.3-cp312-cp312-ohos_aarch64.whl",
+      "archiveSha256": "a7e2095d76bfb55460b4f66ba5a7eb7861ca644c5c6326252b7cdb02a6d61dcd",
+      "sourceMember": "scipy.libs/libscipy_openblas-80d8b5fa.so",
+      "sourceAliasTarget": null,
+      "sourceSha256": "094de356dd4def6076eb2f48ed17ae09364743f21ecf0be457e4828f9c89bf60",
+      "matchesBHash": true,
+      "actualHapTarget": "libs/arm64-v8a/libscipy_openblas-80d8b5fa.so",
+      "actualHapSha256": "bd804fb7741e4a474770c8db844e17984890b87193dd6d94be42c4007449ace6",
+      "allocatedSectionsSameExceptCodesign": true,
+      "differingSections": [],
+      "scope": "locked prebuilt-to-HAP allocated section comparison; not corresponding source or license approval"
+    }
+  ],
+  "schemaVersion": 1,
+  "kind": "actual-HAP-third-party-review",
+  "hapSha256": "429b4d8cf066ec1a1754427110f72f8d54a01031a9c2e90c4b566c0485cdc2e6",
+  "declarationsCanonicalJsonSha256": "f418290e90c35141ad657a5bf9b2fe5a4a81a0b388be8a3beace9fac3037690a",
+  "licenseReceiptsVerified": 11,
+  "nativeELFs": 224,
+  "components": [
+    {
+      "id": "cpython",
+      "declaredVersion": "3.12.9",
+      "declaredLinkMode": "shared library + statically linked stdlib modules",
+      "declaredStatus": "keep",
+      "distributionReview": "pending",
+      "sourceDeclaration": {
+        "download": "https://artifacts-cn-beijing.volces.com/repository/ophcd.pkg/pkg/kernel-1.13.0/python/3.12.9/python-3.12.9-ohos-aarch64.tar.gz",
+        "downloadSha256": "767b7ef43155551aeeb147b15a828d8b996a3ef70fec7edd4eee01800b163576",
+        "sourceCode": "https://www.python.org/ftp/python/3.12.9/Python-3.12.9.tgz",
+        "sourceSha256": "45313e4c5f0e8acdec9580161d565cf5fea578e3eabf25df7cc6355bf4afa1ee",
+        "buildConfig": "sysconfig: --enable-shared --build/--host=aarch64-unknown-linux-ohos --with-openssl=<deps>; CC=clang; CFLAGS=-fPIC -O2 -fuse-ld=bfd; deps: openssl, sqlite3, readline, ncurses, gdbm, gettext 0.26, xz 5.8.2, libffi 3.4.4, bzip2 1.0.8",
+        "patches": "未在载荷中记录；需向社区构建方索取"
+      },
+      "bindings": [
+        {
+          "declaredPath": "libs/libpython3.12.so",
+          "declaredSha256": "1626c4a91dfea4a361e27b29622ba26b3c8da3752eb137d2aaf391ee78c8a96b",
+          "declaredSize": 6899456,
+          "actualPath": "libs/arm64-v8a/libpython3.12.so",
+          "actualSha256": "812153c248d7a72294bad8a58c23de8b055bb8f273f0e9d34b53d112ca7e38bc",
+          "actualSize": 6096448,
+          "byteIdentical": false,
+          "scope": "basename layout association only; transformation provenance not approved"
+        },
+        {
+          "declaredPath": "runtime/lib/libffi.so.8",
+          "declaredSha256": "a327147eb7811ba08b53cf27c50c1f4ff837f720385e029e55ccd3f480e05ff8",
+          "declaredSize": 116608,
+          "actualPath": "libs/arm64-v8a/libffi.so.8",
+          "actualSha256": "d682f33f9ed3c1b757aa66bd6289e5dd4221c01b95e01ddcb400f4024ce920b0",
+          "actualSize": 108224,
+          "byteIdentical": false,
+          "scope": "basename layout association only; transformation provenance not approved"
+        },
+        {
+          "declaredPath": "runtime/lib/libgdbm.so.6",
+          "declaredSha256": "7879eeb18c04e72287893d32516136d1745bca4469e569041222120b0c423dd2",
+          "declaredSize": 79616,
+          "actualPath": "libs/arm64-v8a/libgdbm.so.6",
+          "actualSha256": "7469ad46455799c3bda085f76e3dcd233a6a58879ffc58cb61df6adfaf5aa07b",
+          "actualSize": 67136,
+          "byteIdentical": false,
+          "scope": "basename layout association only; transformation provenance not approved"
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "id": "numpy",
+      "declaredVersion": "2.2.6",
+      "declaredLinkMode": "extension modules link libpython3.12 + libc only; BLAS kernels built in (lapack_lite/noblas)",
+      "declaredStatus": "keep",
+      "distributionReview": "pending",
+      "sourceDeclaration": {
+        "download": "https://pypi.cnb.cool/OpenHarmonyPCDeveloper/pypi/-/packages/simple/numpy/../../packages/46/d1/ec3f782abdf0d8a87398feb6f732731945db028a9e59023f3c2f021bd910/numpy-2.2.6-cp312-cp312-ohos_aarch64.whl",
+        "downloadSha256": "8468135b1d7aabdc0778c7ca4e50f5db1b2148aed97144bf354b80f2a091fcb0",
+        "sourceCode": "https://github.com/numpy/numpy/releases/tag/v2.2.6",
+        "patches": "社区 wheel 构建补丁/配置未随包发布；需向发行方索取"
+      },
+      "bindings": [
+        {
+          "declaredPath": "runtime/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_.so",
+          "declaredSha256": "06883ce6a74cd7cf85b1310f61dc3cd40ced7f3d45a130bc8cee30129bcfceed",
+          "declaredSize": 23271424,
+          "actualPath": "libs/arm64-v8a/libscipy_openblas64_.so",
+          "actualSha256": "57e3445e9724c1e8638f1d613c54338e50136c6f7716e0b86614dcf006aa5d2e",
+          "actualSize": 21657024,
+          "byteIdentical": false,
+          "scope": "basename layout association only; transformation provenance not approved"
+        },
+        {
+          "declaredPath": "runtime/lib/python3.12/site-packages/numpy.libs/libgfortran.so.5",
+          "declaredSha256": "2d227ceb579be7ad5f462abf995a7d258b6406b6a03803493d048d86dd6a7f5d",
+          "declaredSize": 1287808,
+          "actualPath": "libs/arm64-v8a/libgfortran.so.5",
+          "actualSha256": "1ce069ed5ed916bda01f3d98e302f4e4848d6b5fcfddd39b9ae10d2a20dbaf5e",
+          "actualSize": 1287744,
+          "byteIdentical": false,
+          "scope": "basename layout association only; transformation provenance not approved"
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "id": "scipy",
+      "declaredVersion": "1.16.3",
+      "declaredLinkMode": "23 modules DT_NEEDED libscipy_openblas-80d8b5fa.so; OpenBLAS 0.3.29 statically includes its Fortran runtime (NEEDED libc only)",
+      "declaredStatus": "keep",
+      "distributionReview": "pending",
+      "sourceDeclaration": {
+        "download": "https://pypi.cnb.cool/OpenHarmonyPCDeveloper/pypi/-/packages/simple/scipy/../../packages/b5/eb/cb74cfabd35deed6c787d654513660eaefb062f275977043868d5cdb960b/scipy-1.16.3-cp312-cp312-ohos_aarch64.whl",
+        "downloadSha256": "a7e2095d76bfb55460b4f66ba5a7eb7861ca644c5c6326252b7cdb02a6d61dcd",
+        "sourceCode": "https://github.com/scipy/scipy/releases/tag/v1.16.3",
+        "patches": "社区 wheel 构建补丁/配置未随包发布；需向发行方索取"
+      },
+      "bindings": [
+        {
+          "declaredPath": "runtime/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-80d8b5fa.so",
+          "declaredSha256": "094de356dd4def6076eb2f48ed17ae09364743f21ecf0be457e4828f9c89bf60",
+          "declaredSize": 10803648,
+          "actualPath": "libs/arm64-v8a/libscipy_openblas-80d8b5fa.so",
+          "actualSha256": "bd804fb7741e4a474770c8db844e17984890b87193dd6d94be42c4007449ace6",
+          "actualSize": 9692736,
+          "byteIdentical": false,
+          "scope": "basename layout association only; transformation provenance not approved"
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "id": "libffi",
+      "declaredVersion": "3.4.4",
+      "declaredLinkMode": "dynamic",
+      "declaredStatus": "keep",
+      "distributionReview": "pending",
+      "sourceDeclaration": {
+        "url": "https://github.com/libffi/libffi/releases/download/v3.4.4/libffi-3.4.4.tar.gz",
+        "patches": "未记录"
+      },
+      "bindings": [
+        {
+          "declaredPath": "runtime/lib/libffi.so.8",
+          "declaredSha256": "a327147eb7811ba08b53cf27c50c1f4ff837f720385e029e55ccd3f480e05ff8",
+          "declaredSize": 116608,
+          "actualPath": "libs/arm64-v8a/libffi.so.8",
+          "actualSha256": "d682f33f9ed3c1b757aa66bd6289e5dd4221c01b95e01ddcb400f4024ce920b0",
+          "actualSize": 108224,
+          "byteIdentical": false,
+          "scope": "basename layout association only; transformation provenance not approved"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "libs/arm64-v8a/_ctypes.cpython-312-aarch64-linux-ohos.so",
+          "sha256": "274348fa1602855234eb10ea9eac51b2406cb2add4ab0ddf0b2825722c0e69d2"
+        }
+      ],
+      "licenseText": {
+        "file": "libffi-3.4.4-LICENSE.txt",
+        "sha256": "2c9c2acb9743e6b007b91350475308aee44691d96aa20eacef8e199988c8c388",
+        "matchesBReceipt": true,
+        "actualHapTargets": [
+          "resources/rawfile/licenses/runtime/cpython/libffi-3.4.4-LICENSE.txt"
+        ],
+        "scope": "repository text matches SOURCES.json; not proof of prebuilt-library source/patches"
+      }
+    },
+    {
+      "id": "gdbm",
+      "declaredVersion": "1.24",
+      "declaredLinkMode": "dynamic",
+      "declaredStatus": "keep",
+      "distributionReview": "pending",
+      "sourceDeclaration": {
+        "url": "https://ftp.gnu.org/gnu/gdbm/gdbm-1.24.tar.gz",
+        "patches": "未记录"
+      },
+      "bindings": [
+        {
+          "declaredPath": "runtime/lib/libgdbm.so.6",
+          "declaredSha256": "7879eeb18c04e72287893d32516136d1745bca4469e569041222120b0c423dd2",
+          "declaredSize": 79616,
+          "actualPath": "libs/arm64-v8a/libgdbm.so.6",
+          "actualSha256": "7469ad46455799c3bda085f76e3dcd233a6a58879ffc58cb61df6adfaf5aa07b",
+          "actualSize": 67136,
+          "byteIdentical": false,
+          "scope": "basename layout association only; transformation provenance not approved"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "libs/arm64-v8a/_gdbm.cpython-312-aarch64-linux-ohos.so",
+          "sha256": "863fc8c601800598a8e917d8aa7243bda13ca6541af5329c7130299256c745a2"
+        }
+      ],
+      "licenseText": {
+        "file": "gdbm-1.24-COPYING.txt",
+        "sha256": "690d762f2e8e149ab1e2d6a409a3853b6151a2533b2382fae549a176d6bedecf",
+        "matchesBReceipt": true,
+        "actualHapTargets": [
+          "resources/rawfile/licenses/runtime/cpython/gdbm-1.24-COPYING.txt"
+        ],
+        "scope": "repository text matches SOURCES.json; not proof of prebuilt-library source/patches"
+      }
+    },
+    {
+      "id": "openssl",
+      "declaredVersion": "1.1.1w",
+      "declaredLinkMode": "static",
+      "declaredStatus": "keep",
+      "distributionReview": "pending",
+      "sourceDeclaration": {
+        "url": "https://www.openssl.org/source/openssl-1.1.1w.tar.gz",
+        "patches": "未记录"
+      },
+      "bindings": [],
+      "consumers": [
+        {
+          "path": "libs/arm64-v8a/_ssl.cpython-312-aarch64-linux-ohos.so",
+          "sha256": "11cb449c02e5a2581badc7b9f7713720e0d46018d4100232c9c162957af9d763"
+        },
+        {
+          "path": "libs/arm64-v8a/_hashlib.cpython-312-aarch64-linux-ohos.so",
+          "sha256": "024f05b2227ccfd4e8a27529751c58c241d75316a42d40a08d7de502fc5f74e8"
+        }
+      ],
+      "licenseText": {
+        "file": "openssl-1.1.1w-LICENSE.txt",
+        "sha256": "c32913b33252e71190af2066f08115c69bc9fddadf3bf29296e20c835389841c",
+        "matchesBReceipt": true,
+        "actualHapTargets": [
+          "resources/rawfile/licenses/runtime/cpython/openssl-1.1.1w-LICENSE.txt"
+        ],
+        "scope": "repository text matches SOURCES.json; not proof of prebuilt-library source/patches"
+      }
+    },
+    {
+      "id": "sqlite",
+      "declaredVersion": "3.49.1",
+      "declaredLinkMode": "static",
+      "declaredStatus": "keep",
+      "distributionReview": "pending",
+      "sourceDeclaration": {
+        "url": "https://www.sqlite.org/copyright.html",
+        "patches": "未记录"
+      },
+      "bindings": [],
+      "consumers": [
+        {
+          "path": "libs/arm64-v8a/_sqlite3.cpython-312-aarch64-linux-ohos.so",
+          "sha256": "da3721ac45eaba00284afb98ad42c280f52f32ee196c35ab31e2fbc6ac7f5195"
+        }
+      ],
+      "licenseText": {
+        "file": "sqlite-3.49.1-PUBLIC-DOMAIN.txt",
+        "sha256": "324e433812420af7e704d8522013c8107c4b2fe829153bb94622f86c0f49fa13",
+        "matchesBReceipt": true,
+        "actualHapTargets": [
+          "resources/rawfile/licenses/runtime/cpython/sqlite-3.49.1-PUBLIC-DOMAIN.txt"
+        ],
+        "scope": "repository text matches SOURCES.json; not proof of prebuilt-library source/patches"
+      }
+    },
+    {
+      "id": "bzip2",
+      "declaredVersion": "1.0.8",
+      "declaredLinkMode": "static",
+      "declaredStatus": "keep",
+      "distributionReview": "pending",
+      "sourceDeclaration": {
+        "url": "https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz",
+        "patches": "未记录"
+      },
+      "bindings": [],
+      "consumers": [
+        {
+          "path": "libs/arm64-v8a/_bz2.cpython-312-aarch64-linux-ohos.so",
+          "sha256": "17dbc3e2d2f7db63c07c3357ace1f004b67bc64815b17adaa06f19c588c918da"
+        }
+      ],
+      "licenseText": {
+        "file": "bzip2-1.0.8-LICENSE.txt",
+        "sha256": "c6dbbf828498be844a89eaa3b84adbab3199e342eb5cb2ed2f0d4ba7ec0f38a3",
+        "matchesBReceipt": true,
+        "actualHapTargets": [
+          "resources/rawfile/licenses/runtime/cpython/bzip2-1.0.8-LICENSE.txt"
+        ],
+        "scope": "repository text matches SOURCES.json; not proof of prebuilt-library source/patches"
+      }
+    },
+    {
+      "id": "xz",
+      "declaredVersion": "5.8.2",
+      "declaredLinkMode": "static",
+      "declaredStatus": "keep",
+      "distributionReview": "pending",
+      "sourceDeclaration": {
+        "url": "https://github.com/tukaani-project/xz/archive/refs/tags/v5.8.2.tar.gz",
+        "patches": "未记录"
+      },
+      "bindings": [],
+      "consumers": [
+        {
+          "path": "libs/arm64-v8a/_lzma.cpython-312-aarch64-linux-ohos.so",
+          "sha256": "4ea3ba9885ca7a77d1bd1a056a3965bc5f25624d501196fa972ab669d0eaad06"
+        }
+      ],
+      "licenseText": {
+        "file": "xz-5.8.2-COPYING.txt",
+        "sha256": "616a3ad264ce29b8f1cb97e53037b139d406899ca8d1f799651e17bfa09830b8",
+        "matchesBReceipt": true,
+        "actualHapTargets": [
+          "resources/rawfile/licenses/runtime/cpython/xz-5.8.2-COPYING.txt"
+        ],
+        "scope": "repository text matches SOURCES.json; not proof of prebuilt-library source/patches"
+      }
+    },
+    {
+      "id": "ncurses",
+      "declaredVersion": "6.6.20251230",
+      "declaredLinkMode": "static",
+      "declaredStatus": "keep",
+      "distributionReview": "pending",
+      "sourceDeclaration": {
+        "url": "https://invisible-island.net/datafiles/release/ncurses.tar.gz",
+        "patches": "未记录"
+      },
+      "bindings": [],
+      "consumers": [
+        {
+          "path": "libs/arm64-v8a/_curses.cpython-312-aarch64-linux-ohos.so",
+          "sha256": "72aaeda8fddfba3d98697cb78c28bf7e1fd3ee3355e101704ad6f85d8d326286"
+        },
+        {
+          "path": "libs/arm64-v8a/_curses_panel.cpython-312-aarch64-linux-ohos.so",
+          "sha256": "294d041723c53d202bb1f75830d8557dd0b2c8c423b0b860166ed5762f48d18b"
+        }
+      ],
+      "licenseText": {
+        "file": "ncurses-6.6-COPYING.txt",
+        "sha256": "708999f95527e1ffa670c6fce288c6c600cb477dd04afcc1171422b3dd4ee226",
+        "matchesBReceipt": true,
+        "actualHapTargets": [
+          "resources/rawfile/licenses/runtime/cpython/ncurses-6.6-COPYING.txt"
+        ],
+        "scope": "repository text matches SOURCES.json; not proof of prebuilt-library source/patches"
+      }
+    },
+    {
+      "id": "expat",
+      "declaredVersion": "2.6.4",
+      "declaredLinkMode": "static",
+      "declaredStatus": "keep",
+      "distributionReview": "pending",
+      "sourceDeclaration": {
+        "url": "https://github.com/libexpat/libexpat/releases/download/R_2_6_4/expat-2.6.4.tar.gz",
+        "patches": "未记录"
+      },
+      "bindings": [],
+      "consumers": [
+        {
+          "path": "libs/arm64-v8a/pyexpat.cpython-312-aarch64-linux-ohos.so",
+          "sha256": "b44a007e13ec5b009f8e0e27749e08ecec3fbd84cac2a44988318b7180176c23"
+        }
+      ],
+      "licenseText": {
+        "file": "expat-2.6.4-COPYING.txt",
+        "sha256": "122f2c27000472a201d337b9b31f7eb2b52d091b02857061a8880371612d9534",
+        "matchesBReceipt": true,
+        "actualHapTargets": [
+          "resources/rawfile/licenses/runtime/cpython/expat-2.6.4-COPYING.txt"
+        ],
+        "scope": "repository text matches SOURCES.json; not proof of prebuilt-library source/patches"
+      }
+    },
+    {
+      "id": "libmpdec",
+      "declaredVersion": "2.5.1",
+      "declaredLinkMode": "static",
+      "declaredStatus": "keep",
+      "distributionReview": "pending",
+      "sourceDeclaration": {
+        "url": "https://www.python.org/ftp/python/3.12.9/Python-3.12.9.tgz",
+        "patches": "随 CPython 源码树，未改动"
+      },
+      "bindings": [],
+      "consumers": [
+        {
+          "path": "libs/arm64-v8a/_decimal.cpython-312-aarch64-linux-ohos.so",
+          "sha256": "207c3a1e778f01fc435cb4f093b430cbee6667b7cc4906c81da56f2cafa6af8a"
+        }
+      ],
+      "licenseText": {
+        "file": "libmpdec-2.5.1-LICENSE.txt",
+        "sha256": "7065ec78957089bfb800064edb29ba78b58e5ed1be4efa71b25f7b1ff0833e2d",
+        "matchesBReceipt": true,
+        "actualHapTargets": [
+          "resources/rawfile/licenses/runtime/cpython/libmpdec-2.5.1-LICENSE.txt"
+        ],
+        "scope": "repository text matches SOURCES.json; not proof of prebuilt-library source/patches"
+      }
+    },
+    {
+      "id": "openblas-numpy",
+      "declaredVersion": "0.3.23.dev (USE64BITINT DYNAMIC_ARCH)",
+      "declaredLinkMode": "dynamic, orphaned",
+      "declaredStatus": "remove-candidate",
+      "distributionReview": "pending",
+      "sourceDeclaration": {
+        "url": "numpy 2.2.6 wheel (numpy.libs)",
+        "patches": "未记录"
+      },
+      "bindings": [
+        {
+          "declaredPath": "runtime/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_.so",
+          "declaredSha256": "06883ce6a74cd7cf85b1310f61dc3cd40ced7f3d45a130bc8cee30129bcfceed",
+          "declaredSize": 23271424,
+          "actualPath": "libs/arm64-v8a/libscipy_openblas64_.so",
+          "actualSha256": "57e3445e9724c1e8638f1d613c54338e50136c6f7716e0b86614dcf006aa5d2e",
+          "actualSize": 21657024,
+          "byteIdentical": false,
+          "scope": "basename layout association only; transformation provenance not approved"
+        }
+      ],
+      "consumers": [],
+      "licenseText": {
+        "file": "openblas-0.3.29-LICENSE.txt",
+        "sha256": "190b5a9c8d9723fe958ad33916bd7346d96fab3c5ea90832bb02d854f620fcff",
+        "matchesBReceipt": true,
+        "actualHapTargets": [
+          "resources/rawfile/licenses/runtime/scipy/openblas-0.3.29-LICENSE.txt"
+        ],
+        "scope": "repository text matches SOURCES.json; not proof of prebuilt-library source/patches"
+      }
+    },
+    {
+      "id": "gfortran",
+      "declaredVersion": "9.3.0 (Alpine aports build)",
+      "declaredLinkMode": "dynamic, orphaned",
+      "declaredStatus": "remove-candidate",
+      "distributionReview": "pending",
+      "sourceDeclaration": {
+        "url": "https://ftp.gnu.org/gnu/gcc/gcc-9.3.0/",
+        "patches": "未记录"
+      },
+      "bindings": [
+        {
+          "declaredPath": "runtime/lib/python3.12/site-packages/numpy.libs/libgfortran.so.5",
+          "declaredSha256": "2d227ceb579be7ad5f462abf995a7d258b6406b6a03803493d048d86dd6a7f5d",
+          "declaredSize": 1287808,
+          "actualPath": "libs/arm64-v8a/libgfortran.so.5",
+          "actualSha256": "1ce069ed5ed916bda01f3d98e302f4e4848d6b5fcfddd39b9ae10d2a20dbaf5e",
+          "actualSize": 1287744,
+          "byteIdentical": false,
+          "scope": "basename layout association only; transformation provenance not approved"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "libs/arm64-v8a/libscipy_openblas64_.so",
+          "sha256": "57e3445e9724c1e8638f1d613c54338e50136c6f7716e0b86614dcf006aa5d2e"
+        }
+      ],
+      "licenseText": {
+        "file": "gcc-runtime-COPYING.txt",
+        "sha256": "c2ff6bea4ff8eb81e93a10878e3a03db5015051b32272b363a6f23d3b86b11a2",
+        "matchesBReceipt": true,
+        "actualHapTargets": [
+          "resources/rawfile/licenses/runtime/numpy/gcc-runtime-COPYING.txt"
+        ],
+        "scope": "repository text matches SOURCES.json; not proof of prebuilt-library source/patches"
+      }
+    },
+    {
+      "id": "openblas-scipy",
+      "declaredVersion": "0.3.29 (NO_AFFINITY ARMV8)",
+      "declaredLinkMode": "dynamic",
+      "declaredStatus": "keep",
+      "distributionReview": "pending",
+      "sourceDeclaration": {
+        "url": "scipy 1.16.3 wheel (scipy.libs)",
+        "patches": "未记录"
+      },
+      "bindings": [
+        {
+          "declaredPath": "runtime/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-80d8b5fa.so",
+          "declaredSha256": "094de356dd4def6076eb2f48ed17ae09364743f21ecf0be457e4828f9c89bf60",
+          "declaredSize": 10803648,
+          "actualPath": "libs/arm64-v8a/libscipy_openblas-80d8b5fa.so",
+          "actualSha256": "bd804fb7741e4a474770c8db844e17984890b87193dd6d94be42c4007449ace6",
+          "actualSize": 9692736,
+          "byteIdentical": false,
+          "scope": "basename layout association only; transformation provenance not approved"
+        }
+      ],
+      "consumers": [],
+      "licenseText": {
+        "file": "openblas-0.3.29-LICENSE.txt",
+        "sha256": "190b5a9c8d9723fe958ad33916bd7346d96fab3c5ea90832bb02d854f620fcff",
+        "matchesBReceipt": true,
+        "actualHapTargets": [
+          "resources/rawfile/licenses/runtime/scipy/openblas-0.3.29-LICENSE.txt"
+        ],
+        "scope": "repository text matches SOURCES.json; not proof of prebuilt-library source/patches"
+      }
+    },
+    {
+      "id": "libz",
+      "declaredVersion": "OHOS system libz",
+      "declaredLinkMode": "dynamic",
+      "declaredStatus": "system",
+      "distributionReview": "pending",
+      "sourceDeclaration": {},
+      "bindings": [],
+      "consumers": []
+    },
+    {
+      "id": "libcxx-shared",
+      "declaredVersion": "SDK 26",
+      "declaredLinkMode": "dynamic",
+      "declaredStatus": "app-packaged",
+      "distributionReview": "pending",
+      "sourceDeclaration": {},
+      "bindings": [],
+      "consumers": []
+    },
+    {
+      "id": "gettext-libintl",
+      "declaredVersion": "unverified",
+      "declaredLinkMode": "static implementation evidence",
+      "declaredStatus": "review-pending",
+      "distributionReview": "pending",
+      "sourceDeclaration": {
+        "patches": "not supplied; exact source/build/version/license evidence required"
+      },
+      "bindings": [],
+      "consumers": [
+        {
+          "path": "libs/arm64-v8a/libpython3.12.so",
+          "sha256": "812153c248d7a72294bad8a58c23de8b055bb8f273f0e9d34b53d112ca7e38bc"
+        }
+      ]
+    },
+    {
+      "id": "libedit",
+      "declaredVersion": "unverified",
+      "declaredLinkMode": "embedded implementation candidate",
+      "declaredStatus": "review-pending",
+      "distributionReview": "pending",
+      "sourceDeclaration": {
+        "patches": "not supplied; exact source/build/version/license evidence required"
+      },
+      "bindings": [],
+      "consumers": [
+        {
+          "path": "libs/arm64-v8a/readline.cpython-312-aarch64-linux-ohos.so",
+          "sha256": "8909779fce79fa533c3f3ca82a0f6423b4eab77b9e5d7da662b52a360047dceb"
+        }
+      ]
+    }
+  ],
+  "versionObservations": [
+    {
+      "id": "openssl",
+      "literalVersionMarker": "OpenSSL 1.1.1w  11 Sep 2023",
+      "observedIn": [
+        {
+          "path": "libs/arm64-v8a/_ssl.cpython-312-aarch64-linux-ohos.so",
+          "sha256": "11cb449c02e5a2581badc7b9f7713720e0d46018d4100232c9c162957af9d763"
+        }
+      ],
+      "scope": "literal bytes only; not complete build or patch provenance"
+    },
+    {
+      "id": "sqlite",
+      "literalVersionMarker": "3.49.1",
+      "observedIn": [
+        {
+          "path": "libs/arm64-v8a/_sqlite3.cpython-312-aarch64-linux-ohos.so",
+          "sha256": "da3721ac45eaba00284afb98ad42c280f52f32ee196c35ab31e2fbc6ac7f5195"
+        }
+      ],
+      "scope": "literal bytes only; not complete build or patch provenance"
+    },
+    {
+      "id": "bzip2",
+      "literalVersionMarker": "1.0.8, 13-Jul-2019",
+      "observedIn": [
+        {
+          "path": "libs/arm64-v8a/_bz2.cpython-312-aarch64-linux-ohos.so",
+          "sha256": "17dbc3e2d2f7db63c07c3357ace1f004b67bc64815b17adaa06f19c588c918da"
+        }
+      ],
+      "scope": "literal bytes only; not complete build or patch provenance"
+    },
+    {
+      "id": "xz",
+      "literalVersionMarker": "5.8.2",
+      "observedIn": [
+        {
+          "path": "libs/arm64-v8a/_lzma.cpython-312-aarch64-linux-ohos.so",
+          "sha256": "4ea3ba9885ca7a77d1bd1a056a3965bc5f25624d501196fa972ab669d0eaad06"
+        }
+      ],
+      "scope": "literal bytes only; not complete build or patch provenance"
+    },
+    {
+      "id": "ncurses",
+      "literalVersionMarker": "ncurses 6.6.20251230",
+      "observedIn": [
+        {
+          "path": "libs/arm64-v8a/_curses.cpython-312-aarch64-linux-ohos.so",
+          "sha256": "72aaeda8fddfba3d98697cb78c28bf7e1fd3ee3355e101704ad6f85d8d326286"
+        }
+      ],
+      "scope": "literal bytes only; not complete build or patch provenance"
+    },
+    {
+      "id": "expat",
+      "literalVersionMarker": "expat_2.6.4",
+      "observedIn": [
+        {
+          "path": "libs/arm64-v8a/pyexpat.cpython-312-aarch64-linux-ohos.so",
+          "sha256": "b44a007e13ec5b009f8e0e27749e08ecec3fbd84cac2a44988318b7180176c23"
+        }
+      ],
+      "scope": "literal bytes only; not complete build or patch provenance"
+    },
+    {
+      "id": "libmpdec",
+      "literalVersionMarker": "2.5.1",
+      "observedIn": [
+        {
+          "path": "libs/arm64-v8a/_decimal.cpython-312-aarch64-linux-ohos.so",
+          "sha256": "207c3a1e778f01fc435cb4f093b430cbee6667b7cc4906c81da56f2cafa6af8a"
+        }
+      ],
+      "scope": "literal bytes only; not complete build or patch provenance"
+    }
+  ],
+  "additionalEmbeddedCandidates": [
+    {
+      "id": "gettext-libintl",
+      "consumer": "libs/arm64-v8a/libpython3.12.so",
+      "consumerSha256": "812153c248d7a72294bad8a58c23de8b055bb8f273f0e9d34b53d112ca7e38bc",
+      "definedFunctionSymbols": [
+        "libintl_bind_textdomain_codeset",
+        "libintl_bindtextdomain",
+        "libintl_dcgettext",
+        "libintl_dgettext",
+        "libintl_gettext",
+        "libintl_textdomain"
+      ],
+      "version": "unverified",
+      "distributionReview": "pending"
+    },
+    {
+      "id": "libedit",
+      "consumer": "libs/arm64-v8a/readline.cpython-312-aarch64-linux-ohos.so",
+      "consumerSha256": "8909779fce79fa533c3f3ca82a0f6423b4eab77b9e5d7da662b52a360047dceb",
+      "marker": "EditLine wrapper",
+      "version": "unverified",
+      "distributionReview": "pending"
+    }
+  ],
+  "removalEvidence": {
+    "candidateNames": [
+      "libgfortran.so.5",
+      "libscipy_openblas64_.so"
+    ],
+    "externalNeededConsumers": [],
+    "exactPythonJsonReferences": [],
+    "removalApproved": false,
+    "scope": "static experiment evidence only; no deletion, re-signing or device revalidation performed"
+  },
+  "unmatchedNames": [
+    "libc.musl-aarch64.so.1",
+    "libgcc_s.so.1"
+  ],
+  "findings": [
+    {
+      "id": "gettext-source-license-incomplete",
+      "status": "open",
+      "evidence": "actual libpython defines libintl functions, not undefined imports; no DT_NEEDED cannot exclude static code"
+    },
+    {
+      "id": "libedit-source-license-incomplete",
+      "status": "open",
+      "evidence": "actual readline extension identifies EditLine; exact version/source/license not supplied"
+    },
+    {
+      "id": "prebuilt-source-build-patch-evidence-incomplete",
+      "status": "open",
+      "evidence": "B explicitly records unprovided community prebuilt build recipes/patches"
+    },
+    {
+      "id": "scipy-static-fortran-runtime-unresolved",
+      "status": "open",
+      "evidence": "NEEDED libc only does not identify a statically linked runtime or its version/license"
+    }
+  ],
+  "releaseApproved": false,
+  "step2Complete": false
+}

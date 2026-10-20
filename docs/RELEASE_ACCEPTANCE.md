@@ -6,6 +6,8 @@
 
 PR #8 前的历史快照：适用版本待首次真实集成包冻结。当时已完成 A03～A07、B01～B06 以及 B03/A 消费端增量的代码级复核，PR #6、#5 已合入 `main`；HAD-W32 HiShell 补充验证见 [B 侧记录](B_DEVICE_VALIDATION_2026-10-19.md)。当时尚无 HAP 内真实运行、目标设备 GUI 或正式签名验收结论；`--build-mode release`、内容审计与开发代码合并均不替代组长技术放行。
 
+2026-10-20：PR #10 的 B 侧许可清单已接收；C 已核验 11 份文本、6 个原始库与实际 HAP 的对应，并构建许可入包候选。gettext/libedit、社区构建物料与 SciPy 静态运行时范围仍待关闭，详见 [C_THIRD_PARTY_REVIEW](C_THIRD_PARTY_REVIEW.md)。
+
 ## 1. 先取得成员交付
 
 | 提供者 | 必需材料/接口 | 当前状态 |

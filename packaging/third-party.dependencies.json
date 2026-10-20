@@ -395,6 +395,44 @@
         "text": "C 的 HAP 许可清单"
       },
       "status": "app-packaged"
+    },
+    {
+      "id": "gettext-libintl",
+      "version": "unverified",
+      "kind": "embedded-library",
+      "linkMode": "static implementation evidence",
+      "files": [],
+      "consumers": [
+        "libpython3.12.so"
+      ],
+      "evidence": "C actual signed HAP defines six libintl_* FUNC symbols in a non-UND section. Absence of DT_NEEDED does not establish absence of statically linked code.",
+      "license": {
+        "spdx": "NOASSERTION",
+        "text": "not supplied; review pending"
+      },
+      "source": {
+        "patches": "not supplied; exact source/build/version/license evidence required"
+      },
+      "status": "review-pending"
+    },
+    {
+      "id": "libedit",
+      "version": "unverified",
+      "kind": "embedded-library",
+      "linkMode": "embedded implementation candidate",
+      "files": [],
+      "consumers": [
+        "readline.cpython-312-aarch64-linux-ohos.so"
+      ],
+      "evidence": "C actual HAP readline extension contains EditLine wrapper; exact build/version/source not yet established.",
+      "license": {
+        "spdx": "NOASSERTION",
+        "text": "not supplied; review pending"
+      },
+      "source": {
+        "patches": "not supplied; exact source/build/version/license evidence required"
+      },
+      "status": "review-pending"
     }
   ],
   "removalProposal": {
