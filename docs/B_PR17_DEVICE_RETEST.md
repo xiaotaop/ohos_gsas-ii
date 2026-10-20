@@ -2,7 +2,7 @@
 
 适用对象：C 已交付的 PR #17 签名包（源码提交
 `ce624cec654e3492697e22792a047ff69e88d4fc`，原发布证书 + HAD-W32
-inttesting Profile，未改源码或版本）：
+internaltesting Profile，未改源码或版本）：
 
 | 标识 | 值 |
 |---|---|
@@ -114,7 +114,7 @@ B 可按该语义在宿主复现（已有用例），真机由 C 的测试包触
 
 ## 5. 显式断网（行 4）
 
-B 只提供静态证据（`tests/test_core_no_network.py`：核心源码无网络 API 引用），
+B 只提供静态证据（`tests/test_core_no_network.py`：在指定 bridge、C++、ETS 源码中扫描所列网络 API；不覆盖打包运行时与动态调用），
 **不替代**设备断网五阶段记录。断网步骤由组长按 C 的流程执行：关闭 Wi-Fi/移动数据后，
 完成一次 PbSO4 五阶段并导出结果。
 
