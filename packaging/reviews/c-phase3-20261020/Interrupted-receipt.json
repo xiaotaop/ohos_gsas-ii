@@ -1,0 +1,6 @@
+{
+  "activeJob": "job_0b20a3f3-f1c2-4868-b352-fbd19b91863b \u00b7 running",
+  "mode": "interrupted",
+  "terminal": "job_0b20a3f3-f1c2-4868-b352-fbd19b91863b \u00b7 failed",
+  "errorCode": "PROCESS_INTERRUPTED"
+}

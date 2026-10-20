@@ -1,0 +1,7 @@
+{
+  "hapSha256": "70588bde3202dd49512c6628661dba76b761c274aabf8ba05dba5170c06a7fef",
+  "nativeELFsInspected": 219,
+  "scope": "Prior defined-FUNC marker inspection retained only after rechecking every native ELF byte identical; not universal third-party source detection",
+  "matches": [],
+  "carriedFromHapSha256": "1190b1d5be7fa4520ed519f316db8f4035bb555aaaf8864295bd415aa23ce4e5"
+}

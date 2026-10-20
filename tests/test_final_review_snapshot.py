@@ -4,22 +4,29 @@ import json
 from pathlib import Path, PurePosixPath
 import unittest
 
-ROOT = Path(__file__).resolve().parents[1] / 'packaging/reviews/1190b1d5-final'
+REVIEWS = Path(__file__).resolve().parents[1] / 'packaging/reviews'
 
 
 class FrozenReviewTest(unittest.TestCase):
     def test_frozen_files_licenses_and_native_relations_match_review(self):
-        summary = json.loads((ROOT / 'review-summary.json').read_text())
+        snapshots = sorted(REVIEWS.glob('*-final'))
+        self.assertTrue(snapshots)
+        for root in snapshots:
+            with self.subTest(snapshot=root.name):
+                self.verify_snapshot(root)
+
+    def verify_snapshot(self, root):
+        summary = json.loads((root / 'review-summary.json').read_bytes())
         seen = set()
         for row in summary['snapshotFiles']:
             path = PurePosixPath(row['path'])
             self.assertFalse(path.is_absolute() or '..' in path.parts)
             self.assertNotIn(row['path'], seen)
             seen.add(row['path'])
-            data = (ROOT / path).read_bytes()
+            data = (root / path).read_bytes()
             self.assertEqual(len(data), row['size'])
             self.assertEqual(hashlib.sha256(data).hexdigest(), row['sha256'])
-        bom_data = (ROOT / summary['sbomFile']).read_bytes()
+        bom_data = (root / summary['sbomFile']).read_bytes()
         self.assertEqual(hashlib.sha256(bom_data).hexdigest(), summary['sbomSha256'])
         bom = json.loads(bom_data)
         files = {c['name']: c for c in bom['components'] if c['type'] == 'file'}
@@ -30,13 +37,13 @@ class FrozenReviewTest(unittest.TestCase):
         for ref, targets in edges.items():
             self.assertIn(ref, refs)
             self.assertLessEqual(targets, refs)
-        decision = json.loads((ROOT / 'review-decisions.json').read_text())
+        decision = json.loads((root / 'review-decisions.json').read_bytes())
         self.assertEqual(decision['hapSha256'], summary['hapSha256'])
         for row in decision['components']:
             if row['action'] == 'reviewed':
                 for license in row['licenseFiles']:
                     self.assertEqual(files[license['path']]['hashes'][0]['content'], license['sha256'])
-        native = json.loads((ROOT / 'evidence/native-dependencies.json').read_text())
+        native = json.loads((root / 'evidence/native-dependencies.json').read_bytes())
         self.assertEqual(len(native['edges']), summary['nativeNeededEdges'])
         for edge in native['edges']:
             target = ('file:' + edge['packagedTarget'] if edge['status'] == 'packaged-filename'
