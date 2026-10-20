@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "kind": "A-PR14-same-HAP-device-acceptance",
+  "date": "2026-10-20",
+  "sourceCommit": "57c661db55020e5c200947da203ea449c536c1fe",
+  "deliveryMergeCommit": "b2c29a8e741c6a79919a436433e8ed5988a86495",
+  "hapSha256": "59c86f189dd89a22e2e009f4637a58756193cbeececd2ec3f8bde0e85c3e176b",
+  "hapSize": 135971610,
+  "deviceModel": "HAD-W32",
+  "systemVersion": "6.1.0.115",
+  "apiVersion": 23,
+  "versionName": "0.1.1",
+  "versionCodeBefore": 2,
+  "versionCodeAfter": 2,
+  "signatureVerified": true,
+  "targetDeviceInEmbeddedProfile": true,
+  "archiveManifestEntriesVerified": 17,
+  "installationPassed": true,
+  "uninstalled": false,
+  "applicationUidPreserved": true,
+  "firstInstallTimePreserved": true,
+  "initialFileCount": 25,
+  "originalInputAssociationsRestored": true,
+  "inputExistenceAndIntegrityCheckPassed": true,
+  "coreReady": true,
+  "fiveStageElapsedSeconds": [
+    8.7,
+    16.34,
+    6.79
+  ],
+  "successfulTerminalAutoRefresh": {
+    "before": 25,
+    "after": 28
+  },
+  "cancelledTerminalAutoRefresh": {
+    "before": 28,
+    "after": 29
+  },
+  "backgroundThenForegroundCompletion": {
+    "activeBeforeMinimize": true,
+    "visibleAfterMinimize": false,
+    "terminalOnFirstRestoreSnapshot": false,
+    "completedAfterRestore": true,
+    "fileCountAfter": 32,
+    "elapsedSeconds": 16.34
+  },
+  "manualRefreshPassed": true,
+  "invalidPhaseFixtureImported": true,
+  "failureCode": "INVALID_PHASE_FILE",
+  "failedTerminalAutoRefresh": {
+    "before": 33,
+    "after": 34
+  },
+  "failureRecoveryPassed": true,
+  "activeCloseGuardPassed": true,
+  "minimumWindowPhysicalPixels": [
+    1216,
+    912
+  ],
+  "minimumWindowVp": [
+    640,
+    480
+  ],
+  "tabFromPhaseToCyclesPassed": true,
+  "ctrlROpensTaskPassed": true,
+  "normalExitProcessStopped": true,
+  "completedJobRestartRecoveryPassed": true,
+  "finalFileCount": 37,
+  "systemPickerExportNames": [
+    "A15-success-20261020.gpx",
+    "A15-success-20261020.json",
+    "A15-success-20261020.log",
+    "A15-cancel-20261020.txt",
+    "A15-failure-20261020.txt"
+  ],
+  "exportVerificationScope": "Saved through system picker and observed in a newly opened picker; no byte readback or new export hashes.",
+  "applicationValidationPerformed": false,
+  "independentNumericalBaselineRepeated": false,
+  "explicitOfflineTestPassed": false,
+  "startupNetworkVerificationRequired": true,
+  "screenshots": [
+    {
+      "path": "docs/evidence/a-pr14-59c86f18/controls.png",
+      "sha256": "9d16b22a62ab3de34f0f970fed65e8f09677027c17bd66308a62855d333e2fbb"
+    },
+    {
+      "path": "docs/evidence/a-pr14-59c86f18/success.png",
+      "sha256": "84e6169fe7a03e2c680da469bda74ea42599b805ec9d142574c0154ad86f0ed2"
+    },
+    {
+      "path": "docs/evidence/a-pr14-59c86f18/cancelled.png",
+      "sha256": "88e6db3028a7aaa72435940c7961bf5f93517ed37ad9c945f0bf4b8bef4d51c0"
+    },
+    {
+      "path": "docs/evidence/a-pr14-59c86f18/failed.png",
+      "sha256": "aa96d3ffda4b48200d3b721bf95a526db32bba7bad38097e46536a5e4b760c2e"
+    },
+    {
+      "path": "docs/evidence/a-pr14-59c86f18/close-guard.png",
+      "sha256": "5b909b4b67332f8262bf27e88b50d1703a3b5a63790fda44fe3dab5cacf0d088"
+    },
+    {
+      "path": "docs/evidence/a-pr14-59c86f18/minimum.png",
+      "sha256": "6caf53a9263507362bcd895cb0122e5abeb0736cdc1d078ee2e3d093c658ff13"
+    },
+    {
+      "path": "docs/evidence/a-pr14-59c86f18/restarted.png",
+      "sha256": "28156128fe355eefa9a989672026ed0ee10f23d9feb59d35662c8431730684aa"
+    }
+  ],
+  "publicDistributionApproved": false,
+  "releaseApproved": false,
+  "remaining": [
+    "Core-only BUSY, cancellation race, initialization failure retry",
+    "Explicit offline and API20/API24 device scope",
+    "Mouse wheel and long-running background behavior",
+    "Final same-HAP SBOM/device binding review and leader release approval"
+  ]
+}
