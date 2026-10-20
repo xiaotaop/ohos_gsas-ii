@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — 运行时依赖与许可清单（2026-10-20，成员 B）
+
+- 新增 [`docs/DEPENDENCY_LICENSES.md`](docs/DEPENDENCY_LICENSES.md)：按真实载荷字节列出预编译 CPython/NumPy/SciPy 的下载来源、SHA-256、源码地址与 `_sysconfigdata` 记录的构建参数；内嵌第三方库（libffi 3.4.4、GDBM 1.24、OpenSSL 1.1.1w、SQLite 3.49.1、bzip2 1.0.8、XZ 5.8.2、ncurses 6.6、Expat 2.6.4、libmpdec 2.5.1、OpenBLAS 0.3.29）的版本、静态/动态链接方式、消费者与许可证。
+- 新增 [`packaging/third-party.dependencies.json`](packaging/third-party.dependencies.json)（机器可读，含逐文件大小/SHA-256）与 [`packaging/licenses/third-party/`](packaging/licenses/third-party/NOTICE.md)（许可原文、NOTICE、`SOURCES.json`）。
+- 结论：`numpy.libs/libscipy_openblas64_.so` 与 `libgfortran.so.5` 无任何 DT_NEEDED 消费者，可从载荷安全移除（约 23.4 MiB），并消除 `libgcc_s.so.1`/`libc.musl-aarch64.so.1` 两个未匹配依赖；SciPy 实际使用的 `libscipy_openblas-80d8b5fa.so` 必须保留。
+
 ## Unreleased — 远端文档与验收状态统一（2026-10-20）
 
 - 将 README、验收矩阵、接入、依赖、UI、运行时与发布文档统一到 PR #9 合并后的证据：指定设备 internaltesting 签名 HAP 已在 HAD-W32/API23 完成应用内五阶段、独立数值、三类导出及成功任务恢复。

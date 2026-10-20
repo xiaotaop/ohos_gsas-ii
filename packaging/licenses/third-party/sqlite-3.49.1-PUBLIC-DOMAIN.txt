@@ -1,0 +1,17 @@
+SQLite 3.49.1 — public domain
+================================
+
+来源：https://www.sqlite.org/copyright.html （2026-10-20 访问）
+
+SQLite 官方声明（原文）：
+
+    SQLite is in the Public Domain.
+    ...
+    The SQLite source code is in the public domain. The author
+    disclaims any and all interest in the code and in the
+    documentation...
+
+本文件是声明摘录，不是完整许可证文本。SQLite 没有任何使用、复制、
+修改或分发的限制；随附的 SQLite 副本由 CPython 的 `_sqlite3` 模块静态
+编译，不需要单独的许可证文件。正式发布时应保留官方版权页链接：
+https://www.sqlite.org/copyright.html
