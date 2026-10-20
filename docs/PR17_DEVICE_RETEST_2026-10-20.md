@@ -23,4 +23,12 @@
 - 取消 ACK/自然完成的严格竞争：需要可关联 jobId 的 ACK/完成事件时序及终态快照，或测试包的等效诊断。当前仅能证明五次 UI 观察未出现终态跳变。
 - API20/API24 兼容性、公开分发签名、上架授权和组长技术放行均未由本次测试取得。
 
+## 2026-10-20 后续入口核查
+
+设备仍连接，`bm dump -n com.gsasii.desktop` 显示已安装包为 0.1.1 / versionCode 2、`release/internaltesting`、`debug=false`。shell 用户为 `uid=2000(shell)`；读取应用 `files` 目录仍返回 `Permission denied`。对 `EntryAbility` 再次执行 `aa start` 后，进程号未改变，mission 列表仍只有一个该应用的 AbilityRecord，未形成可独立提交第二任务的窗口。
+
+为检查是否能在设备上直接执行已有的原生 Core 测试，已用当前 SDK 将 `tests/core-service-native.test.cpp` 与正式 `core_service.cpp` 交叉编译为 AArch64 ELF，并使用 SDK 的开发自签工具签名。上传到 `/data/local/tmp` 后，shell 执行返回 `Operation not permitted`；该临时设备文件已移除。此结果**不是**测试失败或通过的 Core 结论，也不授权绕过设备执行策略。宿主 Core 桥接测试仍为 30/30 通过，但不能替代同包真机验证。
+
+若要关闭上述三项，需由有签名权限的 C 在不清除用户数据的前提下交付可安装的诊断候选：一次性可恢复的初始化失败、在真实首任务活动时触发第二次 Core `acquireJob` 并记录 `BUSY`、逐 jobId 导出取消 ACK/完成事件顺序与唯一终态快照。诊断改动与正式候选的差异须逐项列出；若改动 HAP，按新哈希重新绑定签名、源码、SBOM/许可和设备证据。未取得该包及其设备记录前，本节仍为待验，不得标记通过。
+
 复验步骤见 [B 的同包方案](B_PR17_DEVICE_RETEST.md)，C 的构建和许可绑定见 [签名 HAP 交接](C_PR17_SIGNED_HAP.md)。
