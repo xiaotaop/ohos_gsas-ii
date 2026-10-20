@@ -1,0 +1,6 @@
+{
+  "valid": true,
+  "format": "CycloneDX 1.5",
+  "hapSha256": "791dc53da7f76c56e0f9ce45b40b83d9cb45b9b42990379f59de64989d712788",
+  "deviceAcceptancePending": true
+}
