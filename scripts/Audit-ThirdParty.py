@@ -353,6 +353,13 @@ def generate(hap, manifest, declarations, directory, sdk, output, prebuilt_dir=N
         symbols = subprocess.run([str(tool), '-Ws', str(paths[libpython['path']])],
                                  capture_output=True, text=True, check=True, timeout=30).stdout
         intl = defined_intl_symbols(symbols)
+        for row in components:
+            if row['id'] == 'gettext-libintl':
+                row['implementationObservation'] = {'definedFunctionSymbols': intl,
+                    'consumerSha256': libpython['sha256'],
+                    'scope': 'function-symbol observation; controlled-build evidence is reviewed separately'}
+                if not intl:
+                    row['consumers'] = []  # A libpython filename alone cannot establish libintl inclusion.
         if intl:
             extra.append({'id': 'gettext-libintl', 'consumer': libpython['path'],
                 'consumerSha256': libpython['sha256'], 'definedFunctionSymbols': intl,

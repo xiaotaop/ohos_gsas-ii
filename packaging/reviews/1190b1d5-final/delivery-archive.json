@@ -1,0 +1,9 @@
+{
+  "archive": "member-c-step2-reviewed-1190b1d5.tar.gz",
+  "archiveBytes": 93382504,
+  "archiveSha256": "8b07c6a3706fe2a20bc33c4763e4efa9256488f5d7c2e06d1957fe78b88bd195",
+  "hapSha256": "1190b1d5be7fa4520ed519f316db8f4035bb555aaaf8864295bd415aa23ce4e5",
+  "sbomSha256": "73bc089265a01dc182fb657cfc82fb8836f3119747cb122df4f675cfd3e1d775",
+  "archiveMembersVerified": 26,
+  "scope": "Complete member C internaltesting engineering handoff; no public or team release approval"
+}

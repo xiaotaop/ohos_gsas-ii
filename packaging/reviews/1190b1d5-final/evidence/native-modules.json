@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "kind": "locally-built-ohos-native-extensions",
+  "upstreamCommit": "2b4aba1bc44de63a3da9d4495944c3b99e389399",
+  "portCommit": "5a4cc39f58c9ed7ad0b102c632f85b0e3c2fa472",
+  "target": "aarch64-linux-ohos",
+  "python": "3.12.9",
+  "numpyHeaders": "2.2.6",
+  "compiler": "LLVM/Flang 20.1.8",
+  "documentationCompilerVersion": "20.1.0",
+  "compilerVersionDeviation": "same LLVM20 branch, rebuilt FortranRuntime/Decimal from matching20.1.8 source",
+  "fortranRuntime": {
+    "version": "20.1.8",
+    "linkage": "static as required, only referenced archive members linked",
+    "license": "Apache-2.0 WITH LLVM-exception",
+    "distributionReview": "pending"
+  },
+  "files": [
+    {
+      "module": "pyspg",
+      "path": "runtime/lib/python3.12/site-packages/GSASII/pyspg.cpython-312-aarch64-linux-ohos.so",
+      "size": 857536,
+      "sha256": "e7ef80528f0a7562ef24512a6da21f016a7b6a536ac5bd06004c613c22a91b5b",
+      "machine": "AArch64",
+      "elfType": "ET_DYN",
+      "pythonAbi": "cp312",
+      "pyInit": "PyInit_pyspg",
+      "needed": [
+        "libc.so",
+        "libpython3.12.so"
+      ],
+      "developmentSelfSigned": true,
+      "fortranRuntimeExportCount": 223
+    },
+    {
+      "module": "pypowder",
+      "path": "runtime/lib/python3.12/site-packages/GSASII/pypowder.cpython-312-aarch64-linux-ohos.so",
+      "size": 714176,
+      "sha256": "78097efe6b45257bbe9ed92dbf2a3d904fb39c90211548ed8bc34683e40194fb",
+      "machine": "AArch64",
+      "elfType": "ET_DYN",
+      "pythonAbi": "cp312",
+      "pyInit": "PyInit_pypowder",
+      "needed": [
+        "libc.so",
+        "libpython3.12.so"
+      ],
+      "developmentSelfSigned": true,
+      "fortranRuntimeExportCount": 104
+    },
+    {
+      "module": "pytexture",
+      "path": "runtime/lib/python3.12/site-packages/GSASII/pytexture.cpython-312-aarch64-linux-ohos.so",
+      "size": 42304,
+      "sha256": "6a7daa16191a2ae9e6ad1e277ce4312dcd10699a0e390773f32246894b7c8146",
+      "machine": "AArch64",
+      "elfType": "ET_DYN",
+      "pythonAbi": "cp312",
+      "pyInit": "PyInit_pytexture",
+      "needed": [
+        "libc.so",
+        "libpython3.12.so"
+      ],
+      "developmentSelfSigned": true,
+      "fortranRuntimeExportCount": 0
+    },
+    {
+      "module": "fmask",
+      "path": "runtime/lib/python3.12/site-packages/GSASII/fmask.cpython-312-aarch64-linux-ohos.so",
+      "size": 17728,
+      "sha256": "5fc4bc94ef3045e306ccca5a35db0a9162d3f407e8216925e242f788096c3977",
+      "machine": "AArch64",
+      "elfType": "ET_DYN",
+      "pythonAbi": "cp312",
+      "pyInit": "PyInit_fmask",
+      "needed": [
+        "libc.so",
+        "libpython3.12.so"
+      ],
+      "developmentSelfSigned": true,
+      "fortranRuntimeExportCount": 0
+    },
+    {
+      "module": "histogram2d",
+      "path": "runtime/lib/python3.12/site-packages/GSASII/histogram2d.cpython-312-aarch64-linux-ohos.so",
+      "size": 38208,
+      "sha256": "60b34c7b643cfe7c2bf7f4badce9fab5f111bcd5ce89648b41d68d4f11c406e7",
+      "machine": "AArch64",
+      "elfType": "ET_DYN",
+      "pythonAbi": "cp312",
+      "pyInit": "PyInit_histogram2d",
+      "needed": [
+        "libc.so",
+        "libpython3.12.so"
+      ],
+      "developmentSelfSigned": true,
+      "fortranRuntimeExportCount": 0
+    },
+    {
+      "module": "pack_f",
+      "path": "runtime/lib/python3.12/site-packages/GSASII/pack_f.cpython-312-aarch64-linux-ohos.so",
+      "size": 38208,
+      "sha256": "43316fb316701f898a75baec01ca137e22153bea91a3db610934ba84488b70a1",
+      "machine": "AArch64",
+      "elfType": "ET_DYN",
+      "pythonAbi": "cp312",
+      "pyInit": "PyInit_pack_f",
+      "needed": [
+        "libc.so",
+        "libpython3.12.so"
+      ],
+      "developmentSelfSigned": true,
+      "fortranRuntimeExportCount": 0
+    },
+    {
+      "module": "unpack_cbf",
+      "path": "runtime/lib/python3.12/site-packages/GSASII/unpack_cbf.cpython-312-aarch64-linux-ohos.so",
+      "size": 812480,
+      "sha256": "9c02fe14550888c02cdee234c8648b5a3fd70053db0fc675c3422951d2feba68",
+      "machine": "AArch64",
+      "elfType": "ET_DYN",
+      "pythonAbi": "cp312",
+      "pyInit": "PyInit_unpack_cbf",
+      "needed": [
+        "libc.so",
+        "libpython3.12.so"
+      ],
+      "developmentSelfSigned": true,
+      "fortranRuntimeExportCount": 125
+    },
+    {
+      "module": "kvec_general",
+      "path": "runtime/lib/python3.12/site-packages/GSASII/kvec_general.cpython-312-aarch64-linux-ohos.so",
+      "size": 124288,
+      "sha256": "49c484c01977e3fd83ea08d47d482e987d30a4bb2485938adaef5d6408dcb0ea",
+      "machine": "AArch64",
+      "elfType": "ET_DYN",
+      "pythonAbi": "cp312",
+      "pyInit": "PyInit_kvec_general",
+      "needed": [
+        "libc.so",
+        "libpython3.12.so"
+      ],
+      "developmentSelfSigned": true,
+      "fortranRuntimeExportCount": 0
+    }
+  ],
+  "releaseApproved": false
+}
