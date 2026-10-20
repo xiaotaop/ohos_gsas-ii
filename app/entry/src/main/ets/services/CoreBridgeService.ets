@@ -101,6 +101,10 @@ export class CoreBridgeService implements CoreService {
   // receive, registered artifacts included), kept for the process lifetime
   // and persisted for cross-process recovery.
   private terminalViews: Map<string, string> = new Map();
+  // jobId -> a terminal event was already delivered (or synthesized at
+  // startup). The contract allows exactly one terminal per job; a racing
+  // native/cancel path must not make the page see a second one.
+  private settled: Set<string> = new Set();
 
   constructor(deps: CoreBridgeDeps) {
     this.native = deps.native;
@@ -131,6 +135,7 @@ export class CoreBridgeService implements CoreService {
       // the synthesized terminal view is persisted so later restarts keep
       // answering PROCESS_INTERRUPTED for this jobId instead of losing it.
       this.interrupted.add(jobId);
+      this.settled.add(jobId);
       const view = CoreBridgeService.interruptedSnapshot(jobId);
       this.terminalViews.set(jobId, view);
       try { this.native.releaseJob(jobId); } catch { /* no ledger entry in a new process */ }
@@ -175,6 +180,7 @@ export class CoreBridgeService implements CoreService {
       // Events already queued for delivery still run; handlers stay safe
       // because config-dependent steps degrade to best-effort.
       CoreBridgeService.detach(this.native);
+      this.settled.clear();  // a later initialize() on this instance starts a new session
     }
   }
 
@@ -284,9 +290,11 @@ export class CoreBridgeService implements CoreService {
   }
 
   private async handle(event: CoreEvent): Promise<void> {
+    if (this.settled.has(event.jobId)) { return; }  // terminal already delivered
     if (event.type === 'job.completed') {
       await this.registerArtifacts(event);
       await this.persistTerminalSnapshot(event);
+      this.settled.add(event.jobId);
       this.dispatch(event);
       await this.cleanupTerminal(event.jobId);
       return;
@@ -299,6 +307,7 @@ export class CoreBridgeService implements CoreService {
       const artifact = await this.writeUserLog(event);
       if (artifact !== undefined) { event.payload.artifacts = [artifact]; }
       await this.persistTerminalSnapshot(event);
+      this.settled.add(event.jobId);
       this.dispatch(event);
       await this.cleanupTerminal(event.jobId);
       return;

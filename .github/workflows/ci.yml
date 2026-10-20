@@ -65,6 +65,9 @@ jobs:
       - name: Test GSAS-II native extension payload gate
         run: python -m unittest discover -s tests -p 'test_payload_native_check.py' -v
 
+      - name: Test core has no network dependency
+        run: python -m unittest discover -s tests -p 'test_core_no_network.py' -v
+
       - name: Test native runtime staging, normalization and HAP SBOM
         run: |
           python -m unittest discover -s tests -p 'test_native_runtime_layout.py' -v

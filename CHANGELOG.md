@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased — B 专项宿主补验与门面终态唯一性修复（2026-10-20，成员 B）
+
+- 修复 `CoreBridgeService`：已交付终态后忽略该 job 的后续事件；取消与自然完成竞争时页面只收到一个终态（此前会同时转发 `job.completed` 与 `job.cancelled`）。启动时为中断任务同步登记，`shutdown` 后清空会话标记。
+- `tests/core-bridge-host.test.cjs` 新增 3 项：初始化失败后可再次初始化并成功、Core-only BUSY 映射且不触碰文件服务、取消与完成竞争只交付一个终态（30/30 通过）。
+- 新增 `tests/test_core_no_network.py`：核心源码无任何网络 API 引用，作为“离线计算”的静态证据；**不替代**设备显式断网的同包记录。
+- `RELEASE_ACCEPTANCE` 第 2/4/6 行与 B 交付行标注宿主补验结果，签名包同包复测仍待。
+
 ## Unreleased — C 最终 SBOM 与工程许可审查（2026-10-20）
 
 - 冻结已验收 1190b1d5… 指定设备包的 CycloneDX 1.5 SBOM：2266 文件、219 ELF、27 个随包组件、4 个排除的平台依赖与 485 条真实原生关系；修正重复归属伪关系、gettext 误归类和 PyCIFRW 许可名称。
