@@ -138,3 +138,45 @@ strings <file> | grep -E 'OpenBLAS|OpenSSL|libmpdec|expat_|6\.6\.2025|3\.49\.1'
 # 构建配置
 sed -n '/build_time_vars/,/^}/p' <payload>/runtime/lib/python3.12/_sysconfigdata__ohos_aarch64-linux-ohos.py
 ```
+
+## 7. B 的处置说明（是否自行编译/修改）
+
+**结论：B 没有编译、打补丁或替换清单中的任何社区二进制。** 全部来自上表所列社区包；
+B 只做“哈希校验下载 → 解包/复制 → 按发布门禁裁剪文件集合”。唯一的内容级改动是
+`finalize_payload.py` 把零字节标记文件写成一个换行（仍为合法 Python/`py.typed` 标记）。
+因此**没有 B 自己的工具链版本和构建日志**：这些组件不是 B 构建的。
+
+| 组件 | 来源 | B 的处理 | 是否自行编译/修改/替换 |
+|---|---|---|---|
+| CPython 3.12.9 | 社区 tarball（volces `ophcd.pkg`） | 解包；复制 `libpython3.12.so` 与 stdlib；排除 `test`、`idle_test`、`ensurepip`、`distutils-precedence.pth`、`config-3.12-*`；删除 `pip` 与字节码；零字节标记规范化 | 未自行编译/修改/替换（仅裁剪文件集合） |
+| CPython 附带 libffi 3.4.4 / GDBM 1.24 | 同上 tarball | 原样复制到 `runtime/lib/` | 未自行修改 |
+| CPython 静态内嵌 OpenSSL 1.1.1w、SQLite 3.49.1、bzip2 1.0.8、XZ 5.8.2、ncurses 6.6、Expat 2.6.4、libmpdec 2.5.1 | 社区 CPython 构建方在构建时静态链接 | 未接触 | 未自行修改 |
+| CPython `readline` 模块（libedit） | 同上，静态链接 | 未接触；版本未嵌入二进制 | 未自行修改；版本未知 |
+| gettext 0.26 | 仅出现在 CPython 构建的 `LIBS=-lintl` 与依赖路径 | 载荷内无任何 ELF NEED `libintl`，未随应用分发 | 未分发，B 未处理 |
+| NumPy 2.2.6 | 社区 wheel（cnb pypi） | 原样解包写入；删除 `tests`、归档类文件、`_sobol_direction_numbers.npz`（数据文件）；跳过 wheel 根级文件 | 未自行编译/修改/替换二进制（仅裁剪文件集合） |
+| NumPy 附带 OpenBLAS64 0.3.23.dev + libgfortran 9.3.0 | 同上 wheel 的 `numpy.libs` | 原样保留（已判定可移除，但未改字节） | 未自行修改 |
+| SciPy 1.16.3 | 社区 wheel（cnb pypi） | 原样解包写入；同样裁剪 `tests`、归档、`.npz` | 未自行编译/修改/替换二进制 |
+| SciPy 附带 OpenBLAS 0.3.29 | 同上 wheel 的 `scipy.libs` | 原样保留 | 未自行修改 |
+| PyCifRW 5.0.1 | 社区 sdist | **只复制纯 Python 源码**；StarScan C 加速器未构建（第二阶段曾在真机单独构建，第三阶段载荷不含） | 未自行编译/修改；有选择的文件复制 |
+| GSAS-II 2.0.0 | 锁定提交 `2b4aba1b` 源码 | 复制源码并裁剪：排除 `pydiffax`/DIFFaX、`G2shapes.py`、`help`、`install`、字节码 | 未自行编译（8 个扩展由 C 用 Flang 20.1.8 重建） |
+| bridge 1.1.0 | 本仓库源码 | 直接复制 | 非社区包 |
+
+### 构建配置与日志
+
+- B 没有为上述组件运行任何编译器，因此**没有工具链版本、构建命令或构建日志**。
+- 载荷 `_sysconfigdata__ohos_aarch64-linux-ohos.py` 记录的是**社区构建方**的配置：
+  `CC=clang`、`CFLAGS=-fPIC -O2 -fuse-ld=bfd`、`--enable-shared`、`--with-openssl=…`，
+  依赖 openssl、sqlite3、readline、ncurses、gdbm、gettext 0.26、xz 5.8.2、
+  libffi 3.4.4、bzip2 1.0.8。这是社区记录，不是 B 的构建。
+
+### 社区仓库、维护者与联系方式
+
+| 项 | 已知 | 未知 |
+|---|---|---|
+| 发布者 | OpenHarmonyPCDeveloper 社区；Python 索引 `https://pypi.cnb.cool/OpenHarmonyPCDeveloper/pypi`；CPython 在 `artifacts-cn-beijing.volces.com/.../ophcd.pkg` | 具体维护者、联系方式 |
+| 构建归档 | `OpenHarmonyPCDeveloper/build_in_harmonyos`（GitCode）：`archives/n/numpy`、`archives/l/libedit`、`archives/g/gettext` | 归档只有 NumPy 1.26.4/2.5.2，**没有 2.2.6、没有 SciPy**；gettext 只有 0.22.5.1（载荷构建记录为 0.26） |
+| gettext | 归档 0.22.5.1；载荷构建记录 0.26 | 0.26 的来源与构建方 |
+| libedit | 归档 20240808、20240817、20251016-3.1 | 载荷 `readline` 模块二进制无版本串，无法确认对应版本；构建记录未知 |
+| SciPy OpenBLAS | 来自社区 SciPy 1.16.3 wheel 的 `scipy.libs`，版本 0.3.29 | 构建仓库、维护者、构建记录：不知道 |
+
+以上“不知道”为如实说明，不推断联系人。已交付的清单与许可文件未被本节的补充改写。

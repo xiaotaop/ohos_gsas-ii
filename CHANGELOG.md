@@ -5,6 +5,7 @@
 - 新增 [`docs/DEPENDENCY_LICENSES.md`](docs/DEPENDENCY_LICENSES.md)：按真实载荷字节列出预编译 CPython/NumPy/SciPy 的下载来源、SHA-256、源码地址与 `_sysconfigdata` 记录的构建参数；内嵌第三方库（libffi 3.4.4、GDBM 1.24、OpenSSL 1.1.1w、SQLite 3.49.1、bzip2 1.0.8、XZ 5.8.2、ncurses 6.6、Expat 2.6.4、libmpdec 2.5.1、OpenBLAS 0.3.29）的版本、静态/动态链接方式、消费者与许可证。
 - 新增 [`packaging/third-party.dependencies.json`](packaging/third-party.dependencies.json)（机器可读，含逐文件大小/SHA-256）与 [`packaging/licenses/third-party/`](packaging/licenses/third-party/NOTICE.md)（许可原文、NOTICE、`SOURCES.json`）。
 - 静态依赖分析将 `numpy.libs/libscipy_openblas64_.so` 与 `libgfortran.so.5` 列为移除候选（预计节省约 23.4 MiB）；是否消除两个未匹配依赖并保持功能须由 C 在新签名 HAP 上复核。SciPy 实际使用的 `libscipy_openblas-80d8b5fa.so` 必须保留。
+- [`DEPENDENCY_LICENSES.md`](docs/DEPENDENCY_LICENSES.md) 新增 §7：逐项说明 B 未编译、打补丁或替换任何社区二进制，只做哈希校验下载与文件集合裁剪，因此没有自有工具链/构建日志；社区构建归档的 NumPy（1.26.4/2.5.2）与 gettext（0.22.5.1）版本不等同于载荷（2.2.6 / 0.26），SciPy 与 libedit 版本、维护者及联系方式未知，按实说明。
 
 ## Unreleased — 远端文档与验收状态统一（2026-10-20）
 
