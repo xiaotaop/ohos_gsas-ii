@@ -1,0 +1,18 @@
+{
+  "sourceCommit": "ce624cec654e3492697e22792a047ff69e88d4fc",
+  "versionName": "0.1.1",
+  "versionCode": 2,
+  "hapSha256": "791dc53da7f76c56e0f9ce45b40b83d9cb45b9b42990379f59de64989d712788",
+  "hapSize": 135971349,
+  "zipSha256": "7d26c658021426de1f536cefa5b2962c4d3682741cf777bb16545dfa9384b5c5",
+  "zipSize": 91500152,
+  "allArchiveMembersVerified": true,
+  "deviceAcceptancePending": true,
+  "hapPath": "deliveries/GSAS-II-0.1.1-ce624cec-signed.hap",
+  "archivePath": "deliveries/c-pr17-ce624cec-791dc53d.zip",
+  "privateKeyPasswordOrStandaloneProfileIncluded": false,
+  "deviceAcceptanceOwner": "Leader/B; stable steps required from B",
+  "sourcePullRequest": 17,
+  "sourcePullRequestStateAtBuild": "OPEN",
+  "publicDistributionApproved": false
+}
