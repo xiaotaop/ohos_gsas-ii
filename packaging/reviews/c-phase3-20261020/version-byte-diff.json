@@ -1,0 +1,19 @@
+{
+  "fromHapSha256": "1190b1d5be7fa4520ed519f316db8f4035bb555aaaf8864295bd415aa23ce4e5",
+  "toHapSha256": "70588bde3202dd49512c6628661dba76b761c274aabf8ba05dba5170c06a7fef",
+  "fileCountUnchanged": true,
+  "runtimeAndNativeBytesUnchanged": true,
+  "changedFiles": [
+    {
+      "path": "module.json",
+      "oldSha256": "26b6d6ef97ecd98b833215c9a7e3ce9c83ae2e353dae719d9f5d4eb6507ca6df",
+      "newSha256": "eb9b3f51ef9a46d78324962d9a0b0eee995b1beb17959150399ccbd2a8a02478"
+    },
+    {
+      "path": "pack.info",
+      "oldSha256": "2fab65722e2bb3d65044702c643ced642536e0f8c4e13c9cf807d2dadee32855",
+      "newSha256": "10878c2426b044fd815c8670702723ead39efdd260e42b5fb4751c63ece853de"
+    }
+  ],
+  "scope": "Archive byte comparison only; versionCode 1-to-2 physical upgrade passed separately in upgrade-preservation.json"
+}

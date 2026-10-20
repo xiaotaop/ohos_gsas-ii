@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "directoryName": "member-c-phase3-70588bde",
+  "filename": "member-c-phase3-70588bde.tar.gz",
+  "sha256": "17aa7504b684ad186d6bcaa7b233f3a56fc71f3325e2b5114b845c0ea57f371d",
+  "size": 89176105,
+  "hapSha256": "70588bde3202dd49512c6628661dba76b761c274aabf8ba05dba5170c06a7fef",
+  "sbomSha256": "399d172cf9ae3b93605a09e4815d3dcb332d8df908f0cde6e5981b23f951d7e1",
+  "allArchiveMembersByteVerified": true,
+  "privateSigningMaterialIncluded": false,
+  "cPhase3DeviceWorkComplete": true,
+  "teamReleaseApproved": false
+}

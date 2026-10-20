@@ -1,0 +1,6 @@
+{
+  "systemSavePickerCancelled": true,
+  "completeCatalogUnchanged": true,
+  "existingOwnCancelLogSha256Unchanged": true,
+  "scope": "Chooser cancellation before any target is opened; existing target rejection separately tested by isolated platform checks"
+}

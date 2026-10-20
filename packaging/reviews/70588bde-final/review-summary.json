@@ -1,0 +1,308 @@
+{
+  "schemaVersion": 1,
+  "kind": "C-final-SBOM-engineering-license-review",
+  "date": "2026-10-20",
+  "hapSha256": "70588bde3202dd49512c6628661dba76b761c274aabf8ba05dba5170c06a7fef",
+  "hapSize": 135975365,
+  "runtimeId": "c-controlled-license-prototype-20261020",
+  "scope": "Specific release/internaltesting HAP and complete accompanying materials; no public-store or team-release authorization",
+  "status": "complete-with-recorded-provenance-limitations",
+  "sbomFile": "hap-sbom.cdx.json",
+  "sbomSha256": "399d172cf9ae3b93605a09e4815d3dcb332d8df908f0cde6e5981b23f951d7e1",
+  "hapFiles": 2266,
+  "nativeELFs": 219,
+  "packagedLogicalComponents": 27,
+  "excludedPlatformComponents": 4,
+  "nativeNeededEdges": 485,
+  "unmatchedNeededNames": [],
+  "licenseCollectionsInHap": 19,
+  "explicitComponentDecisions": 32,
+  "mergedDuplicateOrNoticeEntries": 5,
+  "blockingFindings": [],
+  "acceptedProvenanceObservations": [
+    "SciPy generated BLAS 0.3.33 declaration differs from actual OpenBLAS 0.3.29 marker",
+    "Exact SciPy LLVM static archive version is unverified and omitted from SBOM version",
+    "Retained community extension patchsets not independently recovered; no universal permissive-license requirement for complete compiler logs is asserted"
+  ],
+  "licensesCorrected": [
+    "PyCIFRW is the exact ANSTO agreement, not simply PSF-2.0",
+    "No gettext/GDBM/readline/GNU Fortran binary component inferred from a retained license text",
+    "Mixed scientific bundled notices are documentation, not additional binary components",
+    "Platform libraries are excluded/not shipped; no guessed platform versions or licenses"
+  ],
+  "sameHapPhysicalAcceptance": {
+    "schemaVersion": 1,
+    "kind": "C-phase3-same-HAP-physical-acceptance",
+    "hapSha256": "70588bde3202dd49512c6628661dba76b761c274aabf8ba05dba5170c06a7fef",
+    "hapSize": 135975365,
+    "sourceCommit": "fefce257123f6e2f660f6171d480e677dfd02fc4",
+    "runtimeId": "c-controlled-license-prototype-20261020",
+    "deviceModel": "HAD-W32",
+    "apiVersion": 23,
+    "versionCode": 2,
+    "versionName": "0.1.1",
+    "profileType": "release",
+    "appDistributionType": "internaltesting",
+    "installationPassed": true,
+    "oldAppUninstalled": false,
+    "coreReadyPassed": true,
+    "realFiveStagePassed": true,
+    "elapsedSeconds": 8.857,
+    "jobId": "job_a4da423a-1745-4025-aa40-6699d2fc8fac",
+    "independentWindowsBaselineChecksPassed": 12,
+    "applicationValidationPerformed": false,
+    "gpxJsonLogSystemPickerExportPassed": true,
+    "completedJobProcessRestartRecoveryPassed": true,
+    "restoredFileCount": 22,
+    "exports": [
+      {
+        "name": "Recovery.json",
+        "size": 1664,
+        "sha256": "e5f37c770e58905151788536017b4ce1390f80df99496bf711f807cc2ecd0d13"
+      },
+      {
+        "name": "Recovery.gpx",
+        "size": 709896,
+        "sha256": "ebeb000dca438e5890ddf4e54cdf98d1876d9af6d5b74e87ff7a52a916d43e16"
+      },
+      {
+        "name": "Recovery.log",
+        "size": 5383,
+        "sha256": "a803cc933718eb659b3a09a533db5624f1a58de7fe070191fe79993f6e1840e7"
+      }
+    ],
+    "upgradePreservationRecord": "upgrade-preservation.json",
+    "cancelRecord": "Cancel-receipt.json",
+    "interruptionRecord": "Interrupted-receipt.json",
+    "failureRecord": "failure-receipt.json",
+    "platformFileChecks": {
+      "passed": 18,
+      "failed": 0,
+      "skipped": 1,
+      "lines": [
+        "PASS 导入及 SHA-256 PBSO4.XRA",
+        "PASS 导入及 SHA-256 INST_XRY.PRM",
+        "PASS 导入及 SHA-256 PBSO4.CWN",
+        "PASS 导入及 SHA-256 inst_d1a.prm",
+        "PASS 导入及 SHA-256 PbSO4-Wyckoff.cif",
+        "PASS 重建服务后恢复 fileId 和元数据",
+        "PASS 未知 fileId 与路径逃逸被拒绝",
+        "PASS 格式不匹配不产生文件登记",
+        "PASS 并发导入使用独立 ID 和串行持久化",
+        "PASS 任务引用保护与进程中断租约恢复",
+        "PASS 导出真实字节、拒绝覆盖已有文件",
+        "PASS 已有空文件通过 URI 导出时也不覆盖",
+        "PASS 真实 JSON 产物登记、查询和导出",
+        "PASS 同一产物路径拒绝使用不同 fileId 重复登记",
+        "SKIP 符号链接创建：API 11 起禁止第三方应用创建；需宿主真实文件系统补验",
+        "PASS 内容变化被检出",
+        "PASS 删除中断标记在重建时完成清理",
+        "PASS 未登记的导入与暂存副本在重建时清理",
+        "PASS 删除后查询与重建均保持删除状态"
+      ],
+      "scope": "Actual production HAP file service checks in isolated cache workspace; skips not counted as passed"
+    },
+    "cPhase3DeviceWorkComplete": true,
+    "releaseApproved": false,
+    "scopeLimits": [
+      "HAD-W32/API23 only",
+      "A product/UI sign-off and B Core-only BUSY/cancel race not inferred",
+      "No explicit disconnected-WiFi run while relying on wireless debugging",
+      "Internaltesting only, no public-store or team release authorization",
+      "Known A UI cache observation: Imported files list does not refresh immediately after new result; actual outputs persist and export, separately recorded for A follow-up"
+    ]
+  },
+  "sourceCompanions": [
+    {
+      "filename": "gsas-port-source-companion.tar.gz",
+      "sha256": "80e14e3d775e0f05a7760e402a61e263f0ab8af9046d226d3c30ea8dc7c9c997",
+      "size": 19125834,
+      "portCommit": "fefce257123f6e2f660f6171d480e677dfd02fc4",
+      "verifiedActualAppFiles": 50
+    },
+    {
+      "filename": "gsas-controlled-cpython-source-20261020.tar.gz",
+      "sha256": "6f654514dd7642f283668e3297d39674a97c09ec02b36291eb9140024d0da3a0",
+      "size": 27040149,
+      "verifiedSourcePreparationFiles": 4556
+    }
+  ],
+  "externalNoticesFile": "evidence/THIRD-PARTY-NOTICES.txt",
+  "externalNoticesSha256": "4be2731c67b3526a2a80397a0bb90a928de22a4e496cb41daf2e9aa0212f1c4b",
+  "step2EngineeringDeliveryComplete": true,
+  "publicDistributionApproved": false,
+  "releaseApproved": false,
+  "snapshotFiles": [
+    {
+      "path": "evidence/Cancel-receipt.json",
+      "sha256": "a5bf6d040eec886e340138ba08e03b67651889798f06b6587b1825311a105367",
+      "size": 172
+    },
+    {
+      "path": "evidence/Interrupted-receipt.json",
+      "sha256": "259092236cecd26df75ccd77d9e3aca62acca2b70461fcee63f36e75ce31695b",
+      "size": 212
+    },
+    {
+      "path": "evidence/Recovery-export-receipts.json",
+      "sha256": "14488559b2d23601abbcd4c4b0dbaafd4664b6e4399cbf6faa06da0358f95c9c",
+      "size": 414
+    },
+    {
+      "path": "evidence/Recovery-result-comparison.json",
+      "sha256": "46201838cef0af138b36520323fb34f942606181ba4cac958e531f6a0e25ad5b",
+      "size": 3265
+    },
+    {
+      "path": "evidence/THIRD-PARTY-NOTICES.txt",
+      "sha256": "4be2731c67b3526a2a80397a0bb90a928de22a4e496cb41daf2e9aa0212f1c4b",
+      "size": 1559273
+    },
+    {
+      "path": "evidence/after-picker-cancel.json",
+      "sha256": "91ed178334e700980c9cca6134320f590bd4979b5e56ee517ebdf0cc021e9132",
+      "size": 4305
+    },
+    {
+      "path": "evidence/after-success-cold-start.json",
+      "sha256": "b513ac48c75d5d4fecd1f4244bf1b57ec96dbf5dab4ab010969fc4af8e989bfe",
+      "size": 5258
+    },
+    {
+      "path": "evidence/before-picker-cancel.json",
+      "sha256": "91ed178334e700980c9cca6134320f590bd4979b5e56ee517ebdf0cc021e9132",
+      "size": 4305
+    },
+    {
+      "path": "evidence/before-success-cold-start.json",
+      "sha256": "b513ac48c75d5d4fecd1f4244bf1b57ec96dbf5dab4ab010969fc4af8e989bfe",
+      "size": 5258
+    },
+    {
+      "path": "evidence/bundled-source-receipts.json",
+      "sha256": "cc108a266a27eeabd57fad5d7bb863b1407218b062a66508fe04ab1e88b1f4f8",
+      "size": 11939
+    },
+    {
+      "path": "evidence/cancel-log-export.json",
+      "sha256": "97e884560972ffed05f90d7584a6e08d2ff754b99f8ae8e393fec7fc84d5d10b",
+      "size": 122
+    },
+    {
+      "path": "evidence/controlled-core.json",
+      "sha256": "6ff32262d52d32be693878b134e449c049a08110254858003853142d0ffa157d",
+      "size": 35351
+    },
+    {
+      "path": "evidence/core-source-companion.json",
+      "sha256": "4fad82bfd10064e88b891568a2a473e3ab03fa156ca950bb416112b9d986ca1b",
+      "size": 552
+    },
+    {
+      "path": "evidence/failure-log-export.json",
+      "sha256": "2dc7ba5825290b6e688923b16424da7cd91280cf70bc3aa98501e3f19ae1fbcd",
+      "size": 122
+    },
+    {
+      "path": "evidence/failure-receipt.json",
+      "sha256": "9803ea7cc10dd86233f3923f91b06951a89368c4aeef828fc01ce1a2fb0d8f97",
+      "size": 211
+    },
+    {
+      "path": "evidence/file-library-cache-observation.json",
+      "sha256": "902f7fb2b6ed1a31b21f5b45ef115bd47412c355725d17beb5d6500a34ebe244",
+      "size": 524
+    },
+    {
+      "path": "evidence/file-platform-checks.json",
+      "sha256": "c34a7facd79b1ae4df2565d95909da31ec8ad558144214508b479080683fa924",
+      "size": 1225
+    },
+    {
+      "path": "evidence/first-success-cold-start-cached-library.json",
+      "sha256": "75263b64db69c77621830a7535238e55dba44997e0408bfda34add219f04abe8",
+      "size": 4536
+    },
+    {
+      "path": "evidence/gnu-marker-scan.json",
+      "sha256": "0856ea6e2a90f73a1b842988cef0e0c41ded451c54bf6054b9e947fdd0178e06",
+      "size": 385
+    },
+    {
+      "path": "evidence/license-source-receipts.json",
+      "sha256": "abf4918accd6f75ff00c98eb84b478b3bfa11ad90aa8bdb0ec64366c564eedd7",
+      "size": 9872
+    },
+    {
+      "path": "evidence/native-dependencies.json",
+      "sha256": "de7463755017550c11ec87a7d194958bdc3fab7d0ca12e840b62a3989a477daa",
+      "size": 194290
+    },
+    {
+      "path": "evidence/native-modules.json",
+      "sha256": "cf9eb9c43de716117d8999b330a353fd081ae99c08626f162c765135702aa4a7",
+      "size": 4867
+    },
+    {
+      "path": "evidence/openblas-notices.json",
+      "sha256": "899370821257568a278b986423eccf8450b735c66b52573957e565053a50d88f",
+      "size": 2039
+    },
+    {
+      "path": "evidence/original-state-restoration.json",
+      "sha256": "f0aa25808a34689a7be86866233ea47b7491b3516516b3179ef94913af1e8bf2",
+      "size": 185
+    },
+    {
+      "path": "evidence/physical-acceptance.json",
+      "sha256": "d98312086318596b0e606d48e93e3addaaa2846db9ccdd70a2076011af165cce",
+      "size": 3359
+    },
+    {
+      "path": "evidence/save-cancel-receipt.json",
+      "sha256": "3fe12440c4da76d3618b3b8a7a09d3ef0a79a8b72882e0229173f0bc1253643e",
+      "size": 259
+    },
+    {
+      "path": "evidence/scientific-elf.json",
+      "sha256": "c85ae5ca73bd9bc11017d8fd03109c4c113122b9905b6dab7dc5d9137db0d9c7",
+      "size": 166376
+    },
+    {
+      "path": "evidence/source-bundle-verification.json",
+      "sha256": "ff15ad67dec0be792c02d93a891b7c0e6c22f77f4abd361996a45a15917edaa6",
+      "size": 587
+    },
+    {
+      "path": "evidence/successful-cold-start-recovery.json",
+      "sha256": "3ba5a8fa9cc2f87bf8c5ad674726684d397c26ba26c91eba937a5e10f5de7a69",
+      "size": 429
+    },
+    {
+      "path": "evidence/upgrade-preservation.json",
+      "sha256": "0ed73c53154aa2d2ea24caaa5414797660a4e8287ba189087b5e180f5eba4998",
+      "size": 334
+    },
+    {
+      "path": "evidence/version-byte-diff.json",
+      "sha256": "6487d4f93f09313387138d467b03d7cfe197672bfe5caf1aabf206d82c4a4608",
+      "size": 1305
+    },
+    {
+      "path": "hap-sbom.cdx.json",
+      "sha256": "399d172cf9ae3b93605a09e4815d3dcb332d8df908f0cde6e5981b23f951d7e1",
+      "size": 1605607
+    },
+    {
+      "path": "review-decisions.json",
+      "sha256": "0cf5d8ff537d94b31d56ee6d4df788cf9cb21d7b9a823114290f4ea5d8eaa9f6",
+      "size": 28672
+    },
+    {
+      "path": "third-party-observations.json",
+      "sha256": "ea58612dee93055ecc737d23f17ee3c93c1c26a6ff120284bffeb15cb84932bb",
+      "size": 46728
+    }
+  ],
+  "cPhase3DeviceWorkComplete": true
+}

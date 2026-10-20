@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "kind": "C-phase3-same-HAP-physical-acceptance",
+  "hapSha256": "70588bde3202dd49512c6628661dba76b761c274aabf8ba05dba5170c06a7fef",
+  "hapSize": 135975365,
+  "sourceCommit": "fefce257123f6e2f660f6171d480e677dfd02fc4",
+  "runtimeId": "c-controlled-license-prototype-20261020",
+  "deviceModel": "HAD-W32",
+  "apiVersion": 23,
+  "versionCode": 2,
+  "versionName": "0.1.1",
+  "profileType": "release",
+  "appDistributionType": "internaltesting",
+  "installationPassed": true,
+  "oldAppUninstalled": false,
+  "coreReadyPassed": true,
+  "realFiveStagePassed": true,
+  "elapsedSeconds": 8.857,
+  "jobId": "job_a4da423a-1745-4025-aa40-6699d2fc8fac",
+  "independentWindowsBaselineChecksPassed": 12,
+  "applicationValidationPerformed": false,
+  "gpxJsonLogSystemPickerExportPassed": true,
+  "completedJobProcessRestartRecoveryPassed": true,
+  "restoredFileCount": 22,
+  "exports": [
+    {
+      "name": "Recovery.json",
+      "size": 1664,
+      "sha256": "e5f37c770e58905151788536017b4ce1390f80df99496bf711f807cc2ecd0d13"
+    },
+    {
+      "name": "Recovery.gpx",
+      "size": 709896,
+      "sha256": "ebeb000dca438e5890ddf4e54cdf98d1876d9af6d5b74e87ff7a52a916d43e16"
+    },
+    {
+      "name": "Recovery.log",
+      "size": 5383,
+      "sha256": "a803cc933718eb659b3a09a533db5624f1a58de7fe070191fe79993f6e1840e7"
+    }
+  ],
+  "upgradePreservationRecord": "upgrade-preservation.json",
+  "cancelRecord": "Cancel-receipt.json",
+  "interruptionRecord": "Interrupted-receipt.json",
+  "failureRecord": "failure-receipt.json",
+  "platformFileChecks": {
+    "passed": 18,
+    "failed": 0,
+    "skipped": 1,
+    "lines": [
+      "PASS 导入及 SHA-256 PBSO4.XRA",
+      "PASS 导入及 SHA-256 INST_XRY.PRM",
+      "PASS 导入及 SHA-256 PBSO4.CWN",
+      "PASS 导入及 SHA-256 inst_d1a.prm",
+      "PASS 导入及 SHA-256 PbSO4-Wyckoff.cif",
+      "PASS 重建服务后恢复 fileId 和元数据",
+      "PASS 未知 fileId 与路径逃逸被拒绝",
+      "PASS 格式不匹配不产生文件登记",
+      "PASS 并发导入使用独立 ID 和串行持久化",
+      "PASS 任务引用保护与进程中断租约恢复",
+      "PASS 导出真实字节、拒绝覆盖已有文件",
+      "PASS 已有空文件通过 URI 导出时也不覆盖",
+      "PASS 真实 JSON 产物登记、查询和导出",
+      "PASS 同一产物路径拒绝使用不同 fileId 重复登记",
+      "SKIP 符号链接创建：API 11 起禁止第三方应用创建；需宿主真实文件系统补验",
+      "PASS 内容变化被检出",
+      "PASS 删除中断标记在重建时完成清理",
+      "PASS 未登记的导入与暂存副本在重建时清理",
+      "PASS 删除后查询与重建均保持删除状态"
+    ],
+    "scope": "Actual production HAP file service checks in isolated cache workspace; skips not counted as passed"
+  },
+  "cPhase3DeviceWorkComplete": true,
+  "releaseApproved": false,
+  "scopeLimits": [
+    "HAD-W32/API23 only",
+    "A product/UI sign-off and B Core-only BUSY/cancel race not inferred",
+    "No explicit disconnected-WiFi run while relying on wireless debugging",
+    "Internaltesting only, no public-store or team release authorization",
+    "Known A UI cache observation: Imported files list does not refresh immediately after new result; actual outputs persist and export, separately recorded for A follow-up"
+  ]
+}
