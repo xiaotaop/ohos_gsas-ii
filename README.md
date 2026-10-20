@@ -2,6 +2,8 @@
 
 GSAS-II 面向 HarmonyOS PC 的移植仓库。无 GUI 核心 PoC、正式 ArkUI 页面、文件服务、C++ N-API 与 B03 终态产物已合入主线。**指定设备内测包 0.1.1 / versionCode 2（`70588bde…`）已在 HAD-W32/API23 完成 C 的阶段三验收：递增版本升级保留旧数据、成功/失败/取消日志、三类导出、活动中断与成功任务/完整索引冷启动恢复。**同包最终 SBOM、许可材料和源码伴随已冻结，见 [C 阶段三交接](docs/C_PHASE3_ACCEPTANCE.md)。A 已在源码中修复文件库缓存刷新并精简界面，但这些修改晚于该 HAP，仍待新签名包复验；Core 专项、显式断网/API 兼容矩阵与组长技术放行也未完成。这不是公开上架批准，当前状态以[验收矩阵](docs/RELEASE_ACCEPTANCE.md)为准。
 
+PR #14 后的新完整签名候选 `59c86f18…` 已构建并可[直接下载交付 ZIP](docs/C_A14_SIGNED_HAP.md)，源码为 `57c661db…`；它与上述已验收旧包版本号相同，新包真机结果待 A 返回。
+
 代码仓库：[GitHub](https://github.com/xiaotaop/ohos_gsas-ii)、[GitCode](https://gitcode.com/2401_86708491/ohos_gsas-ii)。社区申请状态见 [发布交接](docs/PUBLISHING.md)。
 
 GSAS-II 是用于 X 射线及中子衍射等结构分析的上游开源软件。本项目拟先验证其脚本化科学计算核心在 HarmonyOS PC 上的运行与数值一致性，再决定桌面界面的具体实现及上架范围。

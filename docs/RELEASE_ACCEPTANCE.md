@@ -2,9 +2,9 @@
 
 状态更新：2026-10-20，以 [C 阶段三同包验收](C_PHASE3_ACCEPTANCE.md)及 [70588bde 最终审查](../packaging/reviews/70588bde-final/review-summary.json)为最新工程交付。0.1.1 / versionCode 2、指定设备 `release/internaltesting` HAP 已在 HAD-W32/API23 完成递增版本覆盖及完整旧数据保留、成功/失败/取消日志、三类导出、活动任务中断和成功任务冷启动恢复；文件服务检查 18 通过/1 跳过。成员 C 本轮阶段三与最终 SBOM/许可材料交付已完成；A/B 专项、兼容性/显式断网及组长放行未完成。旧 `1190b1d5…`、`88ea4528…` 证据保留，但不冒充新包设备测试。
 
-最新 HAP SHA-256：`70588bde3202dd49512c6628661dba76b761c274aabf8ba05dba5170c06a7fef`。仅版本元数据变化，运行时/原生库/许可字节已与前包重新逐项核对；新 HAP 的实际设备证据、最终 SBOM 与源码伴随材料分别重新绑定。`publicDistributionApproved=false`、`releaseApproved=false`。
+已完成设备验收的冻结 HAP SHA-256：`70588bde3202dd49512c6628661dba76b761c274aabf8ba05dba5170c06a7fef`。仅版本元数据变化，运行时/原生库/许可字节已与前包重新逐项核对；新 HAP 的实际设备证据、最终 SBOM 与源码伴随材料分别重新绑定。`publicDistributionApproved=false`、`releaseApproved=false`。
 
-后续 A 页面修复已合入源码：任务终态后刷新文件库、增加手动刷新并精简文案，见 [A 真机与源码记录](A_DEVICE_UI_2026-10-20.md)。该改动**晚于**上述 HAP 的构建源码；旧包的真机记录不能证明新页面已经在设备上通过。需由 C 重新集成签名并按新 HAP 哈希复验，再更新最终交付材料。
+后续 A 页面修复已合入源码：任务终态后刷新文件库、增加手动刷新并精简文案，见 [A 真机与源码记录](A_DEVICE_UI_2026-10-20.md)。该改动**晚于**上述 HAP 的构建源码；旧包的真机记录不能证明新页面已经在设备上通过。C 已按 `57c661db…` 重建完整签名候选 `59c86f18…`，见[下载与交接](C_A14_SIGNED_HAP.md)；新包由 A 安装后按新哈希复验，随后更新最终设备绑定材料。
 
 2026-10-19 C 增量：API26 ARM64 开发 HAP 另行通过取消、重启/中断恢复、再次五阶段及草稿/笔记保留测试，见 [C_NATIVE_ACCEPTANCE](C_NATIVE_ACCEPTANCE.md)。它与上述签名真机 HAP 是不同产物，证据不可混用。下方矩阵是当前状态；早期失败与缺模块结论只在对应历史记录中有效。
 
