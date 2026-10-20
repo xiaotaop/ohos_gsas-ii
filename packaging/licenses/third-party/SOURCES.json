@@ -1,0 +1,112 @@
+[
+    {
+        "file":  "libffi-3.4.4-LICENSE.txt",
+        "component":  "libffi",
+        "version":  "3.4.4",
+        "license":  "MIT",
+        "sourceUrl":  "https://github.com/libffi/libffi/releases/download/v3.4.4/libffi-3.4.4.tar.gz",
+        "retrieved":  "2026-10-20",
+        "sha256":  "2c9c2acb9743e6b007b91350475308aee44691d96aa20eacef8e199988c8c388",
+        "bytes":  1132
+    },
+    {
+        "file":  "gdbm-1.24-COPYING.txt",
+        "component":  "GDBM",
+        "version":  "1.24",
+        "license":  "GPL-3.0-or-later",
+        "sourceUrl":  "https://ftp.gnu.org/gnu/gdbm/gdbm-1.24.tar.gz",
+        "retrieved":  "2026-10-20",
+        "sha256":  "690d762f2e8e149ab1e2d6a409a3853b6151a2533b2382fae549a176d6bedecf",
+        "bytes":  35072
+    },
+    {
+        "file":  "openssl-1.1.1w-LICENSE.txt",
+        "component":  "OpenSSL",
+        "version":  "1.1.1w",
+        "license":  "OpenSSL/SSLeay",
+        "sourceUrl":  "https://www.openssl.org/source/openssl-1.1.1w.tar.gz",
+        "retrieved":  "2026-10-20",
+        "sha256":  "c32913b33252e71190af2066f08115c69bc9fddadf3bf29296e20c835389841c",
+        "bytes":  6121
+    },
+    {
+        "file":  "sqlite-3.49.1-PUBLIC-DOMAIN.txt",
+        "component":  "SQLite",
+        "version":  "3.49.1",
+        "license":  "Public-Domain",
+        "sourceUrl":  "https://www.sqlite.org/copyright.html",
+        "retrieved":  "2026-10-20",
+        "sha256":  "324e433812420af7e704d8522013c8107c4b2fe829153bb94622f86c0f49fa13",
+        "bytes":  678
+    },
+    {
+        "file":  "bzip2-1.0.8-LICENSE.txt",
+        "component":  "bzip2",
+        "version":  "1.0.8",
+        "license":  "bzip2-1.0.6",
+        "sourceUrl":  "https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz",
+        "retrieved":  "2026-10-20",
+        "sha256":  "c6dbbf828498be844a89eaa3b84adbab3199e342eb5cb2ed2f0d4ba7ec0f38a3",
+        "bytes":  1896
+    },
+    {
+        "file":  "xz-5.8.2-COPYING.txt",
+        "component":  "XZ/liblzma",
+        "version":  "5.8.2",
+        "license":  "0BSD",
+        "sourceUrl":  "https://github.com/tukaani-project/xz/archive/refs/tags/v5.8.2.tar.gz",
+        "retrieved":  "2026-10-20",
+        "sha256":  "616a3ad264ce29b8f1cb97e53037b139d406899ca8d1f799651e17bfa09830b8",
+        "bytes":  3119
+    },
+    {
+        "file":  "ncurses-6.6-COPYING.txt",
+        "component":  "ncurses",
+        "version":  "6.6.20251230",
+        "license":  "X11",
+        "sourceUrl":  "https://invisible-island.net/datafiles/release/ncurses.tar.gz",
+        "retrieved":  "2026-10-20",
+        "sha256":  "708999f95527e1ffa670c6fce288c6c600cb477dd04afcc1171422b3dd4ee226",
+        "bytes":  1447
+    },
+    {
+        "file":  "expat-2.6.4-COPYING.txt",
+        "component":  "Expat",
+        "version":  "2.6.4",
+        "license":  "MIT",
+        "sourceUrl":  "https://github.com/libexpat/libexpat/releases/download/R_2_6_4/expat-2.6.4.tar.gz",
+        "retrieved":  "2026-10-20",
+        "sha256":  "122f2c27000472a201d337b9b31f7eb2b52d091b02857061a8880371612d9534",
+        "bytes":  1144
+    },
+    {
+        "file":  "libmpdec-2.5.1-LICENSE.txt",
+        "component":  "libmpdec",
+        "version":  "2.5.1",
+        "license":  "BSD-2-Clause",
+        "sourceUrl":  "https://www.python.org/ftp/python/3.12.9/Python-3.12.9.tgz",
+        "retrieved":  "2026-10-20",
+        "sha256":  "7065ec78957089bfb800064edb29ba78b58e5ed1be4efa71b25f7b1ff0833e2d",
+        "bytes":  1537
+    },
+    {
+        "file":  "openblas-0.3.29-LICENSE.txt",
+        "component":  "OpenBLAS",
+        "version":  "0.3.29",
+        "license":  "BSD-3-Clause",
+        "sourceUrl":  "https://github.com/OpenMathLib/OpenBLAS/archive/refs/tags/v0.3.29.tar.gz",
+        "retrieved":  "2026-10-20",
+        "sha256":  "190b5a9c8d9723fe958ad33916bd7346d96fab3c5ea90832bb02d854f620fcff",
+        "bytes":  1548
+    },
+    {
+        "file":  "gcc-runtime-COPYING.txt",
+        "component":  "GCC Runtime (libgfortran)",
+        "version":  "9.3.0",
+        "license":  "GPL-3.0-or-later WITH GCC-exception-3.1",
+        "sourceUrl":  "https://ftp.gnu.org/gnu/gcc/gcc-9.3.0/",
+        "retrieved":  "2026-10-20",
+        "sha256":  "c2ff6bea4ff8eb81e93a10878e3a03db5015051b32272b363a6f23d3b86b11a2",
+        "bytes":  70612
+    }
+]

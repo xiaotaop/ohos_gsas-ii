@@ -15,7 +15,7 @@
 | CPython | 当前未打包 | 计划复用已验证 3.12.9 | 后续记录实际 OHOS 载荷来源、许可原文、源码与哈希 |
 | NumPy / SciPy / PyCifRW | 当前未打包 | 计划 2.2.6 / 1.16.3 / 5.0.1 | 从 B 取得实际依赖图与构建说明，审计原生链接库 |
 | GSAS-II 核心和原生扩展 | 当前未打包 | 固定上游提交 | 发布构建排除 pydiffax；处理 G2shapes 范围；核对相关源码义务 |
-| flang / BLAS 等运行库 | 当前未打包 | 以实际载荷为准，不推断版本 | 向 B 获取来源、版本、许可和链接依赖 |
+| flang / BLAS 等运行库 | 当前未打包 | 以实际载荷为准，不推断版本 | 已由 B 整理为[依赖与许可清单](DEPENDENCY_LICENSES.md)：内嵌库版本、链接方式、消费者、许可原文与来源；最终分发判断仍由 C 作出 |
 | mock/fake core | 当前 app 不包含 | ui-mock 与 bridge/fake_core 仅在仓库开发范围 | 发布装配时继续验证最终载荷排除 |
 
 DevEco CLI、Hvigor、ohpm、Node.js 为构建工具，当前不是 app 的自带运行时组件。最终 SBOM 必须以实际发布 HAP 文件与链接关系为依据，不能直接把此计划表当作成品 SBOM。

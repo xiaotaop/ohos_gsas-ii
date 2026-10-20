@@ -1,0 +1,418 @@
+{
+  "schemaVersion": "1.0",
+  "payload": {
+    "runtimeId": "b-ohos-aarch64-3.12.9-p1",
+    "source": "B 基础载荷（2214 文件）；不含 8 个 GSAS-II 扩展",
+    "note": "哈希按基础载荷文件计算；最终签名 HAP 由 C 重新审计"
+  },
+  "components": [
+    {
+      "id": "cpython",
+      "version": "3.12.9",
+      "kind": "prebuilt-package",
+      "linkMode": "shared library + statically linked stdlib modules",
+      "files": [
+        {
+          "path": "libs/libpython3.12.so",
+          "bytes": 6899456,
+          "sha256": "1626c4a91dfea4a361e27b29622ba26b3c8da3752eb137d2aaf391ee78c8a96b"
+        },
+        {
+          "path": "runtime/lib/libffi.so.8",
+          "bytes": 116608,
+          "sha256": "a327147eb7811ba08b53cf27c50c1f4ff837f720385e029e55ccd3f480e05ff8"
+        },
+        {
+          "path": "runtime/lib/libgdbm.so.6",
+          "bytes": 79616,
+          "sha256": "7879eeb18c04e72287893d32516136d1745bca4469e569041222120b0c423dd2"
+        }
+      ],
+      "license": {
+        "spdx": "PSF-2.0",
+        "text": "payload/licenses/cpython/LICENSE"
+      },
+      "source": {
+        "download": "https://artifacts-cn-beijing.volces.com/repository/ophcd.pkg/pkg/kernel-1.13.0/python/3.12.9/python-3.12.9-ohos-aarch64.tar.gz",
+        "downloadSha256": "767b7ef43155551aeeb147b15a828d8b996a3ef70fec7edd4eee01800b163576",
+        "sourceCode": "https://www.python.org/ftp/python/3.12.9/Python-3.12.9.tgz",
+        "sourceSha256": "45313e4c5f0e8acdec9580161d565cf5fea578e3eabf25df7cc6355bf4afa1ee",
+        "buildConfig": "sysconfig: --enable-shared --build/--host=aarch64-unknown-linux-ohos --with-openssl=<deps>; CC=clang; CFLAGS=-fPIC -O2 -fuse-ld=bfd; deps: openssl, sqlite3, readline, ncurses, gdbm, gettext 0.26, xz 5.8.2, libffi 3.4.4, bzip2 1.0.8",
+        "patches": "未在载荷中记录；需向社区构建方索取"
+      },
+      "status": "keep"
+    },
+    {
+      "id": "numpy",
+      "version": "2.2.6",
+      "kind": "prebuilt-package",
+      "linkMode": "extension modules link libpython3.12 + libc only; BLAS kernels built in (lapack_lite/noblas)",
+      "files": [
+        {
+          "path": "runtime/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_.so",
+          "bytes": 23271424,
+          "sha256": "06883ce6a74cd7cf85b1310f61dc3cd40ced7f3d45a130bc8cee30129bcfceed"
+        },
+        {
+          "path": "runtime/lib/python3.12/site-packages/numpy.libs/libgfortran.so.5",
+          "bytes": 1287808,
+          "sha256": "2d227ceb579be7ad5f462abf995a7d258b6406b6a03803493d048d86dd6a7f5d"
+        }
+      ],
+      "license": {
+        "spdx": "BSD-3-Clause",
+        "text": "payload/licenses/numpy/LICENSE.txt"
+      },
+      "source": {
+        "download": "https://pypi.cnb.cool/OpenHarmonyPCDeveloper/pypi/-/packages/simple/numpy/../../packages/46/d1/ec3f782abdf0d8a87398feb6f732731945db028a9e59023f3c2f021bd910/numpy-2.2.6-cp312-cp312-ohos_aarch64.whl",
+        "downloadSha256": "8468135b1d7aabdc0778c7ca4e50f5db1b2148aed97144bf354b80f2a091fcb0",
+        "sourceCode": "https://github.com/numpy/numpy/releases/tag/v2.2.6",
+        "patches": "社区 wheel 构建补丁/配置未随包发布；需向发行方索取"
+      },
+      "status": "keep"
+    },
+    {
+      "id": "scipy",
+      "version": "1.16.3",
+      "kind": "prebuilt-package",
+      "linkMode": "23 modules DT_NEEDED libscipy_openblas-80d8b5fa.so; OpenBLAS 0.3.29 statically includes its Fortran runtime (NEEDED libc only)",
+      "files": [
+        {
+          "path": "runtime/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-80d8b5fa.so",
+          "bytes": 10803648,
+          "sha256": "094de356dd4def6076eb2f48ed17ae09364743f21ecf0be457e4828f9c89bf60"
+        }
+      ],
+      "license": {
+        "spdx": "BSD-3-Clause",
+        "text": "payload/licenses/scipy/LICENSE.txt"
+      },
+      "source": {
+        "download": "https://pypi.cnb.cool/OpenHarmonyPCDeveloper/pypi/-/packages/simple/scipy/../../packages/b5/eb/cb74cfabd35deed6c787d654513660eaefb062f275977043868d5cdb960b/scipy-1.16.3-cp312-cp312-ohos_aarch64.whl",
+        "downloadSha256": "a7e2095d76bfb55460b4f66ba5a7eb7861ca644c5c6326252b7cdb02a6d61dcd",
+        "sourceCode": "https://github.com/scipy/scipy/releases/tag/v1.16.3",
+        "patches": "社区 wheel 构建补丁/配置未随包发布；需向发行方索取"
+      },
+      "status": "keep"
+    },
+    {
+      "id": "libffi",
+      "version": "3.4.4",
+      "kind": "embedded-library",
+      "linkMode": "dynamic",
+      "files": [
+        {
+          "path": "runtime/lib/libffi.so.8",
+          "bytes": 116608,
+          "sha256": "a327147eb7811ba08b53cf27c50c1f4ff837f720385e029e55ccd3f480e05ff8"
+        }
+      ],
+      "consumers": [
+        "_ctypes.cpython-312-aarch64-linux-ohos.so"
+      ],
+      "license": {
+        "spdx": "MIT",
+        "text": "packaging/licenses/third-party/libffi-3.4.4-LICENSE.txt"
+      },
+      "source": {
+        "url": "https://github.com/libffi/libffi/releases/download/v3.4.4/libffi-3.4.4.tar.gz",
+        "patches": "未记录"
+      },
+      "status": "keep"
+    },
+    {
+      "id": "gdbm",
+      "version": "1.24",
+      "kind": "embedded-library",
+      "linkMode": "dynamic",
+      "files": [
+        {
+          "path": "runtime/lib/libgdbm.so.6",
+          "bytes": 79616,
+          "sha256": "7879eeb18c04e72287893d32516136d1745bca4469e569041222120b0c423dd2"
+        }
+      ],
+      "consumers": [
+        "_gdbm.cpython-312-aarch64-linux-ohos.so"
+      ],
+      "license": {
+        "spdx": "GPL-3.0-or-later",
+        "text": "packaging/licenses/third-party/gdbm-1.24-COPYING.txt"
+      },
+      "source": {
+        "url": "https://ftp.gnu.org/gnu/gdbm/gdbm-1.24.tar.gz",
+        "patches": "未记录"
+      },
+      "status": "keep"
+    },
+    {
+      "id": "openssl",
+      "version": "1.1.1w",
+      "kind": "embedded-library",
+      "linkMode": "static",
+      "files": [],
+      "consumers": [
+        "_ssl.cpython-312-aarch64-linux-ohos.so",
+        "_hashlib.cpython-312-aarch64-linux-ohos.so"
+      ],
+      "evidence": "strings: 'OpenSSL 1.1.1w  11 Sep 2023'",
+      "license": {
+        "spdx": "OpenSSL/SSLeay",
+        "text": "packaging/licenses/third-party/openssl-1.1.1w-LICENSE.txt"
+      },
+      "source": {
+        "url": "https://www.openssl.org/source/openssl-1.1.1w.tar.gz",
+        "patches": "未记录"
+      },
+      "status": "keep"
+    },
+    {
+      "id": "sqlite",
+      "version": "3.49.1",
+      "kind": "embedded-library",
+      "linkMode": "static",
+      "files": [],
+      "consumers": [
+        "_sqlite3.cpython-312-aarch64-linux-ohos.so"
+      ],
+      "evidence": "strings: '3.49.1'",
+      "license": {
+        "spdx": "Public-Domain",
+        "text": "packaging/licenses/third-party/sqlite-3.49.1-PUBLIC-DOMAIN.txt"
+      },
+      "source": {
+        "url": "https://www.sqlite.org/copyright.html",
+        "patches": "未记录"
+      },
+      "status": "keep"
+    },
+    {
+      "id": "bzip2",
+      "version": "1.0.8",
+      "kind": "embedded-library",
+      "linkMode": "static",
+      "files": [],
+      "consumers": [
+        "_bz2.cpython-312-aarch64-linux-ohos.so"
+      ],
+      "evidence": "sysconfig MODULE__BZ2_LDFLAGS=-lbz2; strings '1.0.8'",
+      "license": {
+        "spdx": "bzip2-1.0.6",
+        "text": "packaging/licenses/third-party/bzip2-1.0.8-LICENSE.txt"
+      },
+      "source": {
+        "url": "https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz",
+        "patches": "未记录"
+      },
+      "status": "keep"
+    },
+    {
+      "id": "xz",
+      "version": "5.8.2",
+      "kind": "embedded-library",
+      "linkMode": "static",
+      "files": [],
+      "consumers": [
+        "_lzma.cpython-312-aarch64-linux-ohos.so"
+      ],
+      "evidence": "sysconfig PKG_CONFIG_PATH/LDFLAGS: xz_v5.8.2; strings '5.8.2'",
+      "license": {
+        "spdx": "0BSD",
+        "text": "packaging/licenses/third-party/xz-5.8.2-COPYING.txt"
+      },
+      "source": {
+        "url": "https://github.com/tukaani-project/xz/archive/refs/tags/v5.8.2.tar.gz",
+        "patches": "未记录"
+      },
+      "status": "keep"
+    },
+    {
+      "id": "ncurses",
+      "version": "6.6.20251230",
+      "kind": "embedded-library",
+      "linkMode": "static",
+      "files": [],
+      "consumers": [
+        "_curses.cpython-312-aarch64-linux-ohos.so",
+        "_curses_panel.cpython-312-aarch64-linux-ohos.so"
+      ],
+      "evidence": "strings '6.6.20251230'; sysconfig MODULE__CURSES_LDFLAGS=-lncursesw",
+      "license": {
+        "spdx": "X11",
+        "text": "packaging/licenses/third-party/ncurses-6.6-COPYING.txt"
+      },
+      "source": {
+        "url": "https://invisible-island.net/datafiles/release/ncurses.tar.gz",
+        "patches": "未记录"
+      },
+      "status": "keep"
+    },
+    {
+      "id": "expat",
+      "version": "2.6.4",
+      "kind": "embedded-library",
+      "linkMode": "static",
+      "files": [],
+      "consumers": [
+        "pyexpat.cpython-312-aarch64-linux-ohos.so"
+      ],
+      "evidence": "sysconfig MODULE_PYEXPAT_DEPS=Modules/expat/libexpat.a; strings 'expat_2.6.4'",
+      "license": {
+        "spdx": "MIT",
+        "text": "packaging/licenses/third-party/expat-2.6.4-COPYING.txt"
+      },
+      "source": {
+        "url": "https://github.com/libexpat/libexpat/releases/download/R_2_6_4/expat-2.6.4.tar.gz",
+        "patches": "未记录"
+      },
+      "status": "keep"
+    },
+    {
+      "id": "libmpdec",
+      "version": "2.5.1",
+      "kind": "embedded-library",
+      "linkMode": "static",
+      "files": [],
+      "consumers": [
+        "_decimal.cpython-312-aarch64-linux-ohos.so"
+      ],
+      "evidence": "strings '__libmpdec_version__', '2.5.1'",
+      "license": {
+        "spdx": "BSD-2-Clause",
+        "text": "packaging/licenses/third-party/libmpdec-2.5.1-LICENSE.txt"
+      },
+      "source": {
+        "url": "https://www.python.org/ftp/python/3.12.9/Python-3.12.9.tgz",
+        "patches": "随 CPython 源码树，未改动"
+      },
+      "status": "keep"
+    },
+    {
+      "id": "openblas-numpy",
+      "version": "0.3.23.dev (USE64BITINT DYNAMIC_ARCH)",
+      "kind": "embedded-library",
+      "linkMode": "dynamic, orphaned",
+      "files": [
+        {
+          "path": "runtime/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_.so",
+          "bytes": 23271424,
+          "sha256": "06883ce6a74cd7cf85b1310f61dc3cd40ced7f3d45a130bc8cee30129bcfceed"
+        }
+      ],
+      "consumers": [],
+      "evidence": "no ELF DT_NEEDED references it; numpy extensions NEED libpython3.12+libc only; _distributor_init has no loader",
+      "license": {
+        "spdx": "BSD-3-Clause",
+        "text": "packaging/licenses/third-party/openblas-0.3.29-LICENSE.txt"
+      },
+      "source": {
+        "url": "numpy 2.2.6 wheel (numpy.libs)",
+        "patches": "未记录"
+      },
+      "status": "remove-candidate"
+    },
+    {
+      "id": "gfortran",
+      "version": "9.3.0 (Alpine aports build)",
+      "kind": "embedded-library",
+      "linkMode": "dynamic, orphaned",
+      "files": [
+        {
+          "path": "runtime/lib/python3.12/site-packages/numpy.libs/libgfortran.so.5",
+          "bytes": 1287808,
+          "sha256": "2d227ceb579be7ad5f462abf995a7d258b6406b6a03803493d048d86dd6a7f5d"
+        }
+      ],
+      "consumers": [
+        "libscipy_openblas64_.so"
+      ],
+      "evidence": "only the orphaned numpy OpenBLAS64 NEEDs it; NEEDED libgcc_s.so.1 + libc.musl-aarch64.so.1",
+      "license": {
+        "spdx": "GPL-3.0-or-later WITH GCC-exception-3.1",
+        "text": "packaging/licenses/third-party/gcc-runtime-COPYING.txt"
+      },
+      "source": {
+        "url": "https://ftp.gnu.org/gnu/gcc/gcc-9.3.0/",
+        "patches": "未记录"
+      },
+      "status": "remove-candidate"
+    },
+    {
+      "id": "openblas-scipy",
+      "version": "0.3.29 (NO_AFFINITY ARMV8)",
+      "kind": "embedded-library",
+      "linkMode": "dynamic",
+      "files": [
+        {
+          "path": "runtime/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-80d8b5fa.so",
+          "bytes": 10803648,
+          "sha256": "094de356dd4def6076eb2f48ed17ae09364743f21ecf0be457e4828f9c89bf60"
+        }
+      ],
+      "consumers": [
+        "23 scipy extension modules (see C_SIGNED_HAP_DELIVERY)"
+      ],
+      "evidence": "DT_NEEDED by 23 modules; NEEDED libc only (Fortran runtime statically included)",
+      "license": {
+        "spdx": "BSD-3-Clause",
+        "text": "packaging/licenses/third-party/openblas-0.3.29-LICENSE.txt"
+      },
+      "source": {
+        "url": "scipy 1.16.3 wheel (scipy.libs)",
+        "patches": "未记录"
+      },
+      "status": "keep"
+    },
+    {
+      "id": "libz",
+      "version": "OHOS system libz",
+      "kind": "system-library",
+      "linkMode": "dynamic",
+      "files": [],
+      "consumers": [
+        "binascii",
+        "zlib"
+      ],
+      "evidence": "SDK sysroot usr/lib/aarch64-linux-ohos/libz.so; not bundled",
+      "license": {
+        "spdx": "Zlib",
+        "text": "OHOS 系统提供，未随应用分发"
+      },
+      "status": "system"
+    },
+    {
+      "id": "libcxx-shared",
+      "version": "SDK 26",
+      "kind": "sdk-app-library",
+      "linkMode": "dynamic",
+      "files": [],
+      "consumers": [
+        "26 scipy modules"
+      ],
+      "evidence": "packaged by app as libs/arm64-v8a/libc++_shared.so",
+      "license": {
+        "spdx": "Apache-2.0 WITH LLVM-exception",
+        "text": "C 的 HAP 许可清单"
+      },
+      "status": "app-packaged"
+    }
+  ],
+  "removalProposal": {
+    "candidateRemove": [
+      "runtime/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_.so",
+      "runtime/lib/python3.12/site-packages/numpy.libs/libgfortran.so.5"
+    ],
+    "keep": [
+      "runtime/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-80d8b5fa.so"
+    ],
+    "rationale": "基础载荷静态扫描未见 DT_NEEDED 引用 libscipy_openblas64_.so；libgfortran.so.5 仅被该库引用，两个 unmatched 名称来自该组。动态加载和删除后的应用内功能尚未验证，故仅为候选。SciPy 的 libscipy_openblas-80d8b5fa.so 被 23 个模块引用，必须保留。",
+    "steps": [
+      "从载荷删除两个文件",
+      "重新生成 manifest 并 Prepare-Runtime",
+      "check_gsas_native.py 不带 --allow-missing",
+      "记录新的 runtimeId/清单哈希与包大小变化",
+      "重新签名新 HAP，复核实际依赖并完成 NumPy/SciPy 导入和五阶段真机验收"
+    ],
+    "expectedSavingsIfValidated": "约 24.6 MB；未执行删除，不能计入当前 HAP"
+  }
+}
