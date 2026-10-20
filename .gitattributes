@@ -8,5 +8,8 @@ ui-mock/entry/src/main/resources/rawfile/*.json text eol=lf
 app/entry/src/main/resources/rawfile/fixtures/* -text -whitespace
 app/entry/src/main/resources/rawfile/licenses/* -text -whitespace
 
+# License copies have byte hashes in SOURCES.json; never rewrite line endings.
+packaging/licenses/third-party/*.txt -text -whitespace
+
 # Unified diffs require a single-space prefix on empty context lines.
 scripts/ohos/local-cross/gsas-ohos.patch -whitespace

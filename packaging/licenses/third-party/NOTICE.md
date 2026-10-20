@@ -27,7 +27,7 @@
   Apache-2.0 WITH LLVM-exception；由 C 的 HAP 许可清单处理。
 - `libgcc_s.so.1`、`libc.musl-aarch64.so.1` 只出现在 libgfortran 的
   NEEDED 中；移除 NumPy 遗留的 OpenBLAS64 与 libgfortran 后，
-  这两个未匹配项随之消失。
+  这两个未匹配项预计随之消失；该删除尚未在新签名 HAP 上执行和复验。
 - gettext/libintl 只出现在 CPython 构建的 `LIBS=-lintl` 中，载荷内没有任何
   ELF 的 NEEDED 指向 `libintl`，未随应用分发。
 

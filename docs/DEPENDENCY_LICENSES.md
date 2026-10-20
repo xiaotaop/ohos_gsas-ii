@@ -6,8 +6,8 @@
 [C 的签名 HAP 记录](C_SIGNED_HAP_DELIVERY.md)）。
 
 本清单回答三个问题：预编译 Python/NumPy/SciPy 实际附带哪些第三方库、
-它们的版本与链接方式、以及许可证；对应源码与构建依据；两个旧帮助库能否
-安全移除。机器可读版本见
+它们的版本与链接方式、以及许可证；对应源码与构建依据；两个旧帮助库是否
+值得作为移除候选。机器可读版本见
 [`packaging/third-party.dependencies.json`](../packaging/third-party.dependencies.json)，
 许可证原文与索引见
 [`packaging/licenses/third-party/`](../packaging/licenses/third-party/NOTICE.md)。
@@ -58,13 +58,14 @@
 - gettext/libintl 只出现在 CPython 构建的 `LIBS=-lintl` 中；载荷内没有任何
    ELF NEED `libintl`，未随应用分发。
 - **OpenSSL 1.1.1w 已停止维护**（1.1.1 系列 2023-09 结束支持）。当前
-  `_ssl`/`_hashlib` 静态包含它；不构成发行阻断，但应在发布说明中如实披露，
-  并在后续运行时升级中评估。
+  `_ssl`/`_hashlib` 静态包含它；是否影响分发由 C 与组长在安全/兼容性复核后
+  决定，并应在发布说明中如实披露。
 
 ## 3. 旧帮助库处理结论
 
-**结论：`libscipy_openblas64_.so` 与 `libgfortran.so.5` 都可以从载荷安全移除；
-SciPy 正在使用的 `libscipy_openblas-80d8b5fa.so` 必须保留。**
+**静态分析结论：`libscipy_openblas64_.so` 与 `libgfortran.so.5` 是移除候选，
+尚未在删除后的签名 HAP 上验证，不得视为安全移除授权；SciPy 正在使用的
+`libscipy_openblas-80d8b5fa.so` 必须保留。**
 
 依据（对基础载荷全部 ELF 的 `DT_NEEDED` 扫描）：
 
@@ -74,13 +75,14 @@ SciPy 正在使用的 `libscipy_openblas-80d8b5fa.so` 必须保留。**
    `noblas` 内核形式编译。
 2. `libgfortran.so.5` 只被 `libscipy_openblas64_.so` 引用；
    `libgcc_s.so.1` 与 `libc.musl-aarch64.so.1` 也只出现在该库的 NEEDED 中。
-   移除这组文件后，C 的 SBOM 工具里两个 `unmatched` 依赖随之消失。
+   若移除这组文件，预计 C 的 SBOM 工具里两个 `unmatched` 依赖随之消失；
+   仍须用新 HAP 的实际依赖扫描核实。
 3. NumPy 源码中除 `numpy-2.2.6.dist-info/RECORD` 外，没有任何 Python 文件
    引用这两个库名；`_distributor_init.py` 只尝试导入可选的
    `_distributor_init_local`，没有 ctypes/dlopen 逻辑。
 4. SciPy 的 OpenBLAS 被 23 个扩展模块 NEED，是实际计算路径，**不能删除**。
 
-操作步骤（由 B 或 C 在其载荷副本上执行）：
+候选实验步骤（由 B 或 C **仅在新载荷副本**上执行，不改变已验收 HAP）：
 
 ```sh
 rm runtime/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_.so
@@ -101,8 +103,9 @@ python3 scripts/payload/check_gsas_native.py --payload <payload>   # 不带 --al
   完整性门禁。
 - 若将来更换 NumPy wheel 或改为动态 BLAS，需重新评估；本结论只对上述
   wheel 字节成立。
-- 删除后必须重新生成清单、重新签名并重新做应用内验证；不能沿用旧 HAP 的
-  哈希或证据。
+- 删除后必须重新生成清单、重新签名并重新做应用内验证，包含相关 NumPy/SciPy
+  导入和实际精修路径；不能沿用旧 HAP 的哈希或证据。只有 C 复核新包并由组长
+  接受后，才能将候选移除写为最终分发结论。
 
 ## 4. 许可证与 NOTICE 位置
 

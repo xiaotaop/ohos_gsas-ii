@@ -383,7 +383,7 @@
     {
       "id": "libcxx-shared",
       "version": "SDK 26",
-      "kind": "system-library",
+      "kind": "sdk-app-library",
       "linkMode": "dynamic",
       "files": [],
       "consumers": [
@@ -394,24 +394,25 @@
         "spdx": "Apache-2.0 WITH LLVM-exception",
         "text": "C 的 HAP 许可清单"
       },
-      "status": "system"
+      "status": "app-packaged"
     }
   ],
-  "removalDecision": {
-    "remove": [
+  "removalProposal": {
+    "candidateRemove": [
       "runtime/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_.so",
       "runtime/lib/python3.12/site-packages/numpy.libs/libgfortran.so.5"
     ],
     "keep": [
       "runtime/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-80d8b5fa.so"
     ],
-    "rationale": "全载荷 ELF 扫描显示没有任何 DT_NEEDED 引用 libscipy_openblas64_.so；numpy 扩展只 NEED libpython3.12/libc 并使用内置 lapack_lite/noblas；libgfortran.so.5 仅被该 OpenBLAS64 引用；libgcc_s.so.1 与 libc.musl-aarch64.so.1 只出现在它的 NEEDED 中。SciPy 的 libscipy_openblas-80d8b5fa.so 被 23 个模块实际引用，必须保留。",
+    "rationale": "基础载荷静态扫描未见 DT_NEEDED 引用 libscipy_openblas64_.so；libgfortran.so.5 仅被该库引用，两个 unmatched 名称来自该组。动态加载和删除后的应用内功能尚未验证，故仅为候选。SciPy 的 libscipy_openblas-80d8b5fa.so 被 23 个模块引用，必须保留。",
     "steps": [
       "从载荷删除两个文件",
       "重新生成 manifest 并 Prepare-Runtime",
       "check_gsas_native.py 不带 --allow-missing",
-      "记录新的 runtimeId/清单哈希与包大小变化"
+      "记录新的 runtimeId/清单哈希与包大小变化",
+      "重新签名新 HAP，复核实际依赖并完成 NumPy/SciPy 导入和五阶段真机验收"
     ],
-    "expectedSavings": "约 24.6 MB"
+    "expectedSavingsIfValidated": "约 24.6 MB；未执行删除，不能计入当前 HAP"
   }
 }

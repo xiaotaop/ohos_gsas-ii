@@ -86,8 +86,8 @@
         "license":  "BSD-2-Clause",
         "sourceUrl":  "https://www.python.org/ftp/python/3.12.9/Python-3.12.9.tgz",
         "retrieved":  "2026-10-20",
-        "sha256":  "52918cb7d1118da451e2d9202c8455655e424164fe18aea88bfeea912eee583b",
-        "bytes":  1568
+        "sha256":  "7065ec78957089bfb800064edb29ba78b58e5ed1be4efa71b25f7b1ff0833e2d",
+        "bytes":  1537
     },
     {
         "file":  "openblas-0.3.29-LICENSE.txt",
