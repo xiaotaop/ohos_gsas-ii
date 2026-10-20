@@ -1,0 +1,77 @@
+{
+  "sourceCommit": "ce624cec654e3492697e22792a047ff69e88d4fc",
+  "versionName": "0.1.1",
+  "versionCode": 2,
+  "bundleName": "com.gsasii.desktop",
+  "runtimeId": "c-controlled-license-prototype-20261020",
+  "trackedAppFilesCompared": 50,
+  "runtimeFiles": 2245,
+  "nativeELFs": 219,
+  "fileCount": 2266,
+  "hapSha256": "791dc53da7f76c56e0f9ce45b40b83d9cb45b9b42990379f59de64989d712788",
+  "hapSize": 135971349,
+  "signatureVerified": true,
+  "runtimeContentUnchanged": true,
+  "reusedRuntimeFromHapSha256": "59c86f189dd89a22e2e009f4637a58756193cbeececd2ec3f8bde0e85c3e176b",
+  "changedHapFilesFromPriorBuild": [
+    "ets/modules.abc"
+  ],
+  "eightModules": [
+    {
+      "module": "pyspg",
+      "path": "libs/arm64-v8a/pyspg.cpython-312-aarch64-linux-ohos.so",
+      "sha256": "e7ef80528f0a7562ef24512a6da21f016a7b6a536ac5bd06004c613c22a91b5b",
+      "size": 857536
+    },
+    {
+      "module": "pypowder",
+      "path": "libs/arm64-v8a/pypowder.cpython-312-aarch64-linux-ohos.so",
+      "sha256": "78097efe6b45257bbe9ed92dbf2a3d904fb39c90211548ed8bc34683e40194fb",
+      "size": 714176
+    },
+    {
+      "module": "pytexture",
+      "path": "libs/arm64-v8a/pytexture.cpython-312-aarch64-linux-ohos.so",
+      "sha256": "6a7daa16191a2ae9e6ad1e277ce4312dcd10699a0e390773f32246894b7c8146",
+      "size": 42304
+    },
+    {
+      "module": "fmask",
+      "path": "libs/arm64-v8a/fmask.cpython-312-aarch64-linux-ohos.so",
+      "sha256": "5fc4bc94ef3045e306ccca5a35db0a9162d3f407e8216925e242f788096c3977",
+      "size": 17728
+    },
+    {
+      "module": "histogram2d",
+      "path": "libs/arm64-v8a/histogram2d.cpython-312-aarch64-linux-ohos.so",
+      "sha256": "60b34c7b643cfe7c2bf7f4badce9fab5f111bcd5ce89648b41d68d4f11c406e7",
+      "size": 38208
+    },
+    {
+      "module": "pack_f",
+      "path": "libs/arm64-v8a/pack_f.cpython-312-aarch64-linux-ohos.so",
+      "sha256": "43316fb316701f898a75baec01ca137e22153bea91a3db610934ba84488b70a1",
+      "size": 38208
+    },
+    {
+      "module": "unpack_cbf",
+      "path": "libs/arm64-v8a/unpack_cbf.cpython-312-aarch64-linux-ohos.so",
+      "sha256": "9c02fe14550888c02cdee234c8648b5a3fd70053db0fc675c3422951d2feba68",
+      "size": 812480
+    },
+    {
+      "module": "kvec_general",
+      "path": "libs/arm64-v8a/kvec_general.cpython-312-aarch64-linux-ohos.so",
+      "sha256": "49c484c01977e3fd83ea08d47d482e987d30a4bb2485938adaef5d6408dcb0ea",
+      "size": 124288
+    }
+  ],
+  "deviceValidated": false,
+  "releaseApproved": false,
+  "filename": "GSAS-II-0.1.1-ce624cec-signed.hap",
+  "sourceCompanionSha256": "4c91bcaca1c6b15b863732193403ccab7bbdb053a98e5144fe2c4256d77d7ad4",
+  "signatureVerificationSha256": "19c909973b5dc07b51b414431be9526034703512a345eacae74d55c1f8eabb88",
+  "runtimeSbomLicenseBindingSha256": "bf883a1ac108329314d45d6dc1e4e28d01434d03002d7dc6d96e90363e24a50f",
+  "sourceScope": "Exact requested PR17 head ce624cec; no version or app-source edits by C",
+  "deviceAcceptanceOwner": "Leader/B using this exact HAP; C did not operate the device in this delivery"
+}
