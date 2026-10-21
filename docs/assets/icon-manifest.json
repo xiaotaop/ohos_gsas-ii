@@ -6,8 +6,13 @@
   "files": [
     {
       "path": "app/AppScope/resources/base/media/app_icon.svg",
-      "sha256": "2b358deeb4e88d4fcca93022a4b7bfb5b30ff1ec55f02749546327ca52752762",
-      "size": 314
+      "sha256": "d8ab06e9deebb48cbda1e0a79e026f0fa5f2b8197913f9ee86ce102f4f4bb755",
+      "size": 313,
+      "historicalCRLFRecord": {
+        "sha256": "2b358deeb4e88d4fcca93022a4b7bfb5b30ff1ec55f02749546327ca52752762",
+        "size": 314
+      },
+      "normalizationNote": "Current exact source Git blob uses LF (313 bytes); historical 314-byte hash is the identical SVG with CRLF. Vector content unchanged."
     },
     {
       "path": "docs/assets/app-icon-128.png",
@@ -54,5 +59,6 @@
     "format": "PNG",
     "maximumMB": 3
   },
-  "rasterization": "Existing SVG rendered with sharp; unchanged vector geometry/colors. No AI redraw."
+  "rasterization": "Existing SVG rendered with sharp; unchanged vector geometry/colors. No AI redraw.",
+  "rasterizationSourceCommit": "8b64bf6ebefa2b4e609f962e926c294e084b6d52"
 }
