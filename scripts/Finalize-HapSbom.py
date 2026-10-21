@@ -8,6 +8,7 @@ import argparse
 import copy
 import json
 from pathlib import Path, PurePosixPath
+import zipfile
 import release_tools as rt
 
 
@@ -46,6 +47,54 @@ def validate_graph(bom, inventory):
             raise ValueError('unresolved dependency reference')
 
 
+def validate_equivalent_device_acceptance(acceptance, inventory, decision, evidence):
+    """Bind a store container to the tested device HAP without claiming it was installed."""
+    if (acceptance.get('result') != 'critical-device-retest-passed-with-startup-warning'
+            or acceptance.get('newJob', {}).get('independentNumericComparisonsPassed') != 12
+            or not acceptance.get('newJob', {}).get('fiveStagesCompleted')
+            or not acceptance.get('exports', {}).get('allThreeVisibleOnPickerReopen')
+            or not acceptance.get('restart', {}).get('successfulResultAndArtifactsRestored')
+            or acceptance.get('upgrade', {}).get('versionCodeAfter') != 3):
+        raise ValueError('device counterpart acceptance is incomplete')
+    counterpart = decision['counterpart']
+    if (acceptance.get('deviceHapSha256') != counterpart['deviceHapSha256']
+            or acceptance.get('publicAppSha256') != counterpart['storeAppSha256']):
+        raise ValueError('counterpart hashes differ from physical acceptance')
+    bound = {item['file'] for item in decision['evidence']}
+    names = [counterpart[key] for key in ('deviceHapFile', 'publicHapFile', 'storeAppFile')]
+    if not set(names) <= bound:
+        raise ValueError('counterpart packages must be hash-bound evidence')
+    device, public, app = (evidence / name for name in names)
+    if (rt.file_hash(device) != counterpart['deviceHapSha256']
+            or rt.file_hash(public) != counterpart['publicHapSha256']
+            or rt.file_hash(app) != counterpart['storeAppSha256']):
+        raise ValueError('counterpart package bytes changed')
+    with zipfile.ZipFile(device) as d, zipfile.ZipFile(public) as p, zipfile.ZipFile(app) as outer:
+        if set(d.namelist()) != set(p.namelist()) or any(d.read(name) != p.read(name) for name in d.namelist()):
+            raise ValueError('public HAP content differs from tested device HAP')
+        if rt.digest(outer.read('entry-default.hap')) != counterpart['embeddedHapSha256']:
+            raise ValueError('store APP embedded HAP hash differs from review')
+        with zipfile.ZipFile(outer.open('entry-default.hap')) as embedded:
+            if counterpart['kind'] == 'public-standalone-hap':
+                if inventory['hapSha256'] != counterpart['publicHapSha256']:
+                    raise ValueError('reviewed HAP is not the public standalone HAP')
+            elif counterpart['kind'] == 'store-embedded-hap':
+                if inventory['hapSha256'] != counterpart['embeddedHapSha256']:
+                    raise ValueError('reviewed HAP is not the store APP embedded HAP')
+                if set(p.namelist()) - set(embedded.namelist()) != {'.pages.info'}:
+                    raise ValueError('unexpected files removed from store embedded HAP')
+                if set(embedded.namelist()) - set(p.namelist()):
+                    raise ValueError('unexpected store embedded HAP files')
+                for name in embedded.namelist():
+                    if name == 'pack.info':
+                        if json.loads(embedded.read(name)) != json.loads(p.read(name)):
+                            raise ValueError('store pack.info semantics changed')
+                    elif embedded.read(name) != p.read(name):
+                        raise ValueError('store embedded HAP content differs: ' + name)
+            else:
+                raise ValueError('unknown counterpart kind')
+
+
 def apply_review(bom, inventory, report, decision, evidence):
     if (decision.get('kind') != 'C-hash-bound-engineering-review'
             or decision.get('hapSha256') != inventory['hapSha256']
@@ -66,7 +115,9 @@ def apply_review(bom, inventory, report, decision, evidence):
     if notices and not any(r['file'] == notices['filename'] and r['sha256'] == notices['sha256'] for r in decision['evidence']):
         raise ValueError('external notices must be hash-bound delivery material')
     acceptance = load(evidence / decision['acceptanceRecord'])
-    if (acceptance.get('hapSha256') != inventory['hapSha256']
+    if decision.get('acceptanceMode') == 'equivalent-device-counterpart':
+        validate_equivalent_device_acceptance(acceptance, inventory, decision, evidence)
+    elif (acceptance.get('hapSha256') != inventory['hapSha256']
             or acceptance.get('independentWindowsBaselineChecksPassed') != 12
             or not all(acceptance.get(k) is True for k in ['installationPassed', 'coreReadyPassed',
                 'realFiveStagePassed', 'gpxJsonLogSystemPickerExportPassed',
@@ -185,8 +236,10 @@ def apply_review(bom, inventory, report, decision, evidence):
                     {'name': 'gsas:runtimeScope', 'value': 'specific API23 sample acceptance, not universal symbol resolution'}]})
             edges['platform:' + name] = set()
     result['dependencies'] = [{'ref': r, 'dependsOn': sorted(t)} for r, t in sorted(edges.items())]
+    distribution_review = ('reviewed-for-app-gallery-candidate' if decision.get('acceptanceMode')
+                           == 'equivalent-device-counterpart' else 'reviewed-for-specified-internaltesting-delivery')
     put(result['metadata'], draft='false', engineeringReview='complete',
-        distributionReview='reviewed-for-specified-internaltesting-delivery',
+        distributionReview=distribution_review,
         thirdPartyReview='reviewed',
         releaseApproved='false', publicDistributionApproved='false',
         reviewCanonicalSha256=rt.digest(json.dumps(decision, sort_keys=True).encode()),

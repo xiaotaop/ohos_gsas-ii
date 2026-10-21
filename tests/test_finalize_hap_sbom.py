@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
@@ -143,6 +144,72 @@ class FinalReviewTest(unittest.TestCase):
         self.decision['evidence'] = []
         with self.assertRaisesRegex(ValueError, 'acceptance must be hash-bound'):
             self.apply()
+
+
+class StoreCounterpartTest(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.device = self.root / 'device.hap'
+        self.public = self.root / 'public.hap'
+        self.embedded = self.root / 'embedded.hap'
+        self.app = self.root / 'store.app'
+        members = {'module.json': b'{"versionCode":3}', 'pack.info': b'{"a":1}',
+                   '.pages.info': b'pages', 'libs/lib.so': b'unchanged'}
+        for path, comment in ((self.device, b'device'), (self.public, b'public')):
+            with zipfile.ZipFile(path, 'w') as z:
+                for name, data in members.items():
+                    z.writestr(name, data)
+                z.comment = comment
+        with zipfile.ZipFile(self.embedded, 'w') as z:
+            for name, data in members.items():
+                if name == '.pages.info':
+                    continue
+                z.writestr(name, b'{\n  "a": 1\n}' if name == 'pack.info' else data)
+        with zipfile.ZipFile(self.app, 'w') as z:
+            z.writestr('entry-default.hap', self.embedded.read_bytes())
+        self.counterpart = {
+            'deviceHapFile': self.device.name, 'publicHapFile': self.public.name,
+            'storeAppFile': self.app.name,
+            'deviceHapSha256': m.rt.file_hash(self.device),
+            'publicHapSha256': m.rt.file_hash(self.public),
+            'embeddedHapSha256': m.rt.file_hash(self.embedded),
+            'storeAppSha256': m.rt.file_hash(self.app),
+        }
+        self.acceptance = {
+            'result': 'critical-device-retest-passed-with-startup-warning',
+            'deviceHapSha256': self.counterpart['deviceHapSha256'],
+            'publicAppSha256': self.counterpart['storeAppSha256'],
+            'newJob': {'independentNumericComparisonsPassed': 12, 'fiveStagesCompleted': True},
+            'exports': {'allThreeVisibleOnPickerReopen': True},
+            'restart': {'successfulResultAndArtifactsRestored': True},
+            'upgrade': {'versionCodeAfter': 3},
+        }
+        self.decision = {'evidence': [{'file': p.name} for p in (self.device, self.public, self.app)],
+                         'counterpart': self.counterpart}
+
+    def test_public_and_embedded_equivalent_counterparts(self):
+        for kind, path in (('public-standalone-hap', self.public),
+                           ('store-embedded-hap', self.embedded)):
+            with self.subTest(kind=kind):
+                self.counterpart['kind'] = kind
+                m.validate_equivalent_device_acceptance(
+                    self.acceptance, {'hapSha256': m.rt.file_hash(path)}, self.decision, self.root)
+
+    def test_changed_payload_or_absent_device_checks_are_rejected(self):
+        self.counterpart['kind'] = 'public-standalone-hap'
+        self.acceptance['newJob']['independentNumericComparisonsPassed'] = 11
+        with self.assertRaisesRegex(ValueError, 'incomplete'):
+            m.validate_equivalent_device_acceptance(
+                self.acceptance, {'hapSha256': m.rt.file_hash(self.public)}, self.decision, self.root)
+        self.acceptance['newJob']['independentNumericComparisonsPassed'] = 12
+        with zipfile.ZipFile(self.public, 'a') as z:
+            z.writestr('extra.txt', b'not on device')
+        self.counterpart['publicHapSha256'] = m.rt.file_hash(self.public)
+        with self.assertRaisesRegex(ValueError, 'content differs'):
+            m.validate_equivalent_device_acceptance(
+                self.acceptance, {'hapSha256': m.rt.file_hash(self.public)}, self.decision, self.root)
 
 
 if __name__ == '__main__':

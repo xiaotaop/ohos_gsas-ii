@@ -1,5 +1,7 @@
 # GitCode 社区建仓申请草稿
 
+后续路线说明（2026-10-21）：团队当前按自有开发者账号准备 0.1.2 公开候选上架；[限定 API23 技术审查](PR21_0_1_2_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)已通过。本页仍是**未提交的社区路线历史草稿**，不是自有账号上架的前置或已提交申请。若改选社区组织路线，须按当时平台要求和实际 0.1.2 状态重新编写下文。
+
 状态更新（2026-10-20）：本草稿仍未提交。最新 `791dc53d…` 指定设备 internaltesting 签名 HAP 已完成实际 SBOM/许可的同包工程绑定，并在 HAD-W32/API23 完成显式断网五阶段与 UI 级临界尝试；Core 边界专项按组长限定证据口径接收，不能称三项均真机通过。兼容性范围和公开分发技术放行仍未完成。提交前由 C 按最终版本重写申请日期、维护者和支持范围。下方保留原始申请格式，**不能把旧状态描述原样提交**。
 
 提交位置：[OpenHarmonyPCDeveloper/community 的 NewRepository 建仓申请](https://gitcode.com/OpenHarmonyPCDeveloper/community/blob/master/NewRepository.md)。本文件是草稿，**未代表用户提交**。申请人/维护者 ID 按本次 GitCode 建仓表单显示的当前账户填写，请实际负责人提交前核对；社区仓库的创建由社区审批决定。

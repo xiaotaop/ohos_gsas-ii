@@ -1,8 +1,8 @@
 # ohos_gsas-ii
 
-0.1.2 新包进度（2026-10-21）：**GSAS-II 0.1.2 / versionCode 3** 的 `release/app_gallery` 公开 APP 候选 `dd173f66…` 及同内容设备复验 HAP `78efbb58…` 已[交付](docs/C_STORE_PACKAGE_0_1_2.md)。后者在原 HAD-W32/API23 完成[保留数据升级与关键真机复验](docs/PR21_0_1_2_DEVICE_RETEST_2026-10-21.md)，首次启动的系统联网验证提示如实保留；组长整包技术审查、平台检测/上架仍待。下方 d65a64a9 内测技术结论保留为旧哈希记录。
+0.1.2 新包进度（2026-10-21）：**GSAS-II 0.1.2 / versionCode 3** 的 `release/app_gallery` 公开 APP 候选 `dd173f66…` 及同内容设备复验 HAP `78efbb58…` 已[交付](docs/C_STORE_PACKAGE_0_1_2.md)。后者在原 HAD-W32/API23 完成[保留数据升级与关键真机复验](docs/PR21_0_1_2_DEVICE_RETEST_2026-10-21.md)；[限定 API23 的整包技术审查](docs/PR21_0_1_2_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)通过。C 可准备上架材料，平台检测/上架尚未提交。下方 d65a64a9 内测技术结论保留为旧哈希记录。
 
-GSAS-II 面向 HarmonyOS PC 的移植仓库。正式 ArkUI 页面、文件服务、C++ N-API 与完整八模块运行时已集成。按组长 [API23 收窄决断](docs/API23_SUPPORT_SCOPE_2026-10-20.md)，C 已用精确源码 `c47b610…` 交付最低 API23 的完整签名候选 `d65a64a9…`（0.1.1 / versionCode 2），[HAP、源码与 SBOM/许可材料可下载](docs/C_API23_SIGNED_HAP.md)。该包已在 HAD-W32/API23 完成[同包关键复验](docs/PR20_API23_DEVICE_ACCEPTANCE_2026-10-21.md)与[限定内测范围整包技术审查](docs/PR20_API23_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)；旧包证据仍按未变组件边界保留。0.1.2 公开签名候选及其设备包关键复验已交付，但公开分发技术放行和平台审核尚未完成，以[验收矩阵](docs/RELEASE_ACCEPTANCE.md)为准。
+GSAS-II 面向 HarmonyOS PC 的移植仓库。正式 ArkUI 页面、文件服务、C++ N-API 与完整八模块运行时已集成。按组长 [API23 收窄决断](docs/API23_SUPPORT_SCOPE_2026-10-20.md)，C 已用精确源码 `c47b610…` 交付最低 API23 的完整签名候选 `d65a64a9…`（0.1.1 / versionCode 2），[HAP、源码与 SBOM/许可材料可下载](docs/C_API23_SIGNED_HAP.md)。该包已在 HAD-W32/API23 完成[同包关键复验](docs/PR20_API23_DEVICE_ACCEPTANCE_2026-10-21.md)与[限定内测范围整包技术审查](docs/PR20_API23_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)；旧包证据仍按未变组件边界保留。0.1.2 公开候选的限定 API23 技术门禁现已通过，平台审核与公开分发批准尚未完成，以[验收矩阵](docs/RELEASE_ACCEPTANCE.md)为准。
 
 PR #14 签名包 `59c86f18…`（源码 `57c661db…`）的[A 同包真机记录](docs/A_A14_DEVICE_ACCEPTANCE.md)已归档；它是历史候选，不是当前最终 HAP。
 

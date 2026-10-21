@@ -17,6 +17,9 @@ class FrozenReviewTest(unittest.TestCase):
 
     def verify_snapshot(self, root):
         summary = json.loads((root / 'review-summary.json').read_bytes())
+        if 'publicHapFinalSbomSha256' in summary:
+            self.verify_store_snapshot(root, summary)
+            return
         seen = set()
         for row in summary['snapshotFiles']:
             path = PurePosixPath(row['path'])
@@ -52,6 +55,40 @@ class FrozenReviewTest(unittest.TestCase):
         for name in ['gdbm', 'readline', 'gettext-libintl', 'gfortran']:
             self.assertNotIn('third-party:' + name, refs)
         self.assertTrue(summary['step2EngineeringDeliveryComplete'])
+        self.assertFalse(summary['publicDistributionApproved'])
+
+    def verify_store_snapshot(self, root, summary):
+        packages = (
+            ('public-hap', 'publicHapSha256', 'publicHapFinalSbomSha256',
+             'publicHapReviewDecisionsSha256', 'publicHapFiles'),
+            ('store-app-embedded-hap', 'storeEmbeddedHapSha256',
+             'storeEmbeddedHapFinalSbomSha256',
+             'storeEmbeddedHapReviewDecisionsSha256', 'storeEmbeddedHapFiles'),
+        )
+        for name, hap_key, sbom_key, decision_key, files_key in packages:
+            with self.subTest(package=name):
+                decision_data = (root / f'{name}-review-decisions.json').read_bytes()
+                self.assertEqual(hashlib.sha256(decision_data).hexdigest(),
+                                 summary[decision_key])
+                decision = json.loads(decision_data)
+                self.assertEqual(decision['hapSha256'], summary[hap_key])
+                self.assertEqual(decision['acceptanceMode'], 'equivalent-device-counterpart')
+                bom_data = (root / f'{name}-sbom.cdx.json').read_bytes()
+                self.assertEqual(hashlib.sha256(bom_data).hexdigest(), summary[sbom_key])
+                bom = json.loads(bom_data)
+                self.assertEqual(bom['metadata']['component']['hashes'][0]['content'],
+                                 summary[hap_key])
+                files = {c['name']: c for c in bom['components'] if c['type'] == 'file'}
+                self.assertEqual(len(files), summary[files_key])
+                self.assertEqual(sum(p.startswith('libs/') for p in files),
+                                 summary['nativeELFs'])
+                properties = {p['name']: p['value'] for p in bom['metadata']['properties']}
+                self.assertEqual(properties['gsas:engineeringReview'], 'complete')
+                self.assertEqual(properties['gsas:publicDistributionApproved'], 'false')
+        self.assertTrue(summary['deviceCriticalRetestPassed'])
+        self.assertEqual(summary['deviceNumericComparisonsPassed'],
+                         summary['deviceNumericComparisonsTotal'])
+        self.assertFalse(summary['platformSubmitted'])
         self.assertFalse(summary['publicDistributionApproved'])
 
 

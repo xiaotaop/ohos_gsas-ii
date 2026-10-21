@@ -1,6 +1,6 @@
 # 发布交接与远端状态
 
-0.1.2 新包进度（2026-10-21）：**GSAS-II 0.1.2 / versionCode 3** 的 `release/app_gallery` 公开 APP 候选 `dd173f66…` 及同内容设备复验 HAP `78efbb58…` 已[交付](C_STORE_PACKAGE_0_1_2.md)。后者在原 HAD-W32/API23 完成[保留数据升级与关键真机复验](PR21_0_1_2_DEVICE_RETEST_2026-10-21.md)，首次启动的系统联网验证提示如实保留；组长整包技术审查、平台检测/上架仍待。下方 d65a64a9 内测技术结论保留为旧哈希记录。
+0.1.2 新包进度（2026-10-21）：**GSAS-II 0.1.2 / versionCode 3** 的 `release/app_gallery` 公开 APP 候选 `dd173f66…` 及同内容设备复验 HAP `78efbb58…` 已[交付](C_STORE_PACKAGE_0_1_2.md)。后者在原 HAD-W32/API23 完成[保留数据升级与关键真机复验](PR21_0_1_2_DEVICE_RETEST_2026-10-21.md)，[限定范围整包技术审查](PR21_0_1_2_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)通过；C 可准备上架材料，平台检测/提交与公开分发批准仍待。下方 d65a64a9 内测技术结论保留为旧哈希记录。
 
 历史状态（2026-10-20）：内测 HAP `791dc53d…` 的工程/SBOM/许可和 API23 显式断网五阶段、UI 临界、[结果页 12 项数值复核](PR17_NUMERIC_UI_ACCEPTANCE_2026-10-20.md)已归档；[Core 三项边界按限定口径接收](LEADER_CORE_BOUNDARY_ACCEPTANCE_2026-10-20.md)，A 旧包已测场景保留为未变组件佐证。组长随后[决定只声明 API23 已验证](API23_SUPPORT_SCOPE_2026-10-20.md)，源码最低兼容版本已改为 API23。该包仍写 API20，当时尚须重建及 API23 同包复验；这些工作后来已完成，0.1.2 公开签名候选亦已交付。平台审核仍待。以下旧 `70588bde…` 和 PR #13/14 叙述均为当时快照，见[验收矩阵](RELEASE_ACCEPTANCE.md)。
 
@@ -34,5 +34,5 @@ git ls-remote origin "refs/heads/$(git branch --show-current)"
 
 2026-10-12 创建的个人公开 GitCode 暂存仓库为 <https://gitcode.com/2401_86708491/ohos_gsas-ii>。它不是 `OpenHarmonyPCDeveloper` 社区组织仓库；保留地址用于追溯，不假定两端会自动同步。本次没有修改旧仓库设置或关闭旧 PR。
 
-核心移植和旧 0.1.1 内测包工程审查已完成；当前先按[API23 收窄决断](API23_SUPPORT_SCOPE_2026-10-20.md)重建完整签名包、在 API23 同包关键复验，再由组长按[验收矩阵](RELEASE_ACCEPTANCE.md)决定技术放行。放行后，若团队选择 OpenHarmonyPCDeveloper 社区组织路线，由 C 复核[社区申请草稿](GITCODE_APPLICATION.md)并申请建仓；若以自有开发者账号上架，则如实使用实际源码仓库与发布主体，社区建仓不是 AGC 的硬性前置。两条路线均须完成公开分发包和上架审核；迁移到 GitHub 不代表任何申请已经提交。
+核心移植、旧 0.1.1 内测包及 0.1.2 公开签名候选在[API23 收窄范围](API23_SUPPORT_SCOPE_2026-10-20.md)内的工程审查已完成；最新结论以[0.1.2 审查记录](PR21_0_1_2_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)为准。团队既定采用自有开发者账号路线，C 可按[上架材料草稿](C_LISTING_DRAFT.md)准备账号、描述、隐私和素材，并如实填写当前源码仓库；社区建仓不是该路线的前置。若日后另选 OpenHarmonyPCDeveloper 社区组织路线，再由 C 更新[社区申请草稿](GITCODE_APPLICATION.md)并申请建仓。两条路线均须完成平台检测和上架审核；GitHub PR 的合并不代表已提交申请。
 

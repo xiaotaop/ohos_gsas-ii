@@ -45,3 +45,6 @@ packaging/reviews/c-api23-final/evidence/*.json -text -whitespace
 deliveries/GSAS-II-0.1.2-app-gallery.app filter=lfs diff=lfs merge=lfs -text
 deliveries/c-store-package-0.1.2-01e38b56.zip filter=lfs diff=lfs merge=lfs -text
 packaging/reviews/c-store-0.1.2/*.json -text -whitespace
+
+# The 0.1.2 final review decisions and SBOMs are hash-bound to exact bytes.
+packaging/reviews/c-store-0.1.2-final/*.json -text -whitespace
