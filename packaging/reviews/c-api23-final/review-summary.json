@@ -12,10 +12,10 @@
   "deviceModel": "HAD-W32",
   "apiVersion": 23,
   "physicalAcceptanceSha256": "cac672c8af1931f63434043906e79a347a10d38eb066fefddfa831f588232a1d",
-  "reviewDecisionsSha256": "d67bcc28b1b6fc4808ed80abcd37a276ef3d93daafdeb74f518f56ab8187035d",
+  "reviewDecisionsSha256": "dc1e21be1475b1918879cf73e703bce5810dd8103169c10e9e9f645cc208b37f",
   "sbomFile": "hap-sbom.cdx.json",
-  "sbomSha256": "6cad806ad12bd6b26b5fdcb5ba38913391c4b02621ed353cb12bc586589da362",
-  "finalSbomSha256": "6cad806ad12bd6b26b5fdcb5ba38913391c4b02621ed353cb12bc586589da362",
+  "sbomSha256": "26a3bf463761136076ed49bbcdd3091f2388626c3721e83e938ad4de6bdbed2c",
+  "finalSbomSha256": "26a3bf463761136076ed49bbcdd3091f2388626c3721e83e938ad4de6bdbed2c",
   "hapFiles": 2266,
   "finalSbomFiles": 2266,
   "finalSbomLogicalAndPlatformComponents": 31,
@@ -39,13 +39,13 @@
     },
     {
       "path": "review-decisions.json",
-      "size": 27161,
-      "sha256": "d67bcc28b1b6fc4808ed80abcd37a276ef3d93daafdeb74f518f56ab8187035d"
+      "size": 26458,
+      "sha256": "dc1e21be1475b1918879cf73e703bce5810dd8103169c10e9e9f645cc208b37f"
     },
     {
       "path": "hap-sbom.cdx.json",
-      "size": 1658463,
-      "sha256": "6cad806ad12bd6b26b5fdcb5ba38913391c4b02621ed353cb12bc586589da362"
+      "size": 1605383,
+      "sha256": "26a3bf463761136076ed49bbcdd3091f2388626c3721e83e938ad4de6bdbed2c"
     },
     {
       "path": "evidence/native-dependencies.json",

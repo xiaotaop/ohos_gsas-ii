@@ -205,7 +205,7 @@ def main():
             raise ValueError('output must be new')
         inventory = rt.audit_hap(a.hap, load(a.manifest), 'development')
         bom = apply_review(load(a.draft), inventory, load(a.report), load(a.review), a.evidence_dir)
-        a.output.write_text(json.dumps(bom, ensure_ascii=False, indent=2) + '\n')
+        a.output.write_bytes((json.dumps(bom, ensure_ascii=False, indent=2) + '\n').encode('utf-8'))
         print(json.dumps({'files': len(inventory['files']), 'engineeringReview': 'complete',
                           'publicDistributionApproved': False, 'sbomSha256': rt.file_hash(a.output)}))
     except (ValueError, OSError, KeyError) as e:

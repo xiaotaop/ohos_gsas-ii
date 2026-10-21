@@ -116,7 +116,7 @@ def main():
         },
     }
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(decision, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    output.write_bytes((json.dumps(decision, ensure_ascii=False, indent=2) + '\n').encode('utf-8'))
     print(json.dumps({'hapSha256': hap_hash, 'components': len(components),
                       'evidence': len(evidence), 'reviewSha256': rt.file_hash(output)}))
 

@@ -8,7 +8,7 @@
 
 1. PR #20 可快进合并，CI 通过，`git diff --check` 无问题；仓库交付 HAP 与完整 ZIP 的 SHA-256 分别为 `d65a64a9…09b25b`、`144eb5a5…8929`，ZIP 中 22 项 `SHA256SUMS` 全部重算一致。新旧 HAP 对比仅 `module.json` 和 `pack.info` 的最低兼容 API 声明变化，应用字节码、完整运行时和许可文件不变；C 的精确源码、签名、219 ELF/八扩展、许可及来源精度限制审查有独立收据。
 2. [本 HAP 的真机记录](PR20_API23_DEVICE_ACCEPTANCE_2026-10-21.md)确认：保留数据同版本覆盖、Core 就绪、五输入保留、新任务真实五阶段 8.78 秒、10 个 Rwp 加 2 个择优取向值相对 Windows 基线 12/12 通过、GPX/JSON/日志三文件经系统选择器保存并重新发现、正常退出后结果及 52 项文件库恢复。原始界面布局只在本机忽略目录，公开记录只存哈希及最小观察。
-3. 使用 C 实际 ZIP 中的 HAP、运行时清单、CycloneDX 草稿、第三方观察报告和完整通知材料，结合[同包物理验收记录](../packaging/reviews/c-api23-final/physical-acceptance.json)与[逐项审查决策](../packaging/reviews/c-api23-final/review-decisions.json)，运行 `Finalize-HapSbom.py` 成功。最终 [CycloneDX 1.5 SBOM](../packaging/reviews/c-api23-final/hap-sbom.cdx.json) SHA-256 为 `6cad806ad12bd6b26b5fdcb5ba38913391c4b02621ed353cb12bc586589da362`，2266 个实际文件、31 个非文件组件（其中 4 个明确为未随包分发的平台项），原生依赖无未匹配名称；该工具对应 15 项单测通过。最终化仅关闭**该内测 HAP 的工程审查**，SBOM 内 `releaseApproved=false` 和 `publicDistributionApproved=false` 保持真实。
+3. 使用 C 实际 ZIP 中的 HAP、运行时清单、CycloneDX 草稿、第三方观察报告和完整通知材料，结合[同包物理验收记录](../packaging/reviews/c-api23-final/physical-acceptance.json)与[逐项审查决策](../packaging/reviews/c-api23-final/review-decisions.json)，运行 `Finalize-HapSbom.py` 成功。最终 [CycloneDX 1.5 SBOM](../packaging/reviews/c-api23-final/hap-sbom.cdx.json) SHA-256 为 `26a3bf463761136076ed49bbcdd3091f2388626c3721e83e938ad4de6bdbed2c`，2266 个实际文件、31 个非文件组件（其中 4 个明确为未随包分发的平台项），原生依赖无未匹配名称；该工具对应 15 项单测通过。最终化仅关闭**该内测 HAP 的工程审查**，SBOM 内 `releaseApproved=false` 和 `publicDistributionApproved=false` 保持真实。
 
 ## 明确保留的边界
 
