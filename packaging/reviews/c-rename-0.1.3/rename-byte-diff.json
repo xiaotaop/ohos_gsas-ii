@@ -1,0 +1,48 @@
+{
+  "referenceSourceCommit": "01e38b56a437e8a8d27cb5ae1f3c821d5aad3fad",
+  "referencePublicHapSha256": "4ac884840e8940e12641d07e0e5ca8e66f7c5222e356fa3ef1aef6925d5d3519",
+  "sourceCommit": "8b64bf6ebefa2b4e609f962e926c294e084b6d52",
+  "displayName": "晶衍精析",
+  "versionName": "0.1.3",
+  "versionCode": 4,
+  "bundleName": "com.gsasii.desktop",
+  "publicHapSha256": "cf31a9ff88ba8a7fe26c7fbf03de9b5ddfd2356f6d49f76d2328542c68f1c726",
+  "storeAppSha256": "89e6b3e47afba2a17d01696cea6c6b6333a7edeb8a1bab58ab18f1b6ff4ddafd",
+  "deviceHapSha256": "60fca45be125e825169b7fef90669cf76a0ef490adeeed1acd28f8ee1a9b94a7",
+  "sourceAppChanges": [
+    "app/AppScope/app.json5",
+    "app/AppScope/resources/base/element/string.json"
+  ],
+  "hapChanges": [
+    {
+      "path": "module.json",
+      "oldSize": 1258,
+      "newSize": 1258,
+      "oldSha256": "63e08eceda7ab24bdec9813934f7c29974a44852496b439a4b8fc05f061dfafe",
+      "newSha256": "4424925eb241c93be6310367d3f0d026c6e83f9207ddf717af8c3c286444de52"
+    },
+    {
+      "path": "pack.info",
+      "oldSize": 521,
+      "newSize": 521,
+      "oldSha256": "d8ebe9313d4a5296f2595237b32375652598f9acafb57ab858bebb188ae57f6e",
+      "newSha256": "55495c04cef4d9cf7e2d5fde9c8891011db61b03aab654313f8811fa562a84bc"
+    },
+    {
+      "path": "resources.index",
+      "oldSize": 504,
+      "newSize": 509,
+      "oldSha256": "b1f09c2a5474a80da3c63cec1f4f643356609bc48c6c6281861fca935733b68f",
+      "newSha256": "e7e6e03ad82fe817ebc98a543b014b43cb323feb3967f358307e265f8b629afb"
+    }
+  ],
+  "allOtherStandaloneHapMemberBytesUnchanged": true,
+  "all2245RuntimeFilesVerified": true,
+  "all219NativeElfBytesUnchanged": true,
+  "arktsBytecodeUnchanged": true,
+  "packagedDisplayNameVerified": true,
+  "deviceDesktopAndTaskbarNameVerified": false,
+  "deviceUpgradeVerified": false,
+  "leaderMustInstallAfterSigning": true,
+  "platformSubmitted": false
+}

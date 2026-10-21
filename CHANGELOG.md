@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — C 晶衍精析0.1.3签名交付（2026-10-21）
+
+- 精确8b64bf6源码、原发布证书与原包名，生成app_gallery公开APP及原internaltesting设备HAP，版本0.1.3/4。
+- 实际两份SBOM/运行时/源码/许可、三个变化文件和签名身份按新哈希绑定；两份独立HAP有效载荷相同，完整ZIP通过Git LFS交付。
+- 签名后仍需组长保留数据安装新HAP，核对桌面/任务栏“晶衍精析”及基本工作流；不套用0.1.2设备结果，不提交平台。
+
 ## Unreleased — 0.1.3 显示名变更（2026-10-21）
 
 - 应用及入口 Ability 共用的 `app_name` 从 GSAS-II 改为“晶衍精析”，保留原 bundleName，版本递增至 0.1.3/versionCode 4。已用原审查载荷构建未签名完整运行时 HAP；C 的原身份签名、新包真机覆盖安装/名称复核及整包审查均待，见[交接](docs/RENAME_0_1_3_HANDOFF_2026-10-21.md)。

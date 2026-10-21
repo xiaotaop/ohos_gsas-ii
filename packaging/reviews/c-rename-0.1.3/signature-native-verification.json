@@ -1,0 +1,32 @@
+{
+  "sourceCommit": "8b64bf6ebefa2b4e609f962e926c294e084b6d52",
+  "publicHapSha256": "cf31a9ff88ba8a7fe26c7fbf03de9b5ddfd2356f6d49f76d2328542c68f1c726",
+  "storeAppSha256": "89e6b3e47afba2a17d01696cea6c6b6333a7edeb8a1bab58ab18f1b6ff4ddafd",
+  "verifyAppPassed": true,
+  "aggregateNativeCodesignVerificationPassed": true,
+  "storeAppSignatureVerified": true,
+  "sameReleaseCertificateChainAsAcceptedInternaltesting": true,
+  "publicProfileEqualsExistingLocalReleaseProfile": true,
+  "certificateChainSha256": "e52a5eff6173539fc60f6136635c0d866374670f828bc6d737ac9875fbadfd30",
+  "publicProfileSha256": "67ff4feaf5f22bd384f544b6dc485901ca588256ad312feb480351d756ed0b9c",
+  "profileType": "release",
+  "appDistributionType": "app_gallery",
+  "bundleName": "com.gsasii.desktop",
+  "standalonePrivateSigningFilesPublished": false,
+  "deviceCounterpart": {
+    "sourceCommit": "8b64bf6ebefa2b4e609f962e926c294e084b6d52",
+    "versionName": "0.1.3",
+    "versionCode": 4,
+    "minAPIVersion": 60100023,
+    "publicHapSha256": "cf31a9ff88ba8a7fe26c7fbf03de9b5ddfd2356f6d49f76d2328542c68f1c726",
+    "deviceHapSha256": "60fca45be125e825169b7fef90669cf76a0ef490adeeed1acd28f8ee1a9b94a7",
+    "deviceHapSize": 135971296,
+    "signatureVerified": true,
+    "deviceProfile": "release/internaltesting",
+    "sameCertificateChain": true,
+    "allZipMemberBytesEqualPublicHap": true,
+    "differsOnlyInHapSigningEnvelopeAndProfile": true,
+    "deviceValidated": false,
+    "dataPreservingInstallOnly": true
+  }
+}
