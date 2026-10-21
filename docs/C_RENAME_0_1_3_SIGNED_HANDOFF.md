@@ -1,6 +1,8 @@
 # C：晶衍精析 0.1.3 签名交付与签名后真机复验
 
-2026-10-21。按[组长改名交接](RENAME_0_1_3_HANDOFF_2026-10-21.md)的精确源码 `8b64bf6ebefa2b4e609f962e926c294e084b6d52`，C 已重建/签名完整 `release/app_gallery` APP 与原 HAD-W32 `release/internaltesting` 设备 HAP。**签名交付完成后，组长还需在原真机安装一次新包，验证升级与“晶衍精析”名称。**当前没有执行本哈希的真机安装或平台上架。
+签名后复验更新（2026-10-21）：组长委托的[原设备复验](PR23_0_1_3_DEVICE_RETEST_2026-10-21.md)已对下述 `60fca45b…` 设备 HAP 完成保留数据升级、新名称显示和关键工作流；[A 新名称截图](A_RENAME_0_1_3_DEVICE_SCREENSHOTS_2026-10-21.md)及[限定 API23 整包技术审查](PR23_0_1_3_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)已归档。下文 C 交付时的待测表述保留为原始交接快照。
+
+2026-10-21。按[组长改名交接](RENAME_0_1_3_HANDOFF_2026-10-21.md)的精确源码 `8b64bf6ebefa2b4e609f962e926c294e084b6d52`，C 已重建/签名完整 `release/app_gallery` APP 与原 HAD-W32 `release/internaltesting` 设备 HAP。交付当时尚未执行本哈希的真机安装；签名后的设备复验现已完成，平台仍未上架。
 
 ## 固定产物
 
@@ -28,7 +30,7 @@
 
 [构建收据](../packaging/reviews/c-rename-0.1.3/BUILD-RECEIPT.json) · [APP 容器核验](../packaging/reviews/c-rename-0.1.3/store-app-verification.json) · [同内容设备包证明](../packaging/reviews/c-rename-0.1.3/device-counterpart-verification.json) · [签名证明](../packaging/reviews/c-rename-0.1.3/signature-native-verification.json) · [实际SBOM/许可绑定](../packaging/reviews/c-rename-0.1.3/runtime-sbom-license-binding.json) · [材料审查](../packaging/reviews/c-rename-0.1.3/material-review.json) · [测试](../packaging/reviews/c-rename-0.1.3/exact-source-validation.json)
 
-## 组长必须在本次签名后完成
+## 签名后原设备复验步骤（已执行）
 
 原HAD-W32/API23留存当前0.1.2/3和旧文件/任务/输入/笔记基线后，核对新设备HAP哈希并执行保留数据覆盖安装：
 
@@ -39,6 +41,6 @@ hdc -t <原设备当前目标> shell aa start -a EntryAbility -b com.gsasii.desk
 
 不卸载、不清数据。确认版本0.1.3/4、原证书/包名、旧数据保留，系统应用列表/桌面入口及启动后任务栏显示 **晶衍精析**，Core ready与关键五阶段正常；按实际差异复核数值、导出和退出重启恢复。应用内许可、日志及上游介绍中的GSAS-II是保留的来源标记，不是桌面改名失败。失败时记录错误，不绕过签名或来源校验。
 
-回传实际安装HAP哈希、设备/API、时间、桌面/任务栏名称、版本/升级和工作流证据后，再形成该精确包的最终SBOM/设备审查。旧0.1.2结果只能作旧哈希或未变组件佐证，不能直接赋给新包。公开APP供平台上传，设备包实测不等于公开APP已通过平台分发/安装审核。
+上述步骤已执行；实际安装 HAP 哈希、设备/API、时间、名称、版本/升级及工作流证据见[真机记录](PR23_0_1_3_DEVICE_RETEST_2026-10-21.md)，该精确包的最终 SBOM/设备审查见[技术放行](PR23_0_1_3_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)。旧 0.1.2 结果仅作旧哈希或未变组件佐证，不直接赋给新包。公开 APP 供平台上传，设备包实测不等于公开 APP 已通过平台分发/安装审核。
 
-当前 `signedPackageReady=true`、`deviceUpgradeAndDisplayVerified=false`、`newHapPhysicalAcceptancePending=true`、`platformSubmitted=false`、`publicDistributionApproved=false`。名称后台可用性及上架账号资料仍须在正式提交前按实际结果核对；产品说明保留“基于GSAS-II的非官方HarmonyOS PC移植”，不暗示上游背书。功能图按既定决定沿用旧图并标注来源。
+当前复验后的状态以[整包审查](PR23_0_1_3_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)为准：`signedPackageReady=true`、`deviceUpgradeAndDisplayVerified=true`、`newHapPhysicalAcceptancePending=false`、`platformSubmitted=false`、`publicDistributionApproved=false`。名称后台可用性及上架账号资料仍须在正式提交前按实际结果核对；产品说明保留“基于 GSAS-II 的非官方 HarmonyOS PC 移植”，不暗示上游背书。功能图已由新名称真机截图补拍。

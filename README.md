@@ -1,8 +1,6 @@
 # ohos_gsas-ii
 
-0.1.3 签名交付更新（2026-10-21）：晶衍精析的公开APP `89e6b3e4…`、同内容原设备HAP `60fca45b…` 已构建/签名，见[下载与交接](docs/C_RENAME_0_1_3_SIGNED_HANDOFF.md)。组长须在签名后用新HAP保留数据安装，核对0.1.3/4及桌面/任务栏新名称、启动和关键流程；当前新包设备与平台审核未完成。
-
-当前改名候选（2026-10-21）：桌面显示名改为**晶衍精析**，版本 0.1.3/4，包名保持 `com.gsasii.desktop`。完整运行时未签名 Release HAP 已构建，见[改名与 C 签名交接](docs/RENAME_0_1_3_HANDOFF_2026-10-21.md)；**C 正式签名、原设备覆盖安装/名称显示及新包技术复核待完成**。下方 0.1.2 审查仅绑定旧包字节，不能充作 0.1.3 放行。
+当前候选（2026-10-21）：**晶衍精析 0.1.3/versionCode 4**，包名 `com.gsasii.desktop` 不变。C 已交付[正式签名 APP `89e6b3e4…` 与设备 HAP `60fca45b…`](docs/C_RENAME_0_1_3_SIGNED_HANDOFF.md)；原 HAD-W32/API23 已完成[保留数据升级、显示名与关键真机复验](docs/PR23_0_1_3_DEVICE_RETEST_2026-10-21.md)，[限定 API23 整包技术门禁](docs/PR23_0_1_3_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)通过。[A 的新名称真机截图](docs/A_RENAME_0_1_3_DEVICE_SCREENSHOTS_2026-10-21.md)已补齐。平台尚未提交或批准公开分发。
 
 0.1.2 历史包（2026-10-21）：**GSAS-II 0.1.2 / versionCode 3** 的 `release/app_gallery` 公开 APP 候选 `dd173f66…` 及同内容设备复验 HAP `78efbb58…` 已[交付](docs/C_STORE_PACKAGE_0_1_2.md)。后者在原 HAD-W32/API23 完成[保留数据升级与关键真机复验](docs/PR21_0_1_2_DEVICE_RETEST_2026-10-21.md)；[限定 API23 的整包技术审查](docs/PR21_0_1_2_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)通过。该包不含新展示名，不应冒充 0.1.3 上传。下方 d65a64a9 内测技术结论亦为旧哈希记录。
 

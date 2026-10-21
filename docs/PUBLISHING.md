@@ -1,8 +1,6 @@
 # 发布交接与远端状态
 
-0.1.3 签名交付更新（2026-10-21）：晶衍精析的公开APP `89e6b3e4…`、同内容原设备HAP `60fca45b…` 已构建/签名，见[下载与交接](C_RENAME_0_1_3_SIGNED_HANDOFF.md)。组长须在签名后用新HAP保留数据安装，核对0.1.3/4及桌面/任务栏新名称、启动和关键流程；当前新包设备与平台审核未完成。
-
-当前改名候选（2026-10-21）：**晶衍精析 0.1.3/versionCode 4** 的完整运行时未签名 HAP 已构建；[C 签名交接](RENAME_0_1_3_HANDOFF_2026-10-21.md)明确公开 APP、原设备 HAP、覆盖安装和真机名称显示仍待。上架材料草稿已切到新名称，旧 0.1.2 APP 不应当作新候选上传。平台未提交，公开分发未批准。
+0.1.3 当前状态（2026-10-21）：**晶衍精析 0.1.3/versionCode 4** 的公开签名 APP `89e6b3e4…` 与同载荷设备 HAP `60fca45b…` 已[交付](C_RENAME_0_1_3_SIGNED_HANDOFF.md)。原 HAD-W32/API23 已完成[保留数据升级、新名称显示和关键复验](PR23_0_1_3_DEVICE_RETEST_2026-10-21.md)；两份最终 SBOM 与[限定 API23 整包技术审查](PR23_0_1_3_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)通过。[新名称真机图](A_RENAME_0_1_3_DEVICE_SCREENSHOTS_2026-10-21.md)已归档。C 的[上架清单](C_LISTING_DRAFT.md)仍须核对平台字段与账号；平台未提交，公开分发未批准。
 
 0.1.2 旧哈希结论（2026-10-21）：**GSAS-II 0.1.2 / versionCode 3** 的 `release/app_gallery` 公开 APP `dd173f66…` 及同内容设备复验 HAP `78efbb58…` 已[交付](C_STORE_PACKAGE_0_1_2.md)。后者在原 HAD-W32/API23 完成[保留数据升级与关键真机复验](PR21_0_1_2_DEVICE_RETEST_2026-10-21.md)，[限定范围整包技术审查](PR21_0_1_2_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)通过；这些结论不自动转移至 0.1.3。下方更早内测结论均保留作历史。
 
@@ -38,5 +36,5 @@ git ls-remote origin "refs/heads/$(git branch --show-current)"
 
 2026-10-12 创建的个人公开 GitCode 暂存仓库为 <https://gitcode.com/2401_86708491/ohos_gsas-ii>。它不是 `OpenHarmonyPCDeveloper` 社区组织仓库；保留地址用于追溯，不假定两端会自动同步。本次没有修改旧仓库设置或关闭旧 PR。
 
-核心移植、旧 0.1.1 内测包及 0.1.2 公开签名候选在[API23 收窄范围](API23_SUPPORT_SCOPE_2026-10-20.md)内的工程审查已完成；0.1.2 结论以[旧哈希审查记录](PR21_0_1_2_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)为准。当前 0.1.3 改名候选仍待 C 签名和新包核验；团队既定采用自有开发者账号路线，C 可按[新上架材料草稿](C_LISTING_DRAFT.md)准备账号、描述、隐私和素材，并如实填写当前源码仓库；社区建仓不是该路线的前置。若日后另选 OpenHarmonyPCDeveloper 社区组织路线，再由 C 更新[社区申请草稿](GITCODE_APPLICATION.md)并申请建仓。两条路线均须完成平台检测和上架审核；GitHub PR 的合并不代表已提交申请。
+核心移植、旧 0.1.1 内测包及 0.1.2 公开签名候选在[API23 收窄范围](API23_SUPPORT_SCOPE_2026-10-20.md)内的工程审查已完成；0.1.2 结论以[旧哈希审查记录](PR21_0_1_2_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)为准。当前 0.1.3 新包的限定技术门禁亦已通过；团队既定采用自有开发者账号路线，C 可按[新上架材料草稿](C_LISTING_DRAFT.md)核对账号、名称、描述、隐私和新截图，并如实填写当前源码仓库；社区建仓不是该路线的前置。若日后另选 OpenHarmonyPCDeveloper 社区组织路线，再由 C 更新[社区申请草稿](GITCODE_APPLICATION.md)并申请建仓。两条路线均须完成平台检测和上架审核；GitHub PR 的合并不代表已提交申请。
 

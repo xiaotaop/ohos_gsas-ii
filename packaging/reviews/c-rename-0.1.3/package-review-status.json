@@ -9,10 +9,13 @@
   "deviceHapSha256": "60fca45be125e825169b7fef90669cf76a0ef490adeeed1acd28f8ee1a9b94a7",
   "signedPackageReady": true,
   "packagedNameVerified": true,
-  "deviceUpgradeAndDisplayVerified": false,
+  "deviceUpgradeAndDisplayVerified": true,
   "sameContentCounterpartVerified": true,
-  "leaderMustInstallAfterSigning": true,
-  "newHapPhysicalAcceptancePending": true,
+  "leaderMustInstallAfterSigning": false,
+  "newHapPhysicalAcceptancePending": false,
+  "physicalAcceptanceRecord": "packaging/reviews/c-rename-0.1.3/physical-acceptance.json",
+  "finalReview": "packaging/reviews/c-rename-0.1.3-final/review-summary.json",
+  "technicalGatePassedForAPI23": true,
   "platformSubmitted": false,
   "publicDistributionApproved": false
 }

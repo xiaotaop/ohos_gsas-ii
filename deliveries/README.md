@@ -1,8 +1,6 @@
 # 内测交付下载
 
-晶衍精析0.1.3：[公开APP](JingyanJingxi-0.1.3-app-gallery.app) · [完整签名交付ZIP](c-jingyanjingxi-0.1.3-8b64bf6e.zip) · [签名后原设备安装步骤](../docs/C_RENAME_0_1_3_SIGNED_HANDOFF.md)。须由组长对新HAP复验名称和升级。
-
-当前改名候选为“晶衍精析”0.1.3/4，[C 签名交接](../docs/RENAME_0_1_3_HANDOFF_2026-10-21.md)已准备；此目录**尚无新签名 APP/HAP**，本机未签名构建不在下载区，不能用于设备安装或平台上传。
+晶衍精析 0.1.3：[公开签名 APP](JingyanJingxi-0.1.3-app-gallery.app) · [完整签名交付 ZIP](c-jingyanjingxi-0.1.3-8b64bf6e.zip) · [C 的交付](../docs/C_RENAME_0_1_3_SIGNED_HANDOFF.md) · [原设备复验与限定技术审查](../docs/PR23_0_1_3_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)。设备 HAP 已按原签名身份完成保留数据升级与新名称显示；公开 APP 尚待平台提交/审核。
 
 历史 0.1.2 已审查包：[公开 APP](GSAS-II-0.1.2-app-gallery.app) · [完整审核 ZIP](c-store-package-0.1.2-01e38b56.zip) · [哈希和审核步骤](../docs/C_STORE_PACKAGE_0_1_2.md)。其 API23 设备复验及限定技术审查已完成，但包内仍显示旧名称，不可冒充 0.1.3。
 

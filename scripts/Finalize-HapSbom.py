@@ -13,7 +13,7 @@ import release_tools as rt
 
 
 def load(path):
-    return json.loads(path.read_text())
+    return json.loads(path.read_text(encoding='utf-8'))
 
 
 def properties(entry):
@@ -49,14 +49,17 @@ def validate_graph(bom, inventory):
 
 def validate_equivalent_device_acceptance(acceptance, inventory, decision, evidence):
     """Bind a store container to the tested device HAP without claiming it was installed."""
-    if (acceptance.get('result') != 'critical-device-retest-passed-with-startup-warning'
+    counterpart = decision['counterpart']
+    if (acceptance.get('result') not in ('critical-device-retest-passed-with-startup-warning',
+                                        'critical-device-retest-passed')
             or acceptance.get('newJob', {}).get('independentNumericComparisonsPassed') != 12
             or not acceptance.get('newJob', {}).get('fiveStagesCompleted')
             or not acceptance.get('exports', {}).get('allThreeVisibleOnPickerReopen')
             or not acceptance.get('restart', {}).get('successfulResultAndArtifactsRestored')
-            or acceptance.get('upgrade', {}).get('versionCodeAfter') != 3):
+            or acceptance.get('upgrade', {}).get('versionCodeAfter') != counterpart.get('versionCode', 3)
+            or (counterpart.get('sourceCommit') is not None
+                and acceptance.get('sourceCommit') != counterpart['sourceCommit'])):
         raise ValueError('device counterpart acceptance is incomplete')
-    counterpart = decision['counterpart']
     if (acceptance.get('deviceHapSha256') != counterpart['deviceHapSha256']
             or acceptance.get('publicAppSha256') != counterpart['storeAppSha256']):
         raise ValueError('counterpart hashes differ from physical acceptance')

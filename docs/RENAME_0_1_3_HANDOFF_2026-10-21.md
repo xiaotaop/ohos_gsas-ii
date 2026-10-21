@@ -1,6 +1,6 @@
 # 0.1.3 桌面显示名变更与 C 签名交接
 
-C 签名后续（2026-10-21）：公开APP `89e6b3e4…` 与原设备复验HAP `60fca45b…` 已重建签名并留档，[下载及签名后真机复验步骤](C_RENAME_0_1_3_SIGNED_HANDOFF.md)。下文未签名构建叙述保留为原始交接快照；组长仍需对本次新签名HAP执行保留数据安装和桌面/任务栏名称复验。
+C 签名及真机后续（2026-10-21）：公开 APP `89e6b3e4…` 与原设备 HAP `60fca45b…` 已[重建签名](C_RENAME_0_1_3_SIGNED_HANDOFF.md)；原 HAD-W32/API23 已完成[保留数据升级、窗口/本机搜索名称及关键工作流复验](PR23_0_1_3_DEVICE_RETEST_2026-10-21.md)，[整包技术审查](PR23_0_1_3_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)在限定范围内通过。下文未签名构建及待办叙述保留为原始交接快照。
 
 日期：2026-10-21。用户要求将已安装时显示的“GSAS-II”改为具有区分度的新名称，并在 C 用原签名身份交付后，才在原 HAD-W32 上保留数据覆盖安装、复核桌面名称。**原始交接时仅完成源码改名及完整运行时未签名构建；当时尚无 0.1.3 正式签名 APP/HAP、覆盖安装或新包技术放行。**
 
@@ -32,4 +32,4 @@ python scripts/Build-App.py --check --build-mode release --runtime-manifest <同
 3. 本组取得签名包后，再在原 HAD-W32/API23 **不卸载、不清数据**执行 `hdc install -r`，记录旧数据保留、启动、桌面/任务栏显示“晶衍精析”、版本 0.1.3/4；必要时按变化范围补测基本工作流。安装前先核对证书身份及包哈希，失败时保留原状态和错误。
 4. 重新审核该**精确签名包**后，更新上架包哈希、最终 SBOM、验收矩阵及平台材料。C 在 AppGallery 后台核对名称占用和账号字段，提交及审核通过须另行记录；本交接不等于平台授权。
 
-0.1.2 的 [整包技术审查](PR21_0_1_2_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)保留为旧哈希历史基线。对 0.1.3 的当前状态：`signedPackageReady=true`、`deviceUpgradeAndDisplayVerified=false`、`platformSubmitted=false`、`publicDistributionApproved=false`。
+0.1.2 的 [整包技术审查](PR21_0_1_2_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)保留为旧哈希历史基线。0.1.3 当前状态：`signedPackageReady=true`、`deviceUpgradeAndDisplayVerified=true`、`technicalGatePassedForAPI23=true`、`platformSubmitted=false`、`publicDistributionApproved=false`。
