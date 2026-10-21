@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-21",
+  "executor": "Codex, delegated by group lead",
+  "scope": "same-payload device-internaltesting HAP upgrade, display and critical workflow retest",
+  "sourceCommit": "8b64bf6ebefa2b4e609f962e926c294e084b6d52",
+  "deviceHapSha256": "60fca45be125e825169b7fef90669cf76a0ef490adeeed1acd28f8ee1a9b94a7",
+  "deviceHapBytes": 135971296,
+  "publicAppSha256": "89e6b3e47afba2a17d01696cea6c6b6333a7edeb8a1bab58ab18f1b6ff4ddafd",
+  "publicAppInstalledOnDevice": false,
+  "device": {
+    "target": "3QC0124C20000901",
+    "model": "HAD-W32",
+    "softwareVersion": "HAD-W24 6.1.0.117(SP68C00E100R13P3)",
+    "api": 23
+  },
+  "upgrade": {
+    "method": "hdc install -r; no uninstall or data clearing",
+    "installResult": "install bundle successfully",
+    "versionBefore": "0.1.2",
+    "versionCodeBefore": 3,
+    "versionAfter": "0.1.3",
+    "versionCodeAfter": 4,
+    "bundleNameBeforeAndAfter": "com.gsasii.desktop",
+    "uidBeforeAndAfter": 20020149,
+    "firstInstallTimeBeforeAndAfter": 1792412214316,
+    "signingFingerprintBeforeAndAfter": "2CEBD21FF93976CAB5F09EFB30002ACDADC42526052D326B3DE3787E1DABAC9E",
+    "filesBefore": 55,
+    "filesAfterUpgrade": 55,
+    "priorSuccessfulResultVisible": true,
+    "fivePriorInputsVisible": true
+  },
+  "display": {
+    "oldWindowTitle": "GSAS-II",
+    "newWindowTitle": "晶衍精析",
+    "localLauncherSearchResult": "晶衍精析",
+    "taskbarIconVisible": true,
+    "taskbarTextTooltipCaptured": false
+  },
+  "startupValidationWarning": {
+    "observedOnThisUpgrade": false
+  },
+  "newJob": {
+    "phaseName": "PbSO4",
+    "maxCycles": 3,
+    "outputName": "rename013-api23-20261021.gpx",
+    "jobIdCaptured": false,
+    "completed": true,
+    "fiveStagesCompleted": true,
+    "elapsedSecondsOnPage": 8.76,
+    "filesAfterJob": 58,
+    "rwpOnPage": [[96.68110, 99.74899], [45.81200, 17.86463], [32.47622, 15.02425], [13.40589, 6.36130], [13.16477, 6.38231]],
+    "preferredOrientationOnPage": {"C(2,0)": 0.12738142465744678, "C(2,2)": 0.09406617903303072},
+    "windowsBaselineSha256": "8f471ac79ccf228205be85b15e42ad0074b0e1a22383d8b9ccfe6a333a34f70f",
+    "independentNumericComparisonsPassed": 12,
+    "independentNumericComparisonsTotal": 12,
+    "maxDeltaOverTolerance": 0.110864213498246
+  },
+  "exports": {
+    "savePickerConfirmed": ["rename013-api23-20261021.gpx", "rename013-api23-20261021.json", "rename013-api23-20261021.log"],
+    "allThreeVisibleOnPickerReopen": true,
+    "rawExportBytesReadBack": false
+  },
+  "additionalAScenarios": {
+    "cancelledTerminalAndLogVisible": true,
+    "invalidCifTerminalAndLogVisible": true,
+    "originalPhaseAssociationRestoredAndIntegrityChecked": true,
+    "activeCloseGuardVisible": true,
+    "taskContinuedAfterGuard": true,
+    "minimumWindowInputsAndActionsVisible": true,
+    "fullScreenScreenshotIndex": "docs/A_RENAME_0_1_3_DEVICE_SCREENSHOTS_2026-10-21.md"
+  },
+  "restart": {
+    "normalFileExit": true,
+    "processStopped": true,
+    "newProcessAfterRestart": true,
+    "coreReady": true,
+    "filesAfterRestart": 63,
+    "successfulResultAndArtifactsRestored": true,
+    "formDraftRestored": null
+  },
+  "result": "critical-device-retest-passed",
+  "groupLeadTechnicalSignoff": false,
+  "platformSubmitted": false,
+  "publicDistributionApproved": false,
+  "evidenceDocument": "docs/PR23_0_1_3_DEVICE_RETEST_2026-10-21.md"
+}
