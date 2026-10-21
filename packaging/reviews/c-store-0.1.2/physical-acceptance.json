@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-21",
+  "executor": "Codex, delegated by group lead",
+  "scope": "same-payload device-internaltesting HAP critical retest only",
+  "sourceCommit": "01e38b56a437e8a8d27cb5ae1f3c821d5aad3fad",
+  "deviceHapSha256": "78efbb58ee3a7d970c4d432cffe376d6256546952449d656da59f7f6ba1fd33f",
+  "deviceHapBytes": 135971346,
+  "publicAppSha256": "dd173f669b3b037726ce64b148d44fe7b4de5881ef7ac923ebe6c3704d917959",
+  "publicAppInstalledOnDevice": false,
+  "device": {
+    "target": "3QC0124C20000901",
+    "model": "HAD-W32",
+    "productName": "HUAWEI MateBook Pro",
+    "softwareVersion": "HAD-W24 6.1.0.117(SP68C00E100R13P3)",
+    "api": 23
+  },
+  "upgrade": {
+    "method": "hdc install -r; no uninstall or data clearing",
+    "installResult": "install bundle successfully",
+    "versionBefore": "0.1.1",
+    "versionCodeBefore": 2,
+    "versionAfter": "0.1.2",
+    "versionCodeAfter": 3,
+    "uidBeforeAndAfter": 20020149,
+    "firstInstallTimeBeforeAndAfter": 1792412214316,
+    "signingFingerprintBeforeAndAfter": "2CEBD21FF93976CAB5F09EFB30002ACDADC42526052D326B3DE3787E1DABAC9E",
+    "filesBefore": 52,
+    "filesAfterUpgrade": 52,
+    "priorSuccessfulResultVisible": true,
+    "fivePriorInputsVisible": true
+  },
+  "startupValidationWarning": {
+    "observed": true,
+    "text": "Unable to verify app; connect to network before running",
+    "wifiLocalAddressPresent": true,
+    "defaultRoutePresent": false,
+    "captivePortalObserved": true,
+    "systemValidationPassed": false,
+    "appOpenedOnRetryWithoutChangingSigning": true
+  },
+  "newJob": {
+    "phaseName": "PbSO4",
+    "maxCycles": 3,
+    "outputName": "pr21-api23-20261021.gpx",
+    "jobIdCaptured": false,
+    "completed": true,
+    "fiveStagesCompleted": true,
+    "elapsedSecondsOnPage": 8.75,
+    "filesAfterJob": 55,
+    "rwpOnPage": [[96.68110, 99.74899], [45.81200, 17.86463], [32.47622, 15.02425], [13.40589, 6.36130], [13.16477, 6.38231]],
+    "preferredOrientationOnPage": {"C(2,0)": 0.12738142465744678, "C(2,2)": 0.09406617903303072},
+    "windowsBaselineSha256": "8f471ac79ccf228205be85b15e42ad0074b0e1a22383d8b9ccfe6a333a34f70f",
+    "independentNumericComparisonsPassed": 12,
+    "independentNumericComparisonsTotal": 12,
+    "maxDeltaOverTolerance": 0.110864213498
+  },
+  "exports": {
+    "savePickerConfirmed": ["pr21-api23-20261021.gpx", "pr21-api23-20261021.json", "pr21-api23-20261021.log"],
+    "allThreeVisibleOnPickerReopen": true,
+    "rawExportBytesReadBack": false
+  },
+  "restart": {
+    "normalFileExit": true,
+    "processStopped": true,
+    "newProcessAfterRestart": true,
+    "coreReady": true,
+    "filesAfterRestart": 55,
+    "successfulResultAndArtifactsRestored": true,
+    "formDraftRestored": false
+  },
+  "result": "critical-device-retest-passed-with-startup-warning",
+  "groupLeadTechnicalSignoff": false,
+  "platformSubmitted": false,
+  "publicDistributionApproved": false,
+  "evidenceDocument": "docs/PR21_0_1_2_DEVICE_RETEST_2026-10-21.md"
+}

@@ -1,8 +1,8 @@
 # 发布交接与远端状态
 
-第一项新包审核准备（2026-10-21）：用户确认的 **GSAS-II 0.1.2 / versionCode 3** 已生成 `release/app_gallery` 公开 APP 候选 `dd173f66…` 及同内容的原设备复验 HAP `78efbb58…`，见 [下载、哈希和组长审核步骤](C_STORE_PACKAGE_0_1_2.md)。C 构建/签名/材料准备完成；新版本升级、启动和关键五阶段待组长复验，平台检测/上架未提交。下方 d65a64a9 内测技术结论保留为旧哈希记录。
+0.1.2 新包进度（2026-10-21）：**GSAS-II 0.1.2 / versionCode 3** 的 `release/app_gallery` 公开 APP 候选 `dd173f66…` 及同内容设备复验 HAP `78efbb58…` 已[交付](C_STORE_PACKAGE_0_1_2.md)。后者在原 HAD-W32/API23 完成[保留数据升级与关键真机复验](PR21_0_1_2_DEVICE_RETEST_2026-10-21.md)，首次启动的系统联网验证提示如实保留；组长整包技术审查、平台检测/上架仍待。下方 d65a64a9 内测技术结论保留为旧哈希记录。
 
-后续状态（2026-10-20）：最近完整签名内测 HAP `791dc53d…` 的工程/SBOM/许可和 API23 显式断网五阶段、UI 临界、[结果页 12 项数值复核](PR17_NUMERIC_UI_ACCEPTANCE_2026-10-20.md)已归档；[Core 三项边界按限定口径接收](LEADER_CORE_BOUNDARY_ACCEPTANCE_2026-10-20.md)，A 旧包已测场景保留为未变组件佐证。组长随后[决定只声明 API23 已验证](API23_SUPPORT_SCOPE_2026-10-20.md)，源码最低兼容版本已改为 API23。旧签名包仍写 API20，须重新构建/签名及 API23 同包关键复验；整包技术放行、公开分发/上架仍待。以下旧 `70588bde…` 和 PR #13/14 叙述是当时快照，见[验收矩阵](RELEASE_ACCEPTANCE.md)。
+历史状态（2026-10-20）：内测 HAP `791dc53d…` 的工程/SBOM/许可和 API23 显式断网五阶段、UI 临界、[结果页 12 项数值复核](PR17_NUMERIC_UI_ACCEPTANCE_2026-10-20.md)已归档；[Core 三项边界按限定口径接收](LEADER_CORE_BOUNDARY_ACCEPTANCE_2026-10-20.md)，A 旧包已测场景保留为未变组件佐证。组长随后[决定只声明 API23 已验证](API23_SUPPORT_SCOPE_2026-10-20.md)，源码最低兼容版本已改为 API23。该包仍写 API20，当时尚须重建及 API23 同包复验；这些工作后来已完成，0.1.2 公开签名候选亦已交付。平台审核仍待。以下旧 `70588bde…` 和 PR #13/14 叙述均为当时快照，见[验收矩阵](RELEASE_ACCEPTANCE.md)。
 
 ## 当前协作仓库
 

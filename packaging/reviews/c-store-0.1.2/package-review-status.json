@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "scope": "item-1-new-package-review-only",
-  "status": "ready-for-leader-package-review",
+  "status": "device-evidence-ready-for-leader-technical-review",
   "sourceCommit": "01e38b56a437e8a8d27cb5ae1f3c821d5aad3fad",
   "versionName": "0.1.2",
   "versionCode": 3,
@@ -12,6 +12,9 @@
   "deviceProfile": "release/internaltesting",
   "cBuildSigningMaterialPreparationComplete": true,
   "samePayloadCounterpartVerified": true,
+  "delegatedDeviceRetestCompleted": true,
+  "delegatedDeviceRetestResult": "critical-device-retest-passed-with-startup-warning",
+  "delegatedDeviceRetestEvidence": "docs/PR21_0_1_2_DEVICE_RETEST_2026-10-21.md",
   "leaderDeviceAcceptancePending": true,
   "platformSubmitted": false,
   "platformApproved": false,
