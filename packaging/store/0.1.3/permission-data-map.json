@@ -1,0 +1,17 @@
+{
+  "scope": "submission draft for local scientific workflow; not full dynamic privacy certification",
+  "appSourceCommit": "8b64bf6ebefa2b4e609f962e926c294e084b6d52",
+  "manifestRequestedPermissions": [],
+  "pickerAuthorization": "user-selected files per operation",
+  "localData": [
+    "imported-file copies and metadata/index",
+    "five input bindings",
+    "parameter drafts and notebook",
+    "job snapshots, results and logs"
+  ],
+  "developerServerEndpointsConfiguredInScannedAppSources": false,
+  "accountsAdsPaymentAnalyticsFeaturesPresent": false,
+  "staticScopeReference": "tests/test_core_no_network.py; excludes packaged runtime dynamic calls",
+  "fullPublicCandidateDynamicPrivacyTest": "pending-platform-validation; same-payload API23 device workflow was retested but was not a comprehensive privacy audit",
+  "doNotInferNoDataProcessingFromNoManifestPermissions": true
+}

@@ -73,6 +73,6 @@ GitHub 开发 PR 的合并不代表社区建仓或上架申请已提交。社区
 ## 4. 剩余工作与执行顺序（2026-10-21）
 
 1. **已完成新名称技术基线。**C 按[0.1.3 交接](C_RENAME_0_1_3_SIGNED_HANDOFF.md)交付原签名身份的公开 APP 和设备 HAP；组长代理完成[同包真机关键复验](PR23_0_1_3_DEVICE_RETEST_2026-10-21.md)、[新名称截图](A_RENAME_0_1_3_DEVICE_SCREENSHOTS_2026-10-21.md)和[整包技术审查](PR23_0_1_3_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)。范围仅 HAD-W32/API23；API20/API24 与原始导出字节回读未验证，不扩大声明。
-2. **C 完成上架材料并提交。**按[新清单](C_LISTING_DRAFT.md)核对名称占用、分类、描述、隐私、维护者/反馈入口及新截图适用性，使用实际自有开发者账号上传最终签名 APP，记录平台受理、包检测和审核反馈。只有平台实际批准后才更新 `platformApproved` / `publicDistributionApproved`。
+2. **C 完成平台字段并提交。**[0.1.3 上架材料工作稿](../packaging/store/0.1.3/README.md)已按新签名包和新名称截图准备，但 `readyToSubmit=false`。C 须按[新清单](C_LISTING_DRAFT.md)核对名称占用、分类、描述、隐私政策及应用内入口要求、维护者/反馈方式和截图规格，使用实际自有开发者账号上传固定哈希 APP，记录平台受理、包检测和审核反馈。只有平台实际批准后才更新 `platformApproved` / `publicDistributionApproved`；如平台要求改应用代码，须重新签名并复验新包。
 
 旧精简候选、许可证 pending 和同版本覆盖等过程记录仅作历史；旧冻结目录保持原字节。0.1.2 已审查结论依旧有效，0.1.3 已按新包哈希独立绑定。

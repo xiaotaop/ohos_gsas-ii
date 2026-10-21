@@ -1,0 +1,46 @@
+{
+  "scope": "0.1.3 new-name device screenshots; engineering originals, platform assets not yet accepted",
+  "sourceHapSha256": "60fca45be125e825169b7fef90669cf76a0ef490adeeed1acd28f8ee1a9b94a7",
+  "sourceCommit": "8b64bf6ebefa2b4e609f962e926c294e084b6d52",
+  "sourceEvidenceIndex": "docs/A_RENAME_0_1_3_DEVICE_SCREENSHOTS_2026-10-21.md",
+  "files": [
+    {
+      "path": "docs/evidence/a-rename-013-60fca45b/controls.jpeg",
+      "sha256": "d6fbad20ecee63ed6ee5de6e7902043363d4c5e9214adca5b132c21b52ac09b0",
+      "size": 306277,
+      "width": 3120,
+      "height": 2080,
+      "caption": "晶衍精析 Controls 与五输入界面",
+      "sourceDeviceScreenshot": true,
+      "imageModified": false,
+      "platformDimensionCountAndContentValidation": "pending-live-platform-validation"
+    },
+    {
+      "path": "docs/evidence/a-rename-013-60fca45b/success.jpeg",
+      "sha256": "7284202ea3ea053db34b3a448d5069eb5a11c1e846c133499e449b69705053d8",
+      "size": 319760,
+      "width": 3120,
+      "height": 2080,
+      "caption": "PbSO4 五阶段精修成功",
+      "sourceDeviceScreenshot": true,
+      "imageModified": false,
+      "reviewNotes": "8.76 秒是一次设备测试记录，不是性能承诺；页面提示本次未执行内置基线校验，独立 12/12 数值复核另见真机记录。",
+      "platformDimensionCountAndContentValidation": "pending-live-platform-validation"
+    },
+    {
+      "path": "docs/evidence/a-rename-013-60fca45b/restarted.jpeg",
+      "sha256": "644ca4fa3ad9798de0fe40101a676c515a19638f67d5aeb178593ab0284738ee",
+      "size": 316044,
+      "width": 3120,
+      "height": 2080,
+      "caption": "正常退出重启后结果恢复",
+      "sourceDeviceScreenshot": true,
+      "imageModified": false,
+      "reviewNotes": "不声称表单草稿恢复；该项未列为 0.1.3 实测通过。",
+      "platformDimensionCountAndContentValidation": "pending-live-platform-validation"
+    }
+  ],
+  "otherOriginalDeviceScreenshots": 7,
+  "priorOldNameScreenshotsRetainedAsHistoricalEvidence": true,
+  "platformAccepted": false
+}

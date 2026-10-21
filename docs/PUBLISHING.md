@@ -1,6 +1,6 @@
 # 发布交接与远端状态
 
-0.1.3 当前状态（2026-10-21）：**晶衍精析 0.1.3/versionCode 4** 的公开签名 APP `89e6b3e4…` 与同载荷设备 HAP `60fca45b…` 已[交付](C_RENAME_0_1_3_SIGNED_HANDOFF.md)。原 HAD-W32/API23 已完成[保留数据升级、新名称显示和关键复验](PR23_0_1_3_DEVICE_RETEST_2026-10-21.md)；两份最终 SBOM 与[限定 API23 整包技术审查](PR23_0_1_3_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)通过。[新名称真机图](A_RENAME_0_1_3_DEVICE_SCREENSHOTS_2026-10-21.md)已归档。C 的[上架清单](C_LISTING_DRAFT.md)仍须核对平台字段与账号；平台未提交，公开分发未批准。
+0.1.3 当前状态（2026-10-21）：**晶衍精析 0.1.3/versionCode 4** 的公开签名 APP `89e6b3e4…` 与同载荷设备 HAP `60fca45b…` 已[交付](C_RENAME_0_1_3_SIGNED_HANDOFF.md)。原 HAD-W32/API23 已完成[保留数据升级、新名称显示和关键复验](PR23_0_1_3_DEVICE_RETEST_2026-10-21.md)；两份最终 SBOM 与[限定 API23 整包技术审查](PR23_0_1_3_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)通过。[新名称真机图](A_RENAME_0_1_3_DEVICE_SCREENSHOTS_2026-10-21.md)已归档。C 的[上架清单](C_LISTING_DRAFT.md)和[0.1.3 材料工作稿](../packaging/store/0.1.3/README.md)已对齐当前包；仍须核对实际账号、隐私与平台字段。平台未提交，公开分发未批准。
 
 0.1.2 旧哈希结论（2026-10-21）：**GSAS-II 0.1.2 / versionCode 3** 的 `release/app_gallery` 公开 APP `dd173f66…` 及同内容设备复验 HAP `78efbb58…` 已[交付](C_STORE_PACKAGE_0_1_2.md)。后者在原 HAD-W32/API23 完成[保留数据升级与关键真机复验](PR21_0_1_2_DEVICE_RETEST_2026-10-21.md)，[限定范围整包技术审查](PR21_0_1_2_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)通过；这些结论不自动转移至 0.1.3。下方更早内测结论均保留作历史。
 
