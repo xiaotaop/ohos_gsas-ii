@@ -1,0 +1,6 @@
+{
+  "format": "CycloneDX 1.5",
+  "bothStandaloneAndActualAppEmbeddedSbomValid": true,
+  "storeAppSha256": "89e6b3e47afba2a17d01696cea6c6b6333a7edeb8a1bab58ab18f1b6ff4ddafd",
+  "physicalFinalizationPending": true
+}

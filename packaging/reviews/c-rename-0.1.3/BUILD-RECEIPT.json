@@ -1,0 +1,53 @@
+{
+  "sourceCommit": "8b64bf6ebefa2b4e609f962e926c294e084b6d52",
+  "displayName": "晶衍精析",
+  "versionName": "0.1.3",
+  "versionCode": 4,
+  "bundleName": "com.gsasii.desktop",
+  "runtimeId": "c-controlled-license-prototype-20261020",
+  "runtimeFiles": 2245,
+  "trackedAppFilesCompared": 50,
+  "buildProfileMatchesSourceExceptPrivateSigning": true,
+  "hapSha256": "cf31a9ff88ba8a7fe26c7fbf03de9b5ddfd2356f6d49f76d2328542c68f1c726",
+  "hapSize": 135971244,
+  "fileCount": 2266,
+  "nativeELFs": 219,
+  "minAPIVersion": 60100023,
+  "targetAPIVersion": 60101024,
+  "signatureVerified": true,
+  "profileType": "release",
+  "appDistributionType": "app_gallery",
+  "changedHapFiles": [
+    "module.json",
+    "pack.info",
+    "resources.index"
+  ],
+  "runtimeContentUnchanged": true,
+  "storeAppSha256": "89e6b3e47afba2a17d01696cea6c6b6333a7edeb8a1bab58ab18f1b6ff4ddafd",
+  "storeAppSize": 45423701,
+  "storeAppSignatureVerified": true,
+  "storeAppContainedHapSha256": "b24fd1eaa8e3d99ae47f68f5bda8621f5fb73b25ac7c2bb73747c7719baa0bd4",
+  "storeAppContainedHapFiles": 2265,
+  "deviceHapSha256": "60fca45be125e825169b7fef90669cf76a0ef490adeeed1acd28f8ee1a9b94a7",
+  "deviceHapSize": 135971296,
+  "deviceValidated": false,
+  "platformSubmitted": false,
+  "releaseApproved": false,
+  "publicDistributionApproved": false,
+  "filenames": {
+    "storeApp": "JingyanJingxi-0.1.3-app-gallery.app",
+    "hap": "JingyanJingxi-0.1.3-app-gallery.hap",
+    "deviceHap": "JingyanJingxi-0.1.3-device-internaltesting.hap"
+  },
+  "sourceCompanionSha256": "f2f37175c6d69261a94e075f51c389f8877dd61cd262106c277f9f57520a40ae",
+  "runtimeManifestSha256": "8dbd5cf3187973f05e7ab4d5e1aa0e81b84ca3ec14812ee507b6363b74b417c8",
+  "signatureRecordSha256": "e829ebb068f46c0eb9fa34f6737c293c9fd6150f726e3451fa07a96abe435fd6",
+  "materialBindingSha256": "0feeea6df8aa21bd1b3116331e47d1607d1c7129fc0632aa51d92958c18cbb9d",
+  "materialReviewSha256": "16e0ce5039507e930e6b2195aaf7c4ffa4e612754a970f0f6ee9382041a24b73",
+  "referencePublicHapSha256": "4ac884840e8940e12641d07e0e5ca8e66f7c5222e356fa3ef1aef6925d5d3519",
+  "handoffCommit": "262f8569a2d0f0f7cd1b676b2242d1944d0dd26d",
+  "buildCommands": [
+    "devecocli build --product default --build-mode release",
+    "devecocli build --modules entry --build-mode release (same exact source; original device Profile)"
+  ]
+}

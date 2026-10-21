@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Assemble explicit, hash-bound reviews for the 0.1.2 store HAPs.
+"""Assemble explicit, hash-bound reviews for the 0.1.2/0.1.3 store HAPs.
 
 The physical test was on the signed device counterpart, not the public APP.
 Finalize-HapSbom independently compares their actual ZIP members and keeps
@@ -27,33 +27,51 @@ def main():
     parser.add_argument('--repo', required=True, type=Path)
     parser.add_argument('--delivery', required=True, type=Path)
     parser.add_argument('--output', required=True, type=Path)
+    parser.add_argument('--candidate', choices=('0.1.2', '0.1.3'), default='0.1.2')
     args = parser.parse_args()
     repo, delivery, output = (p.resolve() for p in (args.repo, args.delivery, args.output))
     if output.exists():
         parser.error('output must be new')
-    material_path = repo / 'packaging/reviews/c-store-0.1.2/material-review.json'
-    binding_path = repo / 'packaging/reviews/c-store-0.1.2/runtime-sbom-license-binding.json'
-    physical_path = repo / 'packaging/reviews/c-store-0.1.2/physical-acceptance.json'
-    old_path = repo / 'packaging/reviews/c-api23-final/review-decisions.json'
+    if args.candidate == '0.1.3':
+        review_dir = 'c-rename-0.1.3'
+        old_path = repo / 'packaging/reviews/c-store-0.1.2-final/public-hap-review-decisions.json'
+        prefix = 'JingyanJingxi-0.1.3'
+        required_result = 'critical-device-retest-passed'
+        version_code = 4
+        scope = ('晶衍精析 0.1.3 release/app_gallery candidate, HAD-W32/API23 '
+                 'equivalent-payload device evidence; no API20/API24 or platform approval')
+    else:
+        review_dir = 'c-store-0.1.2'
+        old_path = repo / 'packaging/reviews/c-api23-final/review-decisions.json'
+        prefix = 'GSAS-II-0.1.2'
+        required_result = 'critical-device-retest-passed-with-startup-warning'
+        version_code = 3
+        scope = ('GSAS-II 0.1.2 release/app_gallery candidate, HAD-W32/API23 '
+                 'equivalent-payload device evidence; no API20/API24 or platform approval')
+    material_path = repo / f'packaging/reviews/{review_dir}/material-review.json'
+    binding_path = repo / f'packaging/reviews/{review_dir}/runtime-sbom-license-binding.json'
+    physical_path = repo / f'packaging/reviews/{review_dir}/physical-acceptance.json'
     material, physical, old = (load(p) for p in (material_path, physical_path, old_path))
     if (not material['materialCompletenessReviewPassed']
             or material['referenceReviewSha256'] != rt.file_hash(old_path)
             or material['materialBindingSha256'] != rt.file_hash(binding_path)
-            or physical['result'] != 'critical-device-retest-passed-with-startup-warning'):
+            or physical['result'] != required_result):
         raise ValueError('C material or device evidence is not ready')
     if {row['ref'] for row in material['componentDispositions']} != {
             row['ref'] for row in old['components']}:
         raise ValueError('reviewed component set differs from accepted predecessor')
 
     counterpart = {
-        'deviceHapFile': 'GSAS-II-0.1.2-device-internaltesting.hap',
-        'publicHapFile': 'GSAS-II-0.1.2-app-gallery.hap',
-        'storeAppFile': 'GSAS-II-0.1.2-app-gallery.app',
+        'deviceHapFile': prefix + '-device-internaltesting.hap',
+        'publicHapFile': prefix + '-app-gallery.hap',
+        'storeAppFile': prefix + '-app-gallery.app',
         'deviceHapSha256': physical['deviceHapSha256'],
         'publicHapSha256': material['publicHapSha256'],
         'storeAppSha256': material['storeAppSha256'],
         'embeddedHapSha256': load(delivery / 'store-app-verification.json')['storeAppContainedHapSha256'],
     }
+    if args.candidate == '0.1.3':
+        counterpart.update(versionCode=version_code, sourceCommit=physical['sourceCommit'])
     for key in ('deviceHap', 'publicHap', 'storeApp'):
         if rt.file_hash(delivery / counterpart[key + 'File']) != counterpart[key + 'Sha256']:
             raise ValueError('C package hash mismatch: ' + key)
@@ -80,7 +98,7 @@ def main():
         *[counterpart[key + 'File'] for key in ('deviceHap', 'publicHap', 'storeApp')],
     ]
     configs = [
-        ('public-hap', 'public-standalone-hap', 'GSAS-II-0.1.2-app-gallery.hap',
+        ('public-hap', 'public-standalone-hap', prefix + '-app-gallery.hap',
          'sbom', 'third-party'),
         ('store-app-embedded-hap', 'store-embedded-hap', 'embedded-entry-default.hap',
          'app-sbom', 'app-third-party'),
@@ -107,8 +125,7 @@ def main():
             'reviewer': 'Codex technical review at group leader request; not a forged human signature',
             'date': '2026-10-21',
             'hapSha256': hap_hash,
-            'scope': ('GSAS-II 0.1.2 release/app_gallery candidate, HAD-W32/API23 '
-                      'equivalent-payload device evidence; no API20/API24 or platform approval'),
+            'scope': scope,
             'acceptanceMode': 'equivalent-device-counterpart',
             'counterpart': {**counterpart, 'kind': kind},
             'draftCanonicalSha256': canonical_hash(draft),
@@ -124,7 +141,7 @@ def main():
             'externalNotices': {
                 'filename': 'THIRD-PARTY-NOTICES.txt',
                 'sha256': rt.file_hash(delivery / 'THIRD-PARTY-NOTICES.txt'),
-                'scope': 'Complete notices from exact 0.1.2 store-candidate delivery',
+                'scope': 'Complete notices from exact ' + args.candidate + ' store-candidate delivery',
             },
             'releaseApproved': False,
             'publicDistributionApproved': False,
