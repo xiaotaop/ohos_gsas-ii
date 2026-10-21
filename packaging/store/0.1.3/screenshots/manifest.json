@@ -1,0 +1,91 @@
+{
+  "scope": "store-format derivatives of existing 0.1.3 device originals; not new device captures",
+  "sourceHapSha256": "60fca45be125e825169b7fef90669cf76a0ef490adeeed1acd28f8ee1a9b94a7",
+  "userAuthorization": "Account holder explicitly selected ordinary image processing, uniform scale and padding, no AI, on 2026-10-21.",
+  "originalsModified": false,
+  "platformAspectRatioAndSizeCheckPassed": true,
+  "platformAccepted": false,
+  "files": [
+    {
+      "sourcePath": "docs/evidence/a-rename-013-60fca45b/controls.jpeg",
+      "sourceSha256": "d6fbad20ecee63ed6ee5de6e7902043363d4c5e9214adca5b132c21b52ac09b0",
+      "sourceWidth": 3120,
+      "sourceHeight": 2080,
+      "path": "packaging/store/0.1.3/screenshots/controls-1920x1080.png",
+      "sha256": "f4919d196c89161311a92fa208c68249a1321626335b06ebadaa0dfe60cdcde8",
+      "size": 527006,
+      "width": 1920,
+      "height": 1080,
+      "format": "png",
+      "transform": {
+        "mode": "contain",
+        "contentWidth": 1620,
+        "contentHeight": 1080,
+        "paddingLeft": 150,
+        "paddingRight": 150,
+        "paddingTop": 0,
+        "paddingBottom": 0,
+        "background": "#ffffff",
+        "crop": false,
+        "textEdited": false,
+        "aiGenerated": false
+      },
+      "derivedForStoreUpload": true,
+      "newPhysicalDeviceEvidence": false
+    },
+    {
+      "sourcePath": "docs/evidence/a-rename-013-60fca45b/success.jpeg",
+      "sourceSha256": "7284202ea3ea053db34b3a448d5069eb5a11c1e846c133499e449b69705053d8",
+      "sourceWidth": 3120,
+      "sourceHeight": 2080,
+      "path": "packaging/store/0.1.3/screenshots/success-1920x1080.png",
+      "sha256": "06424e662093e63e9322eacf2baf36a821c76e2a46b3e62ba4c5414ba6c9e64b",
+      "size": 544785,
+      "width": 1920,
+      "height": 1080,
+      "format": "png",
+      "transform": {
+        "mode": "contain",
+        "contentWidth": 1620,
+        "contentHeight": 1080,
+        "paddingLeft": 150,
+        "paddingRight": 150,
+        "paddingTop": 0,
+        "paddingBottom": 0,
+        "background": "#ffffff",
+        "crop": false,
+        "textEdited": false,
+        "aiGenerated": false
+      },
+      "derivedForStoreUpload": true,
+      "newPhysicalDeviceEvidence": false
+    },
+    {
+      "sourcePath": "docs/evidence/a-rename-013-60fca45b/restarted.jpeg",
+      "sourceSha256": "644ca4fa3ad9798de0fe40101a676c515a19638f67d5aeb178593ab0284738ee",
+      "sourceWidth": 3120,
+      "sourceHeight": 2080,
+      "path": "packaging/store/0.1.3/screenshots/restarted-1920x1080.png",
+      "sha256": "18962ca76c1e376012819a82e5cc41480e407abe9ef9fc12887f1a752633c821",
+      "size": 540338,
+      "width": 1920,
+      "height": 1080,
+      "format": "png",
+      "transform": {
+        "mode": "contain",
+        "contentWidth": 1620,
+        "contentHeight": 1080,
+        "paddingLeft": 150,
+        "paddingRight": 150,
+        "paddingTop": 0,
+        "paddingBottom": 0,
+        "background": "#ffffff",
+        "crop": false,
+        "textEdited": false,
+        "aiGenerated": false
+      },
+      "derivedForStoreUpload": true,
+      "newPhysicalDeviceEvidence": false
+    }
+  ]
+}

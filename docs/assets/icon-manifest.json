@@ -6,8 +6,13 @@
   "files": [
     {
       "path": "app/AppScope/resources/base/media/app_icon.svg",
-      "sha256": "2b358deeb4e88d4fcca93022a4b7bfb5b30ff1ec55f02749546327ca52752762",
-      "size": 314
+      "sha256": "d8ab06e9deebb48cbda1e0a79e026f0fa5f2b8197913f9ee86ce102f4f4bb755",
+      "size": 313,
+      "historicalCRLFRecord": {
+        "sha256": "2b358deeb4e88d4fcca93022a4b7bfb5b30ff1ec55f02749546327ca52752762",
+        "size": 314
+      },
+      "normalizationNote": "Current exact source Git blob uses LF (313 bytes); historical 314-byte hash is the identical SVG with CRLF. Vector content unchanged."
     },
     {
       "path": "docs/assets/app-icon-128.png",
@@ -18,6 +23,42 @@
       "path": "docs/assets/app-icon-512.png",
       "sha256": "b4791b036d2892546bb23d62a75e1bfe5b7b0643598b70ffba2b038abcf6f5f8",
       "size": 18272
+    },
+    {
+      "path": "docs/assets/app-icon-216.png",
+      "sha256": "b12373e0f51ce1e94518e2d6d818e26c302a278805bfa502cb890baa9787299c",
+      "size": 5813,
+      "width": 216,
+      "height": 216,
+      "derivedFrom": "app/AppScope/resources/base/media/app_icon.svg",
+      "storeApproved": false
+    },
+    {
+      "path": "docs/assets/app-icon-1024.png",
+      "sha256": "5658206c3caaa4156a2179ad3de27b40fc06eadf4e8c63710d60d6453ccd9051",
+      "size": 49622,
+      "width": 1024,
+      "height": 1024,
+      "derivedFrom": "app/AppScope/resources/base/media/app_icon.svg",
+      "storeApproved": false
     }
-  ]
+  ],
+  "storeIconRequirementObserved": {
+    "date": "2026-10-21",
+    "source": "authenticated AppGallery application information form",
+    "sizes": [
+      [
+        216,
+        216
+      ],
+      [
+        1024,
+        1024
+      ]
+    ],
+    "format": "PNG",
+    "maximumMB": 3
+  },
+  "rasterization": "Existing SVG rendered with sharp; unchanged vector geometry/colors. No AI redraw.",
+  "rasterizationSourceCommit": "8b64bf6ebefa2b4e609f962e926c294e084b6d52"
 }
