@@ -1,0 +1,604 @@
+{
+  "schemaVersion": 1,
+  "kind": "C-store-candidate-material-review",
+  "sourceCommit": "01e38b56a437e8a8d27cb5ae1f3c821d5aad3fad",
+  "storeAppSha256": "dd173f669b3b037726ce64b148d44fe7b4de5881ef7ac923ebe6c3704d917959",
+  "publicHapSha256": "4ac884840e8940e12641d07e0e5ca8e66f7c5222e356fa3ef1aef6925d5d3519",
+  "referenceReview": "packaging/reviews/c-api23-final/review-decisions.json",
+  "referenceReviewSha256": "dc1e21be1475b1918879cf73e703bce5810dd8103169c10e9e9f645cc208b37f",
+  "materialBindingSha256": "bed32ad64d34ebe0e9b039121ff005c1bf2fc131036632a4071736554bb135b1",
+  "componentDispositions": [
+    {
+      "ref": "component:app-core",
+      "action": "reviewed",
+      "reason": "Project/GSAS license and exact acknowledgement retained; all relevant port and GSAS sources supplied in the verified companion.",
+      "licenses": [
+        {
+          "license": {
+            "name": "GSAS-II Open Source License (UChicago Argonne)"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/GSAS-II-LICENSE.txt",
+          "sha256": "05f7d608ff9997aa4e89c380f936ee2b1ea6a20df3d4dabe362c522e3bf7218d"
+        },
+        {
+          "path": "resources/rawfile/licenses/GSAS-II-NOTICE.txt",
+          "sha256": "e58dee871082ef2764aa7978871f59a4bcf182f19c6883b7d1652ddbe79019a6"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "component:app-fileio",
+      "action": "reviewed",
+      "reason": "Project/GSAS license and exact acknowledgement retained; all relevant port and GSAS sources supplied in the verified companion.",
+      "licenses": [
+        {
+          "license": {
+            "name": "GSAS-II Open Source License (UChicago Argonne)"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/GSAS-II-LICENSE.txt",
+          "sha256": "05f7d608ff9997aa4e89c380f936ee2b1ea6a20df3d4dabe362c522e3bf7218d"
+        },
+        {
+          "path": "resources/rawfile/licenses/GSAS-II-NOTICE.txt",
+          "sha256": "e58dee871082ef2764aa7978871f59a4bcf182f19c6883b7d1652ddbe79019a6"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "component:app-resources",
+      "action": "reviewed",
+      "reason": "Project/GSAS license and exact acknowledgement retained; all relevant port and GSAS sources supplied in the verified companion.",
+      "licenses": [
+        {
+          "license": {
+            "name": "GSAS-II Open Source License (UChicago Argonne)"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/GSAS-II-LICENSE.txt",
+          "sha256": "05f7d608ff9997aa4e89c380f936ee2b1ea6a20df3d4dabe362c522e3bf7218d"
+        },
+        {
+          "path": "resources/rawfile/licenses/GSAS-II-NOTICE.txt",
+          "sha256": "e58dee871082ef2764aa7978871f59a4bcf182f19c6883b7d1652ddbe79019a6"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "component:bridge",
+      "action": "reviewed",
+      "reason": "Project/GSAS license and exact acknowledgement retained; all relevant port and GSAS sources supplied in the verified companion.",
+      "licenses": [
+        {
+          "license": {
+            "name": "GSAS-II Open Source License (UChicago Argonne)"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/GSAS-II-LICENSE.txt",
+          "sha256": "05f7d608ff9997aa4e89c380f936ee2b1ea6a20df3d4dabe362c522e3bf7218d"
+        },
+        {
+          "path": "resources/rawfile/licenses/GSAS-II-NOTICE.txt",
+          "sha256": "e58dee871082ef2764aa7978871f59a4bcf182f19c6883b7d1652ddbe79019a6"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "component:cpython",
+      "action": "reviewed",
+      "reason": "Controlled core and community stdlib are distinguished; actual core hash matches build/source companion; Python and incorporated notices supplied. Other embedded libraries are separately enumerated.",
+      "licenses": [
+        {
+          "license": {
+            "id": "Python-2.0"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/cpython/LICENSE",
+          "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "component:embedded-libffi",
+      "action": "merge",
+      "into": "third-party:libffi",
+      "reason": "One actual component; duplicate container/declaration is not an additional distributed library."
+    },
+    {
+      "ref": "component:embedded-scipy-openblas",
+      "action": "merge",
+      "into": "third-party:openblas-scipy",
+      "reason": "One actual component; duplicate container/declaration is not an additional distributed library."
+    },
+    {
+      "ref": "component:gsas-ii",
+      "action": "reviewed",
+      "reason": "Project/GSAS license and exact acknowledgement retained; all relevant port and GSAS sources supplied in the verified companion.",
+      "licenses": [
+        {
+          "license": {
+            "name": "GSAS-II Open Source License (UChicago Argonne)"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/GSAS-II-LICENSE.txt",
+          "sha256": "05f7d608ff9997aa4e89c380f936ee2b1ea6a20df3d4dabe362c522e3bf7218d"
+        },
+        {
+          "path": "resources/rawfile/licenses/GSAS-II-NOTICE.txt",
+          "sha256": "e58dee871082ef2764aa7978871f59a4bcf182f19c6883b7d1652ddbe79019a6"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "component:numpy",
+      "action": "reviewed",
+      "reason": "Actual packaged license text and copyright conditions checked; no parent-container license inherited. Bundled notices are a conservative superset; no assertion that every upstream build tool is shipped.",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/numpy/LICENSE.txt",
+          "sha256": "01fb016849aa427edb1bbbbd55f91c26ca6cadb32a5b20e7f000655dd05b0760"
+        },
+        {
+          "path": "resources/rawfile/licenses/runtime/numpy/numpy-2.2.6-BUNDLED-NOTICES.txt",
+          "sha256": "8468cd5d33c8bd3a9791ede4d40adbb6dab95f90c6c14b8cf66887c290fe84e5"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "component:ply",
+      "action": "reviewed",
+      "reason": "Actual packaged license text and copyright conditions checked; no parent-container license inherited.",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/ply/LICENSE",
+          "sha256": "3c31d4d6695be3a2013d6bdb5425061bd61bfc763317389d778a4109d6b78765"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "component:prettytable",
+      "action": "reviewed",
+      "reason": "Actual packaged license text and copyright conditions checked; no parent-container license inherited.",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/prettytable/LICENSE",
+          "sha256": "0c8adcc204c8af6cdfdf7887dfd1f99c29901f6c1d505a78bba96efa4fb2cb05"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "component:pycifrw",
+      "action": "reviewed",
+      "reason": "Retain exact ANSTO agreement and copyright; do not label the customized agreement simply PSF-2.0. Port/build changes are described in source companions.",
+      "licenses": [
+        {
+          "license": {
+            "name": "ANSTO PyCIFRW License Agreement (Python License, Version 2)"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/pycifrw/LICENSE",
+          "sha256": "3bd53604193ca9c0e1a069348a32b8909e0d7aee098f99fb8357b3c3bb7323ad"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "component:scipy",
+      "action": "reviewed",
+      "reason": "Actual packaged license text and copyright conditions checked; no parent-container license inherited. Bundled notices are a conservative superset; no assertion that every upstream build tool is shipped.",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/scipy/LICENSE.txt",
+          "sha256": "221e59f5e910fd7f94e44f0dac77436a11338c285c6346232e4a850a50da0e94"
+        },
+        {
+          "path": "resources/rawfile/licenses/runtime/scipy/scipy-1.16.3-BUNDLED-NOTICES.txt",
+          "sha256": "346b9282f4e318a66a08c08315688a740c4d44d406af5ea684fe4b7d2e32ca14"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "component:sdk-libcxx",
+      "action": "reviewed",
+      "reason": "Actual packaged license text and copyright conditions checked; no parent-container license inherited.",
+      "licenses": [
+        {
+          "expression": "Apache-2.0 WITH LLVM-exception"
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/LLVM-NOTICE.txt",
+          "sha256": "22208a1d78a9271ec1d6eaf7d21db5dda6049ed14af09d7d0f8d7787b6bffb77"
+        },
+        {
+          "path": "resources/rawfile/licenses/libcxx-LICENSE.txt",
+          "sha256": "54fe8296021f29a40b7abccb174d440f650088807f8b84d4315e6ef9c3e323a7"
+        },
+        {
+          "path": "resources/rawfile/licenses/libcxxabi-LICENSE.txt",
+          "sha256": "dd55121fdf68d349082de00243eb187fd01ab7afa07944be6d23f6a598b7b37e"
+        }
+      ],
+      "versionStatus": "unverified"
+    },
+    {
+      "ref": "component:wcwidth",
+      "action": "reviewed",
+      "reason": "Actual packaged license text and copyright conditions checked; no parent-container license inherited.",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/wcwidth/LICENSE",
+          "sha256": "70b98a95a2144eb70af8017fa8c6d95ce247e40867436e8bc649e137fe13d21a"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "component:llvm-fortran-runtime",
+      "action": "reviewed",
+      "reason": "Actual packaged license text and copyright conditions checked; no parent-container license inherited.",
+      "licenses": [
+        {
+          "expression": "Apache-2.0 WITH LLVM-exception"
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/gsas-ii/LLVM-FortranRuntime-20.1.8-LICENSE.txt",
+          "sha256": "94b301bb652ae351f5941655bf533f1a136300ad1396be7452c8a04ff2c91374"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "third-party:cpython",
+      "action": "merge",
+      "into": "component:cpython",
+      "reason": "One actual component; duplicate container/declaration is not an additional distributed library.",
+      "declarationOnly": true
+    },
+    {
+      "ref": "third-party:scipy",
+      "action": "merge",
+      "into": "component:scipy",
+      "reason": "One actual component; duplicate container/declaration is not an additional distributed library.",
+      "declarationOnly": true
+    },
+    {
+      "ref": "third-party:libffi",
+      "action": "reviewed",
+      "reason": "Actual packaged license text and copyright conditions checked; no parent-container license inherited.",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/cpython/libffi-3.4.4-LICENSE.txt",
+          "sha256": "2c9c2acb9743e6b007b91350475308aee44691d96aa20eacef8e199988c8c388"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "third-party:openssl",
+      "action": "reviewed",
+      "reason": "Actual packaged license text and copyright conditions checked; no parent-container license inherited.",
+      "licenses": [
+        {
+          "license": {
+            "name": "OpenSSL 1.1.1 dual OpenSSL/SSLeay license"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/cpython/openssl-1.1.1w-LICENSE.txt",
+          "sha256": "c32913b33252e71190af2066f08115c69bc9fddadf3bf29296e20c835389841c"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "third-party:sqlite",
+      "action": "reviewed",
+      "reason": "Actual packaged license text and copyright conditions checked; no parent-container license inherited.",
+      "licenses": [
+        {
+          "license": {
+            "name": "SQLite public-domain dedication"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/cpython/sqlite-3.49.1-PUBLIC-DOMAIN.txt",
+          "sha256": "324e433812420af7e704d8522013c8107c4b2fe829153bb94622f86c0f49fa13"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "third-party:bzip2",
+      "action": "reviewed",
+      "reason": "Actual packaged license text and copyright conditions checked; no parent-container license inherited.",
+      "licenses": [
+        {
+          "license": {
+            "id": "bzip2-1.0.6"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/cpython/bzip2-1.0.8-LICENSE.txt",
+          "sha256": "c6dbbf828498be844a89eaa3b84adbab3199e342eb5cb2ed2f0d4ba7ec0f38a3"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "third-party:xz",
+      "action": "reviewed",
+      "reason": "Only liblzma consumer is present. Upstream COPYING assigns liblzma 0BSD; GNU command-line utilities and helper scripts are not included by this component.",
+      "licenses": [
+        {
+          "license": {
+            "id": "0BSD"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/cpython/xz-5.8.2-COPYING.txt",
+          "sha256": "616a3ad264ce29b8f1cb97e53037b139d406899ca8d1f799651e17bfa09830b8"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "third-party:ncurses",
+      "action": "reviewed",
+      "reason": "Actual packaged license text and copyright conditions checked; no parent-container license inherited.",
+      "licenses": [
+        {
+          "license": {
+            "name": "ncurses permissive license (Thomas E. Dickey/FSF; exact COPYING retained)"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/cpython/ncurses-6.6-COPYING.txt",
+          "sha256": "708999f95527e1ffa670c6fce288c6c600cb477dd04afcc1171422b3dd4ee226"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "third-party:expat",
+      "action": "reviewed",
+      "reason": "Actual packaged license text and copyright conditions checked; no parent-container license inherited.",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/cpython/expat-2.6.4-COPYING.txt",
+          "sha256": "122f2c27000472a201d337b9b31f7eb2b52d091b02857061a8880371612d9534"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "third-party:libmpdec",
+      "action": "reviewed",
+      "reason": "Actual packaged license text and copyright conditions checked; no parent-container license inherited.",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-2-Clause"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/cpython/libmpdec-2.5.1-LICENSE.txt",
+          "sha256": "7065ec78957089bfb800064edb29ba78b58e5ed1be4efa71b25f7b1ff0833e2d"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "third-party:openblas-scipy",
+      "action": "reviewed",
+      "reason": "Actual packaged license text and copyright conditions checked; no parent-container license inherited.",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/scipy/openblas-0.3.29-LICENSE.txt",
+          "sha256": "190b5a9c8d9723fe958ad33916bd7346d96fab3c5ea90832bb02d854f620fcff"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "third-party:llvm-fortran-scipy",
+      "action": "reviewed",
+      "reason": "Defined runtime functions in 14 actual consumers are bound to the pinned original wheel. Apache/LLVM notice retained; exact static archive version is not asserted or needed as a universal source-disclosure condition.",
+      "licenses": [
+        {
+          "expression": "Apache-2.0 WITH LLVM-exception"
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/scipy/LLVM-FortranRuntime-22.1.8-LICENSE.txt",
+          "sha256": "94b301bb652ae351f5941655bf533f1a136300ad1396be7452c8a04ff2c91374"
+        }
+      ],
+      "versionStatus": "unverified"
+    },
+    {
+      "ref": "third-party:lapack-netlib",
+      "action": "reviewed",
+      "reason": "Actual packaged license text and copyright conditions checked; no parent-container license inherited.",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/scipy/netlib-lapack-OpenBLAS-0.3.29-LICENSE.txt",
+          "sha256": "978539245c405775bf347b1256c36df4daf8b69a64b099e94b1d53742201621e"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "third-party:lapacke",
+      "action": "reviewed",
+      "reason": "Actual packaged license text and copyright conditions checked; no parent-container license inherited.",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/scipy/lapacke-OpenBLAS-0.3.29-LICENSE.txt",
+          "sha256": "871f415ebd2fd06c7ab8cc3c0016aa2d26b918622345116e2d0c740b688d4843"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    },
+    {
+      "ref": "third-party:numpy-bundled-notices",
+      "action": "merge",
+      "into": "component:numpy",
+      "reason": "Conservative upstream notice collection is documentation, not an additional binary component.",
+      "declarationOnly": true
+    },
+    {
+      "ref": "third-party:llvm-compiler-rt-controlled",
+      "action": "reviewed",
+      "reason": "Actual packaged license text and copyright conditions checked; no parent-container license inherited.",
+      "licenses": [
+        {
+          "expression": "Apache-2.0 WITH LLVM-exception"
+        }
+      ],
+      "licenseFiles": [
+        {
+          "path": "resources/rawfile/licenses/runtime/cpython/LLVM-compiler-rt-15.0.4-LICENSE.txt",
+          "sha256": "1a8f1058753f1ba890de984e48f0242a3a5c29a6a8f2ed9fd813f36985387e8d"
+        }
+      ],
+      "versionStatus": "package-declared; community patchset not independently reconstructed"
+    }
+  ],
+  "excludedCode": [
+    "GDBM library and _gdbm extension",
+    "GNU readline extension",
+    "GNU Fortran helper and unused NumPy OpenBLAS64",
+    "libintl implementation in original libpython (core replaced)",
+    "pydiffax",
+    "GSASII/G2shapes.py"
+  ],
+  "nonBlockingProvenanceLimits": [
+    "Community standard-library extension patchsets not independently recovered",
+    "SciPy generated BLAS config differs from actual library marker",
+    "Exact SciPy LLVM runtime archive version/hash unknown; compiler marker retained as observation only"
+  ],
+  "materialCompletenessReviewPassed": true,
+  "basis": "All runtime/native/license bytes match accepted d65a64a9 internaltesting reference. Current actual upload APP embedded HAP and standalone candidate have separate inventories/SBOMs. Reuse is limited to unchanged material/component dispositions; it is not a new device result or a platform/public distribution grant.",
+  "sbomPhysicalFinalizationPending": true,
+  "releaseApproved": false,
+  "publicDistributionApproved": false
+}

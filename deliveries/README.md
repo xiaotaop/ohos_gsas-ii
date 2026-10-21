@@ -1,5 +1,7 @@
 # 内测交付下载
 
+当前第一项审核：[0.1.2 公开 APP](GSAS-II-0.1.2-app-gallery.app) · [完整新包审核 ZIP](c-store-package-0.1.2-01e38b56.zip) · [哈希和审核步骤](../docs/C_STORE_PACKAGE_0_1_2.md)。新版本尚待组长设备复验。
+
 当前 API23 候选：[签名 HAP](GSAS-II-0.1.1-c47b610-api23-signed.hap) · [完整材料 ZIP](c-api23-c47b610-d65a64a9.zip) · [精确源码、哈希、签名/SBOM/许可与待复验说明](../docs/C_API23_SIGNED_HAP.md)。旧 API20 包保留作历史。
 
 [PR #14 完整签名包](a-pr14-57c661db-59c86f18.zip) · [包标识、校验及验收说明](../docs/C_A14_SIGNED_HAP.md)

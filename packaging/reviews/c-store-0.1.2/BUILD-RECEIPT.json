@@ -1,0 +1,51 @@
+{
+  "sourceCommit": "01e38b56a437e8a8d27cb5ae1f3c821d5aad3fad",
+  "versionName": "0.1.2",
+  "versionCode": 3,
+  "bundleName": "com.gsasii.desktop",
+  "runtimeId": "c-controlled-license-prototype-20261020",
+  "runtimeFiles": 2245,
+  "trackedAppFilesCompared": 50,
+  "buildProfileMatchesSourceExceptPrivateSigning": true,
+  "hapSha256": "4ac884840e8940e12641d07e0e5ca8e66f7c5222e356fa3ef1aef6925d5d3519",
+  "hapSize": 135971288,
+  "fileCount": 2266,
+  "nativeELFs": 219,
+  "minAPIVersion": 60100023,
+  "targetAPIVersion": 60101024,
+  "signatureVerified": true,
+  "profileType": "release",
+  "appDistributionType": "app_gallery",
+  "changedHapFiles": [
+    "module.json",
+    "pack.info"
+  ],
+  "runtimeContentUnchanged": true,
+  "storeAppSha256": "dd173f669b3b037726ce64b148d44fe7b4de5881ef7ac923ebe6c3704d917959",
+  "storeAppSize": 45423561,
+  "storeAppSignatureVerified": true,
+  "storeAppContainedHapSha256": "14d5761a3fb85fd66c63d9725773f7deee93ecdb7d60b68a587515f44b6a4648",
+  "storeAppContainedHapFiles": 2265,
+  "deviceHapSha256": "78efbb58ee3a7d970c4d432cffe376d6256546952449d656da59f7f6ba1fd33f",
+  "deviceHapSize": 135971346,
+  "deviceValidated": false,
+  "platformSubmitted": false,
+  "releaseApproved": false,
+  "publicDistributionApproved": false,
+  "filenames": {
+    "storeApp": "GSAS-II-0.1.2-app-gallery.app",
+    "hap": "GSAS-II-0.1.2-app-gallery.hap",
+    "deviceHap": "GSAS-II-0.1.2-device-internaltesting.hap"
+  },
+  "sourceCompanionSha256": "67fc5d5e20017ebfefb727a7b5ce39533bcd475ff36f4d34bb39e3d8361530a6",
+  "runtimeManifestSha256": "8dbd5cf3187973f05e7ab4d5e1aa0e81b84ca3ec14812ee507b6363b74b417c8",
+  "signatureRecordSha256": "c0e90a2db22781cf32a4bc07fe600b0f77fc841db58ed0bb4df66be39985ee1b",
+  "materialBindingSha256": "bed32ad64d34ebe0e9b039121ff005c1bf2fc131036632a4071736554bb135b1",
+  "materialReviewSha256": "37a826a7e409662fbd97ce9010d0b2290c63fda4a88e741b4e8223fd609e494a",
+  "referenceAcceptedHapSha256": "d65a64a90cba7d029d43b7549c626903ccf1080a6f5b4aa8a70f77148909b25b",
+  "buildCommands": [
+    "devecocli build --product default --build-mode release",
+    "devecocli build --modules entry --build-mode release (same source, original device internaltesting Profile)"
+  ],
+  "publicProfileChecked": "release/app_gallery; no designated-device restriction"
+}

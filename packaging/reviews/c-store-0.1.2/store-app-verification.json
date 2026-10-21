@@ -1,0 +1,17 @@
+{
+  "sourceCommit": "01e38b56a437e8a8d27cb5ae1f3c821d5aad3fad",
+  "versionName": "0.1.2",
+  "versionCode": 3,
+  "minAPIVersion": 60100023,
+  "targetAPIVersion": 60101024,
+  "hapSha256": "4ac884840e8940e12641d07e0e5ca8e66f7c5222e356fa3ef1aef6925d5d3519",
+  "storeAppSha256": "dd173f669b3b037726ce64b148d44fe7b4de5881ef7ac923ebe6c3704d917959",
+  "storeAppSize": 45423561,
+  "storeAppSignatureVerified": true,
+  "storeAppContainedHapSha256": "14d5761a3fb85fd66c63d9725773f7deee93ecdb7d60b68a587515f44b6a4648",
+  "storeAppContainedHapFiles": 2265,
+  "storeAppContainedRemovedFile": ".pages.info",
+  "storeAppContainedFormattingOnlyDiff": [
+    "pack.info"
+  ]
+}
