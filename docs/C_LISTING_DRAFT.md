@@ -2,7 +2,7 @@
 
 状态（2026-10-21）：展示名“晶衍精析”的 0.1.3 正式签名包已由 C [交付](C_RENAME_0_1_3_SIGNED_HANDOFF.md)；原 HAD-W32/API23 的[保留数据升级、名称及关键工作流复验](PR23_0_1_3_DEVICE_RETEST_2026-10-21.md)通过，[限定范围整包技术门禁](PR23_0_1_3_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)通过。此页继续是 C 的**平台提交草稿**；实际账号、名称占用、素材规格、平台检测和公开审核仍未完成。
 
-C 的[上架材料工作稿](../packaging/store/0.1.3/README.md)已随最终名称、签名包与新截图更新；发布者、反馈联系方式、隐私政策地址等实际账号资料仍待 C 填写，不以草稿冒充平台已提交。
+C 的[上架材料工作稿](../packaging/store/0.1.3/README.md)已随最终名称、签名包与新截图更新；账号持有人已确定发布者及维护者“朱宇辰”、仓库 Issues 反馈入口、仅中国大陆。C 已准备[完整隐私政策](PRIVACY.zh-CN.md)与静态网页；候选地址的合并、可达性及平台接受结果仍待核对，不以材料完成冒充平台已提交。
 
 固定的上传候选：[JingyanJingxi-0.1.3-app-gallery.app](../deliveries/JingyanJingxi-0.1.3-app-gallery.app)，SHA-256 `89e6b3e47afba2a17d01696cea6c6b6333a7edeb8a1bab58ab18f1b6ff4ddafd`。展示名“晶衍精析”，0.1.3/versionCode 4，`bundleName=com.gsasii.desktop`，最低 API23、目标 API24。只声明 API23 真机已验证；旧 `GSAS-II-0.1.2-app-gallery.app` 及其哈希是历史候选。
 
@@ -13,8 +13,10 @@ C 的[上架材料工作稿](../packaging/store/0.1.3/README.md)已随最终名�
 | 图标与截图 | 正式图标源为 `app/AppScope/resources/base/media/app_icon.svg`；[A 的十张 0.1.3 真机原图](A_RENAME_0_1_3_DEVICE_SCREENSHOTS_2026-10-21.md)均显示新名称或对应本包功能，旧图仅保留历史证据 | 从新原图按平台规格导出素材，逐张审核隐私、测试文字、尺寸和真实来源；勿把系统搜索建议写成已在市场上架 |
 | 隐私说明 | 已实现流程为用户主动选取文件、应用内本地计算及系统选择器指定位置导出；当前入口 manifest 未声明网络、摄像头、定位请求权限 | 根据最终实际行为与平台字段完成隐私文本、必要的托管地址和数据处理说明；不得从“未声明权限”推断所有依赖绝不会通信 |
 | 许可与第三方 | C 的 0.1.3 源码/通知/许可归档及实际包草稿已交付；[独立公开 HAP 与 APP 内嵌 HAP 的最终 SBOM](PR23_0_1_3_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)已按新哈希固定；既定来源精度限制保留 | 上传时核对实际 APP 哈希及所附通知、源码和许可材料是否仍一致 |
-| 维护与反馈 | 代码问题可在当前 GitHub 仓库 Issues 留痕 | 由实际账号持有人确定公开维护者、反馈联系方式、客服/支持入口；凭据不入仓库 |
+| 维护与反馈 | 代码问题可在当前 GitHub 仓库 Issues 留痕 | 已确认朱宇辰及仓库 Issues；核对平台是否另要求邮箱/电话，未提供的联系方式不杜撰；凭据不入仓库 |
 | 账号和平台流程 | 团队采用自有开发者账号，社区建仓不是前置；目前 `signedPackageReady=true`、`deviceUpgradeAndDisplayVerified=true`、`platformSubmitted=false`、`publicDistributionApproved=false` | 核对账号权限、名称与必要字段，填写真实源码仓库并上传固定哈希的新 APP；保存平台包检测、受理编号与反馈 |
+
+实际填写与需账号持有人操作的事项见[平台交接](../packaging/store/0.1.3/platform-handoff.zh-CN.md)。
 
 可用的隐私文案起点：用户主动选择的衍射、仪器和 CIF 文件在设备上计算；导入副本、参数草稿、任务及结果保存在应用空间；导出仅写入用户经系统选择器指定的位置。卸载前应先导出需要保留的结果。C 应结合最终包、实际平台字段和隐私政策要求复核后使用，不将本草稿直接作为正式隐私政策。当前应用源码未发现专用隐私政策入口；C 需核对平台实际要求，若须改包增加入口，则重新构建、签名并复验，不能沿用此候选哈希。
 

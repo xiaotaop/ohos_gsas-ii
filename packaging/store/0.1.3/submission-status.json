@@ -18,11 +18,11 @@
   "newNameDeviceScreenshotsArchived": 10,
   "primaryListingScreenshotCandidates": 3,
   "platformScreenshotValidationPending": true,
-  "publisher": null,
-  "maintainer": null,
-  "feedbackContact": null,
-  "privacyPolicyURL": null,
-  "privacyDocumentStatus": "draft; actual publisher, contact, effective date and public URL pending",
+  "publisher": "朱宇辰",
+  "maintainer": "朱宇辰",
+  "feedbackContact": "https://github.com/xiaotaop/ohos_gsas-ii/issues",
+  "privacyPolicyURL": "https://github.com/xiaotaop/ohos_gsas-ii/blob/main/docs/PRIVACY.zh-CN.md",
+  "privacyDocumentStatus": "complete review text and static HTML prepared; public URL and platform validation pending",
   "privacyInAppEntry": "not found in current app sources; verify live platform requirement before submission",
   "livePlatformAccountQualificationsChecked": false,
   "livePlatformNameAndRightsChecked": false,
@@ -30,5 +30,16 @@
   "readyToSubmit": false,
   "platformSubmitted": false,
   "platformApproved": false,
-  "publicDistributionApproved": false
+  "publicDistributionApproved": false,
+  "privacyPolicySource": "docs/PRIVACY.zh-CN.md",
+  "privacyPolicyHtml": "docs/privacy/index.html",
+  "privacyPolicyPublicURLVerified": false,
+  "privacyPolicyMainlandReachabilityVerified": false,
+  "regions": [
+    "CN"
+  ],
+  "regionsConfirmedByAccountHolder": true,
+  "platformRegionConfigured": false,
+  "platformContactRequirementsVerified": false,
+  "platformSubmissionAuthorizedInChat": true
 }
