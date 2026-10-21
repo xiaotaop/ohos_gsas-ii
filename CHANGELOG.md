@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased — 0.1.3 显示名变更（2026-10-21）
+
+- 应用及入口 Ability 共用的 `app_name` 从 GSAS-II 改为“晶衍精析”，保留原 bundleName，版本递增至 0.1.3/versionCode 4。已用原审查载荷构建未签名完整运行时 HAP；C 的原身份签名、新包真机覆盖安装/名称复核及整包审查均待，见[交接](docs/RENAME_0_1_3_HANDOFF_2026-10-21.md)。
+
 ## Unreleased — 0.1.2 整包技术审查（2026-10-21）
 
 - 公开独立 HAP 与实际 APP 内嵌 HAP 分别形成哈希绑定的最终 SBOM，核对同载荷设备复验、原生依赖和许可材料；限定 HAD-W32/API23 的整包技术门禁通过。首次联网提示按组长决断保留为设备未联网的非阻断观察；上架材料、平台检测与公开分发批准仍待。见 [审查结论](docs/PR21_0_1_2_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)。

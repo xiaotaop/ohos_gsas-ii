@@ -1,6 +1,8 @@
 # 发布交接与远端状态
 
-0.1.2 新包进度（2026-10-21）：**GSAS-II 0.1.2 / versionCode 3** 的 `release/app_gallery` 公开 APP 候选 `dd173f66…` 及同内容设备复验 HAP `78efbb58…` 已[交付](C_STORE_PACKAGE_0_1_2.md)。后者在原 HAD-W32/API23 完成[保留数据升级与关键真机复验](PR21_0_1_2_DEVICE_RETEST_2026-10-21.md)，[限定范围整包技术审查](PR21_0_1_2_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)通过；C 可准备上架材料，平台检测/提交与公开分发批准仍待。下方 d65a64a9 内测技术结论保留为旧哈希记录。
+当前改名候选（2026-10-21）：**晶衍精析 0.1.3/versionCode 4** 的完整运行时未签名 HAP 已构建；[C 签名交接](RENAME_0_1_3_HANDOFF_2026-10-21.md)明确公开 APP、原设备 HAP、覆盖安装和真机名称显示仍待。上架材料草稿已切到新名称，旧 0.1.2 APP 不应当作新候选上传。平台未提交，公开分发未批准。
+
+0.1.2 旧哈希结论（2026-10-21）：**GSAS-II 0.1.2 / versionCode 3** 的 `release/app_gallery` 公开 APP `dd173f66…` 及同内容设备复验 HAP `78efbb58…` 已[交付](C_STORE_PACKAGE_0_1_2.md)。后者在原 HAD-W32/API23 完成[保留数据升级与关键真机复验](PR21_0_1_2_DEVICE_RETEST_2026-10-21.md)，[限定范围整包技术审查](PR21_0_1_2_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)通过；这些结论不自动转移至 0.1.3。下方更早内测结论均保留作历史。
 
 历史状态（2026-10-20）：内测 HAP `791dc53d…` 的工程/SBOM/许可和 API23 显式断网五阶段、UI 临界、[结果页 12 项数值复核](PR17_NUMERIC_UI_ACCEPTANCE_2026-10-20.md)已归档；[Core 三项边界按限定口径接收](LEADER_CORE_BOUNDARY_ACCEPTANCE_2026-10-20.md)，A 旧包已测场景保留为未变组件佐证。组长随后[决定只声明 API23 已验证](API23_SUPPORT_SCOPE_2026-10-20.md)，源码最低兼容版本已改为 API23。该包仍写 API20，当时尚须重建及 API23 同包复验；这些工作后来已完成，0.1.2 公开签名候选亦已交付。平台审核仍待。以下旧 `70588bde…` 和 PR #13/14 叙述均为当时快照，见[验收矩阵](RELEASE_ACCEPTANCE.md)。
 
@@ -34,5 +36,5 @@ git ls-remote origin "refs/heads/$(git branch --show-current)"
 
 2026-10-12 创建的个人公开 GitCode 暂存仓库为 <https://gitcode.com/2401_86708491/ohos_gsas-ii>。它不是 `OpenHarmonyPCDeveloper` 社区组织仓库；保留地址用于追溯，不假定两端会自动同步。本次没有修改旧仓库设置或关闭旧 PR。
 
-核心移植、旧 0.1.1 内测包及 0.1.2 公开签名候选在[API23 收窄范围](API23_SUPPORT_SCOPE_2026-10-20.md)内的工程审查已完成；最新结论以[0.1.2 审查记录](PR21_0_1_2_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)为准。团队既定采用自有开发者账号路线，C 可按[上架材料草稿](C_LISTING_DRAFT.md)准备账号、描述、隐私和素材，并如实填写当前源码仓库；社区建仓不是该路线的前置。若日后另选 OpenHarmonyPCDeveloper 社区组织路线，再由 C 更新[社区申请草稿](GITCODE_APPLICATION.md)并申请建仓。两条路线均须完成平台检测和上架审核；GitHub PR 的合并不代表已提交申请。
+核心移植、旧 0.1.1 内测包及 0.1.2 公开签名候选在[API23 收窄范围](API23_SUPPORT_SCOPE_2026-10-20.md)内的工程审查已完成；0.1.2 结论以[旧哈希审查记录](PR21_0_1_2_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)为准。当前 0.1.3 改名候选仍待 C 签名和新包核验；团队既定采用自有开发者账号路线，C 可按[新上架材料草稿](C_LISTING_DRAFT.md)准备账号、描述、隐私和素材，并如实填写当前源码仓库；社区建仓不是该路线的前置。若日后另选 OpenHarmonyPCDeveloper 社区组织路线，再由 C 更新[社区申请草稿](GITCODE_APPLICATION.md)并申请建仓。两条路线均须完成平台检测和上架审核；GitHub PR 的合并不代表已提交申请。
 

@@ -1,6 +1,8 @@
 # ohos_gsas-ii
 
-0.1.2 新包进度（2026-10-21）：**GSAS-II 0.1.2 / versionCode 3** 的 `release/app_gallery` 公开 APP 候选 `dd173f66…` 及同内容设备复验 HAP `78efbb58…` 已[交付](docs/C_STORE_PACKAGE_0_1_2.md)。后者在原 HAD-W32/API23 完成[保留数据升级与关键真机复验](docs/PR21_0_1_2_DEVICE_RETEST_2026-10-21.md)；[限定 API23 的整包技术审查](docs/PR21_0_1_2_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)通过。C 可准备上架材料，平台检测/上架尚未提交。下方 d65a64a9 内测技术结论保留为旧哈希记录。
+当前改名候选（2026-10-21）：桌面显示名改为**晶衍精析**，版本 0.1.3/4，包名保持 `com.gsasii.desktop`。完整运行时未签名 Release HAP 已构建，见[改名与 C 签名交接](docs/RENAME_0_1_3_HANDOFF_2026-10-21.md)；**C 正式签名、原设备覆盖安装/名称显示及新包技术复核待完成**。下方 0.1.2 审查仅绑定旧包字节，不能充作 0.1.3 放行。
+
+0.1.2 历史包（2026-10-21）：**GSAS-II 0.1.2 / versionCode 3** 的 `release/app_gallery` 公开 APP 候选 `dd173f66…` 及同内容设备复验 HAP `78efbb58…` 已[交付](docs/C_STORE_PACKAGE_0_1_2.md)。后者在原 HAD-W32/API23 完成[保留数据升级与关键真机复验](docs/PR21_0_1_2_DEVICE_RETEST_2026-10-21.md)；[限定 API23 的整包技术审查](docs/PR21_0_1_2_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)通过。该包不含新展示名，不应冒充 0.1.3 上传。下方 d65a64a9 内测技术结论亦为旧哈希记录。
 
 GSAS-II 面向 HarmonyOS PC 的移植仓库。正式 ArkUI 页面、文件服务、C++ N-API 与完整八模块运行时已集成。按组长 [API23 收窄决断](docs/API23_SUPPORT_SCOPE_2026-10-20.md)，C 已用精确源码 `c47b610…` 交付最低 API23 的完整签名候选 `d65a64a9…`（0.1.1 / versionCode 2），[HAP、源码与 SBOM/许可材料可下载](docs/C_API23_SIGNED_HAP.md)。该包已在 HAD-W32/API23 完成[同包关键复验](docs/PR20_API23_DEVICE_ACCEPTANCE_2026-10-21.md)与[限定内测范围整包技术审查](docs/PR20_API23_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)；旧包证据仍按未变组件边界保留。0.1.2 公开候选的限定 API23 技术门禁现已通过，平台审核与公开分发批准尚未完成，以[验收矩阵](docs/RELEASE_ACCEPTANCE.md)为准。
 
