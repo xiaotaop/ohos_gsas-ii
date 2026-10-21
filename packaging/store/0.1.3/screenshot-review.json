@@ -42,5 +42,10 @@
   ],
   "otherOriginalDeviceScreenshots": 7,
   "priorOldNameScreenshotsRetainedAsHistoricalEvidence": true,
-  "platformAccepted": false
+  "platformAccepted": false,
+  "storeUploadDerivativeManifest": "packaging/store/0.1.3/screenshots/manifest.json",
+  "storeUploadDerivativeCount": 3,
+  "formatAdaptation": "User-authorized ordinary image processing: uniform downscale, 150px white padding each side, no crop/text edits/AI.",
+  "storeUploadAspectRatioSizeAndFormatChecked": true,
+  "storeUploadVisualReviewPassed": true
 }

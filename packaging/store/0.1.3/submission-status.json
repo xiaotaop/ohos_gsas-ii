@@ -66,5 +66,41 @@
     "maximumMB": 3,
     "source": "authenticated application information form on 2026-10-21"
   },
-  "platformUiControlStatus": "readable; automated click and text entry did not apply; user-assisted navigation required"
+  "platformUiControlStatus": "readable; automated click and text entry did not apply; user-assisted navigation required",
+  "versionFormInspected": true,
+  "versionFormStatusObserved": "准备提交；未提交",
+  "releasePackageSelected": false,
+  "platformPrivateContactFieldsRequired": [
+    "负责人手机号及短信验证",
+    "负责人邮箱",
+    "负责人姓名"
+  ],
+  "privateContactValuesStoredInRepository": false,
+  "screenshotRequirementObserved": {
+    "count": [
+      3,
+      10
+    ],
+    "width": 1920,
+    "height": 1080,
+    "minimum": true,
+    "aspectRatio": "16:9",
+    "formats": [
+      "PNG",
+      "JPG",
+      "JPEG"
+    ],
+    "maximumMBEach": 5
+  },
+  "existingOriginalScreenshotsNeedAspectRatioAdaptation": true,
+  "privacyHostingAvailableInVersionForm": true,
+  "privacyHostingSetupComplete": false,
+  "liveVersionFormCopyPrepared": true,
+  "storeUploadScreenshotFilesPrepared": 3,
+  "storeUploadScreenshotManifest": "packaging/store/0.1.3/screenshots/manifest.json",
+  "platformScreenshotFormatPrepared": true,
+  "platformPrivateContactVerificationReportedByAccountHolder": true,
+  "privateContactVerificationIndependentlyReadBack": false,
+  "userReportedApplicationInfoAdvancedToVersionPage": true,
+  "privacyHostingPlanned": true
 }
