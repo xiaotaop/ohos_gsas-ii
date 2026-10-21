@@ -38,3 +38,5 @@ packaging/reviews/c-pr17-ce624cec/*.json -text -whitespace
 deliveries/GSAS-II-0.1.1-c47b610-api23-signed.hap filter=lfs diff=lfs merge=lfs -text
 deliveries/c-api23-c47b610-d65a64a9.zip filter=lfs diff=lfs merge=lfs -text
 packaging/reviews/c-api23-c47b610/*.json -text -whitespace
+packaging/reviews/c-api23-final/*.json -text -whitespace
+packaging/reviews/c-api23-final/evidence/*.json -text -whitespace

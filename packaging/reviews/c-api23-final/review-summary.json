@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "kind": "API23-internaltesting-technical-acceptance-review",
+  "date": "2026-10-21",
+  "reviewer": "Codex at group leader request; not a forged human signature",
+  "sourceCommit": "c47b6105fdb31ac0536c6d058f5ffb54cb51c5b6",
+  "deliveryPr": "https://github.com/xiaotaop/ohos_gsas-ii/pull/20",
+  "deliveryPrMerged": true,
+  "hapSha256": "d65a64a90cba7d029d43b7549c626903ccf1080a6f5b4aa8a70f77148909b25b",
+  "completeZipSha256": "144eb5a5e8d298f662373059330368d4f1dbb277be663f8b162610e87c1a8929",
+  "zipSha256SumsEntriesVerified": 22,
+  "deviceModel": "HAD-W32",
+  "apiVersion": 23,
+  "physicalAcceptanceSha256": "cac672c8af1931f63434043906e79a347a10d38eb066fefddfa831f588232a1d",
+  "reviewDecisionsSha256": "d67bcc28b1b6fc4808ed80abcd37a276ef3d93daafdeb74f518f56ab8187035d",
+  "sbomFile": "hap-sbom.cdx.json",
+  "sbomSha256": "6cad806ad12bd6b26b5fdcb5ba38913391c4b02621ed353cb12bc586589da362",
+  "finalSbomSha256": "6cad806ad12bd6b26b5fdcb5ba38913391c4b02621ed353cb12bc586589da362",
+  "hapFiles": 2266,
+  "finalSbomFiles": 2266,
+  "finalSbomLogicalAndPlatformComponents": 31,
+  "nativeELFs": 219,
+  "nativeNeededEdges": 485,
+  "unmatchedNativeNeededNames": [],
+  "finalizerPassed": true,
+  "finalizerUnitTestsPassed": 15,
+  "independentWindowsBaselineChecksPassed": 12,
+  "technicalAcceptancePassed": true,
+  "technicalAcceptanceScope": "This exact internaltesting HAP on HAD-W32/API23 and the previously accepted unchanged-component evidence boundary",
+  "step2EngineeringDeliveryComplete": true,
+  "humanGroupLeaderSignatureRecorded": false,
+  "publicDistributionApproved": false,
+  "storeSubmissionApproved": false,
+  "snapshotFiles": [
+    {
+      "path": "physical-acceptance.json",
+      "size": 3227,
+      "sha256": "cac672c8af1931f63434043906e79a347a10d38eb066fefddfa831f588232a1d"
+    },
+    {
+      "path": "review-decisions.json",
+      "size": 27161,
+      "sha256": "d67bcc28b1b6fc4808ed80abcd37a276ef3d93daafdeb74f518f56ab8187035d"
+    },
+    {
+      "path": "hap-sbom.cdx.json",
+      "size": 1658463,
+      "sha256": "6cad806ad12bd6b26b5fdcb5ba38913391c4b02621ed353cb12bc586589da362"
+    },
+    {
+      "path": "evidence/native-dependencies.json",
+      "size": 194290,
+      "sha256": "bf502b36c12c709f794425bb06d5cf2f849f7eb9108dbbe86755bc0c0ca7c33c"
+    }
+  ],
+  "limitations": [
+    "No API20/API24 physical compatibility claim",
+    "System-picker exports were observed and rediscovered, but their original bytes and hashes were not read back in this run",
+    "Initial system network-verification prompt observed after replacement; subsequent fresh process launch succeeded",
+    "Community prebuilt source/version precision limitations are explicitly retained",
+    "Internaltesting signing profile is not a public store distribution profile",
+    "Old A screenshots and scenarios are retained only as unchanged-component evidence, not new-HAP screenshots"
+  ]
+}

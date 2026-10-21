@@ -1,5 +1,7 @@
 # C：签名包最终 SBOM 与许可材料审查
 
+后续（2026-10-21）：最低 API23 的 `d65a64a9…` 已取得[同包真机关键复验](PR20_API23_DEVICE_ACCEPTANCE_2026-10-21.md)，并用实际交付材料及该验收记录生成[新哈希的最终工程 SBOM](../packaging/reviews/c-api23-final/hap-sbom.cdx.json)，见[技术审查结论](PR20_API23_TECHNICAL_RELEASE_REVIEW_2026-10-21.md)。本页原有各时间点状态作为历史快照保留；新包并未获得公开分发批准。
+
 2026-10-21 后继材料：最低 API23 的精确 `c47b610…` 已重建为 `d65a64a9…`，实际 SBOM 草稿、原生关系、源码/签名/许可绑定及沿用的不变组件处置已完成，[详见新交付](C_API23_SIGNED_HAP.md)。该包尚待 API23 同包关键复验；本页旧包最终化结果不直接赋给新哈希。已接受的社区来源精度限制保留，不重新要求 B 提供不存在的日志。
 
 后续版本：0.1.1 / versionCode 2（`70588bde…`）已完成[成员 C 阶段三验收](C_PHASE3_ACCEPTANCE.md)及[同包最终审查](../packaging/reviews/70588bde-final/review-summary.json)。仅四个版本元数据字段变化，运行时/许可字节已重核一致；新设备证据、源码伴随和 SBOM 重新绑定。下文 `1190b1d5…` 是第 2 阶段固定历史快照，保留原结论与字节。
