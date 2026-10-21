@@ -18,9 +18,9 @@
   "supportEmail": null,
   "feedbackUrl": "https://github.com/xiaotaop/ohos_gsas-ii/issues",
   "privacyPolicyUrl": "https://github.com/xiaotaop/ohos_gsas-ii/blob/main/docs/PRIVACY.zh-CN.md",
-  "blankFieldsReason": "分类、价格与内容分级尚待实际后台确认；未提供邮箱。隐私候选地址须合并后核对无登录访问、中国大陆可达性与平台接受情况。",
+  "blankFieldsReason": "分类与内容分级待实际后台选项确认；邮箱未提供且当前应用信息表单未标为必填。隐私候选地址仍待合并、可达性与平台验证。",
   "category": null,
-  "price": null,
+  "price": 0,
   "regions": [
     "CN"
   ],
@@ -32,5 +32,7 @@
   "finalStoreAppSha256": "89e6b3e47afba2a17d01696cea6c6b6333a7edeb8a1bab58ab18f1b6ff4ddafd",
   "privacyPolicyUrlStatus": "candidate-main-URL-pending-merge-and-live-validation",
   "supportContactType": "GitHub Issues; no support email supplied",
-  "confirmedFieldsSource": "Account holder instructions in current chat, 2026-10-21"
+  "confirmedFieldsSource": "Account holder instructions in current chat, 2026-10-21",
+  "pricingModel": "free",
+  "priceConfirmedByAccountHolder": true
 }

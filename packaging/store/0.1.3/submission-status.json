@@ -41,5 +41,30 @@
   "regionsConfirmedByAccountHolder": true,
   "platformRegionConfigured": false,
   "platformContactRequirementsVerified": false,
-  "platformSubmissionAuthorizedInChat": true
+  "platformSubmissionAuthorizedInChat": true,
+  "price": 0,
+  "pricingModel": "free",
+  "priceConfirmedByAccountHolder": true,
+  "platformPricingConfigured": false,
+  "livePlatformAccountOwnershipChecked": true,
+  "livePlatformApplicationInformationInspected": true,
+  "platformFieldsSaved": false,
+  "platformUploadPerformed": false,
+  "platformApplicationInfoContactFieldsObserved": {
+    "website": "optional field observed",
+    "phone": "no required marker observed",
+    "email": "no required marker observed",
+    "QQ": "no required marker observed",
+    "inAppFeedbackPath": "no required marker observed; do not invent an app route"
+  },
+  "platformIconRequirementObserved": {
+    "sizes": [
+      216,
+      1024
+    ],
+    "format": "PNG",
+    "maximumMB": 3,
+    "source": "authenticated application information form on 2026-10-21"
+  },
+  "platformUiControlStatus": "readable; automated click and text entry did not apply; user-assisted navigation required"
 }

@@ -18,6 +18,41 @@
       "path": "docs/assets/app-icon-512.png",
       "sha256": "b4791b036d2892546bb23d62a75e1bfe5b7b0643598b70ffba2b038abcf6f5f8",
       "size": 18272
+    },
+    {
+      "path": "docs/assets/app-icon-216.png",
+      "sha256": "b12373e0f51ce1e94518e2d6d818e26c302a278805bfa502cb890baa9787299c",
+      "size": 5813,
+      "width": 216,
+      "height": 216,
+      "derivedFrom": "app/AppScope/resources/base/media/app_icon.svg",
+      "storeApproved": false
+    },
+    {
+      "path": "docs/assets/app-icon-1024.png",
+      "sha256": "5658206c3caaa4156a2179ad3de27b40fc06eadf4e8c63710d60d6453ccd9051",
+      "size": 49622,
+      "width": 1024,
+      "height": 1024,
+      "derivedFrom": "app/AppScope/resources/base/media/app_icon.svg",
+      "storeApproved": false
     }
-  ]
+  ],
+  "storeIconRequirementObserved": {
+    "date": "2026-10-21",
+    "source": "authenticated AppGallery application information form",
+    "sizes": [
+      [
+        216,
+        216
+      ],
+      [
+        1024,
+        1024
+      ]
+    ],
+    "format": "PNG",
+    "maximumMB": 3
+  },
+  "rasterization": "Existing SVG rendered with sharp; unchanged vector geometry/colors. No AI redraw."
 }

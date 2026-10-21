@@ -12,4 +12,4 @@
 - [华为：隐私测试](https://developer.huawei.com/consumer/cn/doc/doccenter-testing/agc-help-cloudtest-privacytest-0000002465035109)：检查隐私政策网址正常访问、应用内政策与标准化托管政策的一致性、数据目的/方式/范围及第三方组件披露等。政策正文和静态 HTML 完成不替代该测试，当前公开 APP 尚无平台检测结果。
 - [GitHub 一般隐私声明](https://docs.github.com/zh/site-policy/privacy-policies/github-general-privacy-statement)：反馈采用 GitHub Issues 时，站点账号、访问及主动提交内容由 GitHub 按其政策处理；本应用政策明确公开反馈的范围与脱敏注意事项，不把 GitHub 当作本地计算必需的登录或数据上传服务。
 
-本次检查应用管理入口时，原登录会话失效并跳转华为账号登录页；尚未核对任何需登录的实际版本表单，也未上传 APP 或提交审核。分类、价格、分级、强制联系方式及托管可用性仍按实际表单确认。
+本次原登录会话失效后，用户已完成登录并手动打开应用信息表单。已核对归属、包名、PC/2in1、朱宇辰主体和图标规格（216/1024 正方形 PNG，3 MB 内）；尚未保存字段、上传 APP 或提交。分类/标签、分级、联系方式最终校验及隐私托管仍按后续表单核对；用户已确认免费下载。
