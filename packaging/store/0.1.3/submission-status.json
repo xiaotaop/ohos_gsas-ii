@@ -49,7 +49,7 @@
   "livePlatformAccountOwnershipChecked": true,
   "livePlatformApplicationInformationInspected": true,
   "platformFieldsSaved": false,
-  "platformUploadPerformed": false,
+  "platformUploadPerformed": true,
   "platformApplicationInfoContactFieldsObserved": {
     "website": "optional field observed",
     "phone": "no required marker observed",
@@ -69,7 +69,7 @@
   "platformUiControlStatus": "readable; automated click and text entry did not apply; user-assisted navigation required",
   "versionFormInspected": true,
   "versionFormStatusObserved": "准备提交；未提交",
-  "releasePackageSelected": false,
+  "releasePackageSelected": true,
   "platformPrivateContactFieldsRequired": [
     "负责人手机号及短信验证",
     "负责人邮箱",
@@ -102,5 +102,15 @@
   "platformPrivateContactVerificationReportedByAccountHolder": true,
   "privateContactVerificationIndependentlyReadBack": false,
   "userReportedApplicationInfoAdvancedToVersionPage": true,
-  "privacyHostingPlanned": true
+  "privacyHostingPlanned": true,
+  "platformVersionSelectionObserved": {
+    "fileName": "JingyanJingxi-0.1.3-app-gallery.app",
+    "versionName": "0.1.3",
+    "versionCode": 4,
+    "displayedSize": "43.32 MB",
+    "uploadedAtAsDisplayed": "2026-10-21 20:49:45"
+  },
+  "platformUploadedPackageSha256IndependentlyVerified": false,
+  "versionDraftSaveReportedByAccountHolder": true,
+  "platformDraftSaveIndependentlyReadBack": false
 }
