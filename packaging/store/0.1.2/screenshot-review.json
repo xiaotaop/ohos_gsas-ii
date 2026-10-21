@@ -1,0 +1,81 @@
+{
+  "scope": "existing truthful functional screenshots reused per leader; no redraw or replacement of displayed results",
+  "sourceComponentComparison": {
+    "app/entry/src/main/ets/pages/Index.ets": {
+      "unchangedSinceScreenshotSource": true,
+      "sha256": "a3fe497426ad8ad56169dbf3494aa86f0ef31544b2bc2d369d90846938899ee7"
+    },
+    "app/AppScope/resources/base/media/app_icon.svg": {
+      "unchangedSinceScreenshotSource": true,
+      "sha256": "d8ab06e9deebb48cbda1e0a79e026f0fa5f2b8197913f9ee86ce102f4f4bb755"
+    }
+  },
+  "files": [
+    {
+      "path": "docs/evidence/a-pr14-59c86f18/controls.png",
+      "filename": "controls.png",
+      "sha256": "9d16b22a62ab3de34f0f970fed65e8f09677027c17bd66308a62855d333e2fbb",
+      "size": 147036,
+      "width": 2090,
+      "height": 1394,
+      "caption": "文件与输入树、Controls 界面",
+      "visualReviewPassed": true,
+      "reviewNotes": "页面存在未实现/禁用项，不宣传全菜单可用；旧图显示原应用名，最终名称变化后应按平台实际提示核对，不重绘或伪称新名称实拍",
+      "reuseApprovedByLeaderMessage": true,
+      "sourceHapSha256": "59c86f189dd89a22e2e009f4637a58756193cbeececd2ec3f8bde0e85c3e176b",
+      "sourceCommit": "57c661db55020e5c200947da203ea449c536c1fe",
+      "newCandidateDeviceScreenshot": false,
+      "imageModified": false,
+      "platformDimensionCountAndContentValidation": "pending-live-platform-validation",
+      "reuseRequestedByUser": true
+    },
+    {
+      "path": "docs/evidence/a-pr14-59c86f18/success.png",
+      "filename": "success.png",
+      "sha256": "84e6169fe7a03e2c680da469bda74ea42599b805ec9d142574c0154ad86f0ed2",
+      "size": 282433,
+      "width": 3120,
+      "height": 1955,
+      "caption": "PbSO4 五阶段精修结果",
+      "visualReviewPassed": true,
+      "reviewNotes": "含公开样例和测试输出文件名；8.70秒不是性能承诺；保留未执行内置基线校验提示；旧图显示原应用名，最终名称变化后应按平台实际提示核对，不重绘或伪称新名称实拍",
+      "reuseApprovedByLeaderMessage": true,
+      "sourceHapSha256": "59c86f189dd89a22e2e009f4637a58756193cbeececd2ec3f8bde0e85c3e176b",
+      "sourceCommit": "57c661db55020e5c200947da203ea449c536c1fe",
+      "newCandidateDeviceScreenshot": false,
+      "imageModified": false,
+      "platformDimensionCountAndContentValidation": "pending-live-platform-validation",
+      "reuseRequestedByUser": true
+    },
+    {
+      "path": "docs/evidence/a-pr14-59c86f18/restarted.png",
+      "filename": "restarted.png",
+      "sha256": "28156128fe355eefa9a989672026ed0ee10f23d9feb59d35662c8431730684aa",
+      "size": 173550,
+      "width": 2090,
+      "height": 1394,
+      "caption": "成功任务退出后重新打开恢复",
+      "visualReviewPassed": true,
+      "reviewNotes": "历史测试的6.79秒及空表单如实保留，不宣称表单草稿恢复；旧图显示原应用名，最终名称变化后应按平台实际提示核对，不重绘或伪称新名称实拍",
+      "reuseApprovedByLeaderMessage": true,
+      "sourceHapSha256": "59c86f189dd89a22e2e009f4637a58756193cbeececd2ec3f8bde0e85c3e176b",
+      "sourceCommit": "57c661db55020e5c200947da203ea449c536c1fe",
+      "newCandidateDeviceScreenshot": false,
+      "imageModified": false,
+      "platformDimensionCountAndContentValidation": "pending-live-platform-validation",
+      "reuseRequestedByUser": true
+    }
+  ],
+  "rejectedForPrimaryListing": [
+    "minimum.png (little functional content)",
+    "failed.png",
+    "cancelled.png",
+    "close-guard.png"
+  ],
+  "platformAccepted": false,
+  "comparisonSourceCommit": "01e38b56a437e8a8d27cb5ae1f3c821d5aad3fad",
+  "finalRenameSourceComparisonPending": true,
+  "userExplicitlyRequestedReuse": true,
+  "oldDisplayedApplicationName": "GSAS-II",
+  "finalApplicationNamePending": true
+}
