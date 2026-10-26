@@ -2,13 +2,17 @@
 // compile-time Python payload (cpp/python/include absent) this file builds
 // the stub variant so a file-service-only HAP still compiles; every call
 // then rejects with CORE_NOT_READY.
+#if defined(GSAS_HAS_PYTHON)
+// CPython's pyconfig.h sets feature-test macros. Include it before C++ or
+// platform headers so those headers see the same definitions from the start.
+#include <Python.h>
+#endif
+
 #include "python_host.h"
 
 #include <utility>
 
 #if defined(GSAS_HAS_PYTHON)
-
-#include <Python.h>
 #include <dlfcn.h>
 
 namespace {
